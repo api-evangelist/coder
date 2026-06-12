@@ -1,0 +1,46 @@
+---
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Coder
+providerId: coder
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Rate Limiting
+description: >-
+  Coder does not publish explicit global API rate limits in its public
+  documentation. Self-hosted deployments are subject to infrastructure
+  capacity; the platform has been tested at median API request rates of
+  350 RPS during dashboard scenarios and 250 RPS during web terminal
+  scenarios. Code-server password authentication is rate-limited to 2
+  attempts per minute plus 12 per hour.
+sources:
+  - https://coder.com/docs/admin/infrastructure/scale-testing
+  - https://coder.com/docs/reference/api/authentication
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+limits:
+  - name: Code-Server Password Authentication
+    scope: ip
+    metric: requests_per_minute
+    limit: 2
+    timeFrame: minute
+  - name: Code-Server Password Authentication (hourly burst)
+    scope: ip
+    metric: requests_per_hour
+    limit: 12
+    timeFrame: hour
+  - name: API Dashboard (scale reference)
+    scope: deployment
+    metric: requests_per_second
+    limit: 350
+    timeFrame: second
+  - name: API Web Terminal / Workspace Apps (scale reference)
+    scope: deployment
+    metric: requests_per_second
+    limit: 250
+    timeFrame: second

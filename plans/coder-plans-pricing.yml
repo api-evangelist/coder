@@ -1,0 +1,189 @@
+---
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Coder
+providerId: coder
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Developer Tools
+  - Remote Development
+  - Cloud Development Environments
+  - AI Agents
+description: Coder offers a free Community edition for open-source users and small teams, and an annual per-user Premium edition for enterprises requiring advanced security, multi-organization controls, and AI governance.
+sources:
+  - https://coder.com/pricing
+plans:
+  - id: coder-community
+    name: Community
+    type: free
+    description: >-
+      Free, self-hosted open-source edition for hobbyists and small teams.
+      Includes unlimited workspaces, single organization, multiple IDE support,
+      web UI and REST API access, AI coding agent task assignment, OpenID
+      Connect SSO, and community support via Discord and GitHub.
+    entries:
+      - label: Workspaces
+        name: workspaces
+        type: quota
+        metric: workspaces
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: Team Members
+        name: members
+        type: quota
+        metric: members
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: Organizations
+        name: organizations
+        type: quota
+        metric: organizations
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: Platform Integrations
+        name: platform_integrations
+        type: quota
+        metric: integrations
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: External Auth Integrations
+        name: external_auth_integrations
+        type: quota
+        metric: integrations
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: REST API Access
+        name: rest_api_access
+        type: boolean
+        metric: access
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: CLI Access
+        name: cli_access
+        type: boolean
+        metric: access
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+  - id: coder-premium
+    name: Premium
+    type: enterprise
+    description: >-
+      Annual per-user enterprise edition with all Community features plus
+      multi-organization access controls, resource quotas per org and user,
+      audit logging, unlimited integrations, high availability via multiple
+      server replicas, workspace proxies for global relays, automatic idle
+      workspace shutdown, OIDC group and role synchronization, RBAC, custom
+      branding, and optional AI Governance, Agent Firewall, and AI Gateway
+      add-ons.
+    entries:
+      - label: Workspaces
+        name: workspaces
+        type: quota
+        metric: workspaces
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+      - label: Organizations
+        name: organizations
+        type: quota
+        metric: organizations
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: true
+      - label: Platform Integrations
+        name: platform_integrations
+        type: quota
+        metric: integrations
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+      - label: External Auth Integrations
+        name: external_auth_integrations
+        type: quota
+        metric: integrations
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+      - label: Audit Logging
+        name: audit_logging
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+      - label: High Availability
+        name: high_availability
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+      - label: Workspace Proxies
+        name: workspace_proxies
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+      - label: AI Governance Add-On
+        name: ai_governance
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
