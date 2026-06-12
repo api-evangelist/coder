@@ -1,0 +1,1142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coder.com/schemas/codersdk-workspace.json",
+  "title": "Workspace",
+  "$defs": {
+    "codersdk.AgentSubsystem": {
+      "type": "string",
+      "enum": [
+        "envbox",
+        "envbuilder",
+        "exectrace"
+      ]
+    },
+    "codersdk.AutomaticUpdates": {
+      "type": "string",
+      "enum": [
+        "always",
+        "never"
+      ]
+    },
+    "codersdk.BuildReason": {
+      "type": "string",
+      "enum": [
+        "initiator",
+        "autostart",
+        "autostop",
+        "dormancy",
+        "dashboard",
+        "cli",
+        "ssh_connection",
+        "vscode_connection",
+        "jetbrains_connection",
+        "task_auto_pause",
+        "task_manual_pause",
+        "task_resume"
+      ]
+    },
+    "codersdk.DERPRegion": {
+      "type": "object",
+      "properties": {
+        "latency_ms": {
+          "type": "number"
+        },
+        "preferred": {
+          "type": "boolean"
+        }
+      }
+    },
+    "codersdk.DisplayApp": {
+      "type": "string",
+      "enum": [
+        "vscode",
+        "vscode_insiders",
+        "web_terminal",
+        "port_forwarding_helper",
+        "ssh_helper"
+      ]
+    },
+    "codersdk.Healthcheck": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "integer",
+          "description": "Interval specifies the seconds between each health check."
+        },
+        "threshold": {
+          "type": "integer",
+          "description": "Threshold specifies the number of consecutive failed health checks before returning \"unhealthy\"."
+        },
+        "url": {
+          "type": "string",
+          "description": "URL specifies the endpoint to check for the app health."
+        }
+      }
+    },
+    "codersdk.JobErrorCode": {
+      "type": "string",
+      "enum": [
+        "REQUIRED_TEMPLATE_VARIABLES",
+        "INSUFFICIENT_QUOTA"
+      ]
+    },
+    "codersdk.MatchedProvisioners": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "integer",
+          "description": "Available is the number of provisioner daemons that are available to\ntake jobs. This may be less than the count if some provisioners are\nbusy or have been stopped."
+        },
+        "count": {
+          "type": "integer",
+          "description": "Count is the number of provisioner daemons that matched the given\ntags. If the count is 0, it means no provisioner daemons matched the\nrequested tags."
+        },
+        "most_recently_seen": {
+          "type": "string",
+          "format": "date-time",
+          "description": "MostRecentlySeen is the most recently seen time of the set of matched\nprovisioners. If no provisioners matched, this field will be null."
+        }
+      }
+    },
+    "codersdk.ProvisionerJob": {
+      "type": "object",
+      "properties": {
+        "available_workers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "canceled_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "error": {
+          "type": "string"
+        },
+        "error_code": {
+          "enum": [
+            "REQUIRED_TEMPLATE_VARIABLES",
+            "INSUFFICIENT_QUOTA"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.JobErrorCode"
+            }
+          ]
+        },
+        "file_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "initiator_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "input": {
+          "$ref": "#/$defs/codersdk.ProvisionerJobInput"
+        },
+        "logs_overflowed": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "$ref": "#/$defs/codersdk.ProvisionerJobMetadata"
+        },
+        "organization_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "queue_position": {
+          "type": "integer"
+        },
+        "queue_size": {
+          "type": "integer"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "succeeded",
+            "canceling",
+            "canceled",
+            "failed"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.ProvisionerJobStatus"
+            }
+          ]
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "$ref": "#/$defs/codersdk.ProvisionerJobType"
+        },
+        "worker_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "worker_name": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.ProvisionerJobInput": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "template_version_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace_build_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "codersdk.ProvisionerJobMetadata": {
+      "type": "object",
+      "properties": {
+        "template_display_name": {
+          "type": "string"
+        },
+        "template_icon": {
+          "type": "string"
+        },
+        "template_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "template_name": {
+          "type": "string"
+        },
+        "template_version_name": {
+          "type": "string"
+        },
+        "workspace_build_transition": {
+          "$ref": "#/$defs/codersdk.WorkspaceTransition"
+        },
+        "workspace_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace_name": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.ProvisionerJobStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "succeeded",
+        "canceling",
+        "canceled",
+        "failed",
+        "unknown"
+      ]
+    },
+    "codersdk.ProvisionerJobType": {
+      "type": "string",
+      "enum": [
+        "template_version_import",
+        "workspace_build",
+        "template_version_dry_run"
+      ]
+    },
+    "codersdk.SharedWorkspaceActor": {
+      "type": "object",
+      "properties": {
+        "actor_type": {
+          "enum": [
+            "group",
+            "user"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.SharedWorkspaceActorType"
+            }
+          ]
+        },
+        "avatar_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceRole"
+          }
+        }
+      }
+    },
+    "codersdk.SharedWorkspaceActorType": {
+      "type": "string",
+      "enum": [
+        "group",
+        "user"
+      ]
+    },
+    "codersdk.WorkspaceAgent": {
+      "type": "object",
+      "properties": {
+        "api_version": {
+          "type": "string"
+        },
+        "apps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceApp"
+          }
+        },
+        "architecture": {
+          "type": "string"
+        },
+        "connection_timeout_seconds": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "disconnected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "display_apps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.DisplayApp"
+          }
+        },
+        "environment_variables": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "expanded_directory": {
+          "type": "string"
+        },
+        "first_connected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "health": {
+          "description": "Health reports the health of the agent.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.WorkspaceAgentHealth"
+            }
+          ]
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "instance_id": {
+          "type": "string"
+        },
+        "last_connected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "latency": {
+          "type": "object",
+          "description": "DERPLatency is mapped by region name (e.g. \"New York City\", \"Seattle\").",
+          "additionalProperties": {
+            "$ref": "#/$defs/codersdk.DERPRegion"
+          }
+        },
+        "lifecycle_state": {
+          "$ref": "#/$defs/codersdk.WorkspaceAgentLifecycle"
+        },
+        "log_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceAgentLogSource"
+          }
+        },
+        "logs_length": {
+          "type": "integer"
+        },
+        "logs_overflowed": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "operating_system": {
+          "type": "string"
+        },
+        "parent_id": {
+          "format": "uuid",
+          "allOf": [
+            {
+              "$ref": "#/$defs/uuid.NullUUID"
+            }
+          ]
+        },
+        "ready_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "resource_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "scripts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceAgentScript"
+          }
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "startup_script_behavior": {
+          "description": "StartupScriptBehavior is a legacy field that is deprecated in favor\nof the `coder_script` resource. It's only referenced by old clients.\nDeprecated: Remove in the future!",
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.WorkspaceAgentStartupScriptBehavior"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/codersdk.WorkspaceAgentStatus"
+        },
+        "subsystems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.AgentSubsystem"
+          }
+        },
+        "troubleshooting_url": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.WorkspaceAgentHealth": {
+      "type": "object",
+      "properties": {
+        "healthy": {
+          "type": "boolean",
+          "description": "Healthy is true if the agent is healthy.",
+          "example": false
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason is a human-readable explanation of the agent's health. It is empty if Healthy is true.",
+          "example": "agent has lost connection"
+        }
+      }
+    },
+    "codersdk.WorkspaceAgentLifecycle": {
+      "type": "string",
+      "enum": [
+        "created",
+        "starting",
+        "start_timeout",
+        "start_error",
+        "ready",
+        "shutting_down",
+        "shutdown_timeout",
+        "shutdown_error",
+        "off"
+      ]
+    },
+    "codersdk.WorkspaceAgentLogSource": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace_agent_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "codersdk.WorkspaceAgentScript": {
+      "type": "object",
+      "properties": {
+        "cron": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "exit_code": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "log_path": {
+          "type": "string"
+        },
+        "log_source_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "run_on_start": {
+          "type": "boolean"
+        },
+        "run_on_stop": {
+          "type": "boolean"
+        },
+        "script": {
+          "type": "string"
+        },
+        "start_blocks_login": {
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/codersdk.WorkspaceAgentScriptStatus"
+        },
+        "timeout": {
+          "type": "integer"
+        }
+      }
+    },
+    "codersdk.WorkspaceAgentScriptStatus": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "exit_failure",
+        "timed_out",
+        "pipes_left_open"
+      ]
+    },
+    "codersdk.WorkspaceAgentStartupScriptBehavior": {
+      "type": "string",
+      "enum": [
+        "blocking",
+        "non-blocking"
+      ]
+    },
+    "codersdk.WorkspaceAgentStatus": {
+      "type": "string",
+      "enum": [
+        "connecting",
+        "connected",
+        "disconnected",
+        "timeout"
+      ]
+    },
+    "codersdk.WorkspaceApp": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "DisplayName is a friendly name for the app."
+        },
+        "external": {
+          "type": "boolean",
+          "description": "External specifies whether the URL should be opened externally on\nthe client or not."
+        },
+        "group": {
+          "type": "string"
+        },
+        "health": {
+          "$ref": "#/$defs/codersdk.WorkspaceAppHealth"
+        },
+        "healthcheck": {
+          "description": "Healthcheck specifies the configuration for checking app health.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.Healthcheck"
+            }
+          ]
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon is a relative path or external URL that specifies\nan icon to be displayed in the dashboard."
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "open_in": {
+          "$ref": "#/$defs/codersdk.WorkspaceAppOpenIn"
+        },
+        "sharing_level": {
+          "enum": [
+            "owner",
+            "authenticated",
+            "organization",
+            "public"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.WorkspaceAppSharingLevel"
+            }
+          ]
+        },
+        "slug": {
+          "type": "string",
+          "description": "Slug is a unique identifier within the agent."
+        },
+        "statuses": {
+          "type": "array",
+          "description": "Statuses is a list of statuses for the app.",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceAppStatus"
+          }
+        },
+        "subdomain": {
+          "type": "boolean",
+          "description": "Subdomain denotes whether the app should be accessed via a path on the\n`coder server` or via a hostname-based dev URL. If this is set to true\nand there is no app wildcard configured on the server, the app will not\nbe accessible in the UI."
+        },
+        "subdomain_name": {
+          "type": "string",
+          "description": "SubdomainName is the application domain exposed on the `coder server`."
+        },
+        "tooltip": {
+          "type": "string",
+          "description": "Tooltip is an optional markdown supported field that is displayed\nwhen hovering over workspace apps in the UI."
+        },
+        "url": {
+          "type": "string",
+          "description": "URL is the address being proxied to inside the workspace.\nIf external is specified, this will be opened on the client."
+        }
+      }
+    },
+    "codersdk.WorkspaceAppHealth": {
+      "type": "string",
+      "enum": [
+        "disabled",
+        "initializing",
+        "healthy",
+        "unhealthy"
+      ]
+    },
+    "codersdk.WorkspaceAppOpenIn": {
+      "type": "string",
+      "enum": [
+        "slim-window",
+        "tab"
+      ]
+    },
+    "codersdk.WorkspaceAppSharingLevel": {
+      "type": "string",
+      "enum": [
+        "owner",
+        "authenticated",
+        "organization",
+        "public"
+      ]
+    },
+    "codersdk.WorkspaceAppStatus": {
+      "type": "object",
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "app_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Deprecated: This field is unused and will be removed in a future version.\nIcon is an external URL to an icon that will be rendered in the UI."
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "message": {
+          "type": "string"
+        },
+        "needs_user_attention": {
+          "type": "boolean",
+          "description": "Deprecated: This field is unused and will be removed in a future version.\nNeedsUserAttention specifies whether the status needs user attention."
+        },
+        "state": {
+          "$ref": "#/$defs/codersdk.WorkspaceAppStatusState"
+        },
+        "uri": {
+          "type": "string",
+          "description": "URI is the URI of the resource that the status is for.\ne.g. https://github.com/org/repo/pull/123\ne.g. file:///path/to/file"
+        },
+        "workspace_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "codersdk.WorkspaceAppStatusState": {
+      "type": "string",
+      "enum": [
+        "working",
+        "idle",
+        "complete",
+        "failure"
+      ]
+    },
+    "codersdk.WorkspaceBuild": {
+      "type": "object",
+      "properties": {
+        "build_number": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "daily_cost": {
+          "type": "integer"
+        },
+        "deadline": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "has_ai_task": {
+          "type": "boolean",
+          "description": "Deprecated: This field has been deprecated in favor of Task WorkspaceID."
+        },
+        "has_external_agent": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "initiator_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "initiator_name": {
+          "type": "string"
+        },
+        "job": {
+          "$ref": "#/$defs/codersdk.ProvisionerJob"
+        },
+        "matched_provisioners": {
+          "$ref": "#/$defs/codersdk.MatchedProvisioners"
+        },
+        "max_deadline": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reason": {
+          "enum": [
+            "initiator",
+            "autostart",
+            "autostop"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.BuildReason"
+            }
+          ]
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceResource"
+          }
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "starting",
+            "running",
+            "stopping",
+            "stopped",
+            "failed",
+            "canceling",
+            "canceled",
+            "deleting",
+            "deleted"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.WorkspaceStatus"
+            }
+          ]
+        },
+        "template_version_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "template_version_name": {
+          "type": "string"
+        },
+        "template_version_preset_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "transition": {
+          "enum": [
+            "start",
+            "stop",
+            "delete"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.WorkspaceTransition"
+            }
+          ]
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "workspace_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace_name": {
+          "type": "string"
+        },
+        "workspace_owner_avatar_url": {
+          "type": "string"
+        },
+        "workspace_owner_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace_owner_name": {
+          "type": "string",
+          "description": "WorkspaceOwnerName is the username of the owner of the workspace."
+        }
+      }
+    },
+    "codersdk.WorkspaceHealth": {
+      "type": "object",
+      "properties": {
+        "failing_agents": {
+          "type": "array",
+          "description": "FailingAgents lists the IDs of the agents that are failing, if any.",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "healthy": {
+          "type": "boolean",
+          "description": "Healthy is true if the workspace is healthy.",
+          "example": false
+        }
+      }
+    },
+    "codersdk.WorkspaceResource": {
+      "type": "object",
+      "properties": {
+        "agents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceAgent"
+          }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "daily_cost": {
+          "type": "integer"
+        },
+        "hide": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "job_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.WorkspaceResourceMetadata"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "workspace_transition": {
+          "enum": [
+            "start",
+            "stop",
+            "delete"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.WorkspaceTransition"
+            }
+          ]
+        }
+      }
+    },
+    "codersdk.WorkspaceResourceMetadata": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "sensitive": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.WorkspaceRole": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "use",
+        ""
+      ]
+    },
+    "codersdk.WorkspaceStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "starting",
+        "running",
+        "stopping",
+        "stopped",
+        "failed",
+        "canceling",
+        "canceled",
+        "deleting",
+        "deleted"
+      ]
+    },
+    "codersdk.WorkspaceTransition": {
+      "type": "string",
+      "enum": [
+        "start",
+        "stop",
+        "delete"
+      ]
+    },
+    "uuid.NullUUID": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean",
+          "description": "Valid is true if UUID is not NULL"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "allow_renames": {
+      "type": "boolean"
+    },
+    "automatic_updates": {
+      "enum": [
+        "always",
+        "never"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/codersdk.AutomaticUpdates"
+        }
+      ]
+    },
+    "autostart_schedule": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deleting_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "DeletingAt indicates the time at which the workspace will be permanently deleted.\nA workspace is eligible for deletion if it is dormant (a non-nil dormant_at value)\nand a value has been specified for time_til_dormant_autodelete on its template."
+    },
+    "dormant_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "DormantAt being non-nil indicates a workspace that is dormant.\nA dormant workspace is no longer accessible must be activated.\nIt is subject to deletion if it breaches\nthe duration of the time_til_ field on its template."
+    },
+    "favorite": {
+      "type": "boolean"
+    },
+    "health": {
+      "description": "Health shows the health of the workspace and information about\nwhat is causing an unhealthy status.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/codersdk.WorkspaceHealth"
+        }
+      ]
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "is_prebuild": {
+      "type": "boolean",
+      "description": "IsPrebuild indicates whether the workspace is a prebuilt workspace.\nPrebuilt workspaces are owned by the prebuilds system user and have specific behavior,\nsuch as being managed differently from regular workspaces.\nOnce a prebuilt workspace is claimed by a user, it transitions to a regular workspace,\nand IsPrebuild returns false."
+    },
+    "last_used_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "latest_app_status": {
+      "$ref": "#/$defs/codersdk.WorkspaceAppStatus"
+    },
+    "latest_build": {
+      "$ref": "#/$defs/codersdk.WorkspaceBuild"
+    },
+    "name": {
+      "type": "string"
+    },
+    "next_start_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "organization_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "organization_name": {
+      "type": "string"
+    },
+    "outdated": {
+      "type": "boolean"
+    },
+    "owner_avatar_url": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "owner_name": {
+      "type": "string",
+      "description": "OwnerName is the username of the owner of the workspace."
+    },
+    "shared_with": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/codersdk.SharedWorkspaceActor"
+      }
+    },
+    "task_id": {
+      "description": "TaskID, if set, indicates that the workspace is relevant to the given codersdk.Task.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/uuid.NullUUID"
+        }
+      ]
+    },
+    "template_active_version_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "template_allow_user_cancel_workspace_jobs": {
+      "type": "boolean"
+    },
+    "template_display_name": {
+      "type": "string"
+    },
+    "template_icon": {
+      "type": "string"
+    },
+    "template_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "template_name": {
+      "type": "string"
+    },
+    "template_require_active_version": {
+      "type": "boolean"
+    },
+    "template_use_classic_parameter_flow": {
+      "type": "boolean"
+    },
+    "ttl_ms": {
+      "type": "integer"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coder.com/schemas/codersdk-user.json",
+  "title": "User",
+  "$defs": {
+    "codersdk.LoginType": {
+      "type": "string",
+      "enum": [
+        "",
+        "password",
+        "github",
+        "oidc",
+        "token",
+        "none"
+      ]
+    },
+    "codersdk.SlimRole": {
+      "type": "object",
+      "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organization_id": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.UserStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "dormant",
+        "suspended"
+      ]
+    }
+  },
+  "type": "object",
+  "required": [
+    "created_at",
+    "email",
+    "id",
+    "username"
+  ],
+  "properties": {
+    "avatar_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "has_ai_seat": {
+      "type": "boolean",
+      "description": "HasAISeat intentionally omits omitempty so the API always includes the\nfield, even when false."
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "is_service_account": {
+      "type": "boolean"
+    },
+    "last_seen_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "login_type": {
+      "$ref": "#/$defs/codersdk.LoginType"
+    },
+    "name": {
+      "type": "string"
+    },
+    "organization_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/codersdk.SlimRole"
+      }
+    },
+    "status": {
+      "enum": [
+        "active",
+        "suspended"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/codersdk.UserStatus"
+        }
+      ]
+    },
+    "theme_preference": {
+      "type": "string",
+      "description": "Deprecated: this value should be retrieved from\n`codersdk.UserPreferenceSettings` instead."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "username": {
+      "type": "string"
+    }
+  }
+}

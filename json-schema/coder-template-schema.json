@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coder.com/schemas/codersdk-template.json",
+  "title": "Template",
+  "$defs": {
+    "codersdk.CORSBehavior": {
+      "type": "string",
+      "enum": [
+        "simple",
+        "passthru"
+      ]
+    },
+    "codersdk.TemplateAutostartRequirement": {
+      "type": "object",
+      "properties": {
+        "days_of_week": {
+          "type": "array",
+          "description": "DaysOfWeek is a list of days of the week in which autostart is allowed\nto happen. If no days are specified, autostart is not allowed.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday",
+              "sunday"
+            ]
+          }
+        }
+      }
+    },
+    "codersdk.TemplateAutostopRequirement": {
+      "type": "object",
+      "properties": {
+        "days_of_week": {
+          "type": "array",
+          "description": "DaysOfWeek is a list of days of the week on which restarts are required.\nRestarts happen within the user's quiet hours (in their configured\ntimezone). If no days are specified, restarts are not required. Weekdays\ncannot be specified twice.\n\nRestarts will only happen on weekdays in this list on weeks which line up\nwith Weeks.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday",
+              "sunday"
+            ]
+          }
+        },
+        "weeks": {
+          "type": "integer",
+          "description": "Weeks is the number of weeks between required restarts. Weeks are synced\nacross all workspaces (and Coder deployments) using modulo math on a\nhardcoded epoch week of January 2nd, 2023 (the first Monday of 2023).\nValues of 0 or 1 indicate weekly restarts. Values of 2 indicate\nfortnightly restarts, etc."
+        }
+      }
+    },
+    "codersdk.TemplateBuildTimeStats": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/codersdk.TransitionStats"
+      }
+    },
+    "codersdk.TransitionStats": {
+      "type": "object",
+      "properties": {
+        "p50": {
+          "type": "integer",
+          "example": 123
+        },
+        "p95": {
+          "type": "integer",
+          "example": 146
+        }
+      }
+    },
+    "codersdk.WorkspaceAgentPortShareLevel": {
+      "type": "string",
+      "enum": [
+        "owner",
+        "authenticated",
+        "organization",
+        "public"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "active_user_count": {
+      "type": "integer",
+      "description": "ActiveUserCount is set to -1 when loading."
+    },
+    "active_version_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "activity_bump_ms": {
+      "type": "integer"
+    },
+    "allow_user_autostart": {
+      "type": "boolean",
+      "description": "AllowUserAutostart and AllowUserAutostop are enterprise-only. Their\nvalues are only used if your license is entitled to use the advanced\ntemplate scheduling feature."
+    },
+    "allow_user_autostop": {
+      "type": "boolean"
+    },
+    "allow_user_cancel_workspace_jobs": {
+      "type": "boolean"
+    },
+    "autostart_requirement": {
+      "$ref": "#/$defs/codersdk.TemplateAutostartRequirement"
+    },
+    "autostop_requirement": {
+      "description": "AutostopRequirement and AutostartRequirement are enterprise features. Its\nvalue is only used if your license is entitled to use the advanced template\nscheduling feature.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/codersdk.TemplateAutostopRequirement"
+        }
+      ]
+    },
+    "build_time_stats": {
+      "$ref": "#/$defs/codersdk.TemplateBuildTimeStats"
+    },
+    "cors_behavior": {
+      "$ref": "#/$defs/codersdk.CORSBehavior"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "created_by_name": {
+      "type": "string"
+    },
+    "default_ttl_ms": {
+      "type": "integer"
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "deprecated": {
+      "type": "boolean"
+    },
+    "deprecation_message": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "disable_module_cache": {
+      "type": "boolean",
+      "description": "DisableModuleCache disables the use of cached Terraform modules during\nprovisioning."
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "failure_ttl_ms": {
+      "type": "integer",
+      "description": "FailureTTLMillis, TimeTilDormantMillis, and TimeTilDormantAutoDeleteMillis are enterprise-only. Their\nvalues are used if your license is entitled to use the advanced\ntemplate scheduling feature."
+    },
+    "icon": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "max_port_share_level": {
+      "$ref": "#/$defs/codersdk.WorkspaceAgentPortShareLevel"
+    },
+    "name": {
+      "type": "string"
+    },
+    "organization_display_name": {
+      "type": "string"
+    },
+    "organization_icon": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "organization_name": {
+      "type": "string",
+      "format": "url"
+    },
+    "provisioner": {
+      "type": "string",
+      "enum": [
+        "terraform"
+      ]
+    },
+    "require_active_version": {
+      "type": "boolean",
+      "description": "RequireActiveVersion mandates that workspaces are built with the active\ntemplate version."
+    },
+    "time_til_dormant_autodelete_ms": {
+      "type": "integer"
+    },
+    "time_til_dormant_ms": {
+      "type": "integer"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "use_classic_parameter_flow": {
+      "type": "boolean"
+    }
+  }
+}

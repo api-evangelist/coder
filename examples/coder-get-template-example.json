@@ -1,0 +1,56 @@
+{
+  "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+  "created_at": "2024-03-01T10:00:00Z",
+  "updated_at": "2025-05-15T12:00:00Z",
+  "organization_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+  "organization_name": "Acme Corp",
+  "name": "ubuntu-22-dev",
+  "display_name": "Ubuntu 22.04 Dev",
+  "provisioner": "terraform",
+  "active_version_id": "e5f6a7b8-c9d0-1234-ef01-345678901234",
+  "active_user_count": 12,
+  "build_time_stats": {
+    "start": {
+      "p50": 45000,
+      "p95": 90000
+    },
+    "stop": {
+      "p50": 10000,
+      "p95": 20000
+    },
+    "delete": {
+      "p50": 15000,
+      "p95": 30000
+    }
+  },
+  "description": "Standard Ubuntu 22.04 development environment with common tools",
+  "default_ttl_ms": 28800000,
+  "activity_bump_ms": 3600000,
+  "autostop_requirement": {
+    "days_of_week": [
+      "saturday",
+      "sunday"
+    ],
+    "weeks": 1
+  },
+  "autostart_requirement": {
+    "days_of_week": [
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday"
+    ]
+  },
+  "created_by_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "created_by_name": "jsmith",
+  "icon": "/icon/ubuntu.png",
+  "allow_user_cancel_workspace_jobs": true,
+  "allow_user_autostart": true,
+  "allow_user_autostop": true,
+  "failure_ttl_ms": 7200000,
+  "time_til_dormant_ms": 2592000000,
+  "time_til_dormant_autodelete_ms": 0,
+  "deprecated": false,
+  "deprecation_message": ""
+}

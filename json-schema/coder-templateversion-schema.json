@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coder.com/schemas/codersdk-templateversion.json",
+  "title": "TemplateVersion",
+  "$defs": {
+    "codersdk.JobErrorCode": {
+      "type": "string",
+      "enum": [
+        "REQUIRED_TEMPLATE_VARIABLES",
+        "INSUFFICIENT_QUOTA"
+      ]
+    },
+    "codersdk.MatchedProvisioners": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "integer",
+          "description": "Available is the number of provisioner daemons that are available to\ntake jobs. This may be less than the count if some provisioners are\nbusy or have been stopped."
+        },
+        "count": {
+          "type": "integer",
+          "description": "Count is the number of provisioner daemons that matched the given\ntags. If the count is 0, it means no provisioner daemons matched the\nrequested tags."
+        },
+        "most_recently_seen": {
+          "type": "string",
+          "format": "date-time",
+          "description": "MostRecentlySeen is the most recently seen time of the set of matched\nprovisioners. If no provisioners matched, this field will be null."
+        }
+      }
+    },
+    "codersdk.MinimalUser": {
+      "type": "object",
+      "required": [
+        "id",
+        "username"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.ProvisionerJob": {
+      "type": "object",
+      "properties": {
+        "available_workers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "canceled_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "error": {
+          "type": "string"
+        },
+        "error_code": {
+          "enum": [
+            "REQUIRED_TEMPLATE_VARIABLES",
+            "INSUFFICIENT_QUOTA"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.JobErrorCode"
+            }
+          ]
+        },
+        "file_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "initiator_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "input": {
+          "$ref": "#/$defs/codersdk.ProvisionerJobInput"
+        },
+        "logs_overflowed": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "$ref": "#/$defs/codersdk.ProvisionerJobMetadata"
+        },
+        "organization_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "queue_position": {
+          "type": "integer"
+        },
+        "queue_size": {
+          "type": "integer"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "succeeded",
+            "canceling",
+            "canceled",
+            "failed"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.ProvisionerJobStatus"
+            }
+          ]
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "$ref": "#/$defs/codersdk.ProvisionerJobType"
+        },
+        "worker_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "worker_name": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.ProvisionerJobInput": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "template_version_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace_build_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "codersdk.ProvisionerJobMetadata": {
+      "type": "object",
+      "properties": {
+        "template_display_name": {
+          "type": "string"
+        },
+        "template_icon": {
+          "type": "string"
+        },
+        "template_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "template_name": {
+          "type": "string"
+        },
+        "template_version_name": {
+          "type": "string"
+        },
+        "workspace_build_transition": {
+          "$ref": "#/$defs/codersdk.WorkspaceTransition"
+        },
+        "workspace_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace_name": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.ProvisionerJobStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "succeeded",
+        "canceling",
+        "canceled",
+        "failed",
+        "unknown"
+      ]
+    },
+    "codersdk.ProvisionerJobType": {
+      "type": "string",
+      "enum": [
+        "template_version_import",
+        "workspace_build",
+        "template_version_dry_run"
+      ]
+    },
+    "codersdk.TemplateVersionWarning": {
+      "type": "string",
+      "enum": [
+        "UNSUPPORTED_WORKSPACES"
+      ]
+    },
+    "codersdk.WorkspaceTransition": {
+      "type": "string",
+      "enum": [
+        "start",
+        "stop",
+        "delete"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "archived": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "$ref": "#/$defs/codersdk.MinimalUser"
+    },
+    "has_external_agent": {
+      "type": "boolean"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "job": {
+      "$ref": "#/$defs/codersdk.ProvisionerJob"
+    },
+    "matched_provisioners": {
+      "$ref": "#/$defs/codersdk.MatchedProvisioners"
+    },
+    "message": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "readme": {
+      "type": "string"
+    },
+    "template_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/codersdk.TemplateVersionWarning"
+      }
+    }
+  }
+}

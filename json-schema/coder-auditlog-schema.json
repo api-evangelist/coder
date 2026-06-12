@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coder.com/schemas/codersdk-auditlog.json",
+  "title": "AuditLog",
+  "$defs": {
+    "codersdk.AuditAction": {
+      "type": "string",
+      "enum": [
+        "create",
+        "write",
+        "delete",
+        "start",
+        "stop",
+        "login",
+        "logout",
+        "register",
+        "request_password_reset",
+        "connect",
+        "disconnect",
+        "open",
+        "close"
+      ]
+    },
+    "codersdk.AuditDiff": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/codersdk.AuditDiffField"
+      }
+    },
+    "codersdk.AuditDiffField": {
+      "type": "object",
+      "properties": {
+        "new": {},
+        "old": {},
+        "secret": {
+          "type": "boolean"
+        }
+      }
+    },
+    "codersdk.LoginType": {
+      "type": "string",
+      "enum": [
+        "",
+        "password",
+        "github",
+        "oidc",
+        "token",
+        "none"
+      ]
+    },
+    "codersdk.MinimalOrganization": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.ResourceType": {
+      "type": "string",
+      "enum": [
+        "template",
+        "template_version",
+        "user",
+        "workspace",
+        "workspace_build",
+        "git_ssh_key",
+        "api_key",
+        "group",
+        "license",
+        "convert_login",
+        "health_settings",
+        "notifications_settings",
+        "prebuilds_settings",
+        "workspace_proxy",
+        "organization",
+        "oauth2_provider_app",
+        "oauth2_provider_app_secret",
+        "custom_role",
+        "organization_member",
+        "notification_template",
+        "idp_sync_settings_organization",
+        "idp_sync_settings_group",
+        "idp_sync_settings_role",
+        "workspace_agent",
+        "workspace_app",
+        "task",
+        "ai_seat",
+        "ai_provider",
+        "ai_provider_key",
+        "ai_gateway_key",
+        "group_ai_budget",
+        "user_ai_budget_override",
+        "chat",
+        "user_secret",
+        "user_skill"
+      ]
+    },
+    "codersdk.SlimRole": {
+      "type": "object",
+      "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organization_id": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.User": {
+      "type": "object",
+      "required": [
+        "created_at",
+        "email",
+        "id",
+        "username"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "has_ai_seat": {
+          "type": "boolean",
+          "description": "HasAISeat intentionally omits omitempty so the API always includes the\nfield, even when false."
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "is_service_account": {
+          "type": "boolean"
+        },
+        "last_seen_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "login_type": {
+          "$ref": "#/$defs/codersdk.LoginType"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organization_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/codersdk.SlimRole"
+          }
+        },
+        "status": {
+          "enum": [
+            "active",
+            "suspended"
+          ],
+          "allOf": [
+            {
+              "$ref": "#/$defs/codersdk.UserStatus"
+            }
+          ]
+        },
+        "theme_preference": {
+          "type": "string",
+          "description": "Deprecated: this value should be retrieved from\n`codersdk.UserPreferenceSettings` instead."
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "codersdk.UserStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "dormant",
+        "suspended"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "action": {
+      "$ref": "#/$defs/codersdk.AuditAction"
+    },
+    "additional_fields": {
+      "type": "object"
+    },
+    "description": {
+      "type": "string"
+    },
+    "diff": {
+      "$ref": "#/$defs/codersdk.AuditDiff"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "ip": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean"
+    },
+    "organization": {
+      "$ref": "#/$defs/codersdk.MinimalOrganization"
+    },
+    "organization_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Deprecated: Use 'organization.id' instead."
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "resource_icon": {
+      "type": "string"
+    },
+    "resource_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "resource_link": {
+      "type": "string"
+    },
+    "resource_target": {
+      "type": "string",
+      "description": "ResourceTarget is the name of the resource."
+    },
+    "resource_type": {
+      "$ref": "#/$defs/codersdk.ResourceType"
+    },
+    "status_code": {
+      "type": "integer"
+    },
+    "time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "user": {
+      "$ref": "#/$defs/codersdk.User"
+    },
+    "user_agent": {
+      "type": "string"
+    }
+  }
+}

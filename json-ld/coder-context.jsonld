@@ -1,0 +1,255 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://coder.com/api/v2/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "coder": "https://coder.com/api/v2/",
+
+    "Workspace": {
+      "@id": "coder:Workspace",
+      "@type": "@id"
+    },
+    "Template": {
+      "@id": "coder:Template",
+      "@type": "@id"
+    },
+    "TemplateVersion": {
+      "@id": "coder:TemplateVersion",
+      "@type": "@id"
+    },
+    "WorkspaceBuild": {
+      "@id": "coder:WorkspaceBuild",
+      "@type": "@id"
+    },
+    "WorkspaceAgent": {
+      "@id": "coder:WorkspaceAgent",
+      "@type": "@id"
+    },
+    "WorkspaceApp": {
+      "@id": "coder:WorkspaceApp",
+      "@type": "@id"
+    },
+    "User": {
+      "@id": "coder:User",
+      "@type": "@id"
+    },
+    "Organization": {
+      "@id": "coder:Organization",
+      "@type": "@id"
+    },
+    "Group": {
+      "@id": "coder:Group",
+      "@type": "@id"
+    },
+    "AuditLog": {
+      "@id": "coder:AuditLog",
+      "@type": "@id"
+    },
+    "ProvisionerJob": {
+      "@id": "coder:ProvisionerJob",
+      "@type": "@id"
+    },
+    "APIKey": {
+      "@id": "coder:APIKey",
+      "@type": "@id"
+    },
+    "Role": {
+      "@id": "coder:Role",
+      "@type": "@id"
+    },
+    "DeploymentConfig": {
+      "@id": "coder:DeploymentConfig",
+      "@type": "@id"
+    },
+
+    "id": "@id",
+    "name": "schema:name",
+    "display_name": "schema:alternateName",
+    "description": "schema:description",
+    "created_at": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updated_at": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "last_seen_at": {
+      "@id": "schema:dateRead",
+      "@type": "xsd:dateTime"
+    },
+    "last_used_at": {
+      "@id": "coder:lastUsedAt",
+      "@type": "xsd:dateTime"
+    },
+
+    "username": "schema:accountName",
+    "email": "schema:email",
+    "avatar_url": "schema:image",
+    "status": "schema:status",
+    "login_type": "schema:identifier",
+
+    "owner_id": {
+      "@id": "schema:creator",
+      "@type": "@id"
+    },
+    "owner_name": "schema:creator",
+    "organization_id": {
+      "@id": "schema:memberOf",
+      "@type": "@id"
+    },
+    "organization_name": "schema:memberOf",
+    "template_id": {
+      "@id": "coder:hasTemplate",
+      "@type": "@id"
+    },
+    "template_name": "coder:hasTemplate",
+    "template_version_id": {
+      "@id": "coder:hasTemplateVersion",
+      "@type": "@id"
+    },
+
+    "autostart_schedule": "coder:autostartSchedule",
+    "ttl_ms": {
+      "@id": "coder:ttlMs",
+      "@type": "xsd:integer"
+    },
+    "dormant_at": {
+      "@id": "coder:dormantAt",
+      "@type": "xsd:dateTime"
+    },
+    "deleting_at": {
+      "@id": "coder:deletingAt",
+      "@type": "xsd:dateTime"
+    },
+    "automatic_updates": "coder:automaticUpdates",
+    "favorite": {
+      "@id": "coder:favorite",
+      "@type": "xsd:boolean"
+    },
+
+    "provisioner": "coder:provisioner",
+    "active_version_id": {
+      "@id": "coder:activeVersion",
+      "@type": "@id"
+    },
+    "active_user_count": {
+      "@id": "coder:activeUserCount",
+      "@type": "xsd:integer"
+    },
+    "icon": "schema:image",
+    "deprecated": {
+      "@id": "schema:supersededBy",
+      "@type": "xsd:boolean"
+    },
+    "deprecation_message": "schema:description",
+
+    "transition": "coder:transition",
+    "build_number": {
+      "@id": "coder:buildNumber",
+      "@type": "xsd:integer"
+    },
+    "reason": "coder:reason",
+
+    "job": {
+      "@id": "coder:hasJob",
+      "@type": "@id"
+    },
+    "resources": {
+      "@id": "coder:hasResources",
+      "@container": "@list"
+    },
+    "agents": {
+      "@id": "coder:hasAgents",
+      "@container": "@list"
+    },
+    "apps": {
+      "@id": "coder:hasApps",
+      "@container": "@list"
+    },
+    "roles": {
+      "@id": "coder:hasRoles",
+      "@container": "@list"
+    },
+    "members": {
+      "@id": "schema:member",
+      "@container": "@list"
+    },
+
+    "workspaces": {
+      "@id": "coder:workspaces",
+      "@container": "@list"
+    },
+    "count": {
+      "@id": "schema:numberOfItems",
+      "@type": "xsd:integer"
+    },
+
+    "health": "coder:health",
+    "healthy": {
+      "@id": "coder:healthy",
+      "@type": "xsd:boolean"
+    },
+    "failing_agents": {
+      "@id": "coder:failingAgents",
+      "@container": "@list"
+    },
+
+    "directory": "coder:directory",
+    "environment": "coder:environment",
+    "architecture": "coder:architecture",
+    "operating_system": "schema:operatingSystem",
+    "version": "schema:version",
+    "expanded_directory": "coder:expandedDirectory",
+    "first_connected_at": {
+      "@id": "coder:firstConnectedAt",
+      "@type": "xsd:dateTime"
+    },
+    "last_connected_at": {
+      "@id": "coder:lastConnectedAt",
+      "@type": "xsd:dateTime"
+    },
+    "disconnected_at": {
+      "@id": "coder:disconnectedAt",
+      "@type": "xsd:dateTime"
+    },
+    "connection_timeout_seconds": {
+      "@id": "coder:connectionTimeoutSeconds",
+      "@type": "xsd:integer"
+    },
+    "troubleshooting_url": "schema:url",
+    "lifecycle_state": "coder:lifecycleState",
+
+    "url": "schema:url",
+    "share": "coder:share",
+    "subdomain": {
+      "@id": "coder:subdomain",
+      "@type": "xsd:boolean"
+    },
+    "subdomain_name": "coder:subdomainName",
+    "healthcheck": "coder:healthcheck",
+
+    "action": "coder:action",
+    "resource_type": "coder:resourceType",
+    "resource_id": {
+      "@id": "coder:resourceId",
+      "@type": "@id"
+    },
+    "resource_target": "coder:resourceTarget",
+    "diff": "coder:diff",
+    "ip": "coder:ip",
+    "user_agent": "coder:userAgent",
+    "request_id": "coder:requestId",
+    "additional_fields": "coder:additionalFields",
+
+    "Coder": {
+      "@id": "schema:SoftwareApplication",
+      "@type": "@id"
+    },
+    "provider": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    }
+  }
+}

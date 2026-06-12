@@ -1,0 +1,162 @@
+vocabulary:
+  name: Coder API Vocabulary
+  description: >-
+    Core terminology and concepts used across the Coder REST API v2 for
+    managing cloud development environments (CDEs), workspace lifecycle,
+    templates, users, organizations, and workspace agents.
+  version: "2.0"
+  terms:
+    - term: workspace
+      description: >-
+        An isolated cloud development environment provisioned from a template.
+        Each workspace has a lifecycle (start, stop, delete) and runs one or
+        more workspace agents that provide terminal, IDE, and port-forwarding
+        access.
+      related: [template, workspace-agent, workspace-build]
+
+    - term: template
+      description: >-
+        A versioned blueprint for creating workspaces, defined using Terraform
+        and stored as a ZIP archive. Templates specify infrastructure resources,
+        parameters, and lifecycle scripts. Organizations manage their own
+        template catalogs.
+      related: [template-version, workspace, organization]
+
+    - term: template-version
+      description: >-
+        A specific immutable revision of a template. New versions are created
+        by uploading a new Terraform bundle. Workspaces can be updated to newer
+        template versions.
+      related: [template, workspace-build]
+
+    - term: workspace-build
+      description: >-
+        A record of a provisioning job applied to a workspace for a specific
+        transition (start, stop, delete). Each build references a template
+        version and contains the job status, resources, and deadline.
+      related: [workspace, template-version, provisioner-job]
+
+    - term: workspace-agent
+      description: >-
+        A process running inside a workspace resource that handles terminal
+        (PTY) access, app health checks, port sharing, log streaming, and
+        WireGuard/Tailnet coordination. Agents authenticate via instance
+        identity tokens (AWS/Azure/GCP) or pre-shared keys.
+      related: [workspace, workspace-app, wireguard]
+
+    - term: workspace-app
+      description: >-
+        A web application or service exposed by a workspace agent, accessible
+        through the Coder dashboard or a subdomain proxy. Apps have health
+        check URLs, sharing policies, and open/external URL behaviors.
+      related: [workspace-agent]
+
+    - term: organization
+      description: >-
+        A tenant grouping of users, templates, and workspaces within a Coder
+        deployment. Enterprise deployments support multiple organizations with
+        separate RBAC policies, IdP sync, and provisioner keys.
+      related: [user, template, group]
+
+    - term: user
+      description: >-
+        A Coder account identified by username and email. Users authenticate
+        via password, GitHub OAuth, OIDC, or API tokens. Each user belongs to
+        one or more organizations and holds roles that govern permissions.
+      related: [organization, api-key, role]
+
+    - term: api-key
+      description: >-
+        A long-lived or session-scoped authentication credential passed in the
+        Coder-Session-Token HTTP header. API keys have optional expiry, lifetime
+        limits, and token names for management.
+      related: [user]
+
+    - term: provisioner-job
+      description: >-
+        An asynchronous task executed by a provisioner daemon (Terraform) to
+        apply, plan, or destroy workspace infrastructure. Jobs have statuses
+        (pending, running, succeeded, failed, canceled) and stream logs.
+      related: [workspace-build, template-version]
+
+    - term: audit-log
+      description: >-
+        An immutable record of a user or system action (create, write, delete)
+        on a Coder resource such as a workspace, template, user, or
+        organization. Audit logs include actor identity, IP address,
+        user-agent, and a diff of changed fields.
+      related: [user, workspace, organization]
+
+    - term: group
+      description: >-
+        A named collection of users within an organization used for template
+        ACL grants and RBAC assignments. Groups can be synced from an external
+        IdP via OIDC claims.
+      related: [organization, user, role]
+
+    - term: role
+      description: >-
+        A named set of permissions scoped to a site (global) or organization.
+        Built-in roles include owner, template-admin, user-admin, auditor, and
+        member. Enterprise deployments support custom roles with fine-grained
+        permission sets.
+      related: [user, organization, group]
+
+    - term: wireguard
+      description: >-
+        The encrypted peer-to-peer VPN protocol used by the Coder Tailnet to
+        connect developer clients directly to workspace agents without exposing
+        SSH ports. Each agent receives a WireGuard public key registered on the
+        coordination server.
+      related: [workspace-agent]
+
+    - term: coder-session-token
+      description: >-
+        The HTTP header name (Coder-Session-Token) used to pass API key
+        credentials to the Coder API. All authenticated endpoints require this
+        header unless the endpoint is public.
+      related: [api-key]
+
+    - term: dormancy
+      description: >-
+        A lifecycle state where a workspace is automatically stopped after a
+        configurable period of inactivity (time_til_dormant_ms). Dormant
+        workspaces can be auto-deleted after a further period
+        (time_til_dormant_autodelete_ms).
+      related: [workspace, template]
+
+    - term: autostart
+      description: >-
+        A cron-based schedule that automatically starts a stopped workspace at
+        a specified time. Encoded as a cron expression with an optional
+        CRON_TZ timezone prefix.
+      related: [workspace, template]
+
+    - term: autostop
+      description: >-
+        A TTL-based or template-enforced policy that automatically stops a
+        running workspace after a configurable idle period or at week-end
+        boundaries.
+      related: [workspace, template]
+
+    - term: deployment
+      description: >-
+        A running Coder server instance (coderd) with its configuration
+        including licensing, OAuth providers, feature flags, health status,
+        and deployment statistics.
+      related: [organization, provisioner-job]
+
+    - term: template-parameter
+      description: >-
+        A user-supplied variable defined in a template version that customizes
+        workspace provisioning (e.g., region, instance type). Parameters have
+        types, validation rules, default values, and mutable/immutable flags.
+      related: [template-version, workspace-build]
+
+    - term: external-auth
+      description: >-
+        A linked OAuth2 provider (GitHub, GitLab, Bitbucket, Azure DevOps)
+        configured on a Coder deployment. Workspace agents use external auth
+        tokens to clone private repositories and authenticate to external
+        services.
+      related: [user, workspace-agent]
