@@ -14,7 +14,7 @@ description: >-
   (codersdk) and a Terraform provider; a CLI with 40+ subcommands is also
   available for full programmatic control.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Developer Tools
   - Remote Development
