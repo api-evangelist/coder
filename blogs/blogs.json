@@ -2,6 +2,13 @@
   "repo": "coder",
   "feeds": [
     {
+      "source": "https://coder.com/blog",
+      "feed_url": "https://coder.com/api/rss.xml",
+      "title": "",
+      "saved": 3,
+      "method": "discovered"
+    },
+    {
       "source": "https://x.com/coderhq",
       "feed_url": "https://x.com/coderhq",
       "title": "",
@@ -9,6 +16,6 @@
       "method": "none"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 3,
+  "fetched": "2026-06-27T12:03:07Z"
 }

@@ -137,7 +137,7 @@ common:
     url: https://x.com/coderhq
   - type: Blog
     url: https://coder.com/blog
-  - type: Changelog
+  - type: ChangeLog
     url: https://coder.com/changelog
   - type: Pricing
     url: https://coder.com/pricing
