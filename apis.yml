@@ -125,6 +125,14 @@ apis:
       - type: Documentation
         url: https://coder.com/docs/reference/api/enterprise
 common:
+  - type: TrustCenter
+    url: security/coder-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/coder-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/coder-domain-security.yml
+  - type: Authentication
+    url: authentication/coder-authentication.yml
   - type: Website
     url: https://coder.com
   - type: Documentation
