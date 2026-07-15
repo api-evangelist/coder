@@ -125,6 +125,8 @@ apis:
       - type: Documentation
         url: https://coder.com/docs/reference/api/enterprise
 common:
+  - type: AgenticAccess
+    url: agentic-access/coder-agentic-access.yml
   - type: TrustCenter
     url: security/coder-trust-center.yml
   - type: VulnerabilityDisclosure
