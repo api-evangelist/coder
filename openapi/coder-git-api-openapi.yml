@@ -1,0 +1,219 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Git API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Git
+paths:
+  /api/v2/external-auth:
+    get:
+      operationId: get-user-external-auths
+      summary: Get user external auths
+      tags:
+      - Git
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ExternalAuthLink'
+  /api/v2/external-auth/{externalauth}:
+    get:
+      operationId: get-external-auth-by-id
+      summary: Get external auth by ID
+      tags:
+      - Git
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: externalauth
+        in: path
+        required: true
+        description: Git Provider ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ExternalAuth'
+    delete:
+      operationId: delete-external-auth-user-link-by-id
+      summary: Delete external auth user link by ID
+      tags:
+      - Git
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: externalauth
+        in: path
+        required: true
+        description: Git Provider ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.DeleteExternalAuthByIDResponse'
+  /api/v2/external-auth/{externalauth}/device:
+    get:
+      operationId: get-external-auth-device-by-id
+      summary: Get external auth device by ID.
+      tags:
+      - Git
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: externalauth
+        in: path
+        required: true
+        description: Git Provider ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ExternalAuthDevice'
+    post:
+      operationId: post-external-auth-device-by-id
+      summary: Post external auth device by ID
+      tags:
+      - Git
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: externalauth
+        in: path
+        required: true
+        description: External Provider ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+components:
+  schemas:
+    codersdk.ExternalAuth:
+      type: object
+      properties:
+        app_install_url:
+          type: string
+          description: AppInstallURL is the URL to install the app.
+        app_installable:
+          type: boolean
+          description: AppInstallable is true if the request for app installs was successful.
+        authenticated:
+          type: boolean
+        device:
+          type: boolean
+        display_name:
+          type: string
+        installations:
+          type: array
+          description: AppInstallations are the installations that the user has access to.
+          items:
+            $ref: '#/components/schemas/codersdk.ExternalAuthAppInstallation'
+        supports_revocation:
+          type: boolean
+        user:
+          description: User is the user that authenticated with the provider.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ExternalAuthUser'
+    codersdk.ExternalAuthLink:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        expires:
+          type: string
+          format: date-time
+        has_refresh_token:
+          type: boolean
+        provider_id:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        validate_error:
+          type: string
+    codersdk.ExternalAuthUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+        id:
+          type: integer
+        login:
+          type: string
+        name:
+          type: string
+        profile_url:
+          type: string
+    codersdk.ExternalAuthAppInstallation:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/codersdk.ExternalAuthUser'
+        configure_url:
+          type: string
+        id:
+          type: integer
+    codersdk.ExternalAuthDevice:
+      type: object
+      properties:
+        device_code:
+          type: string
+        expires_in:
+          type: integer
+        interval:
+          type: integer
+        user_code:
+          type: string
+        verification_uri:
+          type: string
+    codersdk.DeleteExternalAuthByIDResponse:
+      type: object
+      properties:
+        token_revocation_error:
+          type: string
+        token_revoked:
+          type: boolean
+          description: TokenRevoked set to true if token revocation was attempted and was successful
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

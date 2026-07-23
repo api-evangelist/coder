@@ -1,0 +1,231 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents AI Providers API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: AI Providers
+paths:
+  /api/v2/ai/providers:
+    get:
+      operationId: list-ai-providers
+      summary: List AI providers
+      tags:
+      - AI Providers
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.AIProvider'
+    post:
+      operationId: create-an-ai-provider
+      summary: Create an AI provider
+      tags:
+      - AI Providers
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateAIProviderRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AIProvider'
+  /api/v2/ai/providers/{idOrName}:
+    get:
+      operationId: get-an-ai-provider
+      summary: Get an AI provider
+      tags:
+      - AI Providers
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: idOrName
+        in: path
+        required: true
+        description: Provider ID or name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AIProvider'
+    delete:
+      operationId: delete-an-ai-provider
+      summary: Delete an AI provider
+      tags:
+      - AI Providers
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: idOrName
+        in: path
+        required: true
+        description: Provider ID or name
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+    patch:
+      operationId: update-an-ai-provider
+      summary: Update an AI provider
+      tags:
+      - AI Providers
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: idOrName
+        in: path
+        required: true
+        description: Provider ID or name
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateAIProviderRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AIProvider'
+components:
+  schemas:
+    codersdk.AIProvider:
+      type: object
+      properties:
+        api_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIProviderKey'
+        base_url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        settings:
+          $ref: '#/components/schemas/codersdk.AIProviderSettings'
+        type:
+          $ref: '#/components/schemas/codersdk.AIProviderType'
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.AIProviderType:
+      type: string
+      enum:
+      - openai
+      - anthropic
+      - azure
+      - google
+      - openai-compat
+      - openrouter
+      - vercel
+      - bedrock
+      - copilot
+    codersdk.AIProviderKeyMutation:
+      type: object
+      properties:
+        api_key:
+          type: string
+        id:
+          type: string
+          format: uuid
+    codersdk.AIProviderSettings:
+      type: object
+    codersdk.UpdateAIProviderRequest:
+      type: object
+      properties:
+        api_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIProviderKeyMutation'
+        base_url:
+          type: string
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/codersdk.AIProviderSettings'
+    codersdk.CreateAIProviderRequest:
+      type: object
+      properties:
+        api_keys:
+          type: array
+          items:
+            type: string
+        base_url:
+          type: string
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+        name:
+          type: string
+        settings:
+          $ref: '#/components/schemas/codersdk.AIProviderSettings'
+        type:
+          $ref: '#/components/schemas/codersdk.AIProviderType'
+    codersdk.AIProviderKey:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        masked:
+          type: string
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

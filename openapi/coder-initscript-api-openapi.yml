@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents InitScript API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: InitScript
+paths:
+  /api/v2/init-script/{os}/{arch}:
+    get:
+      operationId: get-agent-init-script
+      summary: Get agent init script
+      tags:
+      - InitScript
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: os
+        in: path
+        required: true
+        description: Operating system
+        schema:
+          type: string
+      - name: arch
+        in: path
+        required: true
+        description: Architecture
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+components:
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

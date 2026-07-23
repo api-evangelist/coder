@@ -1,0 +1,85 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents WorkspaceProxies API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: WorkspaceProxies
+paths:
+  /api/v2/regions:
+    get:
+      operationId: get-site-wide-regions-for-workspace-connections
+      summary: Get site-wide regions for workspace connections
+      tags:
+      - WorkspaceProxies
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.RegionsResponse-codersdk_Region'
+components:
+  schemas:
+    codersdk.RegionsResponse-codersdk_Region:
+      type: object
+      properties:
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Region'
+    codersdk.Region:
+      type: object
+      properties:
+        display_name:
+          type: string
+        healthy:
+          type: boolean
+        icon_url:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        path_app_url:
+          type: string
+          description: 'PathAppURL is the URL to the base path for path apps. Optional
+
+            unless wildcard_hostname is set.
+
+            E.g. https://us.example.com'
+        wildcard_hostname:
+          type: string
+          description: 'WildcardHostname is the wildcard hostname for subdomain apps.
+
+            E.g. *.us.example.com
+
+            E.g. *--suffix.au.example.com
+
+            Optional. Does not need to be on the same domain as PathAppURL.'
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

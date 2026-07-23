@@ -1,0 +1,480 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Organizations API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Organizations
+paths:
+  /api/v2/organizations:
+    get:
+      operationId: get-organizations
+      summary: Get organizations
+      tags:
+      - Organizations
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Organization'
+    post:
+      operationId: create-organization
+      summary: Create organization
+      tags:
+      - Organizations
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateOrganizationRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Organization'
+  /api/v2/organizations/{organization}:
+    get:
+      operationId: get-organization-by-id
+      summary: Get organization by ID
+      tags:
+      - Organizations
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Organization'
+    delete:
+      operationId: delete-organization
+      summary: Delete organization
+      tags:
+      - Organizations
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID or name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+    patch:
+      operationId: update-organization
+      summary: Update organization
+      tags:
+      - Organizations
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID or name
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateOrganizationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Organization'
+  /api/v2/organizations/{organization}/provisionerjobs:
+    get:
+      operationId: get-provisioner-jobs
+      summary: Get provisioner jobs
+      tags:
+      - Organizations
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Page limit
+        schema:
+          type: integer
+      - name: ids
+        in: query
+        required: false
+        description: Filter results by job IDs
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Filter results by status
+        schema:
+          type: string
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          - unknown
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+      - name: tags
+        in: query
+        required: false
+        description: Provisioner tags to filter by (JSON of the form {'tag1':'value1','tag2':'value2'})
+        schema:
+          type: object
+      - name: initiator
+        in: query
+        required: false
+        description: Filter results by initiator
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.ProvisionerJob'
+  /api/v2/organizations/{organization}/provisionerjobs/{job}:
+    get:
+      operationId: get-provisioner-job
+      summary: Get provisioner job
+      tags:
+      - Organizations
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: job
+        in: path
+        required: true
+        description: Job ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ProvisionerJob'
+components:
+  schemas:
+    codersdk.ProvisionerJobInput:
+      type: object
+      properties:
+        error:
+          type: string
+        template_version_id:
+          type: string
+          format: uuid
+        workspace_build_id:
+          type: string
+          format: uuid
+    codersdk.ProvisionerJobMetadata:
+      type: object
+      properties:
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
+          type: string
+        template_version_name:
+          type: string
+        workspace_build_transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+    codersdk.CreateOrganizationRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        display_name:
+          type: string
+          description: DisplayName will default to the same value as `Name` if not provided.
+        icon:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+    codersdk.ProvisionerJob:
+      type: object
+      properties:
+        available_workers:
+          type: array
+          items:
+            type: string
+            format: uuid
+        canceled_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error:
+          type: string
+        error_code:
+          enum:
+          - REQUIRED_TEMPLATE_VARIABLES
+          - INSUFFICIENT_QUOTA
+          allOf:
+          - $ref: '#/components/schemas/codersdk.JobErrorCode'
+        file_id:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        initiator_id:
+          type: string
+          format: uuid
+        input:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobInput'
+        logs_overflowed:
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobMetadata'
+        organization_id:
+          type: string
+          format: uuid
+        queue_position:
+          type: integer
+        queue_size:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+        status:
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        type:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobType'
+        worker_id:
+          type: string
+          format: uuid
+        worker_name:
+          type: string
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    codersdk.Organization:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        default_org_member_roles:
+          type: array
+          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
+
+            roles at request time. Changes propagate to all members on the
+
+            next request.'
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        is_default:
+          type: boolean
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - created_at
+      - id
+      - is_default
+      - updated_at
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
+          type: string
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
+          type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.JobErrorCode:
+      type: string
+      enum:
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
+    codersdk.ProvisionerJobType:
+      type: string
+      enum:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
+    codersdk.UpdateOrganizationRequest:
+      type: object
+      properties:
+        default_org_member_roles:
+          type: array
+          description: 'DefaultOrgMemberRoles, when non-nil, replaces the org''s default
+
+            member roles.'
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

@@ -1,0 +1,343 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents AI Bridge API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: AI Bridge
+paths:
+  /api/v2/aibridge/clients:
+    get:
+      operationId: list-ai-bridge-clients
+      summary: List AI Bridge clients
+      tags:
+      - AI Bridge
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /api/v2/aibridge/models:
+    get:
+      operationId: list-ai-bridge-models
+      summary: List AI Bridge models
+      tags:
+      - AI Bridge
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /api/v2/aibridge/sessions:
+    get:
+      operationId: list-ai-bridge-sessions
+      summary: List AI Bridge sessions
+      tags:
+      - AI Bridge
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: 'Search query in the format `key:value`. Available keys are: initiator, provider, provider_name, model, client, session_id, started_after, started_before.'
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Page limit
+        schema:
+          type: integer
+      - name: after_session_id
+        in: query
+        required: false
+        description: Cursor pagination after session ID (cannot be used with offset)
+        schema:
+          type: string
+      - name: offset
+        in: query
+        required: false
+        description: Offset pagination (cannot be used with after_session_id)
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AIBridgeListSessionsResponse'
+  /api/v2/aibridge/sessions/{session_id}:
+    get:
+      operationId: get-ai-bridge-session-threads
+      summary: Get AI Bridge session threads
+      tags:
+      - AI Bridge
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        description: Session ID (client_session_id or interception UUID)
+        schema:
+          type: string
+      - name: after_id
+        in: query
+        required: false
+        description: Thread pagination cursor (forward/older)
+        schema:
+          type: string
+      - name: before_id
+        in: query
+        required: false
+        description: Thread pagination cursor (backward/newer)
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Number of threads per page (default 50)
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsResponse'
+components:
+  schemas:
+    codersdk.AIBridgeSessionThreadsResponse:
+      type: object
+      properties:
+        client:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+        initiator:
+          $ref: '#/components/schemas/codersdk.MinimalUser'
+        metadata:
+          type: object
+          additionalProperties: {}
+        models:
+          type: array
+          items:
+            type: string
+        page_ended_at:
+          type: string
+          format: date-time
+        page_started_at:
+          type: string
+          format: date-time
+        providers:
+          type: array
+          items:
+            type: string
+        started_at:
+          type: string
+          format: date-time
+        threads:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeThread'
+        token_usage_summary:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+    codersdk.MinimalUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+      required:
+      - id
+      - username
+    codersdk.AIBridgeModelThought:
+      type: object
+      properties:
+        text:
+          type: string
+    codersdk.AIBridgeAgenticAction:
+      type: object
+      properties:
+        model:
+          type: string
+        thinking:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeModelThought'
+        token_usage:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeToolCall'
+    codersdk.AIBridgeSessionTokenUsageSummary:
+      type: object
+      properties:
+        cache_read_input_tokens:
+          type: integer
+        cache_write_input_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+        output_tokens:
+          type: integer
+    codersdk.AIBridgeSessionThreadsTokenUsage:
+      type: object
+      properties:
+        cache_read_input_tokens:
+          type: integer
+        cache_write_input_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+        metadata:
+          type: object
+          additionalProperties: {}
+        output_tokens:
+          type: integer
+    codersdk.AIBridgeListSessionsResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeSession'
+    codersdk.AIBridgeToolCall:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        injected:
+          type: boolean
+        input:
+          type: string
+        interception_id:
+          type: string
+          format: uuid
+        metadata:
+          type: object
+          additionalProperties: {}
+        provider_response_id:
+          type: string
+        server_url:
+          type: string
+        tool:
+          type: string
+    codersdk.AIBridgeThread:
+      type: object
+      properties:
+        agentic_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeAgenticAction'
+        credential_hint:
+          type: string
+        credential_kind:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        model:
+          type: string
+        prompt:
+          type: string
+        provider:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+        token_usage:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+    codersdk.AIBridgeSession:
+      type: object
+      properties:
+        client:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+        initiator:
+          $ref: '#/components/schemas/codersdk.MinimalUser'
+        last_active_at:
+          type: string
+          format: date-time
+        last_prompt:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: {}
+        models:
+          type: array
+          items:
+            type: string
+        providers:
+          type: array
+          items:
+            type: string
+        started_at:
+          type: string
+          format: date-time
+        threads:
+          type: integer
+        token_usage_summary:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionTokenUsageSummary'
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

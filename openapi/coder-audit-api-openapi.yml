@@ -1,0 +1,366 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Audit API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Audit
+paths:
+  /api/v2/audit:
+    get:
+      operationId: get-audit-logs
+      summary: Get audit logs
+      tags:
+      - Audit
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Search query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: true
+        description: Page limit
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        description: Page offset
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AuditLogResponse'
+  /api/v2/audit/testgenerate:
+    post:
+      operationId: generate-fake-audit-log
+      summary: Generate fake audit log
+      tags:
+      - Audit
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateTestAuditLogRequest'
+      responses:
+        '204':
+          description: No Content
+components:
+  schemas:
+    codersdk.User:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        has_ai_seat:
+          type: boolean
+          description: 'HasAISeat intentionally omits omitempty so the API always includes the
+
+            field, even when false.'
+        id:
+          type: string
+          format: uuid
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        organization_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        theme_preference:
+          type: string
+          description: 'Deprecated: this value should be retrieved from
+
+            `codersdk.UserPreferenceSettings` instead.'
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+      required:
+      - created_at
+      - email
+      - id
+      - username
+    codersdk.AuditLogResponse:
+      type: object
+      properties:
+        audit_logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AuditLog'
+        count:
+          type: integer
+        count_cap:
+          type: integer
+    codersdk.ResourceType:
+      type: string
+      enum:
+      - template
+      - template_version
+      - user
+      - workspace
+      - workspace_build
+      - git_ssh_key
+      - api_key
+      - group
+      - license
+      - convert_login
+      - health_settings
+      - notifications_settings
+      - prebuilds_settings
+      - workspace_proxy
+      - organization
+      - oauth2_provider_app
+      - oauth2_provider_app_secret
+      - custom_role
+      - organization_member
+      - notification_template
+      - idp_sync_settings_organization
+      - idp_sync_settings_group
+      - idp_sync_settings_role
+      - workspace_agent
+      - workspace_app
+      - task
+      - ai_seat
+      - ai_provider
+      - ai_provider_key
+      - ai_gateway_key
+      - group_ai_budget
+      - user_ai_budget_override
+      - chat
+      - user_secret
+      - user_skill
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    codersdk.CreateTestAuditLogRequest:
+      type: object
+      properties:
+        action:
+          enum:
+          - create
+          - write
+          - delete
+          - start
+          - stop
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AuditAction'
+        additional_fields:
+          type: array
+          items:
+            type: integer
+        build_reason:
+          enum:
+          - autostart
+          - autostop
+          - initiator
+          allOf:
+          - $ref: '#/components/schemas/codersdk.BuildReason'
+        organization_id:
+          type: string
+          format: uuid
+        request_id:
+          type: string
+          format: uuid
+        resource_id:
+          type: string
+          format: uuid
+        resource_type:
+          enum:
+          - template
+          - template_version
+          - user
+          - workspace
+          - workspace_build
+          - git_ssh_key
+          - auditable_group
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ResourceType'
+        time:
+          type: string
+          format: date-time
+    codersdk.BuildReason:
+      type: string
+      enum:
+      - initiator
+      - autostart
+      - autostop
+      - dormancy
+      - dashboard
+      - cli
+      - ssh_connection
+      - vscode_connection
+      - jetbrains_connection
+      - task_auto_pause
+      - task_manual_pause
+      - task_resume
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.AuditAction:
+      type: string
+      enum:
+      - create
+      - write
+      - delete
+      - start
+      - stop
+      - login
+      - logout
+      - register
+      - request_password_reset
+      - connect
+      - disconnect
+      - open
+      - close
+    codersdk.MinimalOrganization:
+      type: object
+      properties:
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      required:
+      - id
+    codersdk.AuditDiff:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/codersdk.AuditDiffField'
+    codersdk.AuditDiffField:
+      type: object
+      properties:
+        new: {}
+        old: {}
+        secret:
+          type: boolean
+    codersdk.AuditLog:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/codersdk.AuditAction'
+        additional_fields:
+          type: object
+        description:
+          type: string
+        diff:
+          $ref: '#/components/schemas/codersdk.AuditDiff'
+        id:
+          type: string
+          format: uuid
+        ip:
+          type: string
+        is_deleted:
+          type: boolean
+        organization:
+          $ref: '#/components/schemas/codersdk.MinimalOrganization'
+        organization_id:
+          type: string
+          format: uuid
+          description: 'Deprecated: Use ''organization.id'' instead.'
+        request_id:
+          type: string
+          format: uuid
+        resource_icon:
+          type: string
+        resource_id:
+          type: string
+          format: uuid
+        resource_link:
+          type: string
+        resource_target:
+          type: string
+          description: ResourceTarget is the name of the resource.
+        resource_type:
+          $ref: '#/components/schemas/codersdk.ResourceType'
+        status_code:
+          type: integer
+        time:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/codersdk.User'
+        user_agent:
+          type: string
+    codersdk.SlimRole:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

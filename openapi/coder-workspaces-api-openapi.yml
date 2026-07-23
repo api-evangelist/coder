@@ -1,0 +1,1963 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Workspaces API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Workspaces
+paths:
+  /api/experimental/watch-all-workspacebuilds:
+    get:
+      operationId: watch-all-workspace-builds
+      summary: Watch all workspace builds
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      responses:
+        '101':
+          description: Switching Protocols
+  /api/v2/organizations/{organization}/members/{user}/workspaces:
+    post:
+      operationId: create-user-workspace-by-organization
+      summary: Create user workspace by organization
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      description: 'Create a new workspace using a template. The request must
+
+        specify either the Template ID or the Template Version ID,
+
+        not both. If the Template ID is specified, the active version
+
+        of the template will be used.'
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        description: Username, UUID, or me
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateWorkspaceRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Workspace'
+  /api/v2/organizations/{organization}/members/{user}/workspaces/available-users:
+    get:
+      operationId: get-users-available-for-workspace-creation
+      summary: Get users available for workspace creation
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        description: User ID, name, or me
+        schema:
+          type: string
+      - name: q
+        in: query
+        required: false
+        description: Search query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Limit results
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        description: Offset for pagination
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.MinimalUser'
+  /api/v2/users/{user}/workspace/{workspacename}:
+    get:
+      operationId: get-workspace-metadata-by-user-and-workspace-name
+      summary: Get workspace metadata by user and workspace name
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: user
+        in: path
+        required: true
+        description: User ID, name, or me
+        schema:
+          type: string
+      - name: workspacename
+        in: path
+        required: true
+        description: Workspace name
+        schema:
+          type: string
+      - name: include_deleted
+        in: query
+        required: false
+        description: Return data instead of HTTP 404 if the workspace is deleted
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Workspace'
+  /api/v2/users/{user}/workspaces:
+    post:
+      operationId: create-user-workspace
+      summary: Create user workspace
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      description: 'Create a new workspace using a template. The request must
+
+        specify either the Template ID or the Template Version ID,
+
+        not both. If the Template ID is specified, the active version
+
+        of the template will be used.'
+      parameters:
+      - name: user
+        in: path
+        required: true
+        description: Username, UUID, or me
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateWorkspaceRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Workspace'
+  /api/v2/workspaces:
+    get:
+      operationId: list-workspaces
+      summary: List workspaces
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: 'Search query in the format `key:value`. Available keys are: owner, template, name, status, has-agent, dormant, last_used_after, last_used_before, has-ai-task, has_external_agent, healthy.'
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Page limit
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        description: Page offset
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.WorkspacesResponse'
+  /api/v2/workspaces/{workspace}:
+    get:
+      operationId: get-workspace-metadata-by-id
+      summary: Get workspace metadata by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      - name: include_deleted
+        in: query
+        required: false
+        description: Return data instead of HTTP 404 if the workspace is deleted
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Workspace'
+    patch:
+      operationId: update-workspace-metadata-by-id
+      summary: Update workspace metadata by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateWorkspaceRequest'
+      responses:
+        '204':
+          description: No Content
+  /api/v2/workspaces/{workspace}/acl:
+    get:
+      operationId: get-workspace-acls
+      summary: Get workspace ACLs
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.WorkspaceACL'
+    delete:
+      operationId: completely-clears-the-workspaces-user-and-group-acls
+      summary: Completely clears the workspace's user and group ACLs.
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+    patch:
+      operationId: update-workspace-acl
+      summary: Update workspace ACL
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateWorkspaceACL'
+      responses:
+        '204':
+          description: No Content
+  /api/v2/workspaces/{workspace}/agent-connection-watch:
+    get:
+      operationId: workspace-agent-connection-watch
+      summary: Workspace Agent Connection Watch
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '101':
+          description: Switching Protocols
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workspacesdk.ConnectionWatchEvent'
+  /api/v2/workspaces/{workspace}/autostart:
+    put:
+      operationId: update-workspace-autostart-schedule-by-id
+      summary: Update workspace autostart schedule by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateWorkspaceAutostartRequest'
+      responses:
+        '204':
+          description: No Content
+  /api/v2/workspaces/{workspace}/autoupdates:
+    put:
+      operationId: update-workspace-automatic-updates-by-id
+      summary: Update workspace automatic updates by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateWorkspaceAutomaticUpdatesRequest'
+      responses:
+        '204':
+          description: No Content
+  /api/v2/workspaces/{workspace}/dormant:
+    put:
+      operationId: update-workspace-dormancy-status-by-id
+      summary: Update workspace dormancy status by id.
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateWorkspaceDormancy'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Workspace'
+  /api/v2/workspaces/{workspace}/extend:
+    put:
+      operationId: extend-workspace-deadline-by-id
+      summary: Extend workspace deadline by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.PutExtendWorkspaceRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/workspaces/{workspace}/favorite:
+    put:
+      operationId: favorite-workspace-by-id
+      summary: Favorite workspace by ID.
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+    delete:
+      operationId: unfavorite-workspace-by-id
+      summary: Unfavorite workspace by ID.
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+  /api/v2/workspaces/{workspace}/resolve-autostart:
+    get:
+      operationId: resolve-workspace-autostart-by-id
+      summary: Resolve workspace autostart by id.
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ResolveAutostartResponse'
+  /api/v2/workspaces/{workspace}/timings:
+    get:
+      operationId: get-workspace-timings-by-id
+      summary: Get workspace timings by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.WorkspaceBuildTimings'
+  /api/v2/workspaces/{workspace}/ttl:
+    put:
+      operationId: update-workspace-ttl-by-id
+      summary: Update workspace TTL by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateWorkspaceTTLRequest'
+      responses:
+        '204':
+          description: No Content
+  /api/v2/workspaces/{workspace}/usage:
+    post:
+      operationId: post-workspace-usage-by-id
+      summary: Post Workspace Usage by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.PostWorkspaceUsageRequest'
+      responses:
+        '204':
+          description: No Content
+  /api/v2/workspaces/{workspace}/watch:
+    get:
+      operationId: watch-workspace-by-id
+      summary: Watch workspace by ID
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/workspaces/{workspace}/watch-ws:
+    get:
+      operationId: watch-workspace-by-id-via-websockets
+      summary: Watch workspace by ID via WebSockets
+      tags:
+      - Workspaces
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ServerSentEvent'
+components:
+  schemas:
+    codersdk.CreateWorkspaceRequest:
+      type: object
+      description: 'CreateWorkspaceRequest provides options for creating a new workspace. Only one of TemplateID or TemplateVersionID can be specified, not both. If TemplateID is specified, the active version of the template will be used. Workspace names: - Must start with a letter or number - Can only contain letters, numbers, and hyphens - Cannot contain spaces or special characters - Cannot be named `new` or `create` - Must be unique within your workspaces - Maximum length of 32 characters'
+      properties:
+        automatic_updates:
+          $ref: '#/components/schemas/codersdk.AutomaticUpdates'
+        autostart_schedule:
+          type: string
+        name:
+          type: string
+        rich_parameter_values:
+          type: array
+          description: 'RichParameterValues allows for additional parameters to be provided
+
+            during the initial provision.'
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceBuildParameter'
+        template_id:
+          type: string
+          format: uuid
+          description: TemplateID specifies which template should be used for creating the workspace.
+        template_version_id:
+          type: string
+          format: uuid
+          description: TemplateVersionID can be used to specify a specific version of a template for creating the workspace.
+        template_version_preset_id:
+          type: string
+          format: uuid
+        ttl_ms:
+          type: integer
+      required:
+      - name
+    codersdk.TimingStage:
+      type: string
+      enum:
+      - init
+      - plan
+      - graph
+      - apply
+      - start
+      - stop
+      - cron
+      - connect
+    codersdk.SharedWorkspaceActorType:
+      type: string
+      enum:
+      - group
+      - user
+    codersdk.UpdateWorkspaceDormancy:
+      type: object
+      properties:
+        dormant:
+          type: boolean
+    codersdk.BuildReason:
+      type: string
+      enum:
+      - initiator
+      - autostart
+      - autostop
+      - dormancy
+      - dashboard
+      - cli
+      - ssh_connection
+      - vscode_connection
+      - jetbrains_connection
+      - task_auto_pause
+      - task_manual_pause
+      - task_resume
+    codersdk.AgentSubsystem:
+      type: string
+      enum:
+      - envbox
+      - envbuilder
+      - exectrace
+    codersdk.WorkspaceHealth:
+      type: object
+      properties:
+        failing_agents:
+          type: array
+          description: FailingAgents lists the IDs of the agents that are failing, if any.
+          items:
+            type: string
+            format: uuid
+        healthy:
+          type: boolean
+          description: Healthy is true if the workspace is healthy.
+          example: false
+    codersdk.DisplayApp:
+      type: string
+      enum:
+      - vscode
+      - vscode_insiders
+      - web_terminal
+      - port_forwarding_helper
+      - ssh_helper
+    codersdk.ResolveAutostartResponse:
+      type: object
+      properties:
+        parameter_mismatch:
+          type: boolean
+    codersdk.ReducedUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        id:
+          type: string
+          format: uuid
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        theme_preference:
+          type: string
+          description: 'Deprecated: this value should be retrieved from
+
+            `codersdk.UserPreferenceSettings` instead.'
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+      required:
+      - created_at
+      - email
+      - id
+      - username
+    codersdk.WorkspaceAgentHealth:
+      type: object
+      properties:
+        healthy:
+          type: boolean
+          description: Healthy is true if the agent is healthy.
+          example: false
+        reason:
+          type: string
+          description: Reason is a human-readable explanation of the agent's health. It is empty if Healthy is true.
+          example: agent has lost connection
+    codersdk.WorkspaceBuild:
+      type: object
+      properties:
+        build_number:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        daily_cost:
+          type: integer
+        deadline:
+          type: string
+          format: date-time
+        has_ai_task:
+          type: boolean
+          description: 'Deprecated: This field has been deprecated in favor of Task WorkspaceID.'
+        has_external_agent:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        initiator_id:
+          type: string
+          format: uuid
+        initiator_name:
+          type: string
+        job:
+          $ref: '#/components/schemas/codersdk.ProvisionerJob'
+        matched_provisioners:
+          $ref: '#/components/schemas/codersdk.MatchedProvisioners'
+        max_deadline:
+          type: string
+          format: date-time
+        reason:
+          enum:
+          - initiator
+          - autostart
+          - autostop
+          allOf:
+          - $ref: '#/components/schemas/codersdk.BuildReason'
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceResource'
+        status:
+          enum:
+          - pending
+          - starting
+          - running
+          - stopping
+          - stopped
+          - failed
+          - canceling
+          - canceled
+          - deleting
+          - deleted
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceStatus'
+        template_version_id:
+          type: string
+          format: uuid
+        template_version_name:
+          type: string
+        template_version_preset_id:
+          type: string
+          format: uuid
+        transition:
+          enum:
+          - start
+          - stop
+          - delete
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        updated_at:
+          type: string
+          format: date-time
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+        workspace_owner_avatar_url:
+          type: string
+        workspace_owner_id:
+          type: string
+          format: uuid
+        workspace_owner_name:
+          type: string
+          description: WorkspaceOwnerName is the username of the owner of the workspace.
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    workspacesdk.WatchError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/workspacesdk.WatchErrorCode'
+        details:
+          type: string
+        message:
+          type: string
+        retryable:
+          type: boolean
+    workspacesdk.AgentUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        lifecycle:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentLifecycle'
+    uuid.NullUUID:
+      type: object
+      properties:
+        uuid:
+          type: string
+        valid:
+          type: boolean
+          description: Valid is true if UUID is not NULL
+    codersdk.UpdateWorkspaceAutomaticUpdatesRequest:
+      type: object
+      properties:
+        automatic_updates:
+          $ref: '#/components/schemas/codersdk.AutomaticUpdates'
+    codersdk.GroupSource:
+      type: string
+      enum:
+      - user
+      - oidc
+    codersdk.PutExtendWorkspaceRequest:
+      type: object
+      properties:
+        deadline:
+          type: string
+          format: date-time
+      required:
+      - deadline
+    codersdk.WorkspaceRole:
+      type: string
+      enum:
+      - admin
+      - use
+      - ''
+    codersdk.ServerSentEvent:
+      type: object
+      properties:
+        data: {}
+        type:
+          $ref: '#/components/schemas/codersdk.ServerSentEventType'
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+    codersdk.WorkspaceBuildTimings:
+      type: object
+      properties:
+        agent_connection_timings:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AgentConnectionTiming'
+        agent_script_timings:
+          type: array
+          description: 'TODO: Consolidate agent-related timing metrics into a single struct when
+
+            updating the API version'
+          items:
+            $ref: '#/components/schemas/codersdk.AgentScriptTiming'
+        provisioner_timings:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ProvisionerTiming'
+    codersdk.WorkspaceBuildParameter:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    workspacesdk.WatchErrorCode:
+      type: integer
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      x-enum-comments:
+        _: Ensure that zero value is not a valid code
+    codersdk.DERPRegion:
+      type: object
+      properties:
+        latency_ms:
+          type: number
+        preferred:
+          type: boolean
+    codersdk.UpdateWorkspaceTTLRequest:
+      type: object
+      properties:
+        ttl_ms:
+          type: integer
+    codersdk.WorkspaceAgentScriptStatus:
+      type: string
+      enum:
+      - ok
+      - exit_failure
+      - timed_out
+      - pipes_left_open
+    codersdk.AgentScriptTiming:
+      type: object
+      properties:
+        display_name:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        exit_code:
+          type: integer
+        stage:
+          $ref: '#/components/schemas/codersdk.TimingStage'
+        started_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+        workspace_agent_id:
+          type: string
+        workspace_agent_name:
+          type: string
+    codersdk.ProvisionerJobType:
+      type: string
+      enum:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
+    codersdk.WorkspaceAgentStartupScriptBehavior:
+      type: string
+      enum:
+      - blocking
+      - non-blocking
+    codersdk.WorkspaceUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        role:
+          enum:
+          - admin
+          - use
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceRole'
+        username:
+          type: string
+      required:
+      - id
+      - username
+    codersdk.WorkspacesResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Workspace'
+    codersdk.MinimalUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+      required:
+      - id
+      - username
+    codersdk.UpdateWorkspaceAutostartRequest:
+      type: object
+      properties:
+        schedule:
+          type: string
+          description: 'Schedule is expected to be of the form `CRON_TZ=<IANA Timezone> <min> <hour> * * <dow>`
+
+            Example: `CRON_TZ=US/Central 30 9 * * 1-5` represents 0930 in the timezone US/Central
+
+            on weekdays (Mon-Fri). `CRON_TZ` defaults to UTC if not present.'
+    codersdk.WorkspaceApp:
+      type: object
+      properties:
+        command:
+          type: string
+        display_name:
+          type: string
+          description: DisplayName is a friendly name for the app.
+        external:
+          type: boolean
+          description: 'External specifies whether the URL should be opened externally on
+
+            the client or not.'
+        group:
+          type: string
+        health:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppHealth'
+        healthcheck:
+          description: Healthcheck specifies the configuration for checking app health.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.Healthcheck'
+        hidden:
+          type: boolean
+        icon:
+          type: string
+          description: 'Icon is a relative path or external URL that specifies
+
+            an icon to be displayed in the dashboard.'
+        id:
+          type: string
+          format: uuid
+        open_in:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppOpenIn'
+        sharing_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAppSharingLevel'
+        slug:
+          type: string
+          description: Slug is a unique identifier within the agent.
+        statuses:
+          type: array
+          description: Statuses is a list of statuses for the app.
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAppStatus'
+        subdomain:
+          type: boolean
+          description: 'Subdomain denotes whether the app should be accessed via a path on the
+
+            `coder server` or via a hostname-based dev URL. If this is set to true
+
+            and there is no app wildcard configured on the server, the app will not
+
+            be accessible in the UI.'
+        subdomain_name:
+          type: string
+          description: SubdomainName is the application domain exposed on the `coder server`.
+        tooltip:
+          type: string
+          description: 'Tooltip is an optional markdown supported field that is displayed
+
+            when hovering over workspace apps in the UI.'
+        url:
+          type: string
+          description: 'URL is the address being proxied to inside the workspace.
+
+            If external is specified, this will be opened on the client.'
+    codersdk.WorkspaceAgentLifecycle:
+      type: string
+      enum:
+      - created
+      - starting
+      - start_timeout
+      - start_error
+      - ready
+      - shutting_down
+      - shutdown_timeout
+      - shutdown_error
+      - 'off'
+    codersdk.WorkspaceAppStatusState:
+      type: string
+      enum:
+      - working
+      - idle
+      - complete
+      - failure
+    codersdk.WorkspaceAppStatus:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        app_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        icon:
+          type: string
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            Icon is an external URL to an icon that will be rendered in the UI.'
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        needs_user_attention:
+          type: boolean
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            NeedsUserAttention specifies whether the status needs user attention.'
+        state:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppStatusState'
+        uri:
+          type: string
+          description: 'URI is the URI of the resource that the status is for.
+
+            e.g. https://github.com/org/repo/pull/123
+
+            e.g. file:///path/to/file'
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.PostWorkspaceUsageRequest:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        app_name:
+          $ref: '#/components/schemas/codersdk.UsageAppName'
+    codersdk.UsageAppName:
+      type: string
+      enum:
+      - vscode
+      - jetbrains
+      - reconnecting-pty
+      - ssh
+    codersdk.UpdateWorkspaceRequest:
+      type: object
+      properties:
+        name:
+          type: string
+    codersdk.WorkspaceResource:
+      type: object
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgent'
+        created_at:
+          type: string
+          format: date-time
+        daily_cost:
+          type: integer
+        hide:
+          type: boolean
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        job_id:
+          type: string
+          format: uuid
+        metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceResourceMetadata'
+        name:
+          type: string
+        type:
+          type: string
+        workspace_transition:
+          enum:
+          - start
+          - stop
+          - delete
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+    codersdk.WorkspaceStatus:
+      type: string
+      enum:
+      - pending
+      - starting
+      - running
+      - stopping
+      - stopped
+      - failed
+      - canceling
+      - canceled
+      - deleting
+      - deleted
+    codersdk.UpdateWorkspaceACL:
+      type: object
+      properties:
+        group_roles:
+          type: object
+          description: 'GroupRoles is a mapping from valid group UUIDs to the workspace role they
+
+            should be granted. To remove a group from the workspace, use "" as the role
+
+            (available as a constant named codersdk.WorkspaceRoleDeleted)'
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.WorkspaceRole'
+        user_roles:
+          type: object
+          description: 'UserRoles is a mapping from valid user UUIDs to the workspace role they
+
+            should be granted. To remove a user from the workspace, use "" as the role
+
+            (available as a constant named codersdk.WorkspaceRoleDeleted)'
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.WorkspaceRole'
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
+          type: string
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
+          type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.WorkspaceAgent:
+      type: object
+      properties:
+        api_version:
+          type: string
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceApp'
+        architecture:
+          type: string
+        connection_timeout_seconds:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        directory:
+          type: string
+        disconnected_at:
+          type: string
+          format: date-time
+        display_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.DisplayApp'
+        environment_variables:
+          type: object
+          additionalProperties:
+            type: string
+        expanded_directory:
+          type: string
+        first_connected_at:
+          type: string
+          format: date-time
+        health:
+          description: Health reports the health of the agent.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentHealth'
+        id:
+          type: string
+          format: uuid
+        instance_id:
+          type: string
+        last_connected_at:
+          type: string
+          format: date-time
+        latency:
+          type: object
+          description: DERPLatency is mapped by region name (e.g. "New York City", "Seattle").
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.DERPRegion'
+        lifecycle_state:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentLifecycle'
+        log_sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentLogSource'
+        logs_length:
+          type: integer
+        logs_overflowed:
+          type: boolean
+        name:
+          type: string
+        operating_system:
+          type: string
+        parent_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        ready_at:
+          type: string
+          format: date-time
+        resource_id:
+          type: string
+          format: uuid
+        scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentScript'
+        started_at:
+          type: string
+          format: date-time
+        startup_script_behavior:
+          description: 'StartupScriptBehavior is a legacy field that is deprecated in favor
+
+            of the `coder_script` resource. It''s only referenced by old clients.
+
+            Deprecated: Remove in the future!'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentStartupScriptBehavior'
+        status:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentStatus'
+        subsystems:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AgentSubsystem'
+        troubleshooting_url:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        version:
+          type: string
+    codersdk.WorkspaceAppHealth:
+      type: string
+      enum:
+      - disabled
+      - initializing
+      - healthy
+      - unhealthy
+    codersdk.AgentConnectionTiming:
+      type: object
+      properties:
+        ended_at:
+          type: string
+          format: date-time
+        stage:
+          $ref: '#/components/schemas/codersdk.TimingStage'
+        started_at:
+          type: string
+          format: date-time
+        workspace_agent_id:
+          type: string
+        workspace_agent_name:
+          type: string
+    codersdk.ProvisionerJob:
+      type: object
+      properties:
+        available_workers:
+          type: array
+          items:
+            type: string
+            format: uuid
+        canceled_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error:
+          type: string
+        error_code:
+          enum:
+          - REQUIRED_TEMPLATE_VARIABLES
+          - INSUFFICIENT_QUOTA
+          allOf:
+          - $ref: '#/components/schemas/codersdk.JobErrorCode'
+        file_id:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        initiator_id:
+          type: string
+          format: uuid
+        input:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobInput'
+        logs_overflowed:
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobMetadata'
+        organization_id:
+          type: string
+          format: uuid
+        queue_position:
+          type: integer
+        queue_size:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+        status:
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        type:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobType'
+        worker_id:
+          type: string
+          format: uuid
+        worker_name:
+          type: string
+    codersdk.JobErrorCode:
+      type: string
+      enum:
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
+    codersdk.WorkspaceAgentScript:
+      type: object
+      properties:
+        cron:
+          type: string
+        display_name:
+          type: string
+        exit_code:
+          type: integer
+        id:
+          type: string
+          format: uuid
+        log_path:
+          type: string
+        log_source_id:
+          type: string
+          format: uuid
+        run_on_start:
+          type: boolean
+        run_on_stop:
+          type: boolean
+        script:
+          type: string
+        start_blocks_login:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentScriptStatus'
+        timeout:
+          type: integer
+    codersdk.WorkspaceResourceMetadata:
+      type: object
+      properties:
+        key:
+          type: string
+        sensitive:
+          type: boolean
+        value:
+          type: string
+    codersdk.WorkspaceACL:
+      type: object
+      properties:
+        group:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceGroup'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceUser'
+    codersdk.ProvisionerJobInput:
+      type: object
+      properties:
+        error:
+          type: string
+        template_version_id:
+          type: string
+          format: uuid
+        workspace_build_id:
+          type: string
+          format: uuid
+    codersdk.WorkspaceAgentStatus:
+      type: string
+      enum:
+      - connecting
+      - connected
+      - disconnected
+      - timeout
+    codersdk.WorkspaceAppSharingLevel:
+      type: string
+      enum:
+      - owner
+      - authenticated
+      - organization
+      - public
+    codersdk.ProvisionerTiming:
+      type: object
+      properties:
+        action:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        job_id:
+          type: string
+          format: uuid
+        resource:
+          type: string
+        source:
+          type: string
+        stage:
+          $ref: '#/components/schemas/codersdk.TimingStage'
+        started_at:
+          type: string
+          format: date-time
+    workspacesdk.BuildUpdate:
+      type: object
+      properties:
+        job_status:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
+        transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+    codersdk.WorkspaceAppOpenIn:
+      type: string
+      enum:
+      - slim-window
+      - tab
+    codersdk.ProvisionerJobMetadata:
+      type: object
+      properties:
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
+          type: string
+        template_version_name:
+          type: string
+        workspace_build_transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+    codersdk.WorkspaceAgentLogSource:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        workspace_agent_id:
+          type: string
+          format: uuid
+    codersdk.MatchedProvisioners:
+      type: object
+      properties:
+        available:
+          type: integer
+          description: 'Available is the number of provisioner daemons that are available to
+
+            take jobs. This may be less than the count if some provisioners are
+
+            busy or have been stopped.'
+        count:
+          type: integer
+          description: 'Count is the number of provisioner daemons that matched the given
+
+            tags. If the count is 0, it means no provisioner daemons matched the
+
+            requested tags.'
+        most_recently_seen:
+          type: string
+          format: date-time
+          description: 'MostRecentlySeen is the most recently seen time of the set of matched
+
+            provisioners. If no provisioners matched, this field will be null.'
+    codersdk.ServerSentEventType:
+      type: string
+      enum:
+      - ping
+      - data
+      - error
+    codersdk.Healthcheck:
+      type: object
+      properties:
+        interval:
+          type: integer
+          description: Interval specifies the seconds between each health check.
+        threshold:
+          type: integer
+          description: Threshold specifies the number of consecutive failed health checks before returning "unhealthy".
+        url:
+          type: string
+          description: URL specifies the endpoint to check for the app health.
+    workspacesdk.ConnectionWatchEvent:
+      type: object
+      properties:
+        agent_update:
+          $ref: '#/components/schemas/workspacesdk.AgentUpdate'
+        build_update:
+          $ref: '#/components/schemas/workspacesdk.BuildUpdate'
+        error:
+          $ref: '#/components/schemas/workspacesdk.WatchError'
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    codersdk.SharedWorkspaceActor:
+      type: object
+      properties:
+        actor_type:
+          enum:
+          - group
+          - user
+          allOf:
+          - $ref: '#/components/schemas/codersdk.SharedWorkspaceActorType'
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceRole'
+    codersdk.WorkspaceGroup:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        quota_allowance:
+          type: integer
+        role:
+          enum:
+          - admin
+          - use
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceRole'
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          type: integer
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
+    codersdk.AutomaticUpdates:
+      type: string
+      enum:
+      - always
+      - never
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
+    codersdk.Workspace:
+      type: object
+      properties:
+        allow_renames:
+          type: boolean
+        automatic_updates:
+          enum:
+          - always
+          - never
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AutomaticUpdates'
+        autostart_schedule:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        deleting_at:
+          type: string
+          format: date-time
+          description: 'DeletingAt indicates the time at which the workspace will be permanently deleted.
+
+            A workspace is eligible for deletion if it is dormant (a non-nil dormant_at value)
+
+            and a value has been specified for time_til_dormant_autodelete on its template.'
+        dormant_at:
+          type: string
+          format: date-time
+          description: 'DormantAt being non-nil indicates a workspace that is dormant.
+
+            A dormant workspace is no longer accessible must be activated.
+
+            It is subject to deletion if it breaches
+
+            the duration of the time_til_ field on its template.'
+        favorite:
+          type: boolean
+        health:
+          description: 'Health shows the health of the workspace and information about
+
+            what is causing an unhealthy status.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceHealth'
+        id:
+          type: string
+          format: uuid
+        is_prebuild:
+          type: boolean
+          description: 'IsPrebuild indicates whether the workspace is a prebuilt workspace.
+
+            Prebuilt workspaces are owned by the prebuilds system user and have specific behavior,
+
+            such as being managed differently from regular workspaces.
+
+            Once a prebuilt workspace is claimed by a user, it transitions to a regular workspace,
+
+            and IsPrebuild returns false.'
+        last_used_at:
+          type: string
+          format: date-time
+        latest_app_status:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppStatus'
+        latest_build:
+          $ref: '#/components/schemas/codersdk.WorkspaceBuild'
+        name:
+          type: string
+        next_start_at:
+          type: string
+          format: date-time
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        outdated:
+          type: boolean
+        owner_avatar_url:
+          type: string
+        owner_id:
+          type: string
+          format: uuid
+        owner_name:
+          type: string
+          description: OwnerName is the username of the owner of the workspace.
+        shared_with:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SharedWorkspaceActor'
+        task_id:
+          description: TaskID, if set, indicates that the workspace is relevant to the given codersdk.Task.
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        template_active_version_id:
+          type: string
+          format: uuid
+        template_allow_user_cancel_workspace_jobs:
+          type: boolean
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
+          type: string
+        template_require_active_version:
+          type: boolean
+        template_use_classic_parameter_flow:
+          type: boolean
+        ttl_ms:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

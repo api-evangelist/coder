@@ -1,0 +1,2626 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Templates API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Templates
+paths:
+  /api/v2/organizations/{organization}/templates:
+    get:
+      operationId: get-templates-by-organization
+      summary: Get templates by organization
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      description: 'Returns a list of templates for the specified organization.
+
+        By default, only non-deprecated templates are returned.
+
+        To include deprecated templates, specify `deprecated:true` in the search query.'
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Template'
+    post:
+      operationId: create-template-by-organization
+      summary: Create template by organization
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateTemplateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Template'
+  /api/v2/organizations/{organization}/templates/examples:
+    get:
+      operationId: get-template-examples-by-organization
+      summary: Get template examples by organization
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.TemplateExample'
+  /api/v2/organizations/{organization}/templates/{templatename}:
+    get:
+      operationId: get-templates-by-organization-and-template-name
+      summary: Get templates by organization and template name
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: templatename
+        in: path
+        required: true
+        description: Template name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Template'
+  /api/v2/organizations/{organization}/templates/{templatename}/versions/{templateversionname}:
+    get:
+      operationId: get-template-version-by-organization-template-and-name
+      summary: Get template version by organization, template, and name
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: templatename
+        in: path
+        required: true
+        description: Template name
+        schema:
+          type: string
+      - name: templateversionname
+        in: path
+        required: true
+        description: Template version name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.TemplateVersion'
+  /api/v2/organizations/{organization}/templates/{templatename}/versions/{templateversionname}/previous:
+    get:
+      operationId: get-previous-template-version-by-organization-template-and-name
+      summary: Get previous template version by organization, template, and name
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: templatename
+        in: path
+        required: true
+        description: Template name
+        schema:
+          type: string
+      - name: templateversionname
+        in: path
+        required: true
+        description: Template version name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.TemplateVersion'
+        '204':
+          description: No Content
+  /api/v2/organizations/{organization}/templateversions:
+    post:
+      operationId: create-template-version-by-organization
+      summary: Create template version by organization
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateTemplateVersionRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.TemplateVersion'
+  /api/v2/templates:
+    get:
+      operationId: get-all-templates
+      summary: Get all templates
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      description: 'Returns a list of templates.
+
+        By default, only non-deprecated templates are returned.
+
+        To include deprecated templates, specify `deprecated:true` in the search query.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Template'
+  /api/v2/templates/examples:
+    get:
+      operationId: get-template-examples
+      summary: Get template examples
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.TemplateExample'
+  /api/v2/templates/{template}:
+    get:
+      operationId: get-template-settings-by-id
+      summary: Get template settings by ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Template'
+    delete:
+      operationId: delete-template-by-id
+      summary: Delete template by ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+    patch:
+      operationId: update-template-settings-by-id
+      summary: Update template settings by ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateTemplateMeta'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Template'
+  /api/v2/templates/{template}/daus:
+    get:
+      operationId: get-template-daus-by-id
+      summary: Get template DAUs by ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.DAUsResponse'
+  /api/v2/templates/{template}/versions:
+    get:
+      operationId: list-template-versions-by-template-id
+      summary: List template versions by template ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      - name: after_id
+        in: query
+        required: false
+        description: After ID
+        schema:
+          type: string
+      - name: include_archived
+        in: query
+        required: false
+        description: Include archived versions in the list
+        schema:
+          type: boolean
+      - name: limit
+        in: query
+        required: false
+        description: Page limit
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        description: Page offset
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.TemplateVersion'
+    patch:
+      operationId: update-active-template-version-by-template-id
+      summary: Update active template version by template ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateActiveTemplateVersion'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/templates/{template}/versions/archive:
+    post:
+      operationId: archive-template-unused-versions-by-template-id
+      summary: Archive template unused versions by template id
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.ArchiveTemplateVersionsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/templates/{template}/versions/{templateversionname}:
+    get:
+      operationId: get-template-version-by-template-id-and-name
+      summary: Get template version by template ID and name
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: template
+        in: path
+        required: true
+        description: Template ID
+        schema:
+          type: string
+      - name: templateversionname
+        in: path
+        required: true
+        description: Template version name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.TemplateVersion'
+  /api/v2/templateversions/{templateversion}:
+    get:
+      operationId: get-template-version-by-id
+      summary: Get template version by ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.TemplateVersion'
+    patch:
+      operationId: patch-template-version-by-id
+      summary: Patch template version by ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.PatchTemplateVersionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.TemplateVersion'
+  /api/v2/templateversions/{templateversion}/archive:
+    post:
+      operationId: archive-template-version
+      summary: Archive template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/templateversions/{templateversion}/cancel:
+    patch:
+      operationId: cancel-template-version-by-id
+      summary: Cancel template version by ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/templateversions/{templateversion}/dry-run:
+    post:
+      operationId: create-template-version-dry-run
+      summary: Create template version dry-run
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateTemplateVersionDryRunRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ProvisionerJob'
+  /api/v2/templateversions/{templateversion}/dry-run/{jobID}:
+    get:
+      operationId: get-template-version-dry-run-by-job-id
+      summary: Get template version dry-run by job ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      - name: jobID
+        in: path
+        required: true
+        description: Job ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ProvisionerJob'
+  /api/v2/templateversions/{templateversion}/dry-run/{jobID}/cancel:
+    patch:
+      operationId: cancel-template-version-dry-run-by-job-id
+      summary: Cancel template version dry-run by job ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: jobID
+        in: path
+        required: true
+        description: Job ID
+        schema:
+          type: string
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/templateversions/{templateversion}/dry-run/{jobID}/logs:
+    get:
+      operationId: get-template-version-dry-run-logs-by-job-id
+      summary: Get template version dry-run logs by job ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      - name: jobID
+        in: path
+        required: true
+        description: Job ID
+        schema:
+          type: string
+      - name: before
+        in: query
+        required: false
+        description: Before Unix timestamp
+        schema:
+          type: integer
+      - name: after
+        in: query
+        required: false
+        description: After Unix timestamp
+        schema:
+          type: integer
+      - name: follow
+        in: query
+        required: false
+        description: Follow log stream
+        schema:
+          type: boolean
+      - name: format
+        in: query
+        required: false
+        description: 'Log output format. Accepted: ''json'' (default), ''text'' (plain text with RFC3339 timestamps and ANSI colors). Not supported with follow=true.'
+        schema:
+          type: string
+          enum:
+          - json
+          - text
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.ProvisionerJobLog'
+  /api/v2/templateversions/{templateversion}/dry-run/{jobID}/matched-provisioners:
+    get:
+      operationId: get-template-version-dry-run-matched-provisioners
+      summary: Get template version dry-run matched provisioners
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      - name: jobID
+        in: path
+        required: true
+        description: Job ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.MatchedProvisioners'
+  /api/v2/templateversions/{templateversion}/dry-run/{jobID}/resources:
+    get:
+      operationId: get-template-version-dry-run-resources-by-job-id
+      summary: Get template version dry-run resources by job ID
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      - name: jobID
+        in: path
+        required: true
+        description: Job ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.WorkspaceResource'
+  /api/v2/templateversions/{templateversion}/dynamic-parameters:
+    get:
+      operationId: open-dynamic-parameters-websocket-by-template-version
+      summary: Open dynamic parameters WebSocket by template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '101':
+          description: Switching Protocols
+  /api/v2/templateversions/{templateversion}/dynamic-parameters/evaluate:
+    post:
+      operationId: evaluate-dynamic-parameters-for-template-version
+      summary: Evaluate dynamic parameters for template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.DynamicParametersRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.DynamicParametersResponse'
+  /api/v2/templateversions/{templateversion}/external-auth:
+    get:
+      operationId: get-external-auth-by-template-version
+      summary: Get external auth by template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.TemplateVersionExternalAuth'
+  /api/v2/templateversions/{templateversion}/logs:
+    get:
+      operationId: get-logs-by-template-version
+      summary: Get logs by template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      - name: before
+        in: query
+        required: false
+        description: Before log id
+        schema:
+          type: integer
+      - name: after
+        in: query
+        required: false
+        description: After log id
+        schema:
+          type: integer
+      - name: follow
+        in: query
+        required: false
+        description: Follow log stream
+        schema:
+          type: boolean
+      - name: format
+        in: query
+        required: false
+        description: 'Log output format. Accepted: ''json'' (default), ''text'' (plain text with RFC3339 timestamps and ANSI colors). Not supported with follow=true.'
+        schema:
+          type: string
+          enum:
+          - json
+          - text
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.ProvisionerJobLog'
+  /api/v2/templateversions/{templateversion}/parameters:
+    get:
+      operationId: removed-get-parameters-by-template-version
+      summary: 'Removed: Get parameters by template version'
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /api/v2/templateversions/{templateversion}/presets:
+    get:
+      operationId: get-template-version-presets
+      summary: Get template version presets
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Preset'
+  /api/v2/templateversions/{templateversion}/resources:
+    get:
+      operationId: get-resources-by-template-version
+      summary: Get resources by template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.WorkspaceResource'
+  /api/v2/templateversions/{templateversion}/rich-parameters:
+    get:
+      operationId: get-rich-parameters-by-template-version
+      summary: Get rich parameters by template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.TemplateVersionParameter'
+  /api/v2/templateversions/{templateversion}/schema:
+    get:
+      operationId: removed-get-schema-by-template-version
+      summary: 'Removed: Get schema by template version'
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /api/v2/templateversions/{templateversion}/unarchive:
+    post:
+      operationId: unarchive-template-version
+      summary: Unarchive template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
+  /api/v2/templateversions/{templateversion}/variables:
+    get:
+      operationId: get-template-variables-by-template-version
+      summary: Get template variables by template version
+      tags:
+      - Templates
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: templateversion
+        in: path
+        required: true
+        description: Template version ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.TemplateVersionVariable'
+components:
+  schemas:
+    codersdk.Preset:
+      type: object
+      properties:
+        default:
+          type: boolean
+        description:
+          type: string
+        desiredPrebuildInstances:
+          type: integer
+        icon:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.PresetParameter'
+    codersdk.PresetParameter:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    codersdk.UpdateActiveTemplateVersion:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+      required:
+      - id
+    codersdk.AgentSubsystem:
+      type: string
+      enum:
+      - envbox
+      - envbuilder
+      - exectrace
+    codersdk.FriendlyDiagnostic:
+      type: object
+      properties:
+        detail:
+          type: string
+        extra:
+          $ref: '#/components/schemas/codersdk.DiagnosticExtra'
+        severity:
+          $ref: '#/components/schemas/codersdk.DiagnosticSeverityString'
+        summary:
+          type: string
+    codersdk.DiagnosticExtra:
+      type: object
+      properties:
+        code:
+          type: string
+    codersdk.DisplayApp:
+      type: string
+      enum:
+      - vscode
+      - vscode_insiders
+      - web_terminal
+      - port_forwarding_helper
+      - ssh_helper
+    codersdk.WorkspaceAppSharingLevel:
+      type: string
+      enum:
+      - owner
+      - authenticated
+      - organization
+      - public
+    codersdk.WorkspaceAgentHealth:
+      type: object
+      properties:
+        healthy:
+          type: boolean
+          description: Healthy is true if the agent is healthy.
+          example: false
+        reason:
+          type: string
+          description: Reason is a human-readable explanation of the agent's health. It is empty if Healthy is true.
+          example: agent has lost connection
+    codersdk.ArchiveTemplateVersionsRequest:
+      type: object
+      properties:
+        all:
+          type: boolean
+          description: 'By default, only failed versions are archived. Set this to true
+
+            to archive all unused versions regardless of job status.'
+    codersdk.UpdateTemplateMeta:
+      type: object
+      properties:
+        activity_bump_ms:
+          type: integer
+          description: 'ActivityBumpMillis allows optionally specifying the activity bump
+
+            duration for all workspaces created from this template. Defaults to 1h
+
+            but can be set to 0 to disable activity bumping.'
+        allow_user_autostart:
+          type: boolean
+        allow_user_autostop:
+          type: boolean
+        allow_user_cancel_workspace_jobs:
+          type: boolean
+        autostart_requirement:
+          $ref: '#/components/schemas/codersdk.TemplateAutostartRequirement'
+        autostop_requirement:
+          description: 'AutostopRequirement and AutostartRequirement can only be set if your license
+
+            includes the advanced template scheduling feature. If you attempt to set this
+
+            value while unlicensed, it will be ignored.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.TemplateAutostopRequirement'
+        cors_behavior:
+          $ref: '#/components/schemas/codersdk.CORSBehavior'
+        default_ttl_ms:
+          type: integer
+        deprecation_message:
+          type: string
+          description: 'DeprecationMessage if set, will mark the template as deprecated and block
+
+            any new workspaces from using this template.
+
+            If passed an empty string, will remove the deprecated message, making
+
+            the template usable for new workspaces again.'
+        description:
+          type: string
+        disable_everyone_group_access:
+          type: boolean
+          description: 'DisableEveryoneGroupAccess allows optionally disabling the default
+
+            behavior of granting the ''everyone'' group access to use the template.
+
+            If this is set to true, the template will not be available to all users,
+
+            and must be explicitly granted to users or groups in the permissions settings
+
+            of the template.'
+        disable_module_cache:
+          type: boolean
+          description: 'DisableModuleCache disables the using of cached Terraform modules during
+
+            provisioning. It is recommended not to disable this.'
+        display_name:
+          type: string
+        failure_ttl_ms:
+          type: integer
+        icon:
+          type: string
+        max_port_share_level:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
+        name:
+          type: string
+        require_active_version:
+          type: boolean
+          description: 'RequireActiveVersion mandates workspaces built using this template
+
+            use the active version of the template. This option has no
+
+            effect on template admins.'
+        time_til_dormant_autodelete_ms:
+          type: integer
+        time_til_dormant_ms:
+          type: integer
+        update_workspace_dormant_at:
+          type: boolean
+          description: 'UpdateWorkspaceDormantAt updates the dormant_at field of workspaces spawned
+
+            from the template. This is useful for preventing dormant workspaces being
+
+            immediately deleted when updating the dormant_ttl field to a new, shorter
+
+            value.'
+        update_workspace_last_used_at:
+          type: boolean
+          description: 'UpdateWorkspaceLastUsedAt updates the last_used_at field of workspaces
+
+            spawned from the template. This is useful for preventing workspaces being
+
+            immediately locked when updating the inactivity_ttl field to a new, shorter
+
+            value.'
+        use_classic_parameter_flow:
+          type: boolean
+          description: 'UseClassicParameterFlow is a flag that switches the default behavior to use the classic
+
+            parameter flow when creating a workspace. This only affects deployments with the experiment
+
+            "dynamic-parameters" enabled. This setting will live for a period after the experiment is
+
+            made the default.
+
+            An "opt-out" is present in case the new feature breaks some existing templates.'
+    codersdk.DynamicParametersResponse:
+      type: object
+      properties:
+        diagnostics:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.FriendlyDiagnostic'
+        id:
+          type: integer
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.PreviewParameter'
+    codersdk.PreviewParameterOption:
+      type: object
+      properties:
+        description:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+        value:
+          $ref: '#/components/schemas/codersdk.NullHCLString'
+    codersdk.ProvisionerStorageMethod:
+      type: string
+      enum:
+      - file
+    codersdk.TransitionStats:
+      type: object
+      properties:
+        p50:
+          type: integer
+          example: 123
+        p95:
+          type: integer
+          example: 146
+    uuid.NullUUID:
+      type: object
+      properties:
+        uuid:
+          type: string
+        valid:
+          type: boolean
+          description: Valid is true if UUID is not NULL
+    codersdk.DiagnosticSeverityString:
+      type: string
+      enum:
+      - error
+      - warning
+    codersdk.TemplateAutostartRequirement:
+      type: object
+      properties:
+        days_of_week:
+          type: array
+          description: 'DaysOfWeek is a list of days of the week in which autostart is allowed
+
+            to happen. If no days are specified, autostart is not allowed.'
+          items:
+            type: string
+            enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+    codersdk.WorkspaceAgentPortShareLevel:
+      type: string
+      enum:
+      - owner
+      - authenticated
+      - organization
+      - public
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+    codersdk.WorkspaceBuildParameter:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    codersdk.DERPRegion:
+      type: object
+      properties:
+        latency_ms:
+          type: number
+        preferred:
+          type: boolean
+    codersdk.DAUEntry:
+      type: object
+      properties:
+        amount:
+          type: integer
+        date:
+          type: string
+          description: 'Date is a string formatted as 2024-01-31.
+
+            Timezone and time information is not included.'
+    codersdk.LogLevel:
+      type: string
+      enum:
+      - trace
+      - debug
+      - info
+      - warn
+      - error
+    codersdk.WorkspaceAgentScriptStatus:
+      type: string
+      enum:
+      - ok
+      - exit_failure
+      - timed_out
+      - pipes_left_open
+    codersdk.ProvisionerJobType:
+      type: string
+      enum:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
+    codersdk.VariableValue:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    codersdk.WorkspaceAgentStartupScriptBehavior:
+      type: string
+      enum:
+      - blocking
+      - non-blocking
+    codersdk.ProvisionerJobLog:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: integer
+        log_level:
+          enum:
+          - trace
+          - debug
+          - info
+          - warn
+          - error
+          allOf:
+          - $ref: '#/components/schemas/codersdk.LogLevel'
+        log_source:
+          $ref: '#/components/schemas/codersdk.LogSource'
+        output:
+          type: string
+        stage:
+          type: string
+    codersdk.PreviewParameter:
+      type: object
+      properties:
+        default_value:
+          $ref: '#/components/schemas/codersdk.NullHCLString'
+        description:
+          type: string
+        diagnostics:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.FriendlyDiagnostic'
+        display_name:
+          type: string
+        ephemeral:
+          type: boolean
+        form_type:
+          $ref: '#/components/schemas/codersdk.ParameterFormType'
+        icon:
+          type: string
+        mutable:
+          type: boolean
+        name:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.PreviewParameterOption'
+        order:
+          type: integer
+          description: legacy_variable_name was removed (= 14)
+        required:
+          type: boolean
+        styling:
+          $ref: '#/components/schemas/codersdk.PreviewParameterStyling'
+        type:
+          $ref: '#/components/schemas/codersdk.OptionType'
+        validations:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.PreviewParameterValidation'
+        value:
+          $ref: '#/components/schemas/codersdk.NullHCLString'
+    codersdk.PreviewParameterValidation:
+      type: object
+      properties:
+        validation_error:
+          type: string
+        validation_max:
+          type: integer
+        validation_min:
+          type: integer
+        validation_monotonic:
+          type: string
+        validation_regex:
+          type: string
+          description: All validation attributes are optional.
+    codersdk.NullHCLString:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        value:
+          type: string
+    codersdk.MinimalUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+      required:
+      - id
+      - username
+    codersdk.ValidationMonotonicOrder:
+      type: string
+      enum:
+      - increasing
+      - decreasing
+    codersdk.WorkspaceApp:
+      type: object
+      properties:
+        command:
+          type: string
+        display_name:
+          type: string
+          description: DisplayName is a friendly name for the app.
+        external:
+          type: boolean
+          description: 'External specifies whether the URL should be opened externally on
+
+            the client or not.'
+        group:
+          type: string
+        health:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppHealth'
+        healthcheck:
+          description: Healthcheck specifies the configuration for checking app health.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.Healthcheck'
+        hidden:
+          type: boolean
+        icon:
+          type: string
+          description: 'Icon is a relative path or external URL that specifies
+
+            an icon to be displayed in the dashboard.'
+        id:
+          type: string
+          format: uuid
+        open_in:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppOpenIn'
+        sharing_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAppSharingLevel'
+        slug:
+          type: string
+          description: Slug is a unique identifier within the agent.
+        statuses:
+          type: array
+          description: Statuses is a list of statuses for the app.
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAppStatus'
+        subdomain:
+          type: boolean
+          description: 'Subdomain denotes whether the app should be accessed via a path on the
+
+            `coder server` or via a hostname-based dev URL. If this is set to true
+
+            and there is no app wildcard configured on the server, the app will not
+
+            be accessible in the UI.'
+        subdomain_name:
+          type: string
+          description: SubdomainName is the application domain exposed on the `coder server`.
+        tooltip:
+          type: string
+          description: 'Tooltip is an optional markdown supported field that is displayed
+
+            when hovering over workspace apps in the UI.'
+        url:
+          type: string
+          description: 'URL is the address being proxied to inside the workspace.
+
+            If external is specified, this will be opened on the client.'
+    codersdk.PreviewParameterStyling:
+      type: object
+      properties:
+        disabled:
+          type: boolean
+        label:
+          type: string
+        mask_input:
+          type: boolean
+        placeholder:
+          type: string
+    codersdk.WorkspaceAgentLifecycle:
+      type: string
+      enum:
+      - created
+      - starting
+      - start_timeout
+      - start_error
+      - ready
+      - shutting_down
+      - shutdown_timeout
+      - shutdown_error
+      - 'off'
+    codersdk.WorkspaceAppStatusState:
+      type: string
+      enum:
+      - working
+      - idle
+      - complete
+      - failure
+    codersdk.WorkspaceAppStatus:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        app_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        icon:
+          type: string
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            Icon is an external URL to an icon that will be rendered in the UI.'
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        needs_user_attention:
+          type: boolean
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            NeedsUserAttention specifies whether the status needs user attention.'
+        state:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppStatusState'
+        uri:
+          type: string
+          description: 'URI is the URI of the resource that the status is for.
+
+            e.g. https://github.com/org/repo/pull/123
+
+            e.g. file:///path/to/file'
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.TemplateVersionParameterOption:
+      type: object
+      properties:
+        description:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+    codersdk.WorkspaceResource:
+      type: object
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgent'
+        created_at:
+          type: string
+          format: date-time
+        daily_cost:
+          type: integer
+        hide:
+          type: boolean
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        job_id:
+          type: string
+          format: uuid
+        metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceResourceMetadata'
+        name:
+          type: string
+        type:
+          type: string
+        workspace_transition:
+          enum:
+          - start
+          - stop
+          - delete
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
+          type: string
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
+          type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.OptionType:
+      type: string
+      enum:
+      - string
+      - number
+      - bool
+      - list(string)
+    codersdk.WorkspaceAgentScript:
+      type: object
+      properties:
+        cron:
+          type: string
+        display_name:
+          type: string
+        exit_code:
+          type: integer
+        id:
+          type: string
+          format: uuid
+        log_path:
+          type: string
+        log_source_id:
+          type: string
+          format: uuid
+        run_on_start:
+          type: boolean
+        run_on_stop:
+          type: boolean
+        script:
+          type: string
+        start_blocks_login:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentScriptStatus'
+        timeout:
+          type: integer
+    codersdk.Template:
+      type: object
+      properties:
+        active_user_count:
+          type: integer
+          description: ActiveUserCount is set to -1 when loading.
+        active_version_id:
+          type: string
+          format: uuid
+        activity_bump_ms:
+          type: integer
+        allow_user_autostart:
+          type: boolean
+          description: 'AllowUserAutostart and AllowUserAutostop are enterprise-only. Their
+
+            values are only used if your license is entitled to use the advanced
+
+            template scheduling feature.'
+        allow_user_autostop:
+          type: boolean
+        allow_user_cancel_workspace_jobs:
+          type: boolean
+        autostart_requirement:
+          $ref: '#/components/schemas/codersdk.TemplateAutostartRequirement'
+        autostop_requirement:
+          description: 'AutostopRequirement and AutostartRequirement are enterprise features. Its
+
+            value is only used if your license is entitled to use the advanced template
+
+            scheduling feature.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.TemplateAutostopRequirement'
+        build_time_stats:
+          $ref: '#/components/schemas/codersdk.TemplateBuildTimeStats'
+        cors_behavior:
+          $ref: '#/components/schemas/codersdk.CORSBehavior'
+        created_at:
+          type: string
+          format: date-time
+        created_by_id:
+          type: string
+          format: uuid
+        created_by_name:
+          type: string
+        default_ttl_ms:
+          type: integer
+        deleted:
+          type: boolean
+        deprecated:
+          type: boolean
+        deprecation_message:
+          type: string
+        description:
+          type: string
+        disable_module_cache:
+          type: boolean
+          description: 'DisableModuleCache disables the use of cached Terraform modules during
+
+            provisioning.'
+        display_name:
+          type: string
+        failure_ttl_ms:
+          type: integer
+          description: 'FailureTTLMillis, TimeTilDormantMillis, and TimeTilDormantAutoDeleteMillis are enterprise-only. Their
+
+            values are used if your license is entitled to use the advanced
+
+            template scheduling feature.'
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        max_port_share_level:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_icon:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+          format: url
+        provisioner:
+          type: string
+          enum:
+          - terraform
+        require_active_version:
+          type: boolean
+          description: 'RequireActiveVersion mandates that workspaces are built with the active
+
+            template version.'
+        time_til_dormant_autodelete_ms:
+          type: integer
+        time_til_dormant_ms:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+        use_classic_parameter_flow:
+          type: boolean
+    codersdk.WorkspaceAgent:
+      type: object
+      properties:
+        api_version:
+          type: string
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceApp'
+        architecture:
+          type: string
+        connection_timeout_seconds:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        directory:
+          type: string
+        disconnected_at:
+          type: string
+          format: date-time
+        display_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.DisplayApp'
+        environment_variables:
+          type: object
+          additionalProperties:
+            type: string
+        expanded_directory:
+          type: string
+        first_connected_at:
+          type: string
+          format: date-time
+        health:
+          description: Health reports the health of the agent.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentHealth'
+        id:
+          type: string
+          format: uuid
+        instance_id:
+          type: string
+        last_connected_at:
+          type: string
+          format: date-time
+        latency:
+          type: object
+          description: DERPLatency is mapped by region name (e.g. "New York City", "Seattle").
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.DERPRegion'
+        lifecycle_state:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentLifecycle'
+        log_sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentLogSource'
+        logs_length:
+          type: integer
+        logs_overflowed:
+          type: boolean
+        name:
+          type: string
+        operating_system:
+          type: string
+        parent_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        ready_at:
+          type: string
+          format: date-time
+        resource_id:
+          type: string
+          format: uuid
+        scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentScript'
+        started_at:
+          type: string
+          format: date-time
+        startup_script_behavior:
+          description: 'StartupScriptBehavior is a legacy field that is deprecated in favor
+
+            of the `coder_script` resource. It''s only referenced by old clients.
+
+            Deprecated: Remove in the future!'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentStartupScriptBehavior'
+        status:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentStatus'
+        subsystems:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AgentSubsystem'
+        troubleshooting_url:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        version:
+          type: string
+    codersdk.WorkspaceAppHealth:
+      type: string
+      enum:
+      - disabled
+      - initializing
+      - healthy
+      - unhealthy
+    codersdk.LogSource:
+      type: string
+      enum:
+      - provisioner_daemon
+      - provisioner
+    codersdk.TemplateVersion:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          $ref: '#/components/schemas/codersdk.MinimalUser'
+        has_external_agent:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        job:
+          $ref: '#/components/schemas/codersdk.ProvisionerJob'
+        matched_provisioners:
+          $ref: '#/components/schemas/codersdk.MatchedProvisioners'
+        message:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        readme:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        updated_at:
+          type: string
+          format: date-time
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateVersionWarning'
+    codersdk.ProvisionerJob:
+      type: object
+      properties:
+        available_workers:
+          type: array
+          items:
+            type: string
+            format: uuid
+        canceled_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        error:
+          type: string
+        error_code:
+          enum:
+          - REQUIRED_TEMPLATE_VARIABLES
+          - INSUFFICIENT_QUOTA
+          allOf:
+          - $ref: '#/components/schemas/codersdk.JobErrorCode'
+        file_id:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        initiator_id:
+          type: string
+          format: uuid
+        input:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobInput'
+        logs_overflowed:
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobMetadata'
+        organization_id:
+          type: string
+          format: uuid
+        queue_position:
+          type: integer
+        queue_size:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+        status:
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        type:
+          $ref: '#/components/schemas/codersdk.ProvisionerJobType'
+        worker_id:
+          type: string
+          format: uuid
+        worker_name:
+          type: string
+    codersdk.TemplateVersionVariable:
+      type: object
+      properties:
+        default_value:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        required:
+          type: boolean
+        sensitive:
+          type: boolean
+        type:
+          type: string
+          enum:
+          - string
+          - number
+          - bool
+        value:
+          type: string
+    codersdk.DynamicParametersRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID identifies the request. The response contains the same
+
+            ID so that the client can match it to the request.'
+        inputs:
+          type: object
+          additionalProperties:
+            type: string
+        owner_id:
+          type: string
+          format: uuid
+          description: OwnerID if uuid.Nil, it defaults to `codersdk.Me`
+    codersdk.PatchTemplateVersionRequest:
+      type: object
+      properties:
+        message:
+          type: string
+        name:
+          type: string
+    codersdk.CORSBehavior:
+      type: string
+      enum:
+      - simple
+      - passthru
+    codersdk.CreateTemplateRequest:
+      type: object
+      properties:
+        activity_bump_ms:
+          type: integer
+          description: 'ActivityBumpMillis allows optionally specifying the activity bump
+
+            duration for all workspaces created from this template. Defaults to 1h
+
+            but can be set to 0 to disable activity bumping.'
+        allow_user_autostart:
+          type: boolean
+          description: 'AllowUserAutostart allows users to set a schedule for autostarting their
+
+            workspace. By default this is true. This can only be disabled when using
+
+            an enterprise license.'
+        allow_user_autostop:
+          type: boolean
+          description: 'AllowUserAutostop allows users to set a custom workspace TTL to use in
+
+            place of the template''s DefaultTTL field. By default this is true. If
+
+            false, the DefaultTTL will always be used. This can only be disabled when
+
+            using an enterprise license.'
+        allow_user_cancel_workspace_jobs:
+          type: boolean
+          description: 'Allow users to cancel in-progress workspace jobs.
+
+            *bool as the default value is "true".'
+        autostart_requirement:
+          description: 'AutostartRequirement allows optionally specifying the autostart allowed days
+
+            for workspaces created from this template. This is an enterprise feature.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.TemplateAutostartRequirement'
+        autostop_requirement:
+          description: 'AutostopRequirement allows optionally specifying the autostop requirement
+
+            for workspaces created from this template. This is an enterprise feature.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.TemplateAutostopRequirement'
+        cors_behavior:
+          description: CORSBehavior allows optionally specifying the CORS behavior for all shared ports.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.CORSBehavior'
+        default_ttl_ms:
+          type: integer
+          description: 'DefaultTTLMillis allows optionally specifying the default TTL
+
+            for all workspaces created from this template.'
+        delete_ttl_ms:
+          type: integer
+          description: 'TimeTilDormantAutoDeleteMillis allows optionally specifying the max lifetime before Coder
+
+            permanently deletes dormant workspaces created from this template.'
+        description:
+          type: string
+          description: 'Description is a description of what the template contains. It must be
+
+            less than 128 bytes.'
+        disable_everyone_group_access:
+          type: boolean
+          description: 'DisableEveryoneGroupAccess allows optionally disabling the default
+
+            behavior of granting the ''everyone'' group access to use the template.
+
+            If this is set to true, the template will not be available to all users,
+
+            and must be explicitly granted to users or groups in the permissions settings
+
+            of the template.'
+        display_name:
+          type: string
+          description: DisplayName is the displayed name of the template.
+        dormant_ttl_ms:
+          type: integer
+          description: 'TimeTilDormantMillis allows optionally specifying the max lifetime before Coder
+
+            locks inactive workspaces created from this template.'
+        failure_ttl_ms:
+          type: integer
+          description: 'FailureTTLMillis allows optionally specifying the max lifetime before Coder
+
+            stops all resources for failed workspaces created from this template.'
+        icon:
+          type: string
+          description: 'Icon is a relative path or external URL that specifies
+
+            an icon to be displayed in the dashboard.'
+        max_port_share_level:
+          description: 'MaxPortShareLevel allows optionally specifying the maximum port share level
+
+            for workspaces created from the template.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
+        name:
+          type: string
+          description: Name is the name of the template.
+        require_active_version:
+          type: boolean
+          description: 'RequireActiveVersion mandates that workspaces are built with the active
+
+            template version.'
+        template_use_classic_parameter_flow:
+          type: boolean
+          description: 'UseClassicParameterFlow allows optionally specifying whether
+
+            the template should use the classic parameter flow. The default if unset is
+
+            true, and is why `*bool` is used here. When dynamic parameters becomes
+
+            the default, this will default to false.'
+        template_version_id:
+          type: string
+          format: uuid
+          description: 'VersionID is an in-progress or completed job to use as an initial version
+
+            of the template.
+
+
+            This is required on creation to enable a user-flow of validating a
+
+            template works. There is no reason the data-model cannot support empty
+
+            templates, but it doesn''t make sense for users.'
+      required:
+      - name
+      - template_version_id
+    codersdk.JobErrorCode:
+      type: string
+      enum:
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
+    codersdk.ProvisionerJobInput:
+      type: object
+      properties:
+        error:
+          type: string
+        template_version_id:
+          type: string
+          format: uuid
+        workspace_build_id:
+          type: string
+          format: uuid
+    codersdk.TemplateVersionWarning:
+      type: string
+      enum:
+      - UNSUPPORTED_WORKSPACES
+    codersdk.WorkspaceResourceMetadata:
+      type: object
+      properties:
+        key:
+          type: string
+        sensitive:
+          type: boolean
+        value:
+          type: string
+    codersdk.TemplateAutostopRequirement:
+      type: object
+      properties:
+        days_of_week:
+          type: array
+          description: 'DaysOfWeek is a list of days of the week on which restarts are required.
+
+            Restarts happen within the user''s quiet hours (in their configured
+
+            timezone). If no days are specified, restarts are not required. Weekdays
+
+            cannot be specified twice.
+
+
+            Restarts will only happen on weekdays in this list on weeks which line up
+
+            with Weeks.'
+          items:
+            type: string
+            enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+        weeks:
+          type: integer
+          description: 'Weeks is the number of weeks between required restarts. Weeks are synced
+
+            across all workspaces (and Coder deployments) using modulo math on a
+
+            hardcoded epoch week of January 2nd, 2023 (the first Monday of 2023).
+
+            Values of 0 or 1 indicate weekly restarts. Values of 2 indicate
+
+            fortnightly restarts, etc.'
+    codersdk.MatchedProvisioners:
+      type: object
+      properties:
+        available:
+          type: integer
+          description: 'Available is the number of provisioner daemons that are available to
+
+            take jobs. This may be less than the count if some provisioners are
+
+            busy or have been stopped.'
+        count:
+          type: integer
+          description: 'Count is the number of provisioner daemons that matched the given
+
+            tags. If the count is 0, it means no provisioner daemons matched the
+
+            requested tags.'
+        most_recently_seen:
+          type: string
+          format: date-time
+          description: 'MostRecentlySeen is the most recently seen time of the set of matched
+
+            provisioners. If no provisioners matched, this field will be null.'
+    codersdk.CreateTemplateVersionRequest:
+      type: object
+      properties:
+        example_id:
+          type: string
+        file_id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        name:
+          type: string
+        provisioner:
+          type: string
+          enum:
+          - terraform
+          - echo
+        storage_method:
+          enum:
+          - file
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerStorageMethod'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        template_id:
+          type: string
+          format: uuid
+          description: TemplateID optionally associates a version with a template.
+        user_variable_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.VariableValue'
+      required:
+      - provisioner
+      - storage_method
+    codersdk.ProvisionerJobMetadata:
+      type: object
+      properties:
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
+          type: string
+        template_version_name:
+          type: string
+        workspace_build_transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+    codersdk.WorkspaceAgentLogSource:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        workspace_agent_id:
+          type: string
+          format: uuid
+    codersdk.Healthcheck:
+      type: object
+      properties:
+        interval:
+          type: integer
+          description: Interval specifies the seconds between each health check.
+        threshold:
+          type: integer
+          description: Threshold specifies the number of consecutive failed health checks before returning "unhealthy".
+        url:
+          type: string
+          description: URL specifies the endpoint to check for the app health.
+    codersdk.WorkspaceAppOpenIn:
+      type: string
+      enum:
+      - slim-window
+      - tab
+    codersdk.DAUsResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.DAUEntry'
+        tz_hour_offset:
+          type: integer
+    codersdk.TemplateVersionParameter:
+      type: object
+      properties:
+        default_value:
+          type: string
+        description:
+          type: string
+        description_plaintext:
+          type: string
+        display_name:
+          type: string
+        ephemeral:
+          type: boolean
+        form_type:
+          type: string
+          description: 'FormType has an enum value of empty string, `""`.
+
+            Keep the leading comma in the enums struct tag.'
+          enum:
+          - ''
+          - radio
+          - dropdown
+          - input
+          - textarea
+          - slider
+          - checkbox
+          - switch
+          - tag-select
+          - multi-select
+          - error
+        icon:
+          type: string
+        mutable:
+          type: boolean
+        name:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateVersionParameterOption'
+        required:
+          type: boolean
+        type:
+          type: string
+          enum:
+          - string
+          - number
+          - bool
+          - list(string)
+        validation_error:
+          type: string
+        validation_max:
+          type: integer
+        validation_min:
+          type: integer
+        validation_monotonic:
+          enum:
+          - increasing
+          - decreasing
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ValidationMonotonicOrder'
+        validation_regex:
+          type: string
+    codersdk.WorkspaceAgentStatus:
+      type: string
+      enum:
+      - connecting
+      - connected
+      - disconnected
+      - timeout
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    codersdk.ParameterFormType:
+      type: string
+      enum:
+      - ''
+      - radio
+      - slider
+      - input
+      - dropdown
+      - checkbox
+      - switch
+      - multi-select
+      - tag-select
+      - textarea
+      - error
+    codersdk.TemplateBuildTimeStats:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/codersdk.TransitionStats'
+    codersdk.TemplateVersionExternalAuth:
+      type: object
+      properties:
+        authenticate_url:
+          type: string
+        authenticated:
+          type: boolean
+        display_icon:
+          type: string
+        display_name:
+          type: string
+        id:
+          type: string
+        optional:
+          type: boolean
+        type:
+          type: string
+    codersdk.TemplateExample:
+      type: object
+      properties:
+        description:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        markdown:
+          type: string
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
+    codersdk.CreateTemplateVersionDryRunRequest:
+      type: object
+      properties:
+        rich_parameter_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceBuildParameter'
+        user_variable_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.VariableValue'
+        workspace_name:
+          type: string
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Files API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Files
+paths:
+  /api/v2/files:
+    post:
+      operationId: upload-file
+      summary: Upload file
+      tags:
+      - Files
+      security:
+      - CoderSessionToken: []
+      description: 'Swagger notice: Swagger 2.0 doesn''t support file upload with a `content-type` different than `application/x-www-form-urlencoded`.'
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        description: Content-Type must be `application/x-tar` or `application/zip`
+        schema:
+          type: string
+      - name: file
+        in: formData
+        required: true
+        description: File to be uploaded. If using tar format, file must conform to ustar (pax may cause problems).
+        schema:
+          type: file
+      responses:
+        '200':
+          description: Returns existing file if duplicate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.UploadResponse'
+        '201':
+          description: Returns newly created file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.UploadResponse'
+  /api/v2/files/{fileID}:
+    get:
+      operationId: get-file-by-id
+      summary: Get file by ID
+      tags:
+      - Files
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: fileID
+        in: path
+        required: true
+        description: File ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    codersdk.UploadResponse:
+      type: object
+      properties:
+        hash:
+          type: string
+          format: uuid
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

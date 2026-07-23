@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Applications API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Applications
+paths:
+  /api/v2/applications/auth-redirect:
+    get:
+      operationId: redirect-to-uri-with-encrypted-api-key
+      summary: Redirect to URI with encrypted API key
+      tags:
+      - Applications
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: redirect_uri
+        in: query
+        required: false
+        description: Redirect destination
+        schema:
+          type: string
+      responses:
+        '307':
+          description: Temporary Redirect
+  /api/v2/applications/host:
+    get:
+      operationId: get-applications-host
+      summary: Get applications host
+      tags:
+      - Applications
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AppHostResponse'
+components:
+  schemas:
+    codersdk.AppHostResponse:
+      type: object
+      properties:
+        host:
+          type: string
+          description: Host is the externally accessible URL for the Coder instance.
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

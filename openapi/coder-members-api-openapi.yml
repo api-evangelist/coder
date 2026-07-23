@@ -1,0 +1,630 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Members API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Members
+paths:
+  /api/v2/organizations/{organization}/members:
+    get:
+      operationId: list-organization-members
+      summary: List organization members
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
+  /api/v2/organizations/{organization}/members/roles:
+    get:
+      operationId: get-member-roles-by-organization
+      summary: Get member roles by organization
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.AssignableRoles'
+    put:
+      operationId: update-a-custom-organization-role
+      summary: Update a custom organization role
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CustomRoleRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Role'
+    post:
+      operationId: insert-a-custom-organization-role
+      summary: Insert a custom organization role
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CustomRoleRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Role'
+  /api/v2/organizations/{organization}/members/roles/{roleName}:
+    delete:
+      operationId: delete-a-custom-organization-role
+      summary: Delete a custom organization role
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: roleName
+        in: path
+        required: true
+        description: Role name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Role'
+  /api/v2/organizations/{organization}/members/{user}:
+    get:
+      operationId: get-organization-member
+      summary: Get organization member
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        description: User ID, name, or me
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
+    post:
+      operationId: add-organization-member
+      summary: Add organization member
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        description: User ID, name, or me
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.OrganizationMember'
+    delete:
+      operationId: remove-organization-member
+      summary: Remove organization member
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        description: User ID, name, or me
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+  /api/v2/organizations/{organization}/members/{user}/roles:
+    put:
+      operationId: assign-role-to-organization-member
+      summary: Assign role to organization member
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        description: User ID, name, or me
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateRoles'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.OrganizationMember'
+  /api/v2/organizations/{organization}/paginated-members:
+    get:
+      operationId: paginated-organization-members
+      summary: Paginated organization members
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: q
+        in: query
+        required: false
+        description: Member search query
+        schema:
+          type: string
+      - name: after_id
+        in: query
+        required: false
+        description: After ID
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Page limit, if 0 returns all members
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        description: Page offset
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.PaginatedMembersResponse'
+  /api/v2/users/roles:
+    get:
+      operationId: get-site-member-roles
+      summary: Get site member roles
+      tags:
+      - Members
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.AssignableRoles'
+components:
+  schemas:
+    codersdk.AssignableRoles:
+      type: object
+      properties:
+        assignable:
+          type: boolean
+        built_in:
+          type: boolean
+          description: BuiltIn roles are immutable
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_member_permissions:
+          type: array
+          description: OrganizationMemberPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        organization_permissions:
+          type: array
+          description: OrganizationPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        site_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        user_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+    codersdk.UpdateRoles:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            type: string
+    codersdk.RBACResource:
+      type: string
+      enum:
+      - '*'
+      - ai_gateway_key
+      - ai_model_price
+      - ai_provider
+      - ai_seat
+      - aibridge_interception
+      - api_key
+      - assign_org_role
+      - assign_role
+      - audit_log
+      - boundary_log
+      - boundary_usage
+      - chat
+      - connection_log
+      - crypto_key
+      - debug_info
+      - deployment_config
+      - deployment_stats
+      - file
+      - group
+      - group_member
+      - idpsync_settings
+      - inbox_notification
+      - license
+      - notification_message
+      - notification_preference
+      - notification_template
+      - oauth2_app
+      - oauth2_app_code_token
+      - oauth2_app_secret
+      - organization
+      - organization_member
+      - prebuilt_workspace
+      - provisioner_daemon
+      - provisioner_jobs
+      - replicas
+      - system
+      - tailnet_coordinator
+      - task
+      - template
+      - usage_event
+      - user
+      - user_secret
+      - user_skill
+      - webpush_subscription
+      - workspace
+      - workspace_agent_devcontainers
+      - workspace_agent_resource_monitor
+      - workspace_dormant
+      - workspace_proxy
+    codersdk.SlimRole:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    codersdk.PaginatedMembersResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.RBACAction:
+      type: string
+      enum:
+      - application_connect
+      - assign
+      - create
+      - create_agent
+      - delete
+      - delete_agent
+      - read
+      - read_personal
+      - ssh
+      - share
+      - unassign
+      - update
+      - update_agent
+      - update_personal
+      - use
+      - view_insights
+      - start
+      - stop
+    codersdk.Permission:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/codersdk.RBACAction'
+        negate:
+          type: boolean
+          description: Negate makes this a negative permission
+        resource_type:
+          $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.OrganizationMemberWithUserData:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+        global_roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        has_ai_seat:
+          type: boolean
+          description: 'HasAISeat intentionally omits omitempty so the API always includes the
+
+            field, even when false.'
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        updated_at:
+          type: string
+          format: date-time
+        user_created_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
+        user_updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+    codersdk.OrganizationMember:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        organization_id:
+          type: string
+          format: uuid
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        updated_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
+    codersdk.CustomRoleRequest:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_member_permissions:
+          type: array
+          description: OrganizationMemberPermissions are specific to the organization the role belongs to.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        organization_permissions:
+          type: array
+          description: OrganizationPermissions are specific to the organization the role belongs to.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        site_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        user_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+    codersdk.Role:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_member_permissions:
+          type: array
+          description: OrganizationMemberPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        organization_permissions:
+          type: array
+          description: OrganizationPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        site_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        user_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

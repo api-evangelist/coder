@@ -1,0 +1,1846 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Chats API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Chats
+paths:
+  /api/experimental/chats:
+    get:
+      operationId: list-chats
+      summary: List chats
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Search query. Supports title:<substring> (case-insensitive, quote multi-word values), archived:bool, has_unread:bool, pr_status:<draft\|open\|merged\|closed> as repeated or comma-separated values, source:<created_by_me\|shared_with_me>, diff_url:<url> (quote values containing colons), pr:<number> (exact PR number match), repo:<owner/repo> (case-insensitive substring match against git remote origin or URL), pr_title:<text> (case-insensitive PR title substring). Bare terms are not supported; use title:<value> for title filtering.
+        schema:
+          type: string
+      - name: label
+        in: query
+        required: false
+        description: Filter by label as key:value. Repeat for multiple (AND logic).
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.Chat'
+    post:
+      operationId: create-chat
+      summary: Create chat
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateChatRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Chat'
+  /api/experimental/chats/config/retention-days:
+    get:
+      operationId: get-chat-retention-days
+      summary: Get chat retention days
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatRetentionDaysResponse'
+    put:
+      operationId: update-chat-retention-days
+      summary: Update chat retention days
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateChatRetentionDaysRequest'
+      responses:
+        '204':
+          description: No Content
+  /api/experimental/chats/files:
+    post:
+      operationId: upload-chat-file
+      summary: Upload chat file
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: organization
+        in: query
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.UploadChatFileResponse'
+  /api/experimental/chats/files/{file}:
+    get:
+      operationId: get-chat-file
+      summary: Get chat file
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: file
+        in: path
+        required: true
+        description: File ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /api/experimental/chats/insights/pull-requests:
+    get:
+      operationId: get-pr-insights
+      summary: Get PR insights
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        description: Start date (RFC3339)
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        required: true
+        description: End date (RFC3339)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.PRInsightsResponse'
+  /api/experimental/chats/models:
+    get:
+      operationId: list-chat-models
+      summary: List chat models
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatModelsResponse'
+  /api/experimental/chats/watch:
+    get:
+      operationId: watch-chat-events-for-a-user-via-websockets
+      summary: Watch chat events for a user via WebSockets
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatWatchEvent'
+  /api/experimental/chats/{chat}:
+    get:
+      operationId: get-chat-by-id
+      summary: Get chat by ID
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Chat'
+    patch:
+      operationId: update-chat
+      summary: Update chat
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateChatRequest'
+      responses:
+        '204':
+          description: No Content
+  /api/experimental/chats/{chat}/acl:
+    get:
+      operationId: get-chat-acls
+      summary: Get chat ACLs
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatACL'
+    patch:
+      operationId: update-chat-acl
+      summary: Update chat ACL
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateChatACL'
+      responses:
+        '204':
+          description: No Content
+  /api/experimental/chats/{chat}/diff:
+    get:
+      operationId: get-chat-diff-contents
+      summary: Get chat diff contents
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatDiffContents'
+  /api/experimental/chats/{chat}/interrupt:
+    post:
+      operationId: interrupt-chat
+      summary: Interrupt chat
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Chat'
+  /api/experimental/chats/{chat}/messages:
+    get:
+      operationId: list-chat-messages
+      summary: List chat messages
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      - name: before_id
+        in: query
+        required: false
+        description: Return messages with id < before_id
+        schema:
+          type: integer
+      - name: after_id
+        in: query
+        required: false
+        description: Return messages with id > after_id
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Page size, 1 to 200. Defaults to 50.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatMessagesResponse'
+    post:
+      operationId: send-chat-message
+      summary: Send chat message
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateChatMessageRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.CreateChatMessageResponse'
+  /api/experimental/chats/{chat}/messages/{message}:
+    patch:
+      operationId: edit-chat-message
+      summary: Edit chat message
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      - name: message
+        in: path
+        required: true
+        description: Message ID
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.EditChatMessageRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.EditChatMessageResponse'
+  /api/experimental/chats/{chat}/prompts:
+    get:
+      operationId: list-chat-user-prompts
+      summary: List chat user prompts
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.
+
+
+        Returns the user-authored prompts in a chat, newest first,
+
+        with each prompt''s text parts concatenated in the order they
+
+        were authored. Used by the composer to power the up/down
+
+        arrow prompt-history cycle without paging through every
+
+        message in the chat.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Page size, 0 to 2000. 0 (the default) means the server-side default of 500.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatPromptsResponse'
+  /api/experimental/chats/{chat}/reconcile-invalid:
+    post:
+      operationId: reconcile-invalid-chat-state
+      summary: Reconcile invalid chat state
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Chat'
+  /api/experimental/chats/{chat}/stream:
+    get:
+      operationId: stream-chat-events-via-websockets
+      summary: Stream chat events via WebSockets
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatStreamEvent'
+  /api/experimental/chats/{chat}/stream/desktop:
+    get:
+      operationId: connect-to-chat-workspace-desktop-via-websockets
+      summary: Connect to chat workspace desktop via WebSockets
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Raw binary WebSocket stream of the chat workspace desktop.
+
+        Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '101':
+          description: Switching Protocols
+  /api/experimental/chats/{chat}/stream/git:
+    get:
+      operationId: watch-chat-workspace-git-state-via-websockets
+      summary: Watch chat workspace git state via WebSockets
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.WorkspaceAgentGitServerMessage'
+  /api/experimental/chats/{chat}/stream/parts:
+    get:
+      operationId: stream-chat-parts-via-websockets
+      summary: Stream chat parts via WebSockets
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ChatStreamEvent'
+  /api/experimental/chats/{chat}/title/regenerate:
+    post:
+      operationId: regenerate-chat-title
+      summary: Regenerate chat title
+      tags:
+      - Chats
+      security:
+      - CoderSessionToken: []
+      description: 'Experimental: this endpoint is subject to change.'
+      parameters:
+      - name: chat
+        in: path
+        required: true
+        description: Chat ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Chat'
+components:
+  schemas:
+    codersdk.ChatDiffStatus:
+      type: object
+      properties:
+        additions:
+          type: integer
+        approved:
+          type: boolean
+        author_avatar_url:
+          type: string
+        author_login:
+          type: string
+        base_branch:
+          type: string
+        changed_files:
+          type: integer
+        changes_requested:
+          type: boolean
+        chat_id:
+          type: string
+          format: uuid
+        commits:
+          type: integer
+        deletions:
+          type: integer
+        head_branch:
+          type: string
+        pr_number:
+          type: integer
+        pull_request_draft:
+          type: boolean
+        pull_request_state:
+          type: string
+        pull_request_title:
+          type: string
+        refreshed_at:
+          type: string
+          format: date-time
+        reviewer_count:
+          type: integer
+        stale_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+    codersdk.ChatModelProviderUnavailableReason:
+      type: string
+      enum:
+      - missing_api_key
+      - fetch_failed
+      - user_api_key_required
+    codersdk.ChatRetentionDaysResponse:
+      type: object
+      properties:
+        retention_days:
+          type: integer
+    codersdk.ChatInputPart:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The code content from the diff that was commented on.
+        end_line:
+          type: integer
+        file_id:
+          type: string
+          format: uuid
+        file_name:
+          type: string
+          description: 'The following fields are only set when Type is
+
+            ChatInputPartTypeFileReference.'
+        start_line:
+          type: integer
+        text:
+          type: string
+        type:
+          $ref: '#/components/schemas/codersdk.ChatInputPartType'
+    codersdk.ChatGroup:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        quota_allowance:
+          type: integer
+        role:
+          enum:
+          - read
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatRole'
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          type: integer
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
+    codersdk.UpdateChatACL:
+      type: object
+      properties:
+        group_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.ChatRole'
+        user_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.ChatRole'
+    codersdk.CreateChatRequest:
+      type: object
+      properties:
+        client_type:
+          $ref: '#/components/schemas/codersdk.ChatClientType'
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatInputPart'
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        mcp_server_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        model_config_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        plan_mode:
+          $ref: '#/components/schemas/codersdk.ChatPlanMode'
+        system_prompt:
+          type: string
+        unsafe_dynamic_tools:
+          type: array
+          description: 'UnsafeDynamicTools declares client-executed tools that the
+
+            LLM can invoke. This API is highly experimental and highly
+
+            subject to change.'
+          items:
+            $ref: '#/components/schemas/codersdk.DynamicTool'
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.ChatStatus:
+      type: string
+      enum:
+      - waiting
+      - pending
+      - running
+      - paused
+      - completed
+      - error
+      - requires_action
+      - interrupting
+    codersdk.ChatInputPartType:
+      type: string
+      enum:
+      - text
+      - file
+      - file-reference
+    codersdk.ReducedUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        id:
+          type: string
+          format: uuid
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        theme_preference:
+          type: string
+          description: 'Deprecated: this value should be retrieved from
+
+            `codersdk.UserPreferenceSettings` instead.'
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+      required:
+      - created_at
+      - email
+      - id
+      - username
+    codersdk.ChatPlanMode:
+      type: string
+      enum:
+      - plan
+    codersdk.ChatModelProvider:
+      type: object
+      properties:
+        available:
+          type: boolean
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatModel'
+        provider:
+          type: string
+        unavailable_reason:
+          $ref: '#/components/schemas/codersdk.ChatModelProviderUnavailableReason'
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    uuid.NullUUID:
+      type: object
+      properties:
+        uuid:
+          type: string
+        valid:
+          type: boolean
+          description: Valid is true if UUID is not NULL
+    codersdk.ChatMessageUsage:
+      type: object
+      properties:
+        cache_creation_tokens:
+          type: integer
+        cache_read_tokens:
+          type: integer
+        context_limit:
+          type: integer
+        input_tokens:
+          type: integer
+        output_tokens:
+          type: integer
+        reasoning_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    codersdk.GroupSource:
+      type: string
+      enum:
+      - user
+      - oidc
+    codersdk.ChatStreamActionRequired:
+      type: object
+      properties:
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatStreamToolCall'
+    codersdk.ChatModel:
+      type: object
+      properties:
+        display_name:
+          type: string
+        id:
+          type: string
+        model:
+          type: string
+        provider:
+          type: string
+    codersdk.ChatErrorKind:
+      type: string
+      enum:
+      - generic
+      - overloaded
+      - rate_limit
+      - timeout
+      - stream_silence_timeout
+      - auth
+      - config
+      - usage_limit
+      - missing_key
+      - provider_disabled
+    codersdk.ChatFileMetadata:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        mime_type:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        owner_id:
+          type: string
+          format: uuid
+    codersdk.ChatWatchEventKind:
+      type: string
+      enum:
+      - status_change
+      - summary_change
+      - title_change
+      - created
+      - deleted
+      - diff_status_change
+      - action_required
+    codersdk.ChatStreamEvent:
+      type: object
+      properties:
+        action_required:
+          $ref: '#/components/schemas/codersdk.ChatStreamActionRequired'
+        chat_id:
+          type: string
+          format: uuid
+        error:
+          $ref: '#/components/schemas/codersdk.ChatError'
+        message:
+          $ref: '#/components/schemas/codersdk.ChatMessage'
+        message_part:
+          $ref: '#/components/schemas/codersdk.ChatStreamMessagePart'
+        queued_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
+        retry:
+          $ref: '#/components/schemas/codersdk.ChatStreamRetry'
+        status:
+          $ref: '#/components/schemas/codersdk.ChatStreamStatus'
+        type:
+          $ref: '#/components/schemas/codersdk.ChatStreamEventType'
+    codersdk.ChatMessage:
+      type: object
+      properties:
+        chat_id:
+          type: string
+          format: uuid
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        id:
+          type: integer
+        model_config_id:
+          type: string
+          format: uuid
+        role:
+          $ref: '#/components/schemas/codersdk.ChatMessageRole'
+        usage:
+          $ref: '#/components/schemas/codersdk.ChatMessageUsage'
+    codersdk.PRInsightsModelBreakdown:
+      type: object
+      properties:
+        cost_per_merged_pr_micros:
+          type: integer
+        display_name:
+          type: string
+        merge_rate:
+          type: number
+        merged_prs:
+          type: integer
+        model_config_id:
+          type: string
+          format: uuid
+        provider:
+          type: string
+        total_additions:
+          type: integer
+        total_cost_micros:
+          type: integer
+        total_deletions:
+          type: integer
+        total_prs:
+          type: integer
+    codersdk.CreateChatMessageRequest:
+      type: object
+      properties:
+        busy_behavior:
+          enum:
+          - queue
+          - interrupt
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatBusyBehavior'
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatInputPart'
+        mcp_server_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        model_config_id:
+          type: string
+          format: uuid
+        plan_mode:
+          description: 'PlanMode switches the chat''s persistent plan mode.
+
+            nil: no change, ptr to "plan": enable, ptr to "": clear.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatPlanMode'
+    codersdk.PRInsightsTimeSeriesEntry:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        prs_closed:
+          type: integer
+        prs_created:
+          type: integer
+        prs_merged:
+          type: integer
+    codersdk.WorkspaceAgentGitServerMessageType:
+      type: string
+      enum:
+      - changes
+      - error
+    codersdk.ChatUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        role:
+          enum:
+          - read
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatRole'
+        username:
+          type: string
+      required:
+      - id
+      - username
+    codersdk.ChatPromptsResponse:
+      type: object
+      properties:
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatPrompt'
+    codersdk.ChatACL:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatGroup'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatUser'
+    codersdk.ChatMessageRole:
+      type: string
+      enum:
+      - system
+      - user
+      - assistant
+      - tool
+    codersdk.ChatRole:
+      type: string
+      enum:
+      - read
+      - ''
+    codersdk.UploadChatFileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+    codersdk.ChatMessagePart:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            type: integer
+        args_delta:
+          type: string
+        completed_at:
+          type: string
+          format: date-time
+          description: 'CompletedAt is the time a reasoning part finished streaming,
+
+            so reasoning duration can be computed as completed_at minus
+
+            created_at. For interrupted reasoning, this is the
+
+            interruption time. Absent when reasoning timestamp data was
+
+            not recorded (e.g. messages persisted before this feature
+
+            was added).'
+        content:
+          type: string
+          description: The code content from the diff that was commented on.
+        context_file_agent_id:
+          format: uuid
+          description: 'ContextFileAgentID is the workspace agent that provided
+
+            this context file. Used to detect when the agent changes
+
+            (e.g. workspace rebuilt) so instruction files can be
+
+            re-persisted with fresh content.'
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        context_file_content:
+          type: string
+          description: 'ContextFileContent holds the file content sent to the LLM.
+
+            Internal only: stripped before API responses to keep
+
+            payloads small. The backend reads it when building the
+
+            prompt via partsToMessageParts.'
+        context_file_directory:
+          type: string
+          description: 'ContextFileDirectory is the working directory of the
+
+            workspace agent. Internal only: same purpose as
+
+            ContextFileOS.'
+        context_file_os:
+          type: string
+          description: 'ContextFileOS is the operating system of the workspace
+
+            agent. Internal only: used during prompt expansion so
+
+            the LLM knows the OS even on turns where InsertSystem
+
+            is not called.'
+        context_file_path:
+          type: string
+          description: 'ContextFilePath is the absolute path of a file loaded into
+
+            the LLM context (e.g. an AGENTS.md instruction file).'
+        context_file_skill_meta_file:
+          type: string
+          description: 'ContextFileSkillMetaFile is the basename of the skill
+
+            meta file (e.g. "SKILL.md") at the time of persistence.
+
+            Internal only: restored on subsequent turns so the
+
+            read_skill tool uses the correct filename even when the
+
+            agent configured a non-default value.'
+        context_file_truncated:
+          type: boolean
+          description: 'ContextFileTruncated indicates the file exceeded the 64KiB
+
+            instruction file limit and was truncated.'
+        created_at:
+          type: string
+          format: date-time
+          description: 'CreatedAt is the timestamp this part carries. The semantics
+
+            depend on the part type: for tool-call and tool-result parts
+
+            it is the time the call was emitted or the result was
+
+            produced (tool duration is the result''s created_at minus the
+
+            call''s created_at); for reasoning parts it is the time
+
+            reasoning started streaming.'
+        data:
+          type: array
+          items:
+            type: integer
+        end_line:
+          type: integer
+        file_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        file_name:
+          type: string
+        is_error:
+          type: boolean
+        is_media:
+          type: boolean
+        mcp_server_config_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        media_type:
+          type: string
+        name:
+          type: string
+        parsed_commands:
+          type: array
+          description: 'ParsedCommands holds parsed programs from an execute tool call''s
+
+            shell command, one entry per simple command in source order. Each
+
+            entry is [program] or [program, arg] where arg is the first non-flag
+
+            positional argument. Program names are normalized to their base
+
+            name (e.g. /usr/bin/go becomes go). Only populated when ToolName
+
+            is "execute" and the command parses successfully; nil otherwise.'
+          items:
+            type: array
+            items:
+              type: string
+        provider_executed:
+          type: boolean
+          description: 'ProviderExecuted indicates the tool call was executed by
+
+            the provider (e.g. Anthropic computer use).'
+        provider_metadata:
+          type: array
+          description: 'ProviderMetadata holds provider-specific response metadata
+
+            (e.g. Anthropic cache control hints) as raw JSON. Internal
+
+            only: stripped by db2sdk before API responses.'
+          items:
+            type: integer
+        result:
+          type: array
+          items:
+            type: integer
+        result_delta:
+          type: string
+        result_reset:
+          type: boolean
+        signature:
+          type: string
+        skill_description:
+          type: string
+          description: 'SkillDescription is the short description from the skill''s
+
+            SKILL.md frontmatter.'
+        skill_dir:
+          type: string
+          description: 'SkillDir is the absolute path to the skill directory inside
+
+            the workspace filesystem. Internal only: used by
+
+            read_skill/read_skill_file tools to locate skill files.'
+        skill_name:
+          type: string
+          description: 'SkillName is the kebab-case name of a discovered skill
+
+            from the workspace''s .agents/skills/ directory.'
+        source_id:
+          type: string
+        start_line:
+          type: integer
+        text:
+          type: string
+        title:
+          type: string
+        tool_call_id:
+          type: string
+        tool_name:
+          type: string
+        type:
+          $ref: '#/components/schemas/codersdk.ChatMessagePartType'
+        url:
+          type: string
+    codersdk.ChatStreamEventType:
+      type: string
+      enum:
+      - message_part
+      - message
+      - status
+      - error
+      - queue_update
+      - retry
+      - action_required
+      - preview_reset
+      - history_reset
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.ChatStreamRetry:
+      type: object
+      properties:
+        attempt:
+          type: integer
+          description: Attempt is the 1-indexed retry attempt number.
+        delay_ms:
+          type: integer
+          description: DelayMs is the backoff delay in milliseconds before the retry.
+        error:
+          type: string
+          description: Error is the normalized error message from the failed attempt.
+        kind:
+          description: Kind classifies the retry reason for consistent client rendering.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatErrorKind'
+        provider:
+          type: string
+          description: Provider identifies the upstream model provider when known.
+        retrying_at:
+          type: string
+          format: date-time
+          description: RetryingAt is the timestamp when the retry will be attempted.
+        status_code:
+          type: integer
+          description: StatusCode is the best-effort upstream HTTP status code.
+    codersdk.UpdateChatRetentionDaysRequest:
+      type: object
+      properties:
+        retention_days:
+          type: integer
+    codersdk.ChatQueuedMessage:
+      type: object
+      properties:
+        chat_id:
+          type: string
+          format: uuid
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: integer
+        model_config_id:
+          type: string
+          format: uuid
+    codersdk.PRInsightsSummary:
+      type: object
+      properties:
+        approval_rate:
+          type: number
+        cost_per_merged_pr_micros:
+          type: integer
+        merge_rate:
+          type: number
+        prev_cost_per_merged_pr_micros:
+          type: integer
+        prev_merge_rate:
+          type: number
+        prev_total_prs_created:
+          type: integer
+        prev_total_prs_merged:
+          type: integer
+        total_additions:
+          type: integer
+        total_cost_micros:
+          type: integer
+        total_deletions:
+          type: integer
+        total_prs_created:
+          type: integer
+        total_prs_merged:
+          type: integer
+    codersdk.ChatMessagesResponse:
+      type: object
+      properties:
+        has_more:
+          type: boolean
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessage'
+        queued_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
+    codersdk.ChatModelsResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatModelProvider'
+    codersdk.EditChatMessageRequest:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatInputPart'
+        model_config_id:
+          type: string
+          format: uuid
+          description: 'ModelConfigID, when set, overrides the model used for the
+
+            replacement user message and the assistant turn that follows.
+
+            When nil the original message''s model is preserved.'
+    codersdk.ChatStreamToolCall:
+      type: object
+      properties:
+        args:
+          type: string
+        tool_call_id:
+          type: string
+        tool_name:
+          type: string
+    codersdk.DynamicTool:
+      type: object
+      properties:
+        description:
+          type: string
+        input_schema:
+          type: array
+          description: 'InputSchema''s JSON key "input_schema" uses snake_case for
+
+            SDK consistency, deviating from the camelCase "inputSchema"
+
+            convention used by MCP.'
+          items:
+            type: integer
+        name:
+          type: string
+    codersdk.UpdateChatRequest:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        pin_order:
+          type: integer
+          description: "PinOrder controls the chat's pinned state and position.\n- nil: no change to pin state.\n- 0: unpin the chat.\n- >0 (chat is unpinned): pin the chat, appending it to\n  the end of the pinned list. The specific value is\n  ignored; the server assigns the next available position.\n- >0 (chat is already pinned): move the chat to the\n  requested position, shifting neighbors as needed. The\n  value is clamped to [1, pinned_count]."
+        plan_mode:
+          description: 'PlanMode switches the chat''s persistent plan mode.
+
+            nil: no change, ptr to "plan": enable, ptr to "": clear.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatPlanMode'
+        title:
+          type: string
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.Chat:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        archived:
+          type: boolean
+        build_id:
+          type: string
+          format: uuid
+        children:
+          type: array
+          description: 'Children holds child (subagent) chats nested under this root
+
+            chat. Always initialized to an empty slice so the JSON field
+
+            is present as []. Child chats cannot create their own
+
+            subagents, so nesting depth is capped at 1 and this slice is
+
+            always empty for child chats.'
+          items:
+            $ref: '#/components/schemas/codersdk.Chat'
+        client_type:
+          $ref: '#/components/schemas/codersdk.ChatClientType'
+        created_at:
+          type: string
+          format: date-time
+        diff_status:
+          $ref: '#/components/schemas/codersdk.ChatDiffStatus'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatFileMetadata'
+        has_unread:
+          type: boolean
+          description: 'HasUnread is true when assistant messages exist beyond
+
+            the owner''s read cursor, which updates on stream
+
+            connect and disconnect.'
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        last_error:
+          $ref: '#/components/schemas/codersdk.ChatError'
+        last_injected_context:
+          type: array
+          description: 'LastInjectedContext holds the most recently persisted
+
+            injected context parts (AGENTS.md files and skills). It
+
+            is updated only when context changes, on first workspace
+
+            attach or agent change.'
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        last_model_config_id:
+          type: string
+          format: uuid
+        last_turn_summary:
+          type: string
+        mcp_server_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        owner_id:
+          type: string
+          format: uuid
+        owner_name:
+          type: string
+        owner_username:
+          type: string
+        parent_chat_id:
+          type: string
+          format: uuid
+        pin_order:
+          type: integer
+        plan_mode:
+          $ref: '#/components/schemas/codersdk.ChatPlanMode'
+        root_chat_id:
+          type: string
+          format: uuid
+        shared:
+          type: boolean
+          description: Shared is true when this chat's root chat has explicit user or group ACL entries.
+        status:
+          $ref: '#/components/schemas/codersdk.ChatStatus'
+        title:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        warnings:
+          type: array
+          items:
+            type: string
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.ChatBusyBehavior:
+      type: string
+      enum:
+      - queue
+      - interrupt
+    codersdk.EditChatMessageResponse:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/codersdk.ChatMessage'
+        warnings:
+          type: array
+          items:
+            type: string
+    codersdk.PRInsightsResponse:
+      type: object
+      properties:
+        by_model:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.PRInsightsModelBreakdown'
+        recent_prs:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.PRInsightsPullRequest'
+        summary:
+          $ref: '#/components/schemas/codersdk.PRInsightsSummary'
+        time_series:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.PRInsightsTimeSeriesEntry'
+    codersdk.WorkspaceAgentRepoChanges:
+      type: object
+      properties:
+        branch:
+          type: string
+        remote_origin:
+          type: string
+        removed:
+          type: boolean
+        repo_root:
+          type: string
+        unified_diff:
+          type: string
+    codersdk.PRInsightsPullRequest:
+      type: object
+      properties:
+        additions:
+          type: integer
+        approved:
+          type: boolean
+        author_avatar_url:
+          type: string
+        author_login:
+          type: string
+        base_branch:
+          type: string
+        changed_files:
+          type: integer
+        changes_requested:
+          type: boolean
+        chat_id:
+          type: string
+          format: uuid
+        commits:
+          type: integer
+        cost_micros:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        deletions:
+          type: integer
+        draft:
+          type: boolean
+        model_display_name:
+          type: string
+        pr_number:
+          type: integer
+        pr_title:
+          type: string
+        pr_url:
+          type: string
+        reviewer_count:
+          type: integer
+        state:
+          type: string
+    codersdk.ChatClientType:
+      type: string
+      enum:
+      - ui
+      - api
+    codersdk.ChatDiffContents:
+      type: object
+      properties:
+        branch:
+          type: string
+        chat_id:
+          type: string
+          format: uuid
+        diff:
+          type: string
+        provider:
+          type: string
+        pull_request_url:
+          type: string
+        remote_origin:
+          type: string
+    codersdk.ChatPrompt:
+      type: object
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+    codersdk.ChatStreamStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/codersdk.ChatStatus'
+    codersdk.ChatStreamMessagePart:
+      type: object
+      properties:
+        generation_attempt:
+          type: integer
+        history_version:
+          type: integer
+        part:
+          $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        role:
+          $ref: '#/components/schemas/codersdk.ChatMessageRole'
+        seq:
+          type: integer
+    codersdk.ChatWatchEvent:
+      type: object
+      properties:
+        chat:
+          $ref: '#/components/schemas/codersdk.Chat'
+        kind:
+          $ref: '#/components/schemas/codersdk.ChatWatchEventKind'
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatStreamToolCall'
+    codersdk.ChatMessagePartType:
+      type: string
+      enum:
+      - text
+      - reasoning
+      - tool-call
+      - tool-result
+      - source
+      - file
+      - file-reference
+      - context-file
+      - skill
+    codersdk.WorkspaceAgentGitServerMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        repositories:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentRepoChanges'
+        scanned_at:
+          type: string
+          format: date-time
+        type:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentGitServerMessageType'
+    codersdk.ChatError:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: 'Detail is optional provider-specific context shown alongside the
+
+            normalized error message when available.'
+        kind:
+          description: Kind classifies the error for consistent client rendering.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatErrorKind'
+        message:
+          type: string
+          description: Message is the normalized, user-facing error message.
+        provider:
+          type: string
+          description: Provider identifies the upstream model provider when known.
+        retryable:
+          type: boolean
+          description: Retryable reports whether the underlying error is transient.
+        status_code:
+          type: integer
+          description: StatusCode is the best-effort upstream HTTP status code.
+    codersdk.CreateChatMessageResponse:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/codersdk.ChatMessage'
+        queued:
+          type: boolean
+        queued_message:
+          $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
+        warnings:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

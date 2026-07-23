@@ -1,0 +1,176 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents PortSharing API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: PortSharing
+paths:
+  /api/v2/workspaces/{workspace}/port-share:
+    get:
+      operationId: get-workspace-agent-port-shares
+      summary: Get workspace agent port shares
+      tags:
+      - PortSharing
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShares'
+    post:
+      operationId: upsert-workspace-agent-port-share
+      summary: Upsert workspace agent port share
+      tags:
+      - PortSharing
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpsertWorkspaceAgentPortShareRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
+    delete:
+      operationId: delete-workspace-agent-port-share
+      summary: Delete workspace agent port share
+      tags:
+      - PortSharing
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: workspace
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.DeleteWorkspaceAgentPortShareRequest'
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    codersdk.WorkspaceAgentPortShares:
+      type: object
+      properties:
+        shares:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
+    codersdk.WorkspaceAgentPortShareLevel:
+      type: string
+      enum:
+      - owner
+      - authenticated
+      - organization
+      - public
+    codersdk.UpsertWorkspaceAgentPortShareRequest:
+      type: object
+      properties:
+        agent_name:
+          type: string
+        port:
+          type: integer
+        protocol:
+          enum:
+          - http
+          - https
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareProtocol'
+        share_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
+    codersdk.WorkspaceAgentPortShare:
+      type: object
+      properties:
+        agent_name:
+          type: string
+        port:
+          type: integer
+        protocol:
+          enum:
+          - http
+          - https
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareProtocol'
+        share_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.DeleteWorkspaceAgentPortShareRequest:
+      type: object
+      properties:
+        agent_name:
+          type: string
+        port:
+          type: integer
+    codersdk.WorkspaceAgentPortShareProtocol:
+      type: string
+      enum:
+      - http
+      - https
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

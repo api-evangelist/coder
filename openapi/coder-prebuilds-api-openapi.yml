@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Prebuilds API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Prebuilds
+paths:
+  /api/v2/prebuilds/settings:
+    get:
+      operationId: get-prebuilds-settings
+      summary: Get prebuilds settings
+      tags:
+      - Prebuilds
+      security:
+      - CoderSessionToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.PrebuildsSettings'
+    put:
+      operationId: update-prebuilds-settings
+      summary: Update prebuilds settings
+      tags:
+      - Prebuilds
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.PrebuildsSettings'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.PrebuildsSettings'
+        '304':
+          description: Not Modified
+components:
+  schemas:
+    codersdk.PrebuildsSettings:
+      type: object
+      properties:
+        reconciliation_paused:
+          type: boolean
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}

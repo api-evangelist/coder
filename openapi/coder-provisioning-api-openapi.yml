@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder Agents Provisioning API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: https://{coderHost}/api/v2
+  description: Coder instance
+  variables:
+    coderHost:
+      default: coder.example.com
+      description: Your Coder deployment hostname
+security:
+- CoderSessionToken: []
+tags:
+- name: Provisioning
+paths:
+  /api/v2/organizations/{organization}/provisionerdaemons:
+    get:
+      operationId: get-provisioner-daemons
+      summary: Get provisioner daemons
+      tags:
+      - Provisioning
+      security:
+      - CoderSessionToken: []
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        description: Organization ID
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Page limit
+        schema:
+          type: integer
+      - name: ids
+        in: query
+        required: false
+        description: Filter results by job IDs
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Filter results by status
+        schema:
+          type: string
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          - unknown
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+      - name: tags
+        in: query
+        required: false
+        description: Provisioner tags to filter by (JSON of the form {'tag1':'value1','tag2':'value2'})
+        schema:
+          type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.ProvisionerDaemon'
+components:
+  schemas:
+    codersdk.ProvisionerDaemonStatus:
+      type: string
+      enum:
+      - offline
+      - idle
+      - busy
+    codersdk.ProvisionerDaemon:
+      type: object
+      properties:
+        api_version:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        current_job:
+          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
+        id:
+          type: string
+          format: uuid
+        key_id:
+          type: string
+          format: uuid
+        key_name:
+          type: string
+          description: Optional fields.
+        last_seen_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        previous_job:
+          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
+        provisioners:
+          type: array
+          items:
+            type: string
+        status:
+          enum:
+          - offline
+          - idle
+          - busy
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerDaemonStatus'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        version:
+          type: string
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+    codersdk.ProvisionerDaemonJob:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_name:
+          type: string
+  securitySchemes:
+    CoderSessionToken:
+      type: apiKey
+      in: header
+      name: Coder-Session-Token
+externalDocs: {}
