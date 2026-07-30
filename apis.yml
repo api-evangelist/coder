@@ -14,7 +14,20 @@ description: >-
   (codersdk) and a Terraform provider; a CLI with 40+ subcommands is also
   available for full programmatic control.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/coder.png
 tags:
   - Developer Tools
   - Remote Development
@@ -27,103 +40,402 @@ created: '2026-06-12'
 modified: '2026-06-12'
 specificationVersion: '0.19'
 apis:
-  - aid: coder:rest-api
-    name: Coder REST API
-    description: >-
-      The core Coder REST API v2 provides comprehensive HTTP endpoints for
-      managing workspaces, templates, users, organizations, workspace agents,
-      audit logs, deployments, licensing, and enterprise features. Authentication
-      uses a session token passed via the Coder-Session-Token HTTP header.
-    humanURL: https://coder.com/docs/reference/api
-    baseURL: https://coder.example.com/api/v2
-    tags:
-      - Workspaces
-      - Templates
-      - Users
-      - Organizations
-      - Agents
-    properties:
-      - type: Documentation
-        url: https://coder.com/docs/reference/api
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/coder/coder/main/coderd/apidoc/swagger.json
-  - aid: coder:workspaces-api
-    name: Coder Workspaces API
-    description: >-
-      Endpoints for creating, retrieving, updating, and managing workspace
-      lifecycle including autostart schedules, time-to-live settings, dormancy
-      controls, ACLs, and real-time monitoring via server-sent events and
-      WebSockets.
-    humanURL: https://coder.com/docs/reference/api/workspaces
-    tags:
-      - Workspaces
-      - Lifecycle
-      - ACL
-    properties:
-      - type: Documentation
-        url: https://coder.com/docs/reference/api/workspaces
-  - aid: coder:templates-api
-    name: Coder Templates API
-    description: >-
-      Endpoints for creating, listing, updating, and archiving workspace
-      templates and template versions within organizations; supports examples,
-      daily active user metrics, and version management.
-    humanURL: https://coder.com/docs/reference/api/templates
-    tags:
-      - Templates
-      - Versions
-      - Organizations
-    properties:
-      - type: Documentation
-        url: https://coder.com/docs/reference/api/templates
-  - aid: coder:users-api
-    name: Coder Users API
-    description: >-
-      Endpoints for user management including creation, authentication, SSH key
-      management, API token/key lifecycle, role assignment, organization
-      membership, and OIDC/GitHub OAuth integration.
-    humanURL: https://coder.com/docs/reference/api/users
-    tags:
-      - Users
-      - Authentication
-      - OAuth
-      - Tokens
-    properties:
-      - type: Documentation
-        url: https://coder.com/docs/reference/api/users
-  - aid: coder:agents-api
-    name: Coder Workspace Agents API
-    description: >-
-      Endpoints for workspace agent lifecycle, authentication (AWS/Azure/GCP
-      instance identity), PTY terminal access, container management,
-      listening-port enumeration, log streaming, and WireGuard/Tailnet
-      coordination via WebSocket.
-    humanURL: https://coder.com/docs/reference/api/agents
-    tags:
-      - Agents
-      - Workspaces
-      - Networking
-      - Containers
-    properties:
-      - type: Documentation
-        url: https://coder.com/docs/reference/api/agents
-  - aid: coder:enterprise-api
-    name: Coder Enterprise API
-    description: >-
-      Enterprise-only endpoints covering OAuth2 provider management, licensing
-      and entitlements, group and RBAC management, AI spending budgets,
-      organization-level IdP sync, provisioner key management, and connection
-      audit logging.
-    humanURL: https://coder.com/docs/reference/api/enterprise
-    tags:
-      - Enterprise
-      - Licensing
-      - Groups
-      - RBAC
-      - Audit
-    properties:
-      - type: Documentation
-        url: https://coder.com/docs/reference/api/enterprise
+- aid: coder:workspaces-api
+  name: Coder Workspaces API
+  description: >-
+    Endpoints for creating, retrieving, updating, and managing workspace lifecycle including autostart
+    schedules, time-to-live settings, dormancy controls, ACLs, and real-time monitoring via server-sent
+    events and WebSockets.
+  humanURL: https://coder.com/docs/reference/api/workspaces
+  tags:
+  - Workspaces
+  - Lifecycle
+  - ACL
+  properties:
+  - type: Documentation
+    url: https://coder.com/docs/reference/api/workspaces
+- aid: coder:templates-api
+  name: Coder Templates API
+  description: >-
+    Endpoints for creating, listing, updating, and archiving workspace templates and template versions
+    within organizations; supports examples, daily active user metrics, and version management.
+  humanURL: https://coder.com/docs/reference/api/templates
+  tags:
+  - Templates
+  - Versions
+  - Organizations
+  properties:
+  - type: Documentation
+    url: https://coder.com/docs/reference/api/templates
+- aid: coder:users-api
+  name: Coder Users API
+  description: >-
+    Endpoints for user management including creation, authentication, SSH key management, API token/key
+    lifecycle, role assignment, organization membership, and OIDC/GitHub OAuth integration.
+  humanURL: https://coder.com/docs/reference/api/users
+  tags:
+  - Users
+  - Authentication
+  - OAuth
+  - Tokens
+  properties:
+  - type: Documentation
+    url: https://coder.com/docs/reference/api/users
+- aid: coder:agents-api
+  name: Coder Workspace Agents API
+  description: >-
+    Endpoints for workspace agent lifecycle, authentication (AWS/Azure/GCP instance identity), PTY terminal
+    access, container management, listening-port enumeration, log streaming, and WireGuard/Tailnet coordination
+    via WebSocket.
+  humanURL: https://coder.com/docs/reference/api/agents
+  tags:
+  - Agents
+  - Workspaces
+  - Networking
+  - Containers
+  properties:
+  - type: Documentation
+    url: https://coder.com/docs/reference/api/agents
+- aid: coder:enterprise-api
+  name: Coder Enterprise API
+  description: >-
+    Enterprise-only endpoints covering OAuth2 provider management, licensing and entitlements, group and
+    RBAC management, AI spending budgets, organization-level IdP sync, provisioner key management, and
+    connection audit logging.
+  humanURL: https://coder.com/docs/reference/api/enterprise
+  tags:
+  - Enterprise
+  - Licensing
+  - Groups
+  - RBAC
+  - Audit
+  properties:
+  - type: Documentation
+    url: https://coder.com/docs/reference/api/enterprise
+- aid: coder:coder-agents-api
+  name: Coder Agents API
+  description: The Agents API from Coder — 28 operation(s) for agents.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-agents-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-ai-bridge-api
+  name: Coder AI Bridge API
+  description: The AI Bridge API from Coder — 4 operation(s) for ai bridge.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - AI Bridge
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-ai-bridge-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-ai-providers-api
+  name: Coder AI Providers API
+  description: The AI Providers API from Coder — 2 operation(s) for ai providers.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - AI Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-ai-providers-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-applications-api
+  name: Coder Applications API
+  description: The Applications API from Coder — 2 operation(s) for applications.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-applications-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-audit-api
+  name: Coder Audit API
+  description: The Audit API from Coder — 2 operation(s) for audit.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Audit
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-audit-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-authorization-api
+  name: Coder Authorization API
+  description: The Authorization API from Coder — 7 operation(s) for authorization.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-authorization-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-builds-api
+  name: Coder Builds API
+  description: The Builds API from Coder — 9 operation(s) for builds.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Builds
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-builds-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-chats-api
+  name: Coder Chats API
+  description: The Chats API from Coder — 20 operation(s) for chats.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Chats
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-chats-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-debug-api
+  name: Coder Debug API
+  description: The Debug API from Coder — 14 operation(s) for debug.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Debug
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-debug-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-enterprise-api
+  name: Coder Enterprise API
+  description: The Enterprise API from Coder — 67 operation(s) for enterprise.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Enterprise
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-enterprise-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-files-api
+  name: Coder Files API
+  description: The Files API from Coder — 2 operation(s) for files.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-files-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-general-api
+  name: Coder General API
+  description: The General API from Coder — 10 operation(s) for general.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - General
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-general-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-git-api
+  name: Coder Git API
+  description: The Git API from Coder — 3 operation(s) for git.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Git
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-git-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-initscript-api
+  name: Coder InitScript API
+  description: The InitScript API from Coder — 1 operation(s) for initscript.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - InitScript
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-initscript-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-insights-api
+  name: Coder Insights API
+  description: The Insights API from Coder — 5 operation(s) for insights.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Insights
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-insights-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-members-api
+  name: Coder Members API
+  description: The Members API from Coder — 7 operation(s) for members.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-members-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-notifications-api
+  name: Coder Notifications API
+  description: The Notifications API from Coder — 13 operation(s) for notifications.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-organizations-api
+  name: Coder Organizations API
+  description: The Organizations API from Coder — 4 operation(s) for organizations.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-portsharing-api
+  name: Coder PortSharing API
+  description: The PortSharing API from Coder — 1 operation(s) for portsharing.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - PortSharing
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-portsharing-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-prebuilds-api
+  name: Coder Prebuilds API
+  description: The Prebuilds API from Coder — 1 operation(s) for prebuilds.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Prebuilds
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-prebuilds-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-provisioning-api
+  name: Coder Provisioning API
+  description: The Provisioning API from Coder — 1 operation(s) for provisioning.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-provisioning-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-secrets-api
+  name: Coder Secrets API
+  description: The Secrets API from Coder — 2 operation(s) for secrets.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-secrets-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-tasks-api
+  name: Coder Tasks API
+  description: The Tasks API from Coder — 9 operation(s) for tasks.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-templates-api
+  name: Coder Templates API
+  description: The Templates API from Coder — 33 operation(s) for templates.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-templates-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-users-api
+  name: Coder Users API
+  description: The Users API from Coder — 28 operation(s) for users.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-users-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-workspaceproxies-api
+  name: Coder WorkspaceProxies API
+  description: The WorkspaceProxies API from Coder — 1 operation(s) for workspaceproxies.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - WorkspaceProxies
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-workspaceproxies-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-workspaces-api
+  name: Coder Workspaces API
+  description: The Workspaces API from Coder — 20 operation(s) for workspaces.
+  humanURL: https://coder.com/docs/reference/api
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
 common:
   - type: AgenticAccess
     url: agentic-access/coder-agentic-access.yml
