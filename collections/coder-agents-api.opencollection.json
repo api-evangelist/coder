@@ -1,0 +1,758 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Debug OIDC context for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/:user/debug-link",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug OIDC context for a user"
+        },
+        {
+          "info": {
+            "name": "Get DERP map updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/derp-map",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get DERP map updates"
+        },
+        {
+          "info": {
+            "name": "User-scoped tailnet RPC connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/tailnet",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "User-scoped tailnet RPC connection"
+        },
+        {
+          "info": {
+            "name": "Authenticate agent on AWS instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/aws-instance-identity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticate agent on AWS instance"
+        },
+        {
+          "info": {
+            "name": "Authenticate agent on Azure instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/azure-instance-identity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticate agent on Azure instance"
+        },
+        {
+          "info": {
+            "name": "Get connection info for workspace agent generic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/connection",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get connection info for workspace agent generic"
+        },
+        {
+          "info": {
+            "name": "Authenticate agent on Google Cloud instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/google-instance-identity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticate agent on Google Cloud instance"
+        },
+        {
+          "info": {
+            "name": "Patch workspace agent app status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/app-status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Patch workspace agent app status"
+        },
+        {
+          "info": {
+            "name": "Get workspace agent external auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/external-auth",
+            "params": [
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Match"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Provider ID"
+              },
+              {
+                "name": "listen",
+                "value": "",
+                "type": "query",
+                "description": "Wait for a new token to be issued"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace agent external auth"
+        },
+        {
+          "info": {
+            "name": "Removed: Get workspace agent git auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/gitauth",
+            "params": [
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Match"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Provider ID"
+              },
+              {
+                "name": "listen",
+                "value": "",
+                "type": "query",
+                "description": "Wait for a new token to be issued"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removed: Get workspace agent git auth"
+        },
+        {
+          "info": {
+            "name": "Get workspace agent Git SSH key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/gitsshkey",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace agent Git SSH key"
+        },
+        {
+          "info": {
+            "name": "Post workspace agent log source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/log-source",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Post workspace agent log source"
+        },
+        {
+          "info": {
+            "name": "Patch workspace agent logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/logs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Patch workspace agent logs"
+        },
+        {
+          "info": {
+            "name": "Get workspace agent reinitialization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/reinit",
+            "params": [
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query",
+                "description": "Opt in to durable reinit checks"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace agent reinitialization"
+        },
+        {
+          "info": {
+            "name": "Workspace agent RPC API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/rpc",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Workspace agent RPC API"
+        },
+        {
+          "info": {
+            "name": "Get workspace agent by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace agent by ID"
+        },
+        {
+          "info": {
+            "name": "Get connection info for workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/connection",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get connection info for workspace agent"
+        },
+        {
+          "info": {
+            "name": "Get running containers for workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/containers",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Labels"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get running containers for workspace agent"
+        },
+        {
+          "info": {
+            "name": "Delete devcontainer for workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/containers/devcontainers/:devcontainer",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              },
+              {
+                "name": "devcontainer",
+                "value": "",
+                "type": "path",
+                "description": "Devcontainer ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete devcontainer for workspace agent"
+        },
+        {
+          "info": {
+            "name": "Recreate devcontainer for workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/containers/devcontainers/:devcontainer/recreate",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              },
+              {
+                "name": "devcontainer",
+                "value": "",
+                "type": "path",
+                "description": "Devcontainer ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Recreate devcontainer for workspace agent"
+        },
+        {
+          "info": {
+            "name": "Watch workspace agent for container updates.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/containers/watch",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Watch workspace agent for container updates."
+        },
+        {
+          "info": {
+            "name": "Coordinate workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/coordinate",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Coordinate workspace agent"
+        },
+        {
+          "info": {
+            "name": "Get listening ports for workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/listening-ports",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get listening ports for workspace agent"
+        },
+        {
+          "info": {
+            "name": "Get logs by workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/logs",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Before log id"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "After log id"
+              },
+              {
+                "name": "follow",
+                "value": "",
+                "type": "query",
+                "description": "Follow log stream"
+              },
+              {
+                "name": "no_compression",
+                "value": "",
+                "type": "query",
+                "description": "Disable compression for WebSocket connection"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Log output format. Accepted: 'json' (default), 'text' (plain text with RFC3339 timestamps and ANSI colors). Not supported with follow=true."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get logs by workspace agent"
+        },
+        {
+          "info": {
+            "name": "Open PTY to workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/pty",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Open PTY to workspace agent"
+        },
+        {
+          "info": {
+            "name": "Removed: Get logs by workspace agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/startup-logs",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Before log id"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "After log id"
+              },
+              {
+                "name": "follow",
+                "value": "",
+                "type": "query",
+                "description": "Follow log stream"
+              },
+              {
+                "name": "no_compression",
+                "value": "",
+                "type": "query",
+                "description": "Disable compression for WebSocket connection"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removed: Get logs by workspace agent"
+        },
+        {
+          "info": {
+            "name": "Watch for workspace agent metadata updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/watch-metadata",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Watch for workspace agent metadata updates"
+        },
+        {
+          "info": {
+            "name": "Watch for workspace agent metadata updates via WebSockets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/:workspaceagent/watch-metadata-ws",
+            "params": [
+              {
+                "name": "workspaceagent",
+                "value": "",
+                "type": "path",
+                "description": "Workspace agent ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Watch for workspace agent metadata updates via WebSockets"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

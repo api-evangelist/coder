@@ -1,0 +1,592 @@
+{
+  "item": [
+    {
+      "id": "6c428e91-318f-464b-aaec-10f34581f62e",
+      "name": "AI Bridge",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c8ba6f02-dd36-4b08-9c09-d9d42bb0086b",
+          "name": "List AI Bridge clients",
+          "request": {
+            "name": "List AI Bridge clients",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "aibridge",
+                "clients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d2c42ed2-f022-492b-bd22-846cd68709d9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "aibridge",
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10f0431c-5f47-44aa-b7f8-1c9e4a9ebf57",
+          "name": "List AI Bridge models",
+          "request": {
+            "name": "List AI Bridge models",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "aibridge",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "de5cf70c-2129-4e09-aa04-c8e548cea2c8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "aibridge",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ed848dd-01ce-4f0e-a561-9c4ff7ba57c6",
+          "name": "List AI Bridge sessions",
+          "request": {
+            "name": "List AI Bridge sessions",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "aibridge",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query in the format `key:value`. Available keys are: initiator, provider, provider_name, model, client, session_id, started_after, started_before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Page limit"
+                },
+                {
+                  "disabled": false,
+                  "key": "after_session_id",
+                  "value": "<string>",
+                  "description": "Cursor pagination after session ID (cannot be used with offset)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Offset pagination (cannot be used with after_session_id)"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "179ccf46-54b0-425c-9629-b878160d9553",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "aibridge",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after_session_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3329,\n  \"sessions\": [\n    {\n      \"client\": \"string\",\n      \"ended_at\": \"2014-04-15T23:33:35.887Z\",\n      \"id\": \"string\",\n      \"initiator\": {\n        \"id\": \"40389e0c-614f-686c-e1b9-99848699193a\",\n        \"username\": \"string\",\n        \"avatar_url\": \"https://xhotWRLAOzghTNgIgKkwJReCSiaG.wtMNHTgcoQqsDVDS7JzLONNj8uF\",\n        \"name\": \"string\"\n      },\n      \"last_active_at\": \"1965-08-01T17:24:03.037Z\",\n      \"last_prompt\": \"string\",\n      \"metadata\": {\n        \"key_0\": {}\n      },\n      \"models\": [\n        \"string\",\n        \"string\"\n      ],\n      \"providers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"started_at\": \"1980-10-19T00:06:39.375Z\",\n      \"threads\": 9980,\n      \"token_usage_summary\": {\n        \"cache_read_input_tokens\": 4941,\n        \"cache_write_input_tokens\": 6091,\n        \"input_tokens\": 9423,\n        \"output_tokens\": 9054\n      }\n    },\n    {\n      \"client\": \"string\",\n      \"ended_at\": \"1975-06-14T09:47:05.539Z\",\n      \"id\": \"string\",\n      \"initiator\": {\n        \"id\": \"49197c34-29bc-fbeb-ca0e-c9e592b9d181\",\n        \"username\": \"string\",\n        \"avatar_url\": \"https://aXcSFFyLV.tyarTskMRlFWwYX3Q8YN\",\n        \"name\": \"string\"\n      },\n      \"last_active_at\": \"1994-12-30T09:14:31.597Z\",\n      \"last_prompt\": \"string\",\n      \"metadata\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      },\n      \"models\": [\n        \"string\",\n        \"string\"\n      ],\n      \"providers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"started_at\": \"1963-04-29T04:48:53.594Z\",\n      \"threads\": 3555,\n      \"token_usage_summary\": {\n        \"cache_read_input_tokens\": 7346,\n        \"cache_write_input_tokens\": 3016,\n        \"input_tokens\": 4282,\n        \"output_tokens\": 7298\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e226b979-f539-43f4-8180-a0c5d4e31cc1",
+          "name": "Get AI Bridge session threads",
+          "request": {
+            "name": "Get AI Bridge session threads",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "aibridge",
+                "sessions",
+                ":session_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after_id",
+                  "value": "<string>",
+                  "description": "Thread pagination cursor (forward/older)"
+                },
+                {
+                  "disabled": false,
+                  "key": "before_id",
+                  "value": "<string>",
+                  "description": "Thread pagination cursor (backward/newer)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of threads per page (default 50)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) Session ID (client_session_id or interception UUID)"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "78fdeecd-1507-477c-abe8-aee5b8ae42aa",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "aibridge",
+                    "sessions",
+                    ":session_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) Session ID (client_session_id or interception UUID)"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"client\": \"string\",\n  \"ended_at\": \"1973-09-06T15:08:01.889Z\",\n  \"id\": \"string\",\n  \"initiator\": {\n    \"id\": \"ae1af1d0-0563-3aa1-34f3-4d367692452d\",\n    \"username\": \"string\",\n    \"avatar_url\": \"https://cxoDls.vfmvOTRL\",\n    \"name\": \"string\"\n  },\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"models\": [\n    \"string\",\n    \"string\"\n  ],\n  \"page_ended_at\": \"1983-09-06T15:03:51.482Z\",\n  \"page_started_at\": \"1979-04-05T17:57:22.675Z\",\n  \"providers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"started_at\": \"1958-11-13T23:49:10.795Z\",\n  \"threads\": [\n    {\n      \"agentic_actions\": [\n        {\n          \"model\": \"string\",\n          \"thinking\": [\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"token_usage\": {\n            \"cache_read_input_tokens\": 1973,\n            \"cache_write_input_tokens\": 4321,\n            \"input_tokens\": 2404,\n            \"metadata\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"output_tokens\": 7902\n          },\n          \"tool_calls\": [\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"model\": \"string\",\n          \"thinking\": [\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"token_usage\": {\n            \"cache_read_input_tokens\": 1944,\n            \"cache_write_input_tokens\": 4243,\n            \"input_tokens\": 3803,\n            \"metadata\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"output_tokens\": 3858\n          },\n          \"tool_calls\": [\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"credential_hint\": \"string\",\n      \"credential_kind\": \"string\",\n      \"ended_at\": \"1974-09-02T00:18:31.666Z\",\n      \"id\": \"0121693b-703c-6ea6-b789-532984ae3b9d\",\n      \"model\": \"string\",\n      \"prompt\": \"string\",\n      \"provider\": \"string\",\n      \"started_at\": \"1947-01-30T01:50:17.945Z\",\n      \"token_usage\": {\n        \"cache_read_input_tokens\": 8821,\n        \"cache_write_input_tokens\": 6205,\n        \"input_tokens\": 6799,\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {}\n        },\n        \"output_tokens\": 6312\n      }\n    },\n    {\n      \"agentic_actions\": [\n        {\n          \"model\": \"string\",\n          \"thinking\": [\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"token_usage\": {\n            \"cache_read_input_tokens\": 5118,\n            \"cache_write_input_tokens\": 9739,\n            \"input_tokens\": 8826,\n            \"metadata\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"output_tokens\": 1778\n          },\n          \"tool_calls\": [\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"model\": \"string\",\n          \"thinking\": [\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"text\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"token_usage\": {\n            \"cache_read_input_tokens\": 746,\n            \"cache_write_input_tokens\": 1862,\n            \"input_tokens\": 5689,\n            \"metadata\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"output_tokens\": 1176\n          },\n          \"tool_calls\": [\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"injected\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"input\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interception_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"metadata\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"provider_response_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"server_url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tool\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"credential_hint\": \"string\",\n      \"credential_kind\": \"string\",\n      \"ended_at\": \"2022-11-02T13:11:14.317Z\",\n      \"id\": \"d8e6a3bf-2736-4ea6-9056-8cf93332027d\",\n      \"model\": \"string\",\n      \"prompt\": \"string\",\n      \"provider\": \"string\",\n      \"started_at\": \"1947-11-28T12:46:42.585Z\",\n      \"token_usage\": {\n        \"cache_read_input_tokens\": 803,\n        \"cache_write_input_tokens\": 6860,\n        \"input_tokens\": 7645,\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"output_tokens\": 653\n      }\n    }\n  ],\n  \"token_usage_summary\": {\n    \"cache_read_input_tokens\": 3876,\n    \"cache_write_input_tokens\": 6272,\n    \"input_tokens\": 3634,\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"output_tokens\": 2948\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c7698aed-fcd7-4844-a1f1-240836b17f62",
+    "name": "Coder Agents AI Bridge API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

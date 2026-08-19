@@ -1,0 +1,1680 @@
+{
+  "item": [
+    {
+      "id": "681bb252-5249-482c-98ac-fd7272366b67",
+      "name": "Debug",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff05a102-550b-43a1-8c05-e6f24257cf27",
+          "name": "Debug Info Wireguard Coordinator",
+          "request": {
+            "name": "Debug Info Wireguard Coordinator",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "coordinator"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3194b5ec-1f0a-426c-b224-5477d1771232",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "coordinator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d49445b-cfb8-4975-a5b9-204fd44c3ff7",
+          "name": "Debug DERP traffic",
+          "request": {
+            "name": "Debug DERP traffic",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "derp",
+                "traffic"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0a35ee2c-669a-428e-8b7b-cc3a4c6783cb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "derp",
+                    "traffic"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key\": {},\n    \"recv\": 6178,\n    \"sent\": 8164\n  },\n  {\n    \"key\": {},\n    \"recv\": 6789,\n    \"sent\": 4709\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58a1c707-3c47-43e6-b090-cbb603b1ec07",
+          "name": "Debug expvar",
+          "request": {
+            "name": "Debug expvar",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "expvar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e25891a6-6caa-463c-a934-1a78af22cbc4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "expvar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dcbb1871-7ad9-454f-986e-b71e4e69d504",
+          "name": "Debug Info Deployment Health",
+          "request": {
+            "name": "Debug Info Deployment Health",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "Force a healthcheck to run"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "07bedad1-834a-4867-b62b-8cc140c40bc8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_url\": {\n    \"access_url\": \"string\",\n    \"dismissed\": true,\n    \"error\": \"string\",\n    \"healthy\": false,\n    \"healthz_response\": \"string\",\n    \"reachable\": true,\n    \"severity\": \"error\",\n    \"status_code\": 8334,\n    \"warnings\": [\n      {\n        \"code\": \"EDERP03\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"EWS02\",\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"coder_version\": \"string\",\n  \"database\": {\n    \"dismissed\": true,\n    \"error\": \"string\",\n    \"healthy\": false,\n    \"latency\": \"string\",\n    \"latency_ms\": 290,\n    \"reachable\": false,\n    \"severity\": \"warning\",\n    \"threshold_ms\": 6102,\n    \"warnings\": [\n      {\n        \"code\": \"EWS02\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"EWP04\",\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"derp\": {\n    \"dismissed\": true,\n    \"error\": \"string\",\n    \"healthy\": false,\n    \"netcheck\": {\n      \"captivePortal\": \"string\",\n      \"globalV4\": \"string\",\n      \"globalV6\": \"string\",\n      \"hairPinning\": \"string\",\n      \"icmpv4\": true,\n      \"ipv4\": true,\n      \"ipv4CanSend\": true,\n      \"ipv6\": true,\n      \"ipv6CanSend\": false,\n      \"mappingVariesByDestIP\": \"string\",\n      \"oshasIPv6\": true,\n      \"pcp\": \"string\",\n      \"pmp\": \"string\",\n      \"preferredDERP\": 7996,\n      \"regionLatency\": {\n        \"key_0\": 5164,\n        \"key_1\": 8917\n      },\n      \"regionV4Latency\": {\n        \"key_0\": 7319\n      },\n      \"regionV6Latency\": {\n        \"key_0\": 9653,\n        \"key_1\": 9671\n      },\n      \"udp\": false,\n      \"upnP\": \"string\"\n    },\n    \"netcheck_err\": \"string\",\n    \"netcheck_logs\": [\n      \"string\",\n      \"string\"\n    ],\n    \"regions\": {\n      \"key_0\": {\n        \"error\": \"string\",\n        \"healthy\": true,\n        \"node_reports\": [\n          {\n            \"can_exchange_messages\": true,\n            \"client_errs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"client_logs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"error\": \"string\",\n            \"healthy\": true,\n            \"node\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"node_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"round_trip_ping\": \"string\",\n            \"round_trip_ping_ms\": 8702,\n            \"severity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"stun\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uses_websocket\": true,\n            \"warnings\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"can_exchange_messages\": false,\n            \"client_errs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"client_logs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"error\": \"string\",\n            \"healthy\": false,\n            \"node\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"node_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"round_trip_ping\": \"string\",\n            \"round_trip_ping_ms\": 5214,\n            \"severity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"stun\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uses_websocket\": false,\n            \"warnings\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"region\": {\n          \"avoid\": true,\n          \"embeddedRelay\": true,\n          \"nodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"regionCode\": \"string\",\n          \"regionID\": 2109,\n          \"regionName\": \"string\"\n        },\n        \"severity\": \"error\",\n        \"warnings\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          }\n        ]\n      },\n      \"key_1\": {\n        \"error\": \"string\",\n        \"healthy\": false,\n        \"node_reports\": [\n          {\n            \"can_exchange_messages\": false,\n            \"client_errs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"client_logs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"error\": \"string\",\n            \"healthy\": false,\n            \"node\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"node_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"round_trip_ping\": \"string\",\n            \"round_trip_ping_ms\": 6463,\n            \"severity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"stun\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uses_websocket\": false,\n            \"warnings\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"can_exchange_messages\": true,\n            \"client_errs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"client_logs\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"error\": \"string\",\n            \"healthy\": false,\n            \"node\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"node_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"round_trip_ping\": \"string\",\n            \"round_trip_ping_ms\": 773,\n            \"severity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"stun\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uses_websocket\": true,\n            \"warnings\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"region\": {\n          \"avoid\": false,\n          \"embeddedRelay\": false,\n          \"nodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"regionCode\": \"string\",\n          \"regionID\": 7252,\n          \"regionName\": \"string\"\n        },\n        \"severity\": \"warning\",\n        \"warnings\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          }\n        ]\n      }\n    },\n    \"severity\": \"error\",\n    \"warnings\": [\n      {\n        \"code\": \"EWS03\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"EPD03\",\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"healthy\": true,\n  \"provisioner_daemons\": {\n    \"dismissed\": false,\n    \"error\": \"string\",\n    \"items\": [\n      {\n        \"provisioner_daemon\": {\n          \"api_version\": \"string\",\n          \"created_at\": \"2016-01-15T02:51:26.024Z\",\n          \"current_job\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_display_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"id\": \"c1a11169-466d-2e8a-8084-cf7cff30ae37\",\n          \"key_id\": \"34d4287d-8687-3fa7-bd1b-e7beca0c428c\",\n          \"key_name\": \"string\",\n          \"last_seen_at\": \"2018-12-27T11:31:03.722Z\",\n          \"name\": \"string\",\n          \"organization_id\": \"9aa67b83-dc65-d458-c468-f1908a20d97b\",\n          \"previous_job\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_display_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"provisioners\": [\n            \"string\",\n            \"string\"\n          ],\n          \"status\": \"string\",\n          \"tags\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"version\": \"string\"\n        },\n        \"warnings\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          }\n        ]\n      },\n      {\n        \"provisioner_daemon\": {\n          \"api_version\": \"string\",\n          \"created_at\": \"1975-03-08T17:15:19.785Z\",\n          \"current_job\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_display_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"id\": \"9555794c-3c1c-5e7c-04df-13058427cca1\",\n          \"key_id\": \"eb4e4268-56aa-3715-c527-9a1f86824d66\",\n          \"key_name\": \"string\",\n          \"last_seen_at\": \"1961-11-08T21:02:24.826Z\",\n          \"name\": \"string\",\n          \"organization_id\": \"e7f85a3f-83af-5193-a61f-507aad9a4ef7\",\n          \"previous_job\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_display_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"template_name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"provisioners\": [\n            \"string\",\n            \"string\"\n          ],\n          \"status\": \"string\",\n          \"tags\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\"\n          },\n          \"version\": \"string\"\n        },\n        \"warnings\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"severity\": \"ok\",\n    \"warnings\": [\n      {\n        \"code\": \"EDB02\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"EDERP01\",\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"severity\": \"error\",\n  \"time\": \"1986-07-18T02:52:48.650Z\",\n  \"websocket\": {\n    \"body\": \"string\",\n    \"code\": 2036,\n    \"dismissed\": false,\n    \"error\": \"string\",\n    \"healthy\": true,\n    \"severity\": \"error\",\n    \"warnings\": [\n      {\n        \"code\": \"EACS01\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"EACS04\",\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"workspace_proxy\": {\n    \"dismissed\": false,\n    \"error\": \"string\",\n    \"healthy\": true,\n    \"severity\": \"error\",\n    \"warnings\": [\n      {\n        \"code\": \"EACS01\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"EPD02\",\n        \"message\": \"string\"\n      }\n    ],\n    \"workspace_proxies\": {\n      \"regions\": [\n        {\n          \"created_at\": \"1993-07-09T17:30:12.574Z\",\n          \"deleted\": false,\n          \"derp_enabled\": true,\n          \"derp_only\": true,\n          \"display_name\": \"string\",\n          \"healthy\": false,\n          \"icon_url\": \"string\",\n          \"id\": \"048e0e85-fceb-deb3-92b4-919afd9f65e4\",\n          \"name\": \"string\",\n          \"path_app_url\": \"string\",\n          \"status\": {\n            \"description\": \"Status is the latest status check of the proxy. This will be empty for deleted\\nproxies. This value can be used to determine if a workspace proxy is healthy\\nand ready to use.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": \"1997-07-22T22:26:12.782Z\",\n          \"version\": \"string\",\n          \"wildcard_hostname\": \"string\"\n        },\n        {\n          \"created_at\": \"2008-06-04T16:24:26.785Z\",\n          \"deleted\": false,\n          \"derp_enabled\": false,\n          \"derp_only\": true,\n          \"display_name\": \"string\",\n          \"healthy\": false,\n          \"icon_url\": \"string\",\n          \"id\": \"703e3b2f-baf3-a505-9762-7d634298d415\",\n          \"name\": \"string\",\n          \"path_app_url\": \"string\",\n          \"status\": {\n            \"description\": \"Status is the latest status check of the proxy. This will be empty for deleted\\nproxies. This value can be used to determine if a workspace proxy is healthy\\nand ready to use.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": \"2023-05-22T15:56:27.685Z\",\n          \"version\": \"string\",\n          \"wildcard_hostname\": \"string\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb5bdc5e-dc8f-4778-8d4a-0f859b73f434",
+          "name": "Get health settings",
+          "request": {
+            "name": "Get health settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "health",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "38081aeb-6b20-4623-a71b-c4e71a1f185d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "health",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dismissed_healthchecks\": [\n    \"AccessURL\",\n    \"DERP\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e27485cc-ba8c-47c2-b3d7-277a21391fe5",
+          "name": "Update health settings",
+          "request": {
+            "name": "Update health settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "health",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dismissed_healthchecks\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "462aebf8-bab1-49d3-8171-1dcc1f6746f2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "health",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dismissed_healthchecks\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dismissed_healthchecks\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9091b362-4983-4f89-b914-d9ae1e71e0d1",
+          "name": "Debug metrics",
+          "request": {
+            "name": "Debug metrics",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4bd889fb-4872-4c77-8925-c285297edd97",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be4274c4-55df-40fa-904c-4635aafe8688",
+          "name": "Debug pprof index",
+          "request": {
+            "name": "Debug pprof index",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "pprof"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "66848d27-5952-43c5-be14-2c6a1eba1733",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "pprof"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "83fca840-4a20-4a27-9c85-44424ec4724c",
+          "name": "Debug pprof cmdline",
+          "request": {
+            "name": "Debug pprof cmdline",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "pprof",
+                "cmdline"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "de71b423-ca00-4981-8791-341d0a71c072",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "pprof",
+                    "cmdline"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "057f2c7f-ae43-4e59-8145-4b6678be005a",
+          "name": "Debug pprof profile",
+          "request": {
+            "name": "Debug pprof profile",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "pprof",
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "072692c8-ec8a-4a4e-8639-891116b735bd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "pprof",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c7caac3-9f7c-4c9f-925b-88ae3584614e",
+          "name": "Debug pprof symbol",
+          "request": {
+            "name": "Debug pprof symbol",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "pprof",
+                "symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "395c847a-c69d-4457-b130-73e996b5524c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "pprof",
+                    "symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ff3d134-58c5-4280-94de-db6edeae231c",
+          "name": "Debug pprof trace",
+          "request": {
+            "name": "Debug pprof trace",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "pprof",
+                "trace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3811bda1-5c81-4e83-beae-ffee2e1a3310",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "pprof",
+                    "trace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2fa1ea3-9564-4b91-9513-7b5c71c3d712",
+          "name": "Collect debug profiles",
+          "request": {
+            "name": "Collect debug profiles",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e3ad0930-02a1-448f-9d5f-672dea544e84",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cbdb2d24-ff51-41ca-bac8-e3482cd675b5",
+          "name": "Debug Info Tailnet",
+          "request": {
+            "name": "Debug Info Tailnet",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "tailnet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5d2909cf-ff41-4bca-bdf8-e284724dadc5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "tailnet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45eff7b1-b9c9-4ad4-aa3e-58417246fbbc",
+          "name": "Debug Info Websocket Test",
+          "request": {
+            "name": "Debug Info Websocket Test",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                "ws"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "84f29bb5-7dfc-4717-b4c7-e89c3bf4c13d",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    "ws"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"message\": \"string\",\n  \"validations\": [\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0c55b1b1-5982-418f-92a1-a2ad57746c49",
+    "name": "Coder Agents Debug API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

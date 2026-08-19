@@ -1,0 +1,340 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Tasks API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List AI tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query for filtering tasks. Supports: owner:<username/uuid/me>, organization:<org-name/uuid>, status:<status>"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List AI tasks"
+        },
+        {
+          "info": {
+            "name": "Create a new AI task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new AI task"
+        },
+        {
+          "info": {
+            "name": "Get AI task by ID or name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user/:task",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              },
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID, or task name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get AI task by ID or name"
+        },
+        {
+          "info": {
+            "name": "Delete AI task",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user/:task",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              },
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID, or task name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete AI task"
+        },
+        {
+          "info": {
+            "name": "Update AI task input",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user/:task/input",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              },
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID, or task name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update AI task input"
+        },
+        {
+          "info": {
+            "name": "Get AI task logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user/:task/logs",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              },
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID, or task name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get AI task logs"
+        },
+        {
+          "info": {
+            "name": "Pause task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user/:task/pause",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              },
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Pause task"
+        },
+        {
+          "info": {
+            "name": "Resume task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user/:task/resume",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              },
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resume task"
+        },
+        {
+          "info": {
+            "name": "Send input to AI task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/tasks/:user/:task/send",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, user ID, or 'me' for the authenticated user"
+              },
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID, or task name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send input to AI task"
+        },
+        {
+          "info": {
+            "name": "Upload task log snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceagents/me/tasks/:task/log-snapshot",
+            "params": [
+              {
+                "name": "task",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Snapshot format"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upload task log snapshot"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

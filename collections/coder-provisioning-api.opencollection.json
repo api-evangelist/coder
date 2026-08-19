@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Provisioning API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Provisioning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get provisioner daemons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerdaemons",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by job IDs"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by status"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Provisioner tags to filter by (JSON of the form {'tag1':'value1','tag2':'value2'})"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get provisioner daemons"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

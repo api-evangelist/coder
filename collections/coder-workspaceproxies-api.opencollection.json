@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents WorkspaceProxies API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WorkspaceProxies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get site-wide regions for workspace connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/regions",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get site-wide regions for workspace connections"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

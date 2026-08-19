@@ -1,0 +1,282 @@
+{
+  "item": [
+    {
+      "id": "1c6ce390-8c66-41cb-a3d4-40ca9262a03e",
+      "name": "Applications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38296aa3-1447-4ca1-a1c5-0cabf5aeb25e",
+          "name": "Redirect to URI with encrypted API key",
+          "request": {
+            "name": "Redirect to URI with encrypted API key",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "applications",
+                "auth-redirect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<string>",
+                  "description": "Redirect destination"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6f78f393-e155-4bd9-adaa-ac27935cfe7d",
+              "name": "Temporary Redirect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "applications",
+                    "auth-redirect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "redirect_uri",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Temporary Redirect (since HTTP/1.1)",
+              "code": 307,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d50fd21-85d8-4174-86ad-42157906eb15",
+          "name": "Get applications host",
+          "request": {
+            "name": "Get applications host",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "applications",
+                "host"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b94a9082-f62b-4cba-8d3d-04631c96ef17",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "applications",
+                    "host"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"host\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6dde39e9-ddf4-4be5-aa76-f51bf2a684a2",
+    "name": "Coder Agents Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

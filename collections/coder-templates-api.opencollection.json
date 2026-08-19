@@ -1,0 +1,1130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Templates API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get templates by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/templates",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of templates for the specified organization.\nBy default, only non-deprecated templates are returned.\nTo include deprecated templates, specify `deprecated:true` in the search query."
+        },
+        {
+          "info": {
+            "name": "Create template by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/templates",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create template by organization"
+        },
+        {
+          "info": {
+            "name": "Get template examples by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/templates/examples",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template examples by organization"
+        },
+        {
+          "info": {
+            "name": "Get templates by organization and template name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/templates/:templatename",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "templatename",
+                "value": "",
+                "type": "path",
+                "description": "Template name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get templates by organization and template name"
+        },
+        {
+          "info": {
+            "name": "Get template version by organization, template, and name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/templates/:templatename/versions/:templateversionname",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "templatename",
+                "value": "",
+                "type": "path",
+                "description": "Template name"
+              },
+              {
+                "name": "templateversionname",
+                "value": "",
+                "type": "path",
+                "description": "Template version name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version by organization, template, and name"
+        },
+        {
+          "info": {
+            "name": "Get previous template version by organization, template, and name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/templates/:templatename/versions/:templateversionname/previous",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "templatename",
+                "value": "",
+                "type": "path",
+                "description": "Template name"
+              },
+              {
+                "name": "templateversionname",
+                "value": "",
+                "type": "path",
+                "description": "Template version name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get previous template version by organization, template, and name"
+        },
+        {
+          "info": {
+            "name": "Create template version by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/templateversions",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create template version by organization"
+        },
+        {
+          "info": {
+            "name": "Get all templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of templates.\nBy default, only non-deprecated templates are returned.\nTo include deprecated templates, specify `deprecated:true` in the search query."
+        },
+        {
+          "info": {
+            "name": "Get template examples",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/examples",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template examples"
+        },
+        {
+          "info": {
+            "name": "Get template settings by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template settings by ID"
+        },
+        {
+          "info": {
+            "name": "Update template settings by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update template settings by ID"
+        },
+        {
+          "info": {
+            "name": "Delete template by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete template by ID"
+        },
+        {
+          "info": {
+            "name": "Get template DAUs by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/daus",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template DAUs by ID"
+        },
+        {
+          "info": {
+            "name": "List template versions by template ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/versions",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              },
+              {
+                "name": "after_id",
+                "value": "",
+                "type": "query",
+                "description": "After ID"
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Include archived versions in the list"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page offset"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List template versions by template ID"
+        },
+        {
+          "info": {
+            "name": "Update active template version by template ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/versions",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update active template version by template ID"
+        },
+        {
+          "info": {
+            "name": "Archive template unused versions by template id",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/versions/archive",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Archive template unused versions by template id"
+        },
+        {
+          "info": {
+            "name": "Get template version by template ID and name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/versions/:templateversionname",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              },
+              {
+                "name": "templateversionname",
+                "value": "",
+                "type": "path",
+                "description": "Template version name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version by template ID and name"
+        },
+        {
+          "info": {
+            "name": "Get template version by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version by ID"
+        },
+        {
+          "info": {
+            "name": "Patch template version by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Patch template version by ID"
+        },
+        {
+          "info": {
+            "name": "Archive template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/archive",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Archive template version"
+        },
+        {
+          "info": {
+            "name": "Cancel template version by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/cancel",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancel template version by ID"
+        },
+        {
+          "info": {
+            "name": "Create template version dry-run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dry-run",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create template version dry-run"
+        },
+        {
+          "info": {
+            "name": "Get template version dry-run by job ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dry-run/:jobID",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              },
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version dry-run by job ID"
+        },
+        {
+          "info": {
+            "name": "Cancel template version dry-run by job ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dry-run/:jobID/cancel",
+            "params": [
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancel template version dry-run by job ID"
+        },
+        {
+          "info": {
+            "name": "Get template version dry-run logs by job ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dry-run/:jobID/logs",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              },
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Before Unix timestamp"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "After Unix timestamp"
+              },
+              {
+                "name": "follow",
+                "value": "",
+                "type": "query",
+                "description": "Follow log stream"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Log output format. Accepted: 'json' (default), 'text' (plain text with RFC3339 timestamps and ANSI colors). Not supported with follow=true."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version dry-run logs by job ID"
+        },
+        {
+          "info": {
+            "name": "Get template version dry-run matched provisioners",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dry-run/:jobID/matched-provisioners",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              },
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version dry-run matched provisioners"
+        },
+        {
+          "info": {
+            "name": "Get template version dry-run resources by job ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dry-run/:jobID/resources",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              },
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version dry-run resources by job ID"
+        },
+        {
+          "info": {
+            "name": "Open dynamic parameters WebSocket by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dynamic-parameters",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Open dynamic parameters WebSocket by template version"
+        },
+        {
+          "info": {
+            "name": "Evaluate dynamic parameters for template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/dynamic-parameters/evaluate",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Evaluate dynamic parameters for template version"
+        },
+        {
+          "info": {
+            "name": "Get external auth by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/external-auth",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get external auth by template version"
+        },
+        {
+          "info": {
+            "name": "Get logs by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/logs",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Before log id"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "After log id"
+              },
+              {
+                "name": "follow",
+                "value": "",
+                "type": "query",
+                "description": "Follow log stream"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Log output format. Accepted: 'json' (default), 'text' (plain text with RFC3339 timestamps and ANSI colors). Not supported with follow=true."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get logs by template version"
+        },
+        {
+          "info": {
+            "name": "Removed: Get parameters by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/parameters",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removed: Get parameters by template version"
+        },
+        {
+          "info": {
+            "name": "Get template version presets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/presets",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template version presets"
+        },
+        {
+          "info": {
+            "name": "Get resources by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/resources",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get resources by template version"
+        },
+        {
+          "info": {
+            "name": "Get rich parameters by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/rich-parameters",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get rich parameters by template version"
+        },
+        {
+          "info": {
+            "name": "Removed: Get schema by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/schema",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removed: Get schema by template version"
+        },
+        {
+          "info": {
+            "name": "Unarchive template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/unarchive",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unarchive template version"
+        },
+        {
+          "info": {
+            "name": "Get template variables by template version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templateversions/:templateversion/variables",
+            "params": [
+              {
+                "name": "templateversion",
+                "value": "",
+                "type": "path",
+                "description": "Template version ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template variables by template version"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

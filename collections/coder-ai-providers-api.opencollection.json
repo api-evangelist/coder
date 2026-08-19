@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents AI Providers API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List AI providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/ai/providers",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List AI providers"
+        },
+        {
+          "info": {
+            "name": "Create an AI provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/ai/providers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create an AI provider"
+        },
+        {
+          "info": {
+            "name": "Get an AI provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/ai/providers/:idOrName",
+            "params": [
+              {
+                "name": "idOrName",
+                "value": "",
+                "type": "path",
+                "description": "Provider ID or name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get an AI provider"
+        },
+        {
+          "info": {
+            "name": "Update an AI provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/ai/providers/:idOrName",
+            "params": [
+              {
+                "name": "idOrName",
+                "value": "",
+                "type": "path",
+                "description": "Provider ID or name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update an AI provider"
+        },
+        {
+          "info": {
+            "name": "Delete an AI provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/ai/providers/:idOrName",
+            "params": [
+              {
+                "name": "idOrName",
+                "value": "",
+                "type": "path",
+                "description": "Provider ID or name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete an AI provider"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

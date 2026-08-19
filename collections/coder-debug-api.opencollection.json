@@ -1,0 +1,293 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Debug API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Debug",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Debug Info Wireguard Coordinator",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/coordinator",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug Info Wireguard Coordinator"
+        },
+        {
+          "info": {
+            "name": "Debug DERP traffic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/derp/traffic",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug DERP traffic"
+        },
+        {
+          "info": {
+            "name": "Debug expvar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/expvar",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug expvar"
+        },
+        {
+          "info": {
+            "name": "Debug Info Deployment Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/health",
+            "params": [
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Force a healthcheck to run"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug Info Deployment Health"
+        },
+        {
+          "info": {
+            "name": "Get health settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/health/settings",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get health settings"
+        },
+        {
+          "info": {
+            "name": "Update health settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/health/settings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update health settings"
+        },
+        {
+          "info": {
+            "name": "Debug metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/metrics",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug metrics"
+        },
+        {
+          "info": {
+            "name": "Debug pprof index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/pprof",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug pprof index"
+        },
+        {
+          "info": {
+            "name": "Debug pprof cmdline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/pprof/cmdline",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug pprof cmdline"
+        },
+        {
+          "info": {
+            "name": "Debug pprof profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/pprof/profile",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug pprof profile"
+        },
+        {
+          "info": {
+            "name": "Debug pprof symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/pprof/symbol",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug pprof symbol"
+        },
+        {
+          "info": {
+            "name": "Debug pprof trace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/pprof/trace",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug pprof trace"
+        },
+        {
+          "info": {
+            "name": "Collect debug profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/profile",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Collect debug profiles"
+        },
+        {
+          "info": {
+            "name": "Debug Info Tailnet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/tailnet",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug Info Tailnet"
+        },
+        {
+          "info": {
+            "name": "Debug Info Websocket Test",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/debug/ws",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Debug Info Websocket Test"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

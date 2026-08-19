@@ -1,0 +1,1193 @@
+{
+  "item": [
+    {
+      "id": "aeb57bb0-80f6-4c57-9e18-2dbea66b9f0f",
+      "name": "General",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1525cf22-6495-4edb-96e2-98d52329ce3f",
+          "name": "API root handler",
+          "request": {
+            "name": "API root handler",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "031ef9f7-039d-4063-be74-2aa9dcd45ef6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"message\": \"string\",\n  \"validations\": [\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5701c871-0d94-457c-a32d-2dc23e5cb93d",
+          "name": "Build info",
+          "request": {
+            "name": "Build info",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "buildinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fd0647bb-59cd-49d1-be3d-c53eb2aa6f54",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "buildinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"agent_api_version\": \"string\",\n  \"dashboard_url\": \"string\",\n  \"deployment_id\": \"string\",\n  \"external_url\": \"string\",\n  \"provisioner_api_version\": \"string\",\n  \"telemetry\": true,\n  \"upgrade_message\": \"string\",\n  \"version\": \"string\",\n  \"webpush_public_key\": \"string\",\n  \"workspace_proxy\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5aa80b3b-4bdd-46c4-a7c0-12e91736ae74",
+          "name": "Report CSP violations",
+          "request": {
+            "name": "Report CSP violations",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "csp",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"csp-report\": {\n    \"key_0\": 5548.726897309104,\n    \"key_1\": 424,\n    \"key_2\": 16.78089462436305,\n    \"key_3\": 6547\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1124d02b-5097-46a7-94e1-a789a86afbc5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "csp",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"csp-report\": {\n    \"key_0\": false,\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d292e73a-c003-40cc-9117-61873ceee473",
+          "name": "Get deployment config",
+          "request": {
+            "name": "Get deployment config",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "deployment",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cd9392ac-dd12-4943-9ca5-8c524f5b6151",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "deployment",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"config\": {\n    \"access_url\": {\n      \"forceQuery\": true,\n      \"fragment\": \"string\",\n      \"host\": \"string\",\n      \"omitHost\": true,\n      \"opaque\": \"string\",\n      \"path\": \"string\",\n      \"rawFragment\": \"string\",\n      \"rawPath\": \"string\",\n      \"rawQuery\": \"string\",\n      \"scheme\": \"string\",\n      \"user\": {}\n    },\n    \"additional_csp_policy\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"host\": \"string\",\n      \"port\": \"string\"\n    },\n    \"agent_fallback_troubleshooting_url\": {\n      \"forceQuery\": false,\n      \"fragment\": \"string\",\n      \"host\": \"string\",\n      \"omitHost\": false,\n      \"opaque\": \"string\",\n      \"path\": \"string\",\n      \"rawFragment\": \"string\",\n      \"rawPath\": \"string\",\n      \"rawQuery\": \"string\",\n      \"scheme\": \"string\",\n      \"user\": {}\n    },\n    \"agent_stat_refresh_interval\": 8863,\n    \"ai\": {\n      \"aibridge_proxy\": {\n        \"allowed_private_cidrs\": [\n          \"string\",\n          \"string\"\n        ],\n        \"api_dump_dir\": \"string\",\n        \"cert_file\": \"string\",\n        \"domain_allowlist\": [\n          \"string\",\n          \"string\"\n        ],\n        \"enabled\": true,\n        \"key_file\": \"string\",\n        \"listen_addr\": \"string\",\n        \"tls_cert_file\": \"string\",\n        \"tls_key_file\": \"string\",\n        \"upstream_proxy\": \"string\",\n        \"upstream_proxy_ca\": \"string\"\n      },\n      \"bridge\": {\n        \"allow_byok\": true,\n        \"anthropic\": {\n          \"base_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"api_dump_dir\": \"string\",\n        \"bedrock\": {\n          \"access_key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"access_key_secret\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"base_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"small_fast_model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"budget_period\": \"string\",\n        \"budget_policy\": \"string\",\n        \"circuit_breaker_enabled\": false,\n        \"circuit_breaker_failure_threshold\": 5242,\n        \"circuit_breaker_interval\": 4654,\n        \"circuit_breaker_max_requests\": 2078,\n        \"circuit_breaker_timeout\": 5883,\n        \"enabled\": false,\n        \"inject_coder_mcp_tools\": true,\n        \"max_concurrency\": 7197,\n        \"openai\": {\n          \"base_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"providers\": [\n          {\n            \"base_url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bedrock_model\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bedrock_region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bedrock_small_fast_model\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"base_url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bedrock_model\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bedrock_region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bedrock_small_fast_model\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"rate_limit\": 6968,\n        \"retention\": 5330,\n        \"send_actor_headers\": true,\n        \"structured_logging\": true\n      },\n      \"chat\": {\n        \"acquire_batch_size\": 3486,\n        \"debug_logging_enabled\": false\n      }\n    },\n    \"allow_workspace_renames\": false,\n    \"autobuild_poll_interval\": 9799,\n    \"browser_only\": false,\n    \"cache_directory\": \"string\",\n    \"cli_upgrade_message\": \"string\",\n    \"config\": \"string\",\n    \"config_ssh\": {\n      \"deploymentName\": \"string\",\n      \"sshconfigOptions\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"dangerous\": {\n      \"allow_all_cors\": false,\n      \"allow_path_app_sharing\": true,\n      \"allow_path_app_site_owner_access\": true\n    },\n    \"derp\": {\n      \"config\": {\n        \"block_direct\": false,\n        \"force_websockets\": true,\n        \"path\": \"string\",\n        \"url\": \"string\"\n      },\n      \"server\": {\n        \"enable\": true,\n        \"region_code\": \"string\",\n        \"region_id\": 9907,\n        \"region_name\": \"string\",\n        \"relay_url\": {\n          \"forceQuery\": false,\n          \"fragment\": \"string\",\n          \"host\": \"string\",\n          \"omitHost\": true,\n          \"opaque\": \"string\",\n          \"path\": \"string\",\n          \"rawFragment\": \"string\",\n          \"rawPath\": \"string\",\n          \"rawQuery\": \"string\",\n          \"scheme\": \"string\",\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"stun_addresses\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    \"disable_chat_sharing\": false,\n    \"disable_owner_workspace_exec\": false,\n    \"disable_password_auth\": true,\n    \"disable_path_apps\": false,\n    \"disable_workspace_sharing\": false,\n    \"docs_url\": {\n      \"forceQuery\": true,\n      \"fragment\": \"string\",\n      \"host\": \"string\",\n      \"omitHost\": true,\n      \"opaque\": \"string\",\n      \"path\": \"string\",\n      \"rawFragment\": \"string\",\n      \"rawPath\": \"string\",\n      \"rawQuery\": \"string\",\n      \"scheme\": \"string\",\n      \"user\": {}\n    },\n    \"enable_authz_recording\": true,\n    \"enable_terraform_debug_mode\": false,\n    \"ephemeral_deployment\": true,\n    \"experiments\": [\n      \"string\",\n      \"string\"\n    ],\n    \"external_auth\": {\n      \"value\": [\n        {\n          \"api_base_url\": \"string\",\n          \"app_install_url\": \"string\",\n          \"app_installations_url\": \"string\",\n          \"auth_url\": \"string\",\n          \"client_id\": \"string\",\n          \"code_challenge_methods_supported\": [\n            \"string\",\n            \"string\"\n          ],\n          \"device_code_url\": \"string\",\n          \"device_flow\": true,\n          \"display_icon\": \"string\",\n          \"display_name\": \"string\",\n          \"id\": \"string\",\n          \"mcp_tool_allow_regex\": \"string\",\n          \"mcp_tool_deny_regex\": \"string\",\n          \"mcp_url\": \"string\",\n          \"no_refresh\": false,\n          \"regex\": \"string\",\n          \"revoke_url\": \"string\",\n          \"scopes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"token_url\": \"string\",\n          \"type\": \"string\",\n          \"validate_url\": \"string\"\n        },\n        {\n          \"api_base_url\": \"string\",\n          \"app_install_url\": \"string\",\n          \"app_installations_url\": \"string\",\n          \"auth_url\": \"string\",\n          \"client_id\": \"string\",\n          \"code_challenge_methods_supported\": [\n            \"string\",\n            \"string\"\n          ],\n          \"device_code_url\": \"string\",\n          \"device_flow\": false,\n          \"display_icon\": \"string\",\n          \"display_name\": \"string\",\n          \"id\": \"string\",\n          \"mcp_tool_allow_regex\": \"string\",\n          \"mcp_tool_deny_regex\": \"string\",\n          \"mcp_url\": \"string\",\n          \"no_refresh\": true,\n          \"regex\": \"string\",\n          \"revoke_url\": \"string\",\n          \"scopes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"token_url\": \"string\",\n          \"type\": \"string\",\n          \"validate_url\": \"string\"\n        }\n      ]\n    },\n    \"external_auth_github_default_provider_enable\": true,\n    \"external_token_encryption_keys\": [\n      \"string\",\n      \"string\"\n    ],\n    \"healthcheck\": {\n      \"refresh\": 3378,\n      \"threshold_database\": 9552\n    },\n    \"hide_ai_tasks\": false,\n    \"http_address\": \"string\",\n    \"http_cookies\": {\n      \"host_prefix\": true,\n      \"same_site\": \"string\",\n      \"secure_auth_cookie\": false\n    },\n    \"job_hang_detector_interval\": 2294,\n    \"logging\": {\n      \"human\": \"string\",\n      \"json\": \"string\",\n      \"log_filter\": [\n        \"string\",\n        \"string\"\n      ],\n      \"stackdriver\": \"string\"\n    },\n    \"metrics_cache_refresh_interval\": 3975,\n    \"notifications\": {\n      \"dispatch_timeout\": 9841,\n      \"email\": {\n        \"auth\": {\n          \"description\": \"Authentication details.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"force_tls\": false,\n        \"from\": \"string\",\n        \"hello\": \"string\",\n        \"smarthost\": \"string\",\n        \"tls\": {\n          \"description\": \"TLS details.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"fetch_interval\": 2308,\n      \"inbox\": {\n        \"enabled\": true\n      },\n      \"lease_count\": 2381,\n      \"lease_period\": 4623,\n      \"max_send_attempts\": 3326,\n      \"method\": \"string\",\n      \"retry_interval\": 9478,\n      \"sync_buffer_size\": 6261,\n      \"sync_interval\": 5752,\n      \"webhook\": {\n        \"endpoint\": {\n          \"description\": \"The URL to which the payload will be sent with an HTTP POST request.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"oauth2\": {\n      \"github\": {\n        \"allow_everyone\": false,\n        \"allow_signups\": false,\n        \"allowed_orgs\": [\n          \"string\",\n          \"string\"\n        ],\n        \"allowed_teams\": [\n          \"string\",\n          \"string\"\n        ],\n        \"client_id\": \"string\",\n        \"client_secret\": \"string\",\n        \"default_provider_enable\": true,\n        \"device_flow\": false,\n        \"enterprise_base_url\": \"string\"\n      }\n    },\n    \"oidc\": {\n      \"allow_signups\": true,\n      \"auth_url_params\": {},\n      \"client_cert_file\": \"string\",\n      \"client_id\": \"string\",\n      \"client_key_file\": \"string\",\n      \"client_secret\": \"string\",\n      \"email_domain\": [\n        \"string\",\n        \"string\"\n      ],\n      \"email_field\": \"string\",\n      \"group_allow_list\": [\n        \"string\",\n        \"string\"\n      ],\n      \"group_auto_create\": false,\n      \"group_mapping\": {},\n      \"group_regex_filter\": {},\n      \"groups_field\": \"string\",\n      \"icon_url\": {\n        \"forceQuery\": false,\n        \"fragment\": \"string\",\n        \"host\": \"string\",\n        \"omitHost\": true,\n        \"opaque\": \"string\",\n        \"path\": \"string\",\n        \"rawFragment\": \"string\",\n        \"rawPath\": \"string\",\n        \"rawQuery\": \"string\",\n        \"scheme\": \"string\",\n        \"user\": {}\n      },\n      \"ignore_email_verified\": false,\n      \"ignore_user_info\": true,\n      \"issuer_url\": \"string\",\n      \"name_field\": \"string\",\n      \"organization_assign_default\": false,\n      \"organization_field\": \"string\",\n      \"organization_mapping\": {},\n      \"redirect_url\": {\n        \"forceQuery\": true,\n        \"fragment\": \"string\",\n        \"host\": \"string\",\n        \"omitHost\": true,\n        \"opaque\": \"string\",\n        \"path\": \"string\",\n        \"rawFragment\": \"string\",\n        \"rawPath\": \"string\",\n        \"rawQuery\": \"string\",\n        \"scheme\": \"string\",\n        \"user\": {\n          \"description\": \"username and password information\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"scopes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sign_in_text\": \"string\",\n      \"signups_disabled_text\": \"string\",\n      \"skip_issuer_checks\": true,\n      \"source_user_info_from_access_token\": false,\n      \"user_role_field\": \"string\",\n      \"user_role_mapping\": {},\n      \"user_roles_default\": [\n        \"string\",\n        \"string\"\n      ],\n      \"username_field\": \"string\"\n    },\n    \"pg_auth\": \"string\",\n    \"pg_conn_max_idle\": \"string\",\n    \"pg_conn_max_open\": 9342,\n    \"pg_connection_url\": \"string\",\n    \"pprof\": {\n      \"address\": {\n        \"host\": \"string\",\n        \"port\": \"string\"\n      },\n      \"enable\": false\n    },\n    \"prometheus\": {\n      \"address\": {\n        \"host\": \"string\",\n        \"port\": \"string\"\n      },\n      \"aggregate_agent_stats_by\": [\n        \"string\",\n        \"string\"\n      ],\n      \"collect_agent_stats\": true,\n      \"collect_db_metrics\": false,\n      \"enable\": true\n    },\n    \"provisioner\": {\n      \"daemon_poll_interval\": 8634,\n      \"daemon_poll_jitter\": 9602,\n      \"daemon_psk\": \"string\",\n      \"daemon_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"daemons\": 3240,\n      \"force_cancel_interval\": 4283\n    },\n    \"proxy_health_status_interval\": 2130,\n    \"proxy_trusted_headers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"proxy_trusted_origins\": [\n      \"string\",\n      \"string\"\n    ],\n    \"rate_limit\": {\n      \"api\": 6388,\n      \"disable_all\": false\n    },\n    \"redirect_to_access_url\": false,\n    \"retention\": {\n      \"api_keys\": 455,\n      \"audit_logs\": 2094,\n      \"connection_logs\": 4234,\n      \"workspace_agent_logs\": 2362\n    },\n    \"scim_api_key\": \"string\",\n    \"scim_use_legacy\": false,\n    \"session_lifetime\": {\n      \"default_duration\": 2922,\n      \"default_token_lifetime\": 6354,\n      \"disable_expiry_refresh\": false,\n      \"max_admin_token_lifetime\": 5970,\n      \"max_token_lifetime\": 804,\n      \"refresh_default_duration\": 3082\n    },\n    \"ssh_keygen_algorithm\": \"string\",\n    \"stats_collection\": {\n      \"usage_stats\": {\n        \"enable\": false\n      }\n    },\n    \"strict_transport_security\": 8574,\n    \"strict_transport_security_options\": [\n      \"string\",\n      \"string\"\n    ],\n    \"support\": {\n      \"links\": {\n        \"value\": [\n          {\n            \"icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"location\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"target\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"location\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"target\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"swagger\": {\n      \"enable\": true\n    },\n    \"telemetry\": {\n      \"enable\": false,\n      \"trace\": false,\n      \"url\": {\n        \"forceQuery\": false,\n        \"fragment\": \"string\",\n        \"host\": \"string\",\n        \"omitHost\": true,\n        \"opaque\": \"string\",\n        \"path\": \"string\",\n        \"rawFragment\": \"string\",\n        \"rawPath\": \"string\",\n        \"rawQuery\": \"string\",\n        \"scheme\": \"string\",\n        \"user\": {}\n      }\n    },\n    \"template_builder\": {\n      \"disabled\": true,\n      \"registry_url\": \"string\"\n    },\n    \"terms_of_service_url\": \"string\",\n    \"tls\": {\n      \"address\": {\n        \"host\": \"string\",\n        \"port\": \"string\"\n      },\n      \"allow_insecure_ciphers\": false,\n      \"cert_file\": [\n        \"string\",\n        \"string\"\n      ],\n      \"client_auth\": \"string\",\n      \"client_ca_file\": \"string\",\n      \"client_cert_file\": \"string\",\n      \"client_key_file\": \"string\",\n      \"enable\": false,\n      \"key_file\": [\n        \"string\",\n        \"string\"\n      ],\n      \"min_version\": \"string\",\n      \"redirect_http\": true,\n      \"supported_ciphers\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"trace\": {\n      \"capture_logs\": true,\n      \"data_dog\": true,\n      \"enable\": false,\n      \"honeycomb_api_key\": \"string\"\n    },\n    \"update_check\": true,\n    \"user_quiet_hours_schedule\": {\n      \"allow_user_custom\": true,\n      \"default_schedule\": \"string\"\n    },\n    \"verbose\": true,\n    \"web_terminal_renderer\": \"string\",\n    \"wgtunnel_host\": \"string\",\n    \"wildcard_access_url\": \"string\",\n    \"workspace_hostname_suffix\": \"string\",\n    \"workspace_prebuilds\": {\n      \"failure_hard_limit\": 1698,\n      \"reconciliation_backoff_interval\": 2878,\n      \"reconciliation_backoff_lookback\": 4066,\n      \"reconciliation_interval\": 5687\n    },\n    \"write_config\": false\n  },\n  \"options\": [\n    {\n      \"annotations\": {\n        \"key_0\": \"string\"\n      },\n      \"default\": \"string\",\n      \"description\": \"string\",\n      \"env\": \"string\",\n      \"flag\": \"string\",\n      \"flag_shorthand\": \"string\",\n      \"group\": {\n        \"description\": \"string\",\n        \"name\": \"string\",\n        \"parent\": {\n          \"value\": \"<Circular reference to #/components/schemas/serpent.Group detected>\"\n        },\n        \"yaml\": \"string\"\n      },\n      \"hidden\": true,\n      \"name\": \"string\",\n      \"required\": false,\n      \"use_instead\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/serpent.Option detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/serpent.Option detected>\"\n        }\n      ],\n      \"value\": {},\n      \"value_source\": \"\",\n      \"yaml\": \"string\"\n    },\n    {\n      \"annotations\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"default\": \"string\",\n      \"description\": \"string\",\n      \"env\": \"string\",\n      \"flag\": \"string\",\n      \"flag_shorthand\": \"string\",\n      \"group\": {\n        \"description\": \"string\",\n        \"name\": \"string\",\n        \"parent\": {\n          \"value\": \"<Circular reference to #/components/schemas/serpent.Group detected>\"\n        },\n        \"yaml\": \"string\"\n      },\n      \"hidden\": true,\n      \"name\": \"string\",\n      \"required\": true,\n      \"use_instead\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/serpent.Option detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/serpent.Option detected>\"\n        }\n      ],\n      \"value\": {},\n      \"value_source\": \"yaml\",\n      \"yaml\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08fa3c94-0527-4068-aa8e-6f6836baf83f",
+          "name": "SSH Config",
+          "request": {
+            "name": "SSH Config",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "deployment",
+                "ssh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ebfef77c-fd84-4808-ac21-a34718081aa0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "deployment",
+                    "ssh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hostname_prefix\": \"string\",\n  \"hostname_suffix\": \"string\",\n  \"ssh_config_options\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d2f4a9c-52c5-458a-b5a4-ebd070935ba9",
+          "name": "Get deployment stats",
+          "request": {
+            "name": "Get deployment stats",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "deployment",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d9b933d4-ab79-4cbd-937d-e563dc4f43a8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "deployment",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"aggregated_from\": \"1975-11-07T00:55:14.730Z\",\n  \"collected_at\": \"2022-08-13T11:09:40.061Z\",\n  \"next_update_at\": \"1956-05-04T17:28:30.566Z\",\n  \"session_count\": {\n    \"jetbrains\": 1061,\n    \"reconnecting_pty\": 6565,\n    \"ssh\": 2828,\n    \"vscode\": 6038\n  },\n  \"workspaces\": {\n    \"building\": 5300,\n    \"connection_latency_ms\": {\n      \"p50\": 8296.700717033516,\n      \"p95\": 8888.946615942687\n    },\n    \"failed\": 3376,\n    \"pending\": 1393,\n    \"running\": 4377,\n    \"rx_bytes\": 6504,\n    \"stopped\": 4769,\n    \"tx_bytes\": 1507\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "456b0607-db2c-4398-b52b-abe89f0707a1",
+          "name": "Get enabled experiments",
+          "request": {
+            "name": "Get enabled experiments",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "experiments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0c20dbe9-2e45-4638-8182-c86cd116f044",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "experiments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"mcp-server-http\",\n  \"mcp-server-http\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c47c2ab-803e-457c-90d3-f9ec73655af1",
+          "name": "Get safe experiments",
+          "request": {
+            "name": "Get safe experiments",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "experiments",
+                "available"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5ff769a0-4d0e-4af2-8c91-581d38c90c72",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "experiments",
+                    "available"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"mcp-server-http\",\n  \"mcp-server-http\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6546f8f3-68a6-4050-8b67-9819dc307099",
+          "name": "Update check",
+          "request": {
+            "name": "Update check",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "updatecheck"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "65066669-e1fc-44dd-9e9a-aa4a27c999f2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "updatecheck"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"current\": false,\n  \"url\": \"string\",\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b91ec598-774c-4d24-84f0-95c730bc5d27",
+          "name": "Get token config",
+          "request": {
+            "name": "Get token config",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "users",
+                ":user",
+                "keys",
+                "tokens",
+                "tokenconfig"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID, name, or me"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "95a51e6e-22bb-498a-849e-9424b55fa19c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "users",
+                    ":user",
+                    "keys",
+                    "tokens",
+                    "tokenconfig"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID, name, or me"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"max_token_lifetime\": 7703\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ca8f1ece-c792-4a1a-b5ae-f2b436d59b0e",
+    "name": "Coder Agents General API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

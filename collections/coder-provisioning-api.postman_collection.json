@@ -1,0 +1,227 @@
+{
+  "item": [
+    {
+      "id": "7af734c3-84ef-4393-b6ff-6136a29f7f49",
+      "name": "Provisioning",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8bafc07f-2e39-4e7d-b7f1-9f2e22edd5fe",
+          "name": "Get provisioner daemons",
+          "request": {
+            "name": "Get provisioner daemons",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "provisionerdaemons"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Page limit"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filter results by job IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filter results by job IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter results by status"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "33286913-8002-4dc9-a423-e08e7d30be2b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "provisionerdaemons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"api_version\": \"string\",\n    \"created_at\": \"1966-01-29T04:59:00.514Z\",\n    \"current_job\": {\n      \"id\": \"875ab456-6ba6-f3ec-5a2f-6ea93e9c6843\",\n      \"status\": \"running\",\n      \"template_display_name\": \"string\",\n      \"template_icon\": \"string\",\n      \"template_name\": \"string\"\n    },\n    \"id\": \"9930d11c-55dc-559c-1056-c8344667ff62\",\n    \"key_id\": \"090a627e-9c74-f5c7-7008-7bd50734f443\",\n    \"key_name\": \"string\",\n    \"last_seen_at\": \"1953-09-29T23:32:37.167Z\",\n    \"name\": \"string\",\n    \"organization_id\": \"dacb6362-4ff9-1179-ba3e-a8a3f21f0f80\",\n    \"previous_job\": {\n      \"id\": \"2d002d7e-eba3-b86a-8f72-e51b13f5d90a\",\n      \"status\": \"pending\",\n      \"template_display_name\": \"string\",\n      \"template_icon\": \"string\",\n      \"template_name\": \"string\"\n    },\n    \"provisioners\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status\": \"idle\",\n    \"tags\": {\n      \"key_0\": \"string\"\n    },\n    \"version\": \"string\"\n  },\n  {\n    \"api_version\": \"string\",\n    \"created_at\": \"1998-10-03T03:33:00.291Z\",\n    \"current_job\": {\n      \"id\": \"264899e2-9705-9a43-8b09-f954ba39e317\",\n      \"status\": \"succeeded\",\n      \"template_display_name\": \"string\",\n      \"template_icon\": \"string\",\n      \"template_name\": \"string\"\n    },\n    \"id\": \"4f762ad3-83f2-9772-3610-c6731e82b8a6\",\n    \"key_id\": \"8a8e5674-b25f-e3b7-2803-341ceee8f0cf\",\n    \"key_name\": \"string\",\n    \"last_seen_at\": \"1953-06-02T12:52:22.575Z\",\n    \"name\": \"string\",\n    \"organization_id\": \"bfab6c65-02f9-d31c-3fb7-a812aeb99489\",\n    \"previous_job\": {\n      \"id\": \"881c9e80-ab5d-4cba-fac8-713a34793d36\",\n      \"status\": \"pending\",\n      \"template_display_name\": \"string\",\n      \"template_icon\": \"string\",\n      \"template_name\": \"string\"\n    },\n    \"provisioners\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status\": \"busy\",\n    \"tags\": {\n      \"key_0\": \"string\"\n    },\n    \"version\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "22b6ffe1-d084-42e3-bacc-18136e6d947f",
+    "name": "Coder Agents Provisioning API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Organizations API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get organizations"
+        },
+        {
+          "info": {
+            "name": "Create organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create organization"
+        },
+        {
+          "info": {
+            "name": "Get organization by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get organization by ID"
+        },
+        {
+          "info": {
+            "name": "Update organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID or name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update organization"
+        },
+        {
+          "info": {
+            "name": "Delete organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID or name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete organization"
+        },
+        {
+          "info": {
+            "name": "Get provisioner jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerjobs",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by job IDs"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by status"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Provisioner tags to filter by (JSON of the form {'tag1':'value1','tag2':'value2'})"
+              },
+              {
+                "name": "initiator",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by initiator"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get provisioner jobs"
+        },
+        {
+          "info": {
+            "name": "Get provisioner job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerjobs/:job",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "job",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get provisioner job"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

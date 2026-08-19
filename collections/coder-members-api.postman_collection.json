@@ -1,0 +1,1624 @@
+{
+  "item": [
+    {
+      "id": "b2c53677-3bbc-436d-b601-7862cdebe0e3",
+      "name": "Members",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bb38ff8f-bacf-410d-97dd-da0a62baa01c",
+          "name": "List organization members",
+          "request": {
+            "name": "List organization members",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "03d08c97-2864-43c6-bf25-84301cef0de3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"avatar_url\": \"string\",\n    \"created_at\": \"2011-11-05T21:49:13.438Z\",\n    \"email\": \"string\",\n    \"global_roles\": [\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      },\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      }\n    ],\n    \"has_ai_seat\": false,\n    \"is_service_account\": false,\n    \"last_seen_at\": \"1996-07-21T04:48:21.266Z\",\n    \"login_type\": \"github\",\n    \"name\": \"string\",\n    \"organization_id\": \"3fa9cae4-d3e6-8408-379d-9a293b42ea7b\",\n    \"roles\": [\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      },\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      }\n    ],\n    \"status\": \"dormant\",\n    \"updated_at\": \"1960-07-08T20:59:34.731Z\",\n    \"user_created_at\": \"1977-11-26T01:32:35.765Z\",\n    \"user_id\": \"5fbfaaa2-e611-aea4-35db-a90884af29c9\",\n    \"user_updated_at\": \"1949-11-14T20:53:26.233Z\",\n    \"username\": \"string\"\n  },\n  {\n    \"avatar_url\": \"string\",\n    \"created_at\": \"1987-02-24T16:29:11.438Z\",\n    \"email\": \"string\",\n    \"global_roles\": [\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      },\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      }\n    ],\n    \"has_ai_seat\": false,\n    \"is_service_account\": false,\n    \"last_seen_at\": \"2020-04-01T07:13:26.170Z\",\n    \"login_type\": \"github\",\n    \"name\": \"string\",\n    \"organization_id\": \"d7eae77f-e478-0a0a-fbb2-f0f619d31738\",\n    \"roles\": [\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      },\n      {\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"organization_id\": \"string\"\n      }\n    ],\n    \"status\": \"suspended\",\n    \"updated_at\": \"1997-02-18T10:17:03.906Z\",\n    \"user_created_at\": \"1991-10-30T03:10:15.037Z\",\n    \"user_id\": \"8e9388d7-8018-927b-ed22-b9ed51eb5cc4\",\n    \"user_updated_at\": \"1949-07-11T15:34:01.767Z\",\n    \"username\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6dbb3f47-7c95-42dc-b582-10df8a636fb6",
+          "name": "Get member roles by organization",
+          "request": {
+            "name": "Get member roles by organization",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9b855655-7921-4186-b620-f8ab2f59845f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"assignable\": true,\n    \"built_in\": true,\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"5e871b48-118d-b92d-c4d4-09a98bb2c5d1\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"create_agent\",\n        \"negate\": false,\n        \"resource_type\": \"chat\"\n      },\n      {\n        \"action\": \"use\",\n        \"negate\": false,\n        \"resource_type\": \"user_secret\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"start\",\n        \"negate\": false,\n        \"resource_type\": \"prebuilt_workspace\"\n      },\n      {\n        \"action\": \"use\",\n        \"negate\": false,\n        \"resource_type\": \"boundary_log\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"unassign\",\n        \"negate\": false,\n        \"resource_type\": \"organization_member\"\n      },\n      {\n        \"action\": \"delete\",\n        \"negate\": false,\n        \"resource_type\": \"user_secret\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"update_personal\",\n        \"negate\": false,\n        \"resource_type\": \"task\"\n      },\n      {\n        \"action\": \"use\",\n        \"negate\": true,\n        \"resource_type\": \"inbox_notification\"\n      }\n    ]\n  },\n  {\n    \"assignable\": true,\n    \"built_in\": false,\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"7416edc9-c1ab-2ed7-7d90-09e424a0c016\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"share\",\n        \"negate\": false,\n        \"resource_type\": \"workspace\"\n      },\n      {\n        \"action\": \"stop\",\n        \"negate\": true,\n        \"resource_type\": \"group_member\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"delete_agent\",\n        \"negate\": false,\n        \"resource_type\": \"*\"\n      },\n      {\n        \"action\": \"update_personal\",\n        \"negate\": false,\n        \"resource_type\": \"connection_log\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"delete\",\n        \"negate\": false,\n        \"resource_type\": \"workspace_agent_devcontainers\"\n      },\n      {\n        \"action\": \"update_agent\",\n        \"negate\": false,\n        \"resource_type\": \"chat\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"update_agent\",\n        \"negate\": true,\n        \"resource_type\": \"workspace_dormant\"\n      },\n      {\n        \"action\": \"application_connect\",\n        \"negate\": true,\n        \"resource_type\": \"webpush_subscription\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7455a1e8-08ae-4a52-99ec-8180bffc4e21",
+          "name": "Update a custom organization role",
+          "request": {
+            "name": "Update a custom organization role",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"display_name\": \"<string>\",\n  \"name\": \"<string>\",\n  \"organization_member_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"organization_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"site_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"user_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "087dd472-91bd-4fb5-8f73-e1ed977896d3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"<string>\",\n  \"name\": \"<string>\",\n  \"organization_member_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"organization_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"site_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"user_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"7572a348-69a3-a39c-b30c-481388409487\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"cbce93a3-5eb8-849f-285f-3dbb32d5684e\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5bd00f06-f84b-4937-8943-2ff76e8d9d34",
+          "name": "Insert a custom organization role",
+          "request": {
+            "name": "Insert a custom organization role",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"display_name\": \"<string>\",\n  \"name\": \"<string>\",\n  \"organization_member_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"organization_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"site_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"user_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fedb171c-f0a9-427f-8d55-e8b17a269d65",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"<string>\",\n  \"name\": \"<string>\",\n  \"organization_member_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"organization_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"site_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ],\n  \"user_permissions\": [\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\",\n      \"negate\": \"<boolean>\",\n      \"resource_type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"56c3a004-d60b-cb1d-30bb-a1c6f2053f6b\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"d49bb705-47ad-4af3-7e22-975d032d71e5\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06f3cb96-5db1-44f2-b77f-06341dd93f49",
+          "name": "Delete a custom organization role",
+          "request": {
+            "name": "Delete a custom organization role",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                "roles",
+                ":roleName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "roleName",
+                  "description": "(Required) Role name"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "832c62ab-efa0-404a-8221-ea06528681ec",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    "roles",
+                    ":roleName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "roleName",
+                      "description": "(Required) Role name"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"56c3a004-d60b-cb1d-30bb-a1c6f2053f6b\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"d49bb705-47ad-4af3-7e22-975d032d71e5\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74c39ee1-d73c-4b35-9ecf-fe19098be580",
+          "name": "Get organization member",
+          "request": {
+            "name": "Get organization member",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                ":user"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID, name, or me"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5bf31033-0f83-4eec-93b6-2fe9c3913349",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    ":user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID, name, or me"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"avatar_url\": \"string\",\n  \"created_at\": \"1961-06-22T04:14:40.270Z\",\n  \"email\": \"string\",\n  \"global_roles\": [\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    },\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    }\n  ],\n  \"has_ai_seat\": false,\n  \"is_service_account\": false,\n  \"last_seen_at\": \"2007-10-17T15:41:15.358Z\",\n  \"login_type\": \"none\",\n  \"name\": \"string\",\n  \"organization_id\": \"b8c9b29e-f745-fb3b-f89e-4930a0ba1e5e\",\n  \"roles\": [\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    },\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    }\n  ],\n  \"status\": \"suspended\",\n  \"updated_at\": \"1965-06-04T02:26:56.890Z\",\n  \"user_created_at\": \"1972-09-12T07:39:04.839Z\",\n  \"user_id\": \"222698c0-3ea2-37dc-665c-c013b16da712\",\n  \"user_updated_at\": \"1959-05-18T09:19:31.751Z\",\n  \"username\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7dc8959-69cb-424d-ba60-d2ad0967f495",
+          "name": "Add organization member",
+          "request": {
+            "name": "Add organization member",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                ":user"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID, name, or me"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9e2c89b5-fd1e-4c99-aef0-e39e429e7552",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    ":user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID, name, or me"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1997-04-02T04:16:54.618Z\",\n  \"organization_id\": \"50e8a393-0257-0751-82f2-97052302fb95\",\n  \"roles\": [\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    },\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    }\n  ],\n  \"updated_at\": \"1976-06-04T16:21:11.883Z\",\n  \"user_id\": \"9df1f69b-8954-cf18-064e-e1e961949156\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "489b06dc-f51f-47b5-81f7-7c37f1b2cdf4",
+          "name": "Remove organization member",
+          "request": {
+            "name": "Remove organization member",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                ":user"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID, name, or me"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e33d0481-2b68-45fc-acc4-f0182b7d1e19",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    ":user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID, name, or me"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "944e3e31-34b8-4127-be18-838d7dedc0e1",
+          "name": "Assign role to organization member",
+          "request": {
+            "name": "Assign role to organization member",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "members",
+                ":user",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID, name, or me"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "734d9d36-d737-4ef0-8dcb-3765a6cb247b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "members",
+                    ":user",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID, name, or me"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1948-09-05T18:35:53.071Z\",\n  \"organization_id\": \"adf335e2-a38b-93e4-d33d-f61968e57855\",\n  \"roles\": [\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    },\n    {\n      \"display_name\": \"string\",\n      \"name\": \"string\",\n      \"organization_id\": \"string\"\n    }\n  ],\n  \"updated_at\": \"1986-06-01T16:34:00.514Z\",\n  \"user_id\": \"d7fc5e30-e66b-202b-e2d8-0459f9d4d2aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1965eba2-5958-4f82-9275-71627be2dcf0",
+          "name": "Paginated organization members",
+          "request": {
+            "name": "Paginated organization members",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "paginated-members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Member search query"
+                },
+                {
+                  "disabled": false,
+                  "key": "after_id",
+                  "value": "<string>",
+                  "description": "After ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Page limit, if 0 returns all members"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Page offset"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4a00b90d-2f23-4ade-9544-f905bb2cf09f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "paginated-members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"count\": 8264,\n    \"members\": [\n      {\n        \"avatar_url\": \"string\",\n        \"created_at\": \"1994-09-17T18:11:25.779Z\",\n        \"email\": \"string\",\n        \"global_roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"has_ai_seat\": false,\n        \"is_service_account\": false,\n        \"last_seen_at\": \"2000-03-20T16:51:07.685Z\",\n        \"login_type\": \"none\",\n        \"name\": \"string\",\n        \"organization_id\": \"877a8307-e75b-4bd7-d0d2-6e83e65bbd82\",\n        \"roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"status\": \"active\",\n        \"updated_at\": \"1999-11-19T03:13:35.594Z\",\n        \"user_created_at\": \"1998-08-15T07:52:09.604Z\",\n        \"user_id\": \"2643beb0-883c-9b5d-db3d-d36e68e04545\",\n        \"user_updated_at\": \"1991-03-07T10:02:37.979Z\",\n        \"username\": \"string\"\n      },\n      {\n        \"avatar_url\": \"string\",\n        \"created_at\": \"1971-12-04T00:01:08.225Z\",\n        \"email\": \"string\",\n        \"global_roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"has_ai_seat\": true,\n        \"is_service_account\": false,\n        \"last_seen_at\": \"1976-01-23T11:57:08.290Z\",\n        \"login_type\": \"token\",\n        \"name\": \"string\",\n        \"organization_id\": \"b6b50532-8f1d-92ac-ec51-ce76e42d194d\",\n        \"roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"status\": \"suspended\",\n        \"updated_at\": \"1965-07-20T02:07:48.769Z\",\n        \"user_created_at\": \"1963-12-19T08:37:37.585Z\",\n        \"user_id\": \"46cf2e98-2e27-56d0-e858-90f91ea4e6e9\",\n        \"user_updated_at\": \"2015-08-19T10:13:14.200Z\",\n        \"username\": \"string\"\n      }\n    ]\n  },\n  {\n    \"count\": 4983,\n    \"members\": [\n      {\n        \"avatar_url\": \"string\",\n        \"created_at\": \"1968-03-23T18:25:37.877Z\",\n        \"email\": \"string\",\n        \"global_roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"has_ai_seat\": false,\n        \"is_service_account\": false,\n        \"last_seen_at\": \"1968-03-21T13:00:38.325Z\",\n        \"login_type\": \"token\",\n        \"name\": \"string\",\n        \"organization_id\": \"49a598c0-bd72-c997-8681-20b14a0cbac0\",\n        \"roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"status\": \"dormant\",\n        \"updated_at\": \"1953-10-02T00:23:02.628Z\",\n        \"user_created_at\": \"2014-01-23T04:56:20.041Z\",\n        \"user_id\": \"4e55e841-7cfa-4f56-6199-4cb02a21c6aa\",\n        \"user_updated_at\": \"2010-08-11T13:20:40.096Z\",\n        \"username\": \"string\"\n      },\n      {\n        \"avatar_url\": \"string\",\n        \"created_at\": \"1996-12-29T08:25:41.795Z\",\n        \"email\": \"string\",\n        \"global_roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"has_ai_seat\": false,\n        \"is_service_account\": true,\n        \"last_seen_at\": \"2000-10-23T14:39:43.138Z\",\n        \"login_type\": \"token\",\n        \"name\": \"string\",\n        \"organization_id\": \"c8601b7d-3fe6-24bd-7429-e39b863194ba\",\n        \"roles\": [\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          },\n          {\n            \"display_name\": \"string\",\n            \"name\": \"string\",\n            \"organization_id\": \"string\"\n          }\n        ],\n        \"status\": \"active\",\n        \"updated_at\": \"1985-08-08T16:58:20.968Z\",\n        \"user_created_at\": \"1996-09-14T09:28:45.314Z\",\n        \"user_id\": \"4727954f-0845-e80f-8744-740aa3d336fa\",\n        \"user_updated_at\": \"2015-05-17T19:52:12.985Z\",\n        \"username\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f037877e-df0f-42ea-89c8-d48d692d34ec",
+          "name": "Get site member roles",
+          "request": {
+            "name": "Get site member roles",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "users",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3629e5a9-f2fd-4ef8-98a1-91f8ba9caf3b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "users",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"assignable\": true,\n    \"built_in\": true,\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"e54bded6-b76f-1868-510a-3bed1c031201\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"assignable\": false,\n    \"built_in\": true,\n    \"display_name\": \"string\",\n    \"name\": \"string\",\n    \"organization_id\": \"dcef26a0-1991-a641-c284-bb77e022ca7c\",\n    \"organization_member_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"organization_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"site_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"user_permissions\": [\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"negate\": \"<boolean>\",\n        \"resource_type\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e20b9a66-2f05-4191-b18b-e0323d1014bb",
+    "name": "Coder Agents Members API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

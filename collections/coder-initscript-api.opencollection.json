@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents InitScript API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "InitScript",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get agent init script",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/init-script/:os/:arch",
+            "params": [
+              {
+                "name": "os",
+                "value": "",
+                "type": "path",
+                "description": "Operating system"
+              },
+              {
+                "name": "arch",
+                "value": "",
+                "type": "path",
+                "description": "Architecture"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get agent init script"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

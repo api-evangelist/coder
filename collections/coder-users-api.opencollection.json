@@ -1,0 +1,1072 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Users API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user skills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/users/:user/skills",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List user skills"
+        },
+        {
+          "info": {
+            "name": "Create a user skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/experimental/users/:user/skills",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a user skill"
+        },
+        {
+          "info": {
+            "name": "Get a user skill by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/users/:user/skills/:skillName",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              },
+              {
+                "name": "skillName",
+                "value": "",
+                "type": "path",
+                "description": "Skill name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a user skill by name"
+        },
+        {
+          "info": {
+            "name": "Update a user skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/experimental/users/:user/skills/:skillName",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              },
+              {
+                "name": "skillName",
+                "value": "",
+                "type": "path",
+                "description": "Skill name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a user skill"
+        },
+        {
+          "info": {
+            "name": "Delete a user skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/experimental/users/:user/skills/:skillName",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              },
+              {
+                "name": "skillName",
+                "value": "",
+                "type": "path",
+                "description": "Skill name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a user skill"
+        },
+        {
+          "info": {
+            "name": "Get users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              },
+              {
+                "name": "after_id",
+                "value": "",
+                "type": "query",
+                "description": "After ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page offset"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get users"
+        },
+        {
+          "info": {
+            "name": "Create new user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create new user"
+        },
+        {
+          "info": {
+            "name": "Get authentication methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/authmethods",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get authentication methods"
+        },
+        {
+          "info": {
+            "name": "Check initial user created",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/first",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check initial user created"
+        },
+        {
+          "info": {
+            "name": "Create initial user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users/first",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create initial user"
+        },
+        {
+          "info": {
+            "name": "Log out user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users/logout",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Log out user"
+        },
+        {
+          "info": {
+            "name": "OAuth 2.0 GitHub Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/oauth2/github/callback",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OAuth 2.0 GitHub Callback"
+        },
+        {
+          "info": {
+            "name": "Get Github device auth.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/oauth2/github/device",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Github device auth."
+        },
+        {
+          "info": {
+            "name": "Get OIDC claims for the authenticated user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/oidc-claims",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get OIDC claims for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/oidc/callback",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OpenID Connect Callback"
+        },
+        {
+          "info": {
+            "name": "Get user by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user by name"
+        },
+        {
+          "info": {
+            "name": "Delete user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete user"
+        },
+        {
+          "info": {
+            "name": "Get user appearance settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/appearance",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user appearance settings"
+        },
+        {
+          "info": {
+            "name": "Update user appearance settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/appearance",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update user appearance settings"
+        },
+        {
+          "info": {
+            "name": "Get autofill build parameters for user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/autofill-parameters",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "query",
+                "description": "Template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get autofill build parameters for user"
+        },
+        {
+          "info": {
+            "name": "Get user Git SSH key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/gitsshkey",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user Git SSH key"
+        },
+        {
+          "info": {
+            "name": "Regenerate user SSH key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/gitsshkey",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Regenerate user SSH key"
+        },
+        {
+          "info": {
+            "name": "Create new session key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/keys",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create new session key"
+        },
+        {
+          "info": {
+            "name": "Get user tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/keys/tokens",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "include_expired",
+                "value": "",
+                "type": "query",
+                "description": "Include expired tokens in the list"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user tokens"
+        },
+        {
+          "info": {
+            "name": "Create token API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/keys/tokens",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create token API key"
+        },
+        {
+          "info": {
+            "name": "Get API key by token name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/keys/tokens/:keyname",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "keyname",
+                "value": "",
+                "type": "path",
+                "description": "Key Name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get API key by token name"
+        },
+        {
+          "info": {
+            "name": "Get API key by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/keys/:keyid",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "keyid",
+                "value": "",
+                "type": "path",
+                "description": "Key ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get API key by ID"
+        },
+        {
+          "info": {
+            "name": "Delete API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/keys/:keyid",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "keyid",
+                "value": "",
+                "type": "path",
+                "description": "Key ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete API key"
+        },
+        {
+          "info": {
+            "name": "Expire API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/keys/:keyid/expire",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "keyid",
+                "value": "",
+                "type": "path",
+                "description": "Key ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Expire API key"
+        },
+        {
+          "info": {
+            "name": "Get user login type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/login-type",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user login type"
+        },
+        {
+          "info": {
+            "name": "Get organizations by user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/organizations",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get organizations by user"
+        },
+        {
+          "info": {
+            "name": "Get organization by user and organization name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/organizations/:organizationname",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "organizationname",
+                "value": "",
+                "type": "path",
+                "description": "Organization name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get organization by user and organization name"
+        },
+        {
+          "info": {
+            "name": "Update user password",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/password",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update user password"
+        },
+        {
+          "info": {
+            "name": "Get user preference settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/preferences",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user preference settings"
+        },
+        {
+          "info": {
+            "name": "Update user preference settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/preferences",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update user preference settings"
+        },
+        {
+          "info": {
+            "name": "Update user profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/profile",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update user profile"
+        },
+        {
+          "info": {
+            "name": "Get user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/roles",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user roles"
+        },
+        {
+          "info": {
+            "name": "Assign role to user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/roles",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Assign role to user"
+        },
+        {
+          "info": {
+            "name": "Activate user account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/status/activate",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Activate user account"
+        },
+        {
+          "info": {
+            "name": "Suspend user account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/status/suspend",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Suspend user account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

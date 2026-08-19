@@ -1,0 +1,693 @@
+{
+  "item": [
+    {
+      "id": "207d8736-4d71-4f5d-8c14-7c3c807a986b",
+      "name": "AI Providers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "16ce2251-5d86-4fae-b582-04bc48dbf2f2",
+          "name": "List AI providers",
+          "request": {
+            "name": "List AI providers",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "ai",
+                "providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26a4daad-a875-4cff-bf6b-2d3ac46cf56c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "ai",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"api_keys\": [\n      {\n        \"created_at\": \"1988-06-25T15:17:09.448Z\",\n        \"id\": \"1a086c1c-2808-c8e6-4480-a73d1bef802a\",\n        \"masked\": \"string\"\n      },\n      {\n        \"created_at\": \"1955-12-27T10:11:07.063Z\",\n        \"id\": \"df137ab3-6bf0-e65f-59b2-065a6d26fb4a\",\n        \"masked\": \"string\"\n      }\n    ],\n    \"base_url\": \"string\",\n    \"created_at\": \"1974-02-09T22:20:02.936Z\",\n    \"display_name\": \"string\",\n    \"enabled\": true,\n    \"id\": \"07490a38-199d-8fd5-da5a-eeec566f3bac\",\n    \"name\": \"string\",\n    \"settings\": {},\n    \"type\": \"openrouter\",\n    \"updated_at\": \"2011-04-16T22:08:38.309Z\"\n  },\n  {\n    \"api_keys\": [\n      {\n        \"created_at\": \"1966-08-21T14:28:07.163Z\",\n        \"id\": \"ec472e44-0e2f-5a1a-db18-66ceb6085336\",\n        \"masked\": \"string\"\n      },\n      {\n        \"created_at\": \"1953-02-08T18:09:05.940Z\",\n        \"id\": \"bef7fa24-d7e8-38a7-2ea9-7056ba6963bd\",\n        \"masked\": \"string\"\n      }\n    ],\n    \"base_url\": \"string\",\n    \"created_at\": \"2002-02-04T10:32:13.167Z\",\n    \"display_name\": \"string\",\n    \"enabled\": false,\n    \"id\": \"2c064fb0-dd27-c6d1-cfd2-7b650144af6d\",\n    \"name\": \"string\",\n    \"settings\": {},\n    \"type\": \"bedrock\",\n    \"updated_at\": \"1998-08-13T03:32:56.032Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "baf8ad81-2139-480f-986c-16ce84af6db6",
+          "name": "Create an AI provider",
+          "request": {
+            "name": "Create an AI provider",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "ai",
+                "providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"base_url\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"settings\": \"<object>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6b3e1b0b-1af9-47a1-8157-95797dd00ec3",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "ai",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"base_url\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"settings\": \"<object>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_keys\": [\n    {\n      \"created_at\": \"1996-08-29T20:53:07.213Z\",\n      \"id\": \"f0abe2d0-7578-407f-9f91-b3ae1b521a9a\",\n      \"masked\": \"string\"\n    },\n    {\n      \"created_at\": \"1982-07-28T22:13:43.614Z\",\n      \"id\": \"e4f31744-1a6b-f86b-0d67-7cd6715c4cf3\",\n      \"masked\": \"string\"\n    }\n  ],\n  \"base_url\": \"string\",\n  \"created_at\": \"1992-12-23T19:18:16.029Z\",\n  \"display_name\": \"string\",\n  \"enabled\": true,\n  \"id\": \"3a705f9b-6f28-71a4-616b-25af67567f6a\",\n  \"name\": \"string\",\n  \"settings\": \"<object>\",\n  \"type\": \"<string>\",\n  \"updated_at\": \"1971-11-05T02:52:34.775Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d80548cf-cb66-477e-9dad-2d91fd114e7a",
+          "name": "Get an AI provider",
+          "request": {
+            "name": "Get an AI provider",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "ai",
+                "providers",
+                ":idOrName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "idOrName",
+                  "description": "(Required) Provider ID or name"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "78f1c091-13bb-4083-b84e-4cc5f28694e7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "ai",
+                    "providers",
+                    ":idOrName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "idOrName",
+                      "description": "(Required) Provider ID or name"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_keys\": [\n    {\n      \"created_at\": \"1996-08-29T20:53:07.213Z\",\n      \"id\": \"f0abe2d0-7578-407f-9f91-b3ae1b521a9a\",\n      \"masked\": \"string\"\n    },\n    {\n      \"created_at\": \"1982-07-28T22:13:43.614Z\",\n      \"id\": \"e4f31744-1a6b-f86b-0d67-7cd6715c4cf3\",\n      \"masked\": \"string\"\n    }\n  ],\n  \"base_url\": \"string\",\n  \"created_at\": \"1992-12-23T19:18:16.029Z\",\n  \"display_name\": \"string\",\n  \"enabled\": true,\n  \"id\": \"3a705f9b-6f28-71a4-616b-25af67567f6a\",\n  \"name\": \"string\",\n  \"settings\": \"<object>\",\n  \"type\": \"<string>\",\n  \"updated_at\": \"1971-11-05T02:52:34.775Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c77018e-d770-4d91-b5bd-2b8baaa4838d",
+          "name": "Delete an AI provider",
+          "request": {
+            "name": "Delete an AI provider",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "ai",
+                "providers",
+                ":idOrName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "idOrName",
+                  "description": "(Required) Provider ID or name"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "52a120ca-cf27-4b15-9383-7137bf91972c",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "ai",
+                    "providers",
+                    ":idOrName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "idOrName",
+                      "description": "(Required) Provider ID or name"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8756e19b-64e7-4771-a194-7b052d4b0bcc",
+          "name": "Update an AI provider",
+          "request": {
+            "name": "Update an AI provider",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "ai",
+                "providers",
+                ":idOrName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "idOrName",
+                  "description": "(Required) Provider ID or name"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_keys\": [\n    {\n      \"api_key\": \"<string>\",\n      \"id\": \"<uuid>\"\n    },\n    {\n      \"api_key\": \"<string>\",\n      \"id\": \"<uuid>\"\n    }\n  ],\n  \"base_url\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"settings\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c9ba78e5-7664-4023-b707-77009ec4a462",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "ai",
+                    "providers",
+                    ":idOrName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "idOrName",
+                      "description": "(Required) Provider ID or name"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_keys\": [\n    {\n      \"api_key\": \"<string>\",\n      \"id\": \"<uuid>\"\n    },\n    {\n      \"api_key\": \"<string>\",\n      \"id\": \"<uuid>\"\n    }\n  ],\n  \"base_url\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"settings\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_keys\": [\n    {\n      \"created_at\": \"1996-08-29T20:53:07.213Z\",\n      \"id\": \"f0abe2d0-7578-407f-9f91-b3ae1b521a9a\",\n      \"masked\": \"string\"\n    },\n    {\n      \"created_at\": \"1982-07-28T22:13:43.614Z\",\n      \"id\": \"e4f31744-1a6b-f86b-0d67-7cd6715c4cf3\",\n      \"masked\": \"string\"\n    }\n  ],\n  \"base_url\": \"string\",\n  \"created_at\": \"1992-12-23T19:18:16.029Z\",\n  \"display_name\": \"string\",\n  \"enabled\": true,\n  \"id\": \"3a705f9b-6f28-71a4-616b-25af67567f6a\",\n  \"name\": \"string\",\n  \"settings\": \"<object>\",\n  \"type\": \"<string>\",\n  \"updated_at\": \"1971-11-05T02:52:34.775Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "43ef3428-0d04-441e-8cc1-8fa437490aba",
+    "name": "Coder Agents AI Providers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

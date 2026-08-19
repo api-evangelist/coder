@@ -1,0 +1,3727 @@
+{
+  "item": [
+    {
+      "id": "228c0b04-48c9-44bd-97e9-a0b496284bf9",
+      "name": "Agents",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1f9c4eb5-a45b-4681-a2f2-901d8ad05fb9",
+          "name": "Debug OIDC context for a user",
+          "request": {
+            "name": "Debug OIDC context for a user",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "debug",
+                ":user",
+                "debug-link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID, name, or me"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0b6eed8f-5710-44cc-b930-398fa70732df",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "debug",
+                    ":user",
+                    "debug-link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID, name, or me"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14552c56-62a7-4200-9039-08ab9fb704c9",
+          "name": "Get DERP map updates",
+          "request": {
+            "name": "Get DERP map updates",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "derp-map"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "409f0b9d-aa81-47f2-bb58-82e40cea0116",
+              "name": "Switching Protocols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "derp-map"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37e9d372-33c1-4d71-8e87-4e31641ba180",
+          "name": "User-scoped tailnet RPC connection",
+          "request": {
+            "name": "User-scoped tailnet RPC connection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tailnet"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae9cd3e8-edca-4f9c-8e2e-1954bad13ce1",
+              "name": "Switching Protocols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tailnet"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27dfc9c3-dca8-47aa-a30c-1a7e31a1251d",
+          "name": "Authenticate agent on AWS instance",
+          "request": {
+            "name": "Authenticate agent on AWS instance",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "aws-instance-identity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"agent_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f3454588-879c-4a56-9f8e-0efe07c4fa1a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "aws-instance-identity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"agent_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11ec2834-9194-4114-9786-600b9106ea5f",
+          "name": "Authenticate agent on Azure instance",
+          "request": {
+            "name": "Authenticate agent on Azure instance",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "azure-instance-identity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"encoding\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"agent_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "27dd8cae-53ad-42ba-adc9-b84e0bfa9e7a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "azure-instance-identity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"encoding\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"agent_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e0d3710e-b439-4294-985e-4d37b36d1b07",
+          "name": "Get connection info for workspace agent generic",
+          "request": {
+            "name": "Get connection info for workspace agent generic",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "connection"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "68b9e791-f7ab-4f12-a123-7ed766b201c4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "connection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"derp_force_websockets\": false,\n  \"derp_map\": {\n    \"homeParams\": {\n      \"regionScore\": {\n        \"key_0\": 8925.122217736112,\n        \"key_1\": 3373.0646313862867,\n        \"key_2\": 8044.524782243304,\n        \"key_3\": 4593.503123437811\n      }\n    },\n    \"omitDefaultRegions\": false,\n    \"regions\": {\n      \"key_0\": {\n        \"avoid\": true,\n        \"embeddedRelay\": true,\n        \"nodes\": [\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 8255,\n            \"forceHTTP\": false,\n            \"hostName\": \"string\",\n            \"insecureForTests\": false,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 8688,\n            \"stunonly\": false,\n            \"stunport\": 8492,\n            \"stuntestIP\": \"string\"\n          },\n          {\n            \"canPort80\": false,\n            \"certName\": \"string\",\n            \"derpport\": 8075,\n            \"forceHTTP\": false,\n            \"hostName\": \"string\",\n            \"insecureForTests\": true,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 6583,\n            \"stunonly\": true,\n            \"stunport\": 9285,\n            \"stuntestIP\": \"string\"\n          }\n        ],\n        \"regionCode\": \"string\",\n        \"regionID\": 7077,\n        \"regionName\": \"string\"\n      },\n      \"key_1\": {\n        \"avoid\": true,\n        \"embeddedRelay\": false,\n        \"nodes\": [\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 9554,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": false,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 7023,\n            \"stunonly\": false,\n            \"stunport\": 3022,\n            \"stuntestIP\": \"string\"\n          },\n          {\n            \"canPort80\": false,\n            \"certName\": \"string\",\n            \"derpport\": 1077,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": false,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 8826,\n            \"stunonly\": false,\n            \"stunport\": 6797,\n            \"stuntestIP\": \"string\"\n          }\n        ],\n        \"regionCode\": \"string\",\n        \"regionID\": 6276,\n        \"regionName\": \"string\"\n      }\n    }\n  },\n  \"disable_direct_connections\": false,\n  \"hostname_suffix\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "05656c16-7c77-4135-bcd8-aeb4d6608f19",
+          "name": "Authenticate agent on Google Cloud instance",
+          "request": {
+            "name": "Authenticate agent on Google Cloud instance",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "google-instance-identity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"json_web_token\": \"<string>\",\n  \"agent_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "47902422-4220-41eb-83df-2d5b679ba239",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "google-instance-identity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"json_web_token\": \"<string>\",\n  \"agent_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be47c6ec-8f56-40d6-b407-91e6b28c7f29",
+          "name": "Patch workspace agent app status",
+          "request": {
+            "name": "Patch workspace agent app status",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "app-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"app_slug\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"message\": \"<string>\",\n  \"needs_user_attention\": \"<boolean>\",\n  \"state\": \"<string>\",\n  \"uri\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "30ed3c44-9ea0-4f99-bbe4-f4af988fcc66",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "app-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app_slug\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"message\": \"<string>\",\n  \"needs_user_attention\": \"<boolean>\",\n  \"state\": \"<string>\",\n  \"uri\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"message\": \"string\",\n  \"validations\": [\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c567cdf5-eb7d-43c9-9bff-9c17b04be5cf",
+          "name": "Get workspace agent external auth",
+          "request": {
+            "name": "Get workspace agent external auth",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "external-auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "<string>",
+                  "description": "(Required) Match"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) Provider ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "listen",
+                  "value": "<boolean>",
+                  "description": "Wait for a new token to be issued"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "61d8dfd5-fd60-40c3-9ea0-00c36459bb02",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "external-auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "match",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "listen",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"password\": \"string\",\n  \"token_extra\": {\n    \"key_0\": 4202,\n    \"key_1\": 6408\n  },\n  \"type\": \"string\",\n  \"url\": \"string\",\n  \"username\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90e24092-6a8e-440f-907f-1f81f2a72df9",
+          "name": "Removed: Get workspace agent git auth",
+          "request": {
+            "name": "Removed: Get workspace agent git auth",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "gitauth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "<string>",
+                  "description": "(Required) Match"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) Provider ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "listen",
+                  "value": "<boolean>",
+                  "description": "Wait for a new token to be issued"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a6b34875-06a6-40d4-95b9-6b8d044eb80d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "gitauth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "match",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "listen",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"password\": \"string\",\n  \"token_extra\": {\n    \"key_0\": 4202,\n    \"key_1\": 6408\n  },\n  \"type\": \"string\",\n  \"url\": \"string\",\n  \"username\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e27780c-2b1c-450b-8b13-269e06b33516",
+          "name": "Get workspace agent Git SSH key",
+          "request": {
+            "name": "Get workspace agent Git SSH key",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "gitsshkey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ed4d9982-7443-4fd8-85fe-107a83af7d7b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "gitsshkey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"private_key\": \"string\",\n  \"public_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cdfc26e-3856-41b2-a08a-297d644a2cd0",
+          "name": "Post workspace agent log source",
+          "request": {
+            "name": "Post workspace agent log source",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "log-source"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"display_name\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35f5df2a-bd1a-42c6-9abd-0c2ca7e84789",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "log-source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1969-08-18T19:41:11.862Z\",\n  \"display_name\": \"string\",\n  \"icon\": \"string\",\n  \"id\": \"cf717b73-0af9-a7d6-6b52-8aa60c0ba573\",\n  \"workspace_agent_id\": \"4de705bb-4fed-5a8d-8712-18dc23befb53\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff8e0bcf-0da1-4d91-9af2-874ff1745d19",
+          "name": "Patch workspace agent logs",
+          "request": {
+            "name": "Patch workspace agent logs",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"log_source_id\": \"<string>\",\n  \"logs\": [\n    {\n      \"created_at\": \"<string>\",\n      \"level\": \"<string>\",\n      \"output\": \"<string>\"\n    },\n    {\n      \"created_at\": \"<string>\",\n      \"level\": \"<string>\",\n      \"output\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "83681d84-3357-4d7e-8258-798079af0392",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_source_id\": \"<string>\",\n  \"logs\": [\n    {\n      \"created_at\": \"<string>\",\n      \"level\": \"<string>\",\n      \"output\": \"<string>\"\n    },\n    {\n      \"created_at\": \"<string>\",\n      \"level\": \"<string>\",\n      \"output\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"message\": \"string\",\n  \"validations\": [\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "298f404f-ea49-4b28-b1f7-4b75a80bf44f",
+          "name": "Get workspace agent reinitialization",
+          "request": {
+            "name": "Get workspace agent reinitialization",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "reinit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "wait",
+                  "value": "<boolean>",
+                  "description": "Opt in to durable reinit checks"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a43b90f7-d9fb-4725-b74c-a4d9b009d587",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "reinit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "wait",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"owner_id\": \"cb2ac4fb-4b67-7670-227d-fca49c5b6a0a\",\n  \"reason\": \"prebuild_claimed\",\n  \"workspace_id\": \"bff3a121-3a94-b1c9-7dbb-a760dec0e754\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38a9fef9-cd3c-40fc-8026-86f5cc2e6c90",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "reinit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "wait",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"message\": \"string\",\n  \"validations\": [\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f3082e0-06f6-4cf2-ad9e-9bd789e36c03",
+          "name": "Workspace agent RPC API",
+          "request": {
+            "name": "Workspace agent RPC API",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                "me",
+                "rpc"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2d6f19fe-5b71-40b5-b0e6-4852bfb8ab61",
+              "name": "Switching Protocols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    "me",
+                    "rpc"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da5f7e7f-374d-4600-9785-5ef4b4aacf7d",
+          "name": "Get workspace agent by ID",
+          "request": {
+            "name": "Get workspace agent by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "387a7a67-afdb-457c-afe3-ba3fcc52ae4c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_version\": \"string\",\n  \"apps\": [\n    {\n      \"command\": \"string\",\n      \"display_name\": \"string\",\n      \"external\": true,\n      \"group\": \"string\",\n      \"health\": \"initializing\",\n      \"healthcheck\": {\n        \"interval\": 9273,\n        \"threshold\": 9955,\n        \"url\": \"string\"\n      },\n      \"hidden\": true,\n      \"icon\": \"string\",\n      \"id\": \"5da6bb4e-8dd4-05f5-7a6d-6143434e98a6\",\n      \"open_in\": \"tab\",\n      \"sharing_level\": \"organization\",\n      \"slug\": \"string\",\n      \"statuses\": [\n        {\n          \"agent_id\": \"e3adcebf-05bf-7ac5-c6c3-c4f158566be6\",\n          \"app_id\": \"a3154fd3-56ab-35d0-cdcd-58fd4fde94af\",\n          \"created_at\": \"1982-10-31T19:49:53.114Z\",\n          \"icon\": \"string\",\n          \"id\": \"e2acc8cb-c093-821d-cb5a-c08e56c3eeb3\",\n          \"message\": \"string\",\n          \"needs_user_attention\": false,\n          \"state\": \"<string>\",\n          \"uri\": \"string\",\n          \"workspace_id\": \"bf46956b-1370-1b98-d822-e94fb4cd21a9\"\n        },\n        {\n          \"agent_id\": \"4f1a1bc2-e914-307b-a79b-90f3d5ba6fc2\",\n          \"app_id\": \"bcbc2bdb-0eac-01d2-1afe-833318c0e548\",\n          \"created_at\": \"2015-10-24T20:46:51.402Z\",\n          \"icon\": \"string\",\n          \"id\": \"035e0724-57d2-df7c-e0e6-02c6d932567e\",\n          \"message\": \"string\",\n          \"needs_user_attention\": false,\n          \"state\": \"<string>\",\n          \"uri\": \"string\",\n          \"workspace_id\": \"92ab6dc6-cb06-a46e-faea-1ac4296ed810\"\n        }\n      ],\n      \"subdomain\": false,\n      \"subdomain_name\": \"string\",\n      \"tooltip\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"command\": \"string\",\n      \"display_name\": \"string\",\n      \"external\": false,\n      \"group\": \"string\",\n      \"health\": \"disabled\",\n      \"healthcheck\": {\n        \"interval\": 4240,\n        \"threshold\": 5426,\n        \"url\": \"string\"\n      },\n      \"hidden\": false,\n      \"icon\": \"string\",\n      \"id\": \"679f2d93-03f6-861b-cd1b-f30af656dcef\",\n      \"open_in\": \"slim-window\",\n      \"sharing_level\": \"owner\",\n      \"slug\": \"string\",\n      \"statuses\": [\n        {\n          \"agent_id\": \"29e05d61-f89f-0c13-4657-dd4617819d67\",\n          \"app_id\": \"c1ba1aae-9444-1dde-d1d0-ff1ef8a893a4\",\n          \"created_at\": \"1968-11-02T06:31:26.218Z\",\n          \"icon\": \"string\",\n          \"id\": \"1e0b167d-6b6b-83fc-a8ff-c61f204b3541\",\n          \"message\": \"string\",\n          \"needs_user_attention\": false,\n          \"state\": \"<string>\",\n          \"uri\": \"string\",\n          \"workspace_id\": \"b1d8ec25-bc7d-28c5-0d95-49afe29a5ec6\"\n        },\n        {\n          \"agent_id\": \"2c65b788-68e2-1699-b96f-8bca124731f3\",\n          \"app_id\": \"26aa1a8c-0da5-ce59-e790-506760ef372a\",\n          \"created_at\": \"1987-11-21T12:50:17.123Z\",\n          \"icon\": \"string\",\n          \"id\": \"c23e6a03-91bd-faf7-e8e4-ed97f4365b1f\",\n          \"message\": \"string\",\n          \"needs_user_attention\": false,\n          \"state\": \"<string>\",\n          \"uri\": \"string\",\n          \"workspace_id\": \"f4feaf3b-8323-8725-666c-f3b9bce2fafa\"\n        }\n      ],\n      \"subdomain\": true,\n      \"subdomain_name\": \"string\",\n      \"tooltip\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"architecture\": \"string\",\n  \"connection_timeout_seconds\": 7042,\n  \"created_at\": \"1962-07-01T06:52:17.753Z\",\n  \"directory\": \"string\",\n  \"disconnected_at\": \"1966-02-13T10:59:20.049Z\",\n  \"display_apps\": [\n    \"web_terminal\",\n    \"port_forwarding_helper\"\n  ],\n  \"environment_variables\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"expanded_directory\": \"string\",\n  \"first_connected_at\": \"1989-06-14T22:46:43.464Z\",\n  \"health\": {\n    \"healthy\": false,\n    \"reason\": \"agent has lost connection\"\n  },\n  \"id\": \"2760075d-f41c-8637-798a-f63b4613f286\",\n  \"instance_id\": \"string\",\n  \"last_connected_at\": \"1950-09-01T22:39:36.382Z\",\n  \"latency\": {\n    \"key_0\": {\n      \"latency_ms\": 7892.2372045518205,\n      \"preferred\": false\n    },\n    \"key_1\": {\n      \"latency_ms\": 1910.3745037001108,\n      \"preferred\": true\n    }\n  },\n  \"lifecycle_state\": \"start_timeout\",\n  \"log_sources\": [\n    {\n      \"created_at\": \"1959-01-08T04:48:05.753Z\",\n      \"display_name\": \"string\",\n      \"icon\": \"string\",\n      \"id\": \"37f1cca7-c0b0-11c5-0ded-3fc9290a64f7\",\n      \"workspace_agent_id\": \"b505e610-dd1e-1d5a-16f0-e4eb19820a6c\"\n    },\n    {\n      \"created_at\": \"2009-10-04T02:23:35.415Z\",\n      \"display_name\": \"string\",\n      \"icon\": \"string\",\n      \"id\": \"a502c97a-66a9-015a-53c3-a7afc63eef54\",\n      \"workspace_agent_id\": \"11eb2d72-ef43-ab2e-b4f3-be5cd5cbfb2a\"\n    }\n  ],\n  \"logs_length\": 8874,\n  \"logs_overflowed\": false,\n  \"name\": \"string\",\n  \"operating_system\": \"string\",\n  \"parent_id\": {\n    \"uuid\": \"string\",\n    \"valid\": true\n  },\n  \"ready_at\": \"2026-08-12T06:02:54.838Z\",\n  \"resource_id\": \"e61e7d81-bfb2-cccb-0342-f7587e412861\",\n  \"scripts\": [\n    {\n      \"cron\": \"string\",\n      \"display_name\": \"string\",\n      \"exit_code\": 1908,\n      \"id\": \"265c9521-1d29-60ff-72fd-c05d5228ff52\",\n      \"log_path\": \"string\",\n      \"log_source_id\": \"fb827a15-2b70-74aa-6748-f2469d9e4b9c\",\n      \"run_on_start\": true,\n      \"run_on_stop\": true,\n      \"script\": \"string\",\n      \"start_blocks_login\": true,\n      \"status\": \"ok\",\n      \"timeout\": 7743\n    },\n    {\n      \"cron\": \"string\",\n      \"display_name\": \"string\",\n      \"exit_code\": 3165,\n      \"id\": \"417b2da8-28a7-f0ee-4147-2d6f56518e7d\",\n      \"log_path\": \"string\",\n      \"log_source_id\": \"faed13c6-d850-978a-6321-22208d20144d\",\n      \"run_on_start\": false,\n      \"run_on_stop\": true,\n      \"script\": \"string\",\n      \"start_blocks_login\": false,\n      \"status\": \"ok\",\n      \"timeout\": 9738\n    }\n  ],\n  \"started_at\": \"2020-04-26T05:10:28.875Z\",\n  \"startup_script_behavior\": \"blocking\",\n  \"status\": \"timeout\",\n  \"subsystems\": [\n    \"exectrace\",\n    \"exectrace\"\n  ],\n  \"troubleshooting_url\": \"string\",\n  \"updated_at\": \"1974-02-13T23:25:07.993Z\",\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49f3f2b9-8997-4e7d-a64f-0a383a38b0ed",
+          "name": "Get connection info for workspace agent",
+          "request": {
+            "name": "Get connection info for workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "connection"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "877bd8f6-62f6-4f5c-b171-970082d225c8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "connection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"derp_force_websockets\": true,\n  \"derp_map\": {\n    \"homeParams\": {\n      \"regionScore\": {\n        \"key_0\": 5807.764797086169\n      }\n    },\n    \"omitDefaultRegions\": false,\n    \"regions\": {\n      \"key_0\": {\n        \"avoid\": true,\n        \"embeddedRelay\": false,\n        \"nodes\": [\n          {\n            \"canPort80\": false,\n            \"certName\": \"string\",\n            \"derpport\": 8821,\n            \"forceHTTP\": false,\n            \"hostName\": \"string\",\n            \"insecureForTests\": false,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 9499,\n            \"stunonly\": true,\n            \"stunport\": 1689,\n            \"stuntestIP\": \"string\"\n          },\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 7076,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": false,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 9918,\n            \"stunonly\": false,\n            \"stunport\": 1458,\n            \"stuntestIP\": \"string\"\n          }\n        ],\n        \"regionCode\": \"string\",\n        \"regionID\": 7198,\n        \"regionName\": \"string\"\n      },\n      \"key_1\": {\n        \"avoid\": true,\n        \"embeddedRelay\": true,\n        \"nodes\": [\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 7862,\n            \"forceHTTP\": false,\n            \"hostName\": \"string\",\n            \"insecureForTests\": true,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 7805,\n            \"stunonly\": false,\n            \"stunport\": 2743,\n            \"stuntestIP\": \"string\"\n          },\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 6807,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": true,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 513,\n            \"stunonly\": true,\n            \"stunport\": 8457,\n            \"stuntestIP\": \"string\"\n          }\n        ],\n        \"regionCode\": \"string\",\n        \"regionID\": 2587,\n        \"regionName\": \"string\"\n      },\n      \"key_2\": {\n        \"avoid\": true,\n        \"embeddedRelay\": true,\n        \"nodes\": [\n          {\n            \"canPort80\": false,\n            \"certName\": \"string\",\n            \"derpport\": 7314,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": false,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 3229,\n            \"stunonly\": false,\n            \"stunport\": 5444,\n            \"stuntestIP\": \"string\"\n          },\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 729,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": true,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 3445,\n            \"stunonly\": true,\n            \"stunport\": 9015,\n            \"stuntestIP\": \"string\"\n          }\n        ],\n        \"regionCode\": \"string\",\n        \"regionID\": 8341,\n        \"regionName\": \"string\"\n      },\n      \"key_3\": {\n        \"avoid\": false,\n        \"embeddedRelay\": true,\n        \"nodes\": [\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 7714,\n            \"forceHTTP\": false,\n            \"hostName\": \"string\",\n            \"insecureForTests\": true,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 2939,\n            \"stunonly\": true,\n            \"stunport\": 2794,\n            \"stuntestIP\": \"string\"\n          },\n          {\n            \"canPort80\": false,\n            \"certName\": \"string\",\n            \"derpport\": 299,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": false,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 6262,\n            \"stunonly\": true,\n            \"stunport\": 6820,\n            \"stuntestIP\": \"string\"\n          }\n        ],\n        \"regionCode\": \"string\",\n        \"regionID\": 2558,\n        \"regionName\": \"string\"\n      },\n      \"key_4\": {\n        \"avoid\": true,\n        \"embeddedRelay\": false,\n        \"nodes\": [\n          {\n            \"canPort80\": false,\n            \"certName\": \"string\",\n            \"derpport\": 1411,\n            \"forceHTTP\": false,\n            \"hostName\": \"string\",\n            \"insecureForTests\": true,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 794,\n            \"stunonly\": true,\n            \"stunport\": 2404,\n            \"stuntestIP\": \"string\"\n          },\n          {\n            \"canPort80\": true,\n            \"certName\": \"string\",\n            \"derpport\": 4110,\n            \"forceHTTP\": true,\n            \"hostName\": \"string\",\n            \"insecureForTests\": true,\n            \"ipv4\": \"string\",\n            \"ipv6\": \"string\",\n            \"name\": \"string\",\n            \"regionID\": 4714,\n            \"stunonly\": true,\n            \"stunport\": 3739,\n            \"stuntestIP\": \"string\"\n          }\n        ],\n        \"regionCode\": \"string\",\n        \"regionID\": 9287,\n        \"regionName\": \"string\"\n      }\n    }\n  },\n  \"disable_direct_connections\": false,\n  \"hostname_suffix\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19ef77ab-6f46-49a2-a5d6-75e19fa2eb98",
+          "name": "Get running containers for workspace agent",
+          "request": {
+            "name": "Get running containers for workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "containers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "label",
+                  "value": "<string>",
+                  "description": "(Required) Labels"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ee7e6791-8be7-4604-a3e3-7cf6f910a82e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "containers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"containers\": [\n    {\n      \"created_at\": \"2023-01-31T13:31:34.087Z\",\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\"\n      },\n      \"name\": \"string\",\n      \"ports\": [\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 1917,\n          \"network\": \"string\",\n          \"port\": 1604\n        },\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 1415,\n          \"network\": \"string\",\n          \"port\": 4399\n        }\n      ],\n      \"running\": true,\n      \"status\": \"string\",\n      \"volumes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"created_at\": \"1968-04-08T15:23:30.200Z\",\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"name\": \"string\",\n      \"ports\": [\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 5705,\n          \"network\": \"string\",\n          \"port\": 9403\n        },\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 6963,\n          \"network\": \"string\",\n          \"port\": 79\n        }\n      ],\n      \"running\": true,\n      \"status\": \"string\",\n      \"volumes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"devcontainers\": [\n    {\n      \"agent\": {\n        \"directory\": \"string\",\n        \"id\": \"26d2d4b4-0503-54b7-9554-f542fc8d600d\",\n        \"name\": \"string\"\n      },\n      \"config_path\": \"string\",\n      \"container\": {\n        \"created_at\": \"1987-06-06T14:10:10.676Z\",\n        \"id\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"name\": \"string\",\n        \"ports\": [\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 7619,\n            \"network\": \"string\",\n            \"port\": 8345\n          },\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 3687,\n            \"network\": \"string\",\n            \"port\": 4023\n          }\n        ],\n        \"running\": true,\n        \"status\": \"string\",\n        \"volumes\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"dirty\": true,\n      \"error\": \"string\",\n      \"id\": \"f380fe97-61e0-c472-1c9f-f0ee28ad7a2f\",\n      \"name\": \"string\",\n      \"status\": \"starting\",\n      \"subagent_id\": {\n        \"uuid\": \"string\",\n        \"valid\": true\n      },\n      \"workspace_folder\": \"string\"\n    },\n    {\n      \"agent\": {\n        \"directory\": \"string\",\n        \"id\": \"4f5baa53-8376-7cda-51a2-496945c5c3de\",\n        \"name\": \"string\"\n      },\n      \"config_path\": \"string\",\n      \"container\": {\n        \"created_at\": \"1963-12-19T13:01:43.526Z\",\n        \"id\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"name\": \"string\",\n        \"ports\": [\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 8504,\n            \"network\": \"string\",\n            \"port\": 2576\n          },\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 4177,\n            \"network\": \"string\",\n            \"port\": 9862\n          }\n        ],\n        \"running\": true,\n        \"status\": \"string\",\n        \"volumes\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"dirty\": true,\n      \"error\": \"string\",\n      \"id\": \"61f0154e-d903-03ec-7fbc-1d3717a7e850\",\n      \"name\": \"string\",\n      \"status\": \"stopped\",\n      \"subagent_id\": {\n        \"uuid\": \"string\",\n        \"valid\": false\n      },\n      \"workspace_folder\": \"string\"\n    }\n  ],\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9346752-f425-4ef1-90c4-3ee2405f36a0",
+          "name": "Delete devcontainer for workspace agent",
+          "request": {
+            "name": "Delete devcontainer for workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "containers",
+                "devcontainers",
+                ":devcontainer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "devcontainer",
+                  "description": "(Required) Devcontainer ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ba95810a-5fca-41ef-b0b9-858f72ce5ad6",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "containers",
+                    "devcontainers",
+                    ":devcontainer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "devcontainer",
+                      "description": "(Required) Devcontainer ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1cb0a01a-14c1-44ef-a5d6-f1aaac51111a",
+          "name": "Recreate devcontainer for workspace agent",
+          "request": {
+            "name": "Recreate devcontainer for workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "containers",
+                "devcontainers",
+                ":devcontainer",
+                "recreate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "devcontainer",
+                  "description": "(Required) Devcontainer ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "25548d92-187f-4e51-b83a-7560bb4b05b5",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "containers",
+                    "devcontainers",
+                    ":devcontainer",
+                    "recreate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "devcontainer",
+                      "description": "(Required) Devcontainer ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"message\": \"string\",\n  \"validations\": [\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0404fe03-2bb0-4092-b031-9cfa19a498ec",
+          "name": "Watch workspace agent for container updates.",
+          "request": {
+            "name": "Watch workspace agent for container updates.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "containers",
+                "watch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9ef06137-194c-42d2-a266-685b243c1242",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "containers",
+                    "watch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"containers\": [\n    {\n      \"created_at\": \"1963-06-04T20:18:06.868Z\",\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"name\": \"string\",\n      \"ports\": [\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 5586,\n          \"network\": \"string\",\n          \"port\": 1228\n        },\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 1627,\n          \"network\": \"string\",\n          \"port\": 9923\n        }\n      ],\n      \"running\": true,\n      \"status\": \"string\",\n      \"volumes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"created_at\": \"1968-12-21T14:07:07.424Z\",\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"name\": \"string\",\n      \"ports\": [\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 2188,\n          \"network\": \"string\",\n          \"port\": 6618\n        },\n        {\n          \"host_ip\": \"string\",\n          \"host_port\": 8541,\n          \"network\": \"string\",\n          \"port\": 7388\n        }\n      ],\n      \"running\": true,\n      \"status\": \"string\",\n      \"volumes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"devcontainers\": [\n    {\n      \"agent\": {\n        \"directory\": \"string\",\n        \"id\": \"2961b60a-4c3d-f408-e259-e692e828512e\",\n        \"name\": \"string\"\n      },\n      \"config_path\": \"string\",\n      \"container\": {\n        \"created_at\": \"1973-01-08T20:13:11.352Z\",\n        \"id\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"name\": \"string\",\n        \"ports\": [\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 9649,\n            \"network\": \"string\",\n            \"port\": 9591\n          },\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 3738,\n            \"network\": \"string\",\n            \"port\": 9304\n          }\n        ],\n        \"running\": true,\n        \"status\": \"string\",\n        \"volumes\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"dirty\": true,\n      \"error\": \"string\",\n      \"id\": \"d4c7b697-9a6b-49d0-21d6-6387846ab325\",\n      \"name\": \"string\",\n      \"status\": \"stopping\",\n      \"subagent_id\": {\n        \"uuid\": \"string\",\n        \"valid\": true\n      },\n      \"workspace_folder\": \"string\"\n    },\n    {\n      \"agent\": {\n        \"directory\": \"string\",\n        \"id\": \"ba85c391-0433-b327-bb72-96cb819dcc2a\",\n        \"name\": \"string\"\n      },\n      \"config_path\": \"string\",\n      \"container\": {\n        \"created_at\": \"1985-01-06T08:36:25.081Z\",\n        \"id\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"name\": \"string\",\n        \"ports\": [\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 8732,\n            \"network\": \"string\",\n            \"port\": 8081\n          },\n          {\n            \"host_ip\": \"string\",\n            \"host_port\": 4826,\n            \"network\": \"string\",\n            \"port\": 5338\n          }\n        ],\n        \"running\": false,\n        \"status\": \"string\",\n        \"volumes\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"dirty\": false,\n      \"error\": \"string\",\n      \"id\": \"84333659-0821-0233-1ac6-a70aaa4f5fec\",\n      \"name\": \"string\",\n      \"status\": \"starting\",\n      \"subagent_id\": {\n        \"uuid\": \"string\",\n        \"valid\": true\n      },\n      \"workspace_folder\": \"string\"\n    }\n  ],\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6cbbe17-82ae-4626-a4ad-f5915398e285",
+          "name": "Coordinate workspace agent",
+          "request": {
+            "name": "Coordinate workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "coordinate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3a464834-019c-4a51-95bd-ced6bb40908c",
+              "name": "Switching Protocols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "coordinate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8018fbe5-4551-4d10-838b-728556177d92",
+          "name": "Get listening ports for workspace agent",
+          "request": {
+            "name": "Get listening ports for workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "listening-ports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cb6a6f29-3784-41f4-b1d3-4e151fddf18b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "listening-ports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ports\": [\n    {\n      \"network\": \"string\",\n      \"port\": 352,\n      \"process_name\": \"string\"\n    },\n    {\n      \"network\": \"string\",\n      \"port\": 4737,\n      \"process_name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b10afb1f-5594-44f3-aad0-a874410f6c47",
+          "name": "Get logs by workspace agent",
+          "request": {
+            "name": "Get logs by workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<integer>",
+                  "description": "Before log id"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<integer>",
+                  "description": "After log id"
+                },
+                {
+                  "disabled": false,
+                  "key": "follow",
+                  "value": "<boolean>",
+                  "description": "Follow log stream"
+                },
+                {
+                  "disabled": false,
+                  "key": "no_compression",
+                  "value": "<boolean>",
+                  "description": "Disable compression for WebSocket connection"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Log output format. Accepted: 'json' (default), 'text' (plain text with RFC3339 timestamps and ANSI colors). Not supported with follow=true."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a9071ec3-82b0-4378-8fe5-7aa468ff47d5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "follow",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "no_compression",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"created_at\": \"1986-04-03T15:03:40.704Z\",\n    \"id\": 2589,\n    \"level\": \"<string>\",\n    \"output\": \"string\",\n    \"source_id\": \"70935218-800c-61bb-66a3-c3f82094d0e4\"\n  },\n  {\n    \"created_at\": \"2015-03-13T21:06:48.372Z\",\n    \"id\": 9589,\n    \"level\": \"<string>\",\n    \"output\": \"string\",\n    \"source_id\": \"7b7f42fc-a1f7-3441-2213-e08a33f7f6b6\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10804ab6-6319-42c4-9698-30bc2871bf39",
+          "name": "Open PTY to workspace agent",
+          "request": {
+            "name": "Open PTY to workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "pty"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f7b2a487-bb97-482b-a0e0-e490b7209d96",
+              "name": "Switching Protocols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "pty"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ced0e0d-cf62-484a-b4e3-e94c21199eb3",
+          "name": "Removed: Get logs by workspace agent",
+          "request": {
+            "name": "Removed: Get logs by workspace agent",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "startup-logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<integer>",
+                  "description": "Before log id"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<integer>",
+                  "description": "After log id"
+                },
+                {
+                  "disabled": false,
+                  "key": "follow",
+                  "value": "<boolean>",
+                  "description": "Follow log stream"
+                },
+                {
+                  "disabled": false,
+                  "key": "no_compression",
+                  "value": "<boolean>",
+                  "description": "Disable compression for WebSocket connection"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e7ae495a-dd20-408f-ace1-0b6651b180ef",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "startup-logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "follow",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "no_compression",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"created_at\": \"1986-04-03T15:03:40.704Z\",\n    \"id\": 2589,\n    \"level\": \"<string>\",\n    \"output\": \"string\",\n    \"source_id\": \"70935218-800c-61bb-66a3-c3f82094d0e4\"\n  },\n  {\n    \"created_at\": \"2015-03-13T21:06:48.372Z\",\n    \"id\": 9589,\n    \"level\": \"<string>\",\n    \"output\": \"string\",\n    \"source_id\": \"7b7f42fc-a1f7-3441-2213-e08a33f7f6b6\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5cc9bb99-24b4-45cf-ad9f-9f888c19937b",
+          "name": "Watch for workspace agent metadata updates",
+          "request": {
+            "name": "Watch for workspace agent metadata updates",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "watch-metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1a3d8c17-7942-45d9-aaa4-d01620425899",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "watch-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ece1f430-c614-4cd3-b700-49fe3e21016f",
+          "name": "Watch for workspace agent metadata updates via WebSockets",
+          "request": {
+            "name": "Watch for workspace agent metadata updates via WebSockets",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "workspaceagents",
+                ":workspaceagent",
+                "watch-metadata-ws"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceagent",
+                  "description": "(Required) Workspace agent ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26bfefac-9c0e-462c-9bfc-c2c96c9d7e5c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "workspaceagents",
+                    ":workspaceagent",
+                    "watch-metadata-ws"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceagent",
+                      "description": "(Required) Workspace agent ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": \"\",\n  \"type\": \"data\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "792b2400-022d-463c-93d3-6bc8e4f21d73",
+    "name": "Coder Agents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,418 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Notifications API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a custom notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a custom notification"
+        },
+        {
+          "info": {
+            "name": "Get notification dispatch methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/dispatch-methods",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get notification dispatch methods"
+        },
+        {
+          "info": {
+            "name": "List inbox notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/inbox",
+            "params": [
+              {
+                "name": "targets",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of target IDs to filter notifications"
+              },
+              {
+                "name": "templates",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of template IDs to filter notifications"
+              },
+              {
+                "name": "read_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter notifications by read status. Possible values: read, unread, all"
+              },
+              {
+                "name": "starting_before",
+                "value": "",
+                "type": "query",
+                "description": "ID of the last notification from the current page. Notifications returned will be older than the associated one"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List inbox notifications"
+        },
+        {
+          "info": {
+            "name": "Mark all unread notifications as read",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/inbox/mark-all-as-read",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Mark all unread notifications as read"
+        },
+        {
+          "info": {
+            "name": "Watch for new inbox notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/inbox/watch",
+            "params": [
+              {
+                "name": "targets",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of target IDs to filter notifications"
+              },
+              {
+                "name": "templates",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of template IDs to filter notifications"
+              },
+              {
+                "name": "read_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter notifications by read status. Possible values: read, unread, all"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Define the output format for notifications title and body."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Watch for new inbox notifications"
+        },
+        {
+          "info": {
+            "name": "Update read status of a notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/inbox/:id/read-status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id of the notification"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update read status of a notification"
+        },
+        {
+          "info": {
+            "name": "Get notifications settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/settings",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get notifications settings"
+        },
+        {
+          "info": {
+            "name": "Update notifications settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/settings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update notifications settings"
+        },
+        {
+          "info": {
+            "name": "Get custom notification templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/templates/custom",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get custom notification templates"
+        },
+        {
+          "info": {
+            "name": "Get system notification templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/templates/system",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get system notification templates"
+        },
+        {
+          "info": {
+            "name": "Send a test notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/test",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a test notification"
+        },
+        {
+          "info": {
+            "name": "Get user notification preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/notifications/preferences",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user notification preferences"
+        },
+        {
+          "info": {
+            "name": "Update user notification preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/notifications/preferences",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update user notification preferences"
+        },
+        {
+          "info": {
+            "name": "Create user webpush subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/webpush/subscription",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create user webpush subscription"
+        },
+        {
+          "info": {
+            "name": "Delete user webpush subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/webpush/subscription",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete user webpush subscription"
+        },
+        {
+          "info": {
+            "name": "Send a test push notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/webpush/test",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a test push notification"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

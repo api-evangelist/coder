@@ -1,0 +1,677 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Chats API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Chats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List chats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query. Supports title:<substring> (case-insensitive, quote multi-word values), archived:bool, has_unread:bool, pr_status:<draft\\|open\\|merged\\|closed> as repeated or comma-separated values, source:<created_by_me\\|shared_with_me>, diff_url:<url> (quote values containing colons), pr:<number> (exact PR number match), repo:<owner/repo> (case-insensitive substring match against git remote origin or URL), pr_title:<text> (case-insensitive PR title substring). Bare terms are not supported; use title:<value> for title filtering."
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Filter by label as key:value. Repeat for multiple (AND logic)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Create chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Get chat retention days",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/config/retention-days",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get chat retention days"
+        },
+        {
+          "info": {
+            "name": "Update chat retention days",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/config/retention-days",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update chat retention days"
+        },
+        {
+          "info": {
+            "name": "Upload chat file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/files",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Get chat file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/files/:file",
+            "params": [
+              {
+                "name": "file",
+                "value": "",
+                "type": "path",
+                "description": "File ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Get PR insights",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/insights/pull-requests",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start date (RFC3339)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "End date (RFC3339)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get PR insights"
+        },
+        {
+          "info": {
+            "name": "List chat models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/models",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Watch chat events for a user via WebSockets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/watch",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Get chat by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Update chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Get chat ACLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/acl",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Update chat ACL",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/acl",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Get chat diff contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/diff",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Interrupt chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/interrupt",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "List chat messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/messages",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              },
+              {
+                "name": "before_id",
+                "value": "",
+                "type": "query",
+                "description": "Return messages with id < before_id"
+              },
+              {
+                "name": "after_id",
+                "value": "",
+                "type": "query",
+                "description": "Return messages with id > after_id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page size, 1 to 200. Defaults to 50."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Send chat message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/messages",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Edit chat message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/messages/:message",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "path",
+                "description": "Message ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "List chat user prompts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/prompts",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page size, 0 to 2000. 0 (the default) means the server-side default of 500."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change.\n\nReturns the user-authored prompts in a chat, newest first,\nwith each prompt's text parts concatenated in the order they\nwere authored. Used by the composer to power the up/down\narrow prompt-history cycle without paging through every\nmessage in the chat."
+        },
+        {
+          "info": {
+            "name": "Reconcile invalid chat state",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/reconcile-invalid",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Stream chat events via WebSockets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/stream",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Connect to chat workspace desktop via WebSockets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/stream/desktop",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Raw binary WebSocket stream of the chat workspace desktop.\nExperimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Watch chat workspace git state via WebSockets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/stream/git",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Stream chat parts via WebSockets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/stream/parts",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        },
+        {
+          "info": {
+            "name": "Regenerate chat title",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/experimental/chats/:chat/title/regenerate",
+            "params": [
+              {
+                "name": "chat",
+                "value": "",
+                "type": "path",
+                "description": "Chat ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Experimental: this endpoint is subject to change."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,783 @@
+{
+  "item": [
+    {
+      "id": "2623a29e-0dee-4d99-8cd8-a168f2098dff",
+      "name": "Insights",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "31945b20-82ac-430a-95e6-e7d65f477def",
+          "name": "Get deployment DAUs",
+          "request": {
+            "name": "Get deployment DAUs",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "insights",
+                "daus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tz_offset",
+                  "value": "<integer>",
+                  "description": "(Required) Time-zone offset (e.g. -2)"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "19ff7595-acde-4a88-8409-81592b764c20",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "insights",
+                    "daus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tz_offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"amount\": 1837,\n      \"date\": \"string\"\n    },\n    {\n      \"amount\": 7418,\n      \"date\": \"string\"\n    }\n  ],\n  \"tz_hour_offset\": 7924\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb79ef43-7b46-45a6-b0cc-2c0f723d907a",
+          "name": "Get insights about templates",
+          "request": {
+            "name": "Get insights about templates",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "insights",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<string>",
+                  "description": "(Required) Start time"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<string>",
+                  "description": "(Required) End time"
+                },
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "<string>",
+                  "description": "(Required) Interval"
+                },
+                {
+                  "disabled": false,
+                  "key": "template_ids",
+                  "value": "<string>",
+                  "description": "Template IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "template_ids",
+                  "value": "<string>",
+                  "description": "Template IDs"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8c79f764-03a5-4545-b3a4-c6f7895b0c20",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "insights",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "template_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "template_ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"interval_reports\": [\n    {\n      \"active_users\": 14,\n      \"end_time\": \"1964-02-02T05:13:09.353Z\",\n      \"interval\": \"week\",\n      \"start_time\": \"1964-05-11T16:52:55.554Z\",\n      \"template_ids\": [\n        \"5f4031bb-ea83-d04e-fd32-78ea5c59b863\",\n        \"35f7037a-1572-b813-18b7-c677ef3d4eb1\"\n      ]\n    },\n    {\n      \"active_users\": 14,\n      \"end_time\": \"1950-11-21T02:20:31.294Z\",\n      \"interval\": \"week\",\n      \"start_time\": \"2013-10-02T15:53:21.750Z\",\n      \"template_ids\": [\n        \"afcf5f13-1e6f-c95d-616d-2a607275312d\",\n        \"463e97d8-3c45-24bc-edde-d2e07b8ab6ef\"\n      ]\n    }\n  ],\n  \"report\": {\n    \"active_users\": 22,\n    \"apps_usage\": [\n      {\n        \"display_name\": \"Visual Studio Code\",\n        \"icon\": \"string\",\n        \"seconds\": 80500,\n        \"slug\": \"vscode\",\n        \"template_ids\": [\n          \"0775ad2b-d2c0-a195-ba11-474ff8f1a5eb\",\n          \"ce6c3155-9750-a4a7-086f-a3b18d4276bf\"\n        ],\n        \"times_used\": 2,\n        \"type\": \"builtin\"\n      },\n      {\n        \"display_name\": \"Visual Studio Code\",\n        \"icon\": \"string\",\n        \"seconds\": 80500,\n        \"slug\": \"vscode\",\n        \"template_ids\": [\n          \"93b9675a-26cf-9782-ad38-96586290a646\",\n          \"de3d7d9e-5337-7824-06dc-01928831ce84\"\n        ],\n        \"times_used\": 2,\n        \"type\": \"builtin\"\n      }\n    ],\n    \"end_time\": \"1952-06-08T17:57:46.770Z\",\n    \"parameters_usage\": [\n      {\n        \"description\": \"string\",\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"options\": [\n          {\n            \"description\": \"string\",\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"description\": \"string\",\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ],\n        \"template_ids\": [\n          \"20774ed9-eaa6-1811-1418-4a2115a79767\",\n          \"46a30195-7609-0ddc-3aa6-326f5e0070d6\"\n        ],\n        \"type\": \"string\",\n        \"values\": [\n          {\n            \"count\": 8602,\n            \"value\": \"string\"\n          },\n          {\n            \"count\": 2292,\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"description\": \"string\",\n        \"display_name\": \"string\",\n        \"name\": \"string\",\n        \"options\": [\n          {\n            \"description\": \"string\",\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"description\": \"string\",\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ],\n        \"template_ids\": [\n          \"fbf197d5-6c4f-a493-0688-9595a4716d1f\",\n          \"292e493d-f94f-4c91-4ae0-8c7f66c9dd10\"\n        ],\n        \"type\": \"string\",\n        \"values\": [\n          {\n            \"count\": 4239,\n            \"value\": \"string\"\n          },\n          {\n            \"count\": 3773,\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"start_time\": \"1972-08-31T06:41:25.048Z\",\n    \"template_ids\": [\n      \"63fdc73b-d597-1717-d769-ecac310dec81\",\n      \"fbfa1476-755a-99b0-1685-9b3015230812\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee5c8405-eedb-4837-8d13-9b0376ef1e7b",
+          "name": "Get insights about user activity",
+          "request": {
+            "name": "Get insights about user activity",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "insights",
+                "user-activity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<string>",
+                  "description": "(Required) Start time"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<string>",
+                  "description": "(Required) End time"
+                },
+                {
+                  "disabled": false,
+                  "key": "template_ids",
+                  "value": "<string>",
+                  "description": "Template IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "template_ids",
+                  "value": "<string>",
+                  "description": "Template IDs"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9138c148-eb7e-4a0e-a911-70a37d0111c7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "insights",
+                    "user-activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "template_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "template_ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"report\": {\n    \"end_time\": \"2017-01-18T20:23:20.820Z\",\n    \"start_time\": \"1985-01-08T07:02:46.297Z\",\n    \"template_ids\": [\n      \"626db108-c28a-345a-7df8-e53eef40e9c6\",\n      \"35b4fed5-22f8-042a-9f02-c7632bb9a9c6\"\n    ],\n    \"users\": [\n      {\n        \"avatar_url\": \"https://rogsKRGkGENQ.spzZtxlFVm36xWA0HbIa4EDUg,bb-p578DNToLZw2t\",\n        \"seconds\": 80500,\n        \"template_ids\": [\n          \"a03bf619-062f-41ac-dd00-fcee9ae4f966\",\n          \"8268b9e3-1a11-0fe5-25d0-7f0d3c304ef8\"\n        ],\n        \"user_id\": \"77d6d124-c993-12bb-9e16-8c53785c5e10\",\n        \"username\": \"string\"\n      },\n      {\n        \"avatar_url\": \"https://bthowW.ookZ5xojNEAGWCl7+X9KcqWvPMXSxkrJdFHZm3oICOYgg3Pkzct3Zoq3YGajDHugFZfUtfS\",\n        \"seconds\": 80500,\n        \"template_ids\": [\n          \"9ab72603-266d-7237-5e65-7298768d1005\",\n          \"b463ac8b-0424-bb94-9609-f8575d37e438\"\n        ],\n        \"user_id\": \"ded1fd90-a5f3-67bb-5be6-205fad55213a\",\n        \"username\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3584fd05-67dd-47af-8e4d-0dc4703a1cc5",
+          "name": "Get insights about user latency",
+          "request": {
+            "name": "Get insights about user latency",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "insights",
+                "user-latency"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<string>",
+                  "description": "(Required) Start time"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<string>",
+                  "description": "(Required) End time"
+                },
+                {
+                  "disabled": false,
+                  "key": "template_ids",
+                  "value": "<string>",
+                  "description": "Template IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "template_ids",
+                  "value": "<string>",
+                  "description": "Template IDs"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3c905800-4e5d-4453-a8ba-58d410b9deb8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "insights",
+                    "user-latency"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "template_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "template_ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"report\": {\n    \"end_time\": \"1979-02-19T16:31:45.169Z\",\n    \"start_time\": \"2004-01-14T21:31:39.604Z\",\n    \"template_ids\": [\n      \"f4a30611-9611-ee62-2232-59ba948f4e96\",\n      \"859b35a8-237e-e3ad-ed95-6d053526a100\"\n    ],\n    \"users\": [\n      {\n        \"avatar_url\": \"http://TicPRhlIjebtAwZy.oejWs.6hIbQywGf23lmUKa9.W,HeE-GlamJUt9Sz-eUoJZvWhZa\",\n        \"latency_ms\": {\n          \"p50\": 31.312,\n          \"p95\": 119.832\n        },\n        \"template_ids\": [\n          \"8c30a435-541b-fec2-27f0-2e816bb0d1ca\",\n          \"3e7b5db7-2150-82d3-e037-80c5b1ec47b0\"\n        ],\n        \"user_id\": \"fd202862-7ea6-ee69-2335-e89004d1b43f\",\n        \"username\": \"string\"\n      },\n      {\n        \"avatar_url\": \"http://OvxdjlcaBKBHVrMxGrKlhl.inUxNphQgJXoN\",\n        \"latency_ms\": {\n          \"p50\": 31.312,\n          \"p95\": 119.832\n        },\n        \"template_ids\": [\n          \"4bfa5102-3a21-9c47-af59-fb6b616484d5\",\n          \"8be008ca-da78-6362-5c91-fcc49b0139c8\"\n        ],\n        \"user_id\": \"433a07a5-d654-3f2e-c4a2-c58c6b84b51d\",\n        \"username\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e990086b-8cad-4d82-97eb-7e9590d0bc18",
+          "name": "Get insights about user status counts",
+          "request": {
+            "name": "Get insights about user status counts",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "insights",
+                "user-status-counts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "IANA timezone name (e.g. America/St_Johns)"
+                },
+                {
+                  "disabled": false,
+                  "key": "tz_offset",
+                  "value": "<integer>",
+                  "description": "Deprecated: Time-zone offset (e.g. -2). Use timezone instead."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7542a23d-4030-4a0a-9562-8e2ec29206ee",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "insights",
+                    "user-status-counts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tz_offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_counts\": {\n    \"key_0\": [\n      {\n        \"count\": 10,\n        \"date\": \"1963-02-15T15:19:45.931Z\"\n      },\n      {\n        \"count\": 10,\n        \"date\": \"1961-02-23T23:08:56.193Z\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"count\": 10,\n        \"date\": \"2012-11-08T12:57:08.020Z\"\n      },\n      {\n        \"count\": 10,\n        \"date\": \"2004-01-04T01:06:28.419Z\"\n      }\n    ],\n    \"key_2\": [\n      {\n        \"count\": 10,\n        \"date\": \"2020-10-21T20:36:00.719Z\"\n      },\n      {\n        \"count\": 10,\n        \"date\": \"1991-04-26T01:14:30.189Z\"\n      }\n    ],\n    \"key_3\": [\n      {\n        \"count\": 10,\n        \"date\": \"1996-05-27T15:05:23.302Z\"\n      },\n      {\n        \"count\": 10,\n        \"date\": \"2016-12-28T16:52:55.317Z\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "769561be-0297-4f54-809f-79369acbb46f",
+    "name": "Coder Agents Insights API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

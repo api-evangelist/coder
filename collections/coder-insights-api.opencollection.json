@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Insights API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Insights",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get deployment DAUs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/insights/daus",
+            "params": [
+              {
+                "name": "tz_offset",
+                "value": "",
+                "type": "query",
+                "description": "Time-zone offset (e.g. -2)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get deployment DAUs"
+        },
+        {
+          "info": {
+            "name": "Get insights about templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/insights/templates",
+            "params": [
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Start time"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "End time"
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Interval"
+              },
+              {
+                "name": "template_ids",
+                "value": "",
+                "type": "query",
+                "description": "Template IDs"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get insights about templates"
+        },
+        {
+          "info": {
+            "name": "Get insights about user activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/insights/user-activity",
+            "params": [
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Start time"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "End time"
+              },
+              {
+                "name": "template_ids",
+                "value": "",
+                "type": "query",
+                "description": "Template IDs"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get insights about user activity"
+        },
+        {
+          "info": {
+            "name": "Get insights about user latency",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/insights/user-latency",
+            "params": [
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Start time"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "End time"
+              },
+              {
+                "name": "template_ids",
+                "value": "",
+                "type": "query",
+                "description": "Template IDs"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get insights about user latency"
+        },
+        {
+          "info": {
+            "name": "Get insights about user status counts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/insights/user-status-counts",
+            "params": [
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "IANA timezone name (e.g. America/St_Johns)"
+              },
+              {
+                "name": "tz_offset",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated: Time-zone offset (e.g. -2). Use timezone instead."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get insights about user status counts"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

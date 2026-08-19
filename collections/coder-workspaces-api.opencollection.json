@@ -1,0 +1,718 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Workspaces API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Watch all workspace builds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/experimental/watch-all-workspacebuilds",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Watch all workspace builds"
+        },
+        {
+          "info": {
+            "name": "Create user workspace by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/members/:user/workspaces",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, UUID, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new workspace using a template. The request must\nspecify either the Template ID or the Template Version ID,\nnot both. If the Template ID is specified, the active version\nof the template will be used."
+        },
+        {
+          "info": {
+            "name": "Get users available for workspace creation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/members/:user/workspaces/available-users",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get users available for workspace creation"
+        },
+        {
+          "info": {
+            "name": "Get workspace metadata by user and workspace name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/workspace/:workspacename",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "workspacename",
+                "value": "",
+                "type": "path",
+                "description": "Workspace name"
+              },
+              {
+                "name": "include_deleted",
+                "value": "",
+                "type": "query",
+                "description": "Return data instead of HTTP 404 if the workspace is deleted"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace metadata by user and workspace name"
+        },
+        {
+          "info": {
+            "name": "Create user workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/workspaces",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "Username, UUID, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new workspace using a template. The request must\nspecify either the Template ID or the Template Version ID,\nnot both. If the Template ID is specified, the active version\nof the template will be used."
+        },
+        {
+          "info": {
+            "name": "List workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query in the format `key:value`. Available keys are: owner, template, name, status, has-agent, dormant, last_used_after, last_used_before, has-ai-task, has_external_agent, healthy."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page offset"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List workspaces"
+        },
+        {
+          "info": {
+            "name": "Get workspace metadata by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              },
+              {
+                "name": "include_deleted",
+                "value": "",
+                "type": "query",
+                "description": "Return data instead of HTTP 404 if the workspace is deleted"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace metadata by ID"
+        },
+        {
+          "info": {
+            "name": "Update workspace metadata by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace metadata by ID"
+        },
+        {
+          "info": {
+            "name": "Get workspace ACLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/acl",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace ACLs"
+        },
+        {
+          "info": {
+            "name": "Update workspace ACL",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/acl",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace ACL"
+        },
+        {
+          "info": {
+            "name": "Completely clears the workspace's user and group ACLs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/acl",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Completely clears the workspace's user and group ACLs."
+        },
+        {
+          "info": {
+            "name": "Workspace Agent Connection Watch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/agent-connection-watch",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Workspace Agent Connection Watch"
+        },
+        {
+          "info": {
+            "name": "Update workspace autostart schedule by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/autostart",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace autostart schedule by ID"
+        },
+        {
+          "info": {
+            "name": "Update workspace automatic updates by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/autoupdates",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace automatic updates by ID"
+        },
+        {
+          "info": {
+            "name": "Update workspace dormancy status by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/dormant",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace dormancy status by id."
+        },
+        {
+          "info": {
+            "name": "Extend workspace deadline by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/extend",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Extend workspace deadline by ID"
+        },
+        {
+          "info": {
+            "name": "Favorite workspace by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/favorite",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Favorite workspace by ID."
+        },
+        {
+          "info": {
+            "name": "Unfavorite workspace by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/favorite",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unfavorite workspace by ID."
+        },
+        {
+          "info": {
+            "name": "Resolve workspace autostart by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/resolve-autostart",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resolve workspace autostart by id."
+        },
+        {
+          "info": {
+            "name": "Get workspace timings by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/timings",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace timings by ID"
+        },
+        {
+          "info": {
+            "name": "Update workspace TTL by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/ttl",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace TTL by ID"
+        },
+        {
+          "info": {
+            "name": "Post Workspace Usage by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/usage",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Post Workspace Usage by ID"
+        },
+        {
+          "info": {
+            "name": "Watch workspace by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/watch",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Watch workspace by ID"
+        },
+        {
+          "info": {
+            "name": "Watch workspace by ID via WebSockets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/watch-ws",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Watch workspace by ID via WebSockets"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

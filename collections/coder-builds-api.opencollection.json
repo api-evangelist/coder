@@ -1,0 +1,375 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Builds API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Builds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get workspace build by user, workspace name, and build number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/workspace/:workspacename/builds/:buildnumber",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "workspacename",
+                "value": "",
+                "type": "path",
+                "description": "Workspace name"
+              },
+              {
+                "name": "buildnumber",
+                "value": "",
+                "type": "path",
+                "description": "Build number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace build by user, workspace name, and build number"
+        },
+        {
+          "info": {
+            "name": "Get workspace build",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace build"
+        },
+        {
+          "info": {
+            "name": "Cancel workspace build",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild/cancel",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              },
+              {
+                "name": "expect_status",
+                "value": "",
+                "type": "query",
+                "description": "Expected status of the job. If expect_status is supplied, the request will be rejected with 412 Precondition Failed if the job doesn't match the state when performing the cancellation."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancel workspace build"
+        },
+        {
+          "info": {
+            "name": "Get workspace build logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild/logs",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Before log id"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "After log id"
+              },
+              {
+                "name": "follow",
+                "value": "",
+                "type": "query",
+                "description": "Follow log stream"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Log output format. Accepted: 'json' (default), 'text' (plain text with RFC3339 timestamps and ANSI colors). Not supported with follow=true."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace build logs"
+        },
+        {
+          "info": {
+            "name": "Get build parameters for workspace build",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild/parameters",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get build parameters for workspace build"
+        },
+        {
+          "info": {
+            "name": "Removed: Get workspace resources for workspace build",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild/resources",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removed: Get workspace resources for workspace build"
+        },
+        {
+          "info": {
+            "name": "Get provisioner state for workspace build",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild/state",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get provisioner state for workspace build"
+        },
+        {
+          "info": {
+            "name": "Update workspace build state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild/state",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace build state"
+        },
+        {
+          "info": {
+            "name": "Get workspace build timings by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspacebuilds/:workspacebuild/timings",
+            "params": [
+              {
+                "name": "workspacebuild",
+                "value": "",
+                "type": "path",
+                "description": "Workspace build ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace build timings by ID"
+        },
+        {
+          "info": {
+            "name": "Get workspace builds by workspace ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/builds",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              },
+              {
+                "name": "after_id",
+                "value": "",
+                "type": "query",
+                "description": "After ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page offset"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Since timestamp"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace builds by workspace ID"
+        },
+        {
+          "info": {
+            "name": "Create workspace build",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/builds",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create workspace build"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

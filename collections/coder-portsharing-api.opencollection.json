@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents PortSharing API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "PortSharing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get workspace agent port shares",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/port-share",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace agent port shares"
+        },
+        {
+          "info": {
+            "name": "Upsert workspace agent port share",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/port-share",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upsert workspace agent port share"
+        },
+        {
+          "info": {
+            "name": "Delete workspace agent port share",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/port-share",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete workspace agent port share"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

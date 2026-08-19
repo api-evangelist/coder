@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents AI Bridge API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Bridge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List AI Bridge clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/aibridge/clients",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List AI Bridge clients"
+        },
+        {
+          "info": {
+            "name": "List AI Bridge models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/aibridge/models",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List AI Bridge models"
+        },
+        {
+          "info": {
+            "name": "List AI Bridge sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/aibridge/sessions",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query in the format `key:value`. Available keys are: initiator, provider, provider_name, model, client, session_id, started_after, started_before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "after_session_id",
+                "value": "",
+                "type": "query",
+                "description": "Cursor pagination after session ID (cannot be used with offset)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset pagination (cannot be used with after_session_id)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List AI Bridge sessions"
+        },
+        {
+          "info": {
+            "name": "Get AI Bridge session threads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/aibridge/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID (client_session_id or interception UUID)"
+              },
+              {
+                "name": "after_id",
+                "value": "",
+                "type": "query",
+                "description": "Thread pagination cursor (forward/older)"
+              },
+              {
+                "name": "before_id",
+                "value": "",
+                "type": "query",
+                "description": "Thread pagination cursor (backward/newer)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of threads per page (default 50)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get AI Bridge session threads"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

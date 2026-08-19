@@ -1,0 +1,1015 @@
+{
+  "item": [
+    {
+      "id": "2f07d051-74cf-471d-97ed-8fc141a384b1",
+      "name": "Organizations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff9a8618-aa82-4800-bfbe-09b15eae617d",
+          "name": "Get organizations",
+          "request": {
+            "name": "Get organizations",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ea7e8cab-520e-49ad-ab59-ea24a4c88540",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"created_at\": \"1979-08-01T03:36:56.247Z\",\n    \"id\": \"d8e162d6-4dfd-1c83-4f60-fe34f3fdc389\",\n    \"is_default\": true,\n    \"updated_at\": \"2026-01-09T13:25:20.713Z\",\n    \"default_org_member_roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"display_name\": \"string\",\n    \"icon\": \"string\",\n    \"name\": \"string\"\n  },\n  {\n    \"created_at\": \"1959-06-12T11:25:44.845Z\",\n    \"id\": \"43cf6677-d35f-9660-2760-0ec4801f70f4\",\n    \"is_default\": false,\n    \"updated_at\": \"1995-03-21T13:59:33.981Z\",\n    \"default_org_member_roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"display_name\": \"string\",\n    \"icon\": \"string\",\n    \"name\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "249d00e0-a3db-4853-a7b5-7f13edd550f8",
+          "name": "Create organization",
+          "request": {
+            "name": "Create organization",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"icon\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bd4229c9-aef4-44c7-9f2c-64e110ddf7af",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"icon\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1997-07-21T03:51:45.402Z\",\n  \"id\": \"6472ed87-1022-3ba3-45c3-434ce27db9a6\",\n  \"is_default\": true,\n  \"updated_at\": \"1966-02-13T08:05:31.585Z\",\n  \"default_org_member_roles\": [\n    \"string\",\n    \"string\"\n  ],\n  \"description\": \"string\",\n  \"display_name\": \"string\",\n  \"icon\": \"string\",\n  \"name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7da8724-3977-49cf-a0f2-f6e74e23ce70",
+          "name": "Get organization by ID",
+          "request": {
+            "name": "Get organization by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "928e72cd-b36f-4107-8955-b44ee6f787f9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1997-07-21T03:51:45.402Z\",\n  \"id\": \"6472ed87-1022-3ba3-45c3-434ce27db9a6\",\n  \"is_default\": true,\n  \"updated_at\": \"1966-02-13T08:05:31.585Z\",\n  \"default_org_member_roles\": [\n    \"string\",\n    \"string\"\n  ],\n  \"description\": \"string\",\n  \"display_name\": \"string\",\n  \"icon\": \"string\",\n  \"name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45548384-83cb-437f-adc1-b22e3578da43",
+          "name": "Delete organization",
+          "request": {
+            "name": "Delete organization",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID or name"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5732ea7c-df85-456f-9d94-6322697fc1fc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID or name"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"message\": \"string\",\n  \"validations\": [\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be62505d-bb7d-4768-a5b2-2b6ae5fd093e",
+          "name": "Update organization",
+          "request": {
+            "name": "Update organization",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID or name"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"default_org_member_roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8819f2e1-4a10-41f8-beb1-17c25003f13c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID or name"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"default_org_member_roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1997-07-21T03:51:45.402Z\",\n  \"id\": \"6472ed87-1022-3ba3-45c3-434ce27db9a6\",\n  \"is_default\": true,\n  \"updated_at\": \"1966-02-13T08:05:31.585Z\",\n  \"default_org_member_roles\": [\n    \"string\",\n    \"string\"\n  ],\n  \"description\": \"string\",\n  \"display_name\": \"string\",\n  \"icon\": \"string\",\n  \"name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e47a501c-843e-4fc5-9b38-e7494e96c980",
+          "name": "Get provisioner jobs",
+          "request": {
+            "name": "Get provisioner jobs",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "provisionerjobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Page limit"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filter results by job IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filter results by job IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter results by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "initiator",
+                  "value": "<string>",
+                  "description": "Filter results by initiator"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "767e9505-6978-4a41-be1f-2f053143c311",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "provisionerjobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initiator",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"available_workers\": [\n      \"7fa56d39-5668-616b-a7c8-409080814abc\",\n      \"88054f16-71b1-58d2-4772-92f3807bba15\"\n    ],\n    \"canceled_at\": \"2022-04-07T18:34:36.162Z\",\n    \"completed_at\": \"2011-10-31T02:33:53.090Z\",\n    \"created_at\": \"1975-11-09T13:49:31.802Z\",\n    \"error\": \"string\",\n    \"error_code\": \"REQUIRED_TEMPLATE_VARIABLES\",\n    \"file_id\": \"747ce701-8d6f-b38f-99d3-ece298b53a8d\",\n    \"id\": \"584323d8-e1b2-70dd-5ced-c21b388616ba\",\n    \"initiator_id\": \"7df0948a-eb9f-37aa-eb59-33a404b2edf4\",\n    \"input\": {\n      \"error\": \"string\",\n      \"template_version_id\": \"469132c3-6981-1a35-ec42-ed3704171f56\",\n      \"workspace_build_id\": \"b91a3221-a610-9501-86d5-b6e57a206ed5\"\n    },\n    \"logs_overflowed\": true,\n    \"metadata\": {\n      \"template_display_name\": \"string\",\n      \"template_icon\": \"string\",\n      \"template_id\": \"b919ad85-3157-4db6-43c9-cf7bb9bacb75\",\n      \"template_name\": \"string\",\n      \"template_version_name\": \"string\",\n      \"workspace_build_transition\": \"stop\",\n      \"workspace_id\": \"a56df263-d270-f08c-13c4-e9d5ed8f67a9\",\n      \"workspace_name\": \"string\"\n    },\n    \"organization_id\": \"f174f7d6-3a28-d679-8f4a-acd8e6044831\",\n    \"queue_position\": 2523,\n    \"queue_size\": 2887,\n    \"started_at\": \"1988-08-21T23:13:42.948Z\",\n    \"status\": \"running\",\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"type\": \"workspace_build\",\n    \"worker_id\": \"a303c6c7-62f7-f672-627d-fc459348d3ed\",\n    \"worker_name\": \"string\"\n  },\n  {\n    \"available_workers\": [\n      \"d886920e-73f4-94b7-7631-ef8d1cb61b5b\",\n      \"70bbde2c-2c13-8d9e-b52e-4099129e8361\"\n    ],\n    \"canceled_at\": \"1952-08-18T10:52:41.865Z\",\n    \"completed_at\": \"1950-08-28T19:04:09.191Z\",\n    \"created_at\": \"1997-06-27T22:48:38.635Z\",\n    \"error\": \"string\",\n    \"error_code\": \"INSUFFICIENT_QUOTA\",\n    \"file_id\": \"f99cba5d-cc3d-73b7-3057-a6c4b05480d6\",\n    \"id\": \"fb882c66-204c-84f2-c303-6508b7f95e5c\",\n    \"initiator_id\": \"5daf3b4a-4891-5724-8365-56e494585172\",\n    \"input\": {\n      \"error\": \"string\",\n      \"template_version_id\": \"4d9f9927-c5b5-a508-73bd-69a4ca72f1e6\",\n      \"workspace_build_id\": \"5f60e14c-4f22-35ed-7746-5c69211829ca\"\n    },\n    \"logs_overflowed\": true,\n    \"metadata\": {\n      \"template_display_name\": \"string\",\n      \"template_icon\": \"string\",\n      \"template_id\": \"f259d0ff-894b-af93-cf98-856ea492f54a\",\n      \"template_name\": \"string\",\n      \"template_version_name\": \"string\",\n      \"workspace_build_transition\": \"start\",\n      \"workspace_id\": \"6586d5a8-bbd6-c66c-1ac4-5b7a13a04fd9\",\n      \"workspace_name\": \"string\"\n    },\n    \"organization_id\": \"85948c3f-37ab-94f9-300c-2e35e1bdaec4\",\n    \"queue_position\": 6215,\n    \"queue_size\": 7976,\n    \"started_at\": \"2025-07-11T18:58:42.073Z\",\n    \"status\": \"canceled\",\n    \"tags\": {\n      \"key_0\": \"string\"\n    },\n    \"type\": \"template_version_import\",\n    \"worker_id\": \"ad04aba6-9376-e073-e02a-6b7a902b0aa5\",\n    \"worker_name\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25e00d74-8497-4928-9ee4-58102f33def4",
+          "name": "Get provisioner job",
+          "request": {
+            "name": "Get provisioner job",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "provisionerjobs",
+                ":job"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job",
+                  "description": "(Required) Job ID"
+                },
+                {
+                  "description": "Your Coder deployment hostname",
+                  "type": "any",
+                  "value": "{{coderHost}}",
+                  "key": "coderHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Coder-Session-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "03c5efd6-4366-4ba5-9423-d180bcb2f1d0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "provisionerjobs",
+                    ":job"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job",
+                      "description": "(Required) Job ID"
+                    },
+                    {
+                      "description": "Your Coder deployment hostname",
+                      "type": "any",
+                      "value": "{{coderHost}}",
+                      "key": "coderHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Coder-Session-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"available_workers\": [\n    \"0ddb93ab-1d2a-efdc-2c5e-acd25fe70837\",\n    \"0d2cd858-1b0a-0ada-2cd9-7e9a4b521fa3\"\n  ],\n  \"canceled_at\": \"1997-03-20T19:34:43.400Z\",\n  \"completed_at\": \"1965-09-17T03:05:03.108Z\",\n  \"created_at\": \"1972-07-01T19:08:46.871Z\",\n  \"error\": \"string\",\n  \"error_code\": \"REQUIRED_TEMPLATE_VARIABLES\",\n  \"file_id\": \"1deaf096-fd5b-efb1-ff2e-64582de4bf10\",\n  \"id\": \"b9e63b3d-8487-fdf3-a757-56366d1748e6\",\n  \"initiator_id\": \"37cf7059-813c-4f05-8f71-63e2a3f60f46\",\n  \"input\": {\n    \"error\": \"string\",\n    \"template_version_id\": \"fb02e273-91b3-2d5b-d387-dc810b71a701\",\n    \"workspace_build_id\": \"db0c89a9-d16f-b57c-4ac0-a2efdda78860\"\n  },\n  \"logs_overflowed\": true,\n  \"metadata\": {\n    \"template_display_name\": \"string\",\n    \"template_icon\": \"string\",\n    \"template_id\": \"5c99b91f-0821-c766-d0ab-29b2b556923a\",\n    \"template_name\": \"string\",\n    \"template_version_name\": \"string\",\n    \"workspace_build_transition\": \"delete\",\n    \"workspace_id\": \"84811d3d-3662-c40e-fc63-dc1c2e82bb3b\",\n    \"workspace_name\": \"string\"\n  },\n  \"organization_id\": \"76bc72d6-cd1a-d099-0b04-be50886eec37\",\n  \"queue_position\": 628,\n  \"queue_size\": 808,\n  \"started_at\": \"2021-01-25T05:44:06.029Z\",\n  \"status\": \"canceling\",\n  \"tags\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"type\": \"template_version_dry_run\",\n  \"worker_id\": \"afda1379-e50a-4399-0e73-d585ca1b05bc\",\n  \"worker_name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coder deployment hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "coder.example.com",
+      "key": "coderHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{coderHost}}/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Coder-Session-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a4f62892-d61d-4cfa-a519-6cde4e772131",
+    "name": "Coder Agents Organizations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.\n\nContact Support:\n Name: API Support\n Email: support@coder.com",
+      "type": "text/plain"
+    }
+  }
+}

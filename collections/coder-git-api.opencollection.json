@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Git API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Git",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user external auths",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/external-auth",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user external auths"
+        },
+        {
+          "info": {
+            "name": "Get external auth by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/external-auth/:externalauth",
+            "params": [
+              {
+                "name": "externalauth",
+                "value": "",
+                "type": "path",
+                "description": "Git Provider ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get external auth by ID"
+        },
+        {
+          "info": {
+            "name": "Delete external auth user link by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/external-auth/:externalauth",
+            "params": [
+              {
+                "name": "externalauth",
+                "value": "",
+                "type": "path",
+                "description": "Git Provider ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete external auth user link by ID"
+        },
+        {
+          "info": {
+            "name": "Get external auth device by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/external-auth/:externalauth/device",
+            "params": [
+              {
+                "name": "externalauth",
+                "value": "",
+                "type": "path",
+                "description": "Git Provider ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get external auth device by ID."
+        },
+        {
+          "info": {
+            "name": "Post external auth device by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/external-auth/:externalauth/device",
+            "params": [
+              {
+                "name": "externalauth",
+                "value": "",
+                "type": "path",
+                "description": "External Provider ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Post external auth device by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,2506 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coder Agents Enterprise API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Coder-Session-Token",
+      "value": "{{Coder-Session-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Enterprise",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OAuth2 authorization server metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/.well-known/oauth-authorization-server",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OAuth2 authorization server metadata."
+        },
+        {
+          "info": {
+            "name": "OAuth2 protected resource metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/.well-known/oauth-protected-resource",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OAuth2 protected resource metadata."
+        },
+        {
+          "info": {
+            "name": "List AI Gateway keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/aibridge/keys",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List AI Gateway keys"
+        },
+        {
+          "info": {
+            "name": "Create AI Gateway key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/aibridge/keys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create AI Gateway key"
+        },
+        {
+          "info": {
+            "name": "Delete AI Gateway key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/aibridge/keys/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete AI Gateway key"
+        },
+        {
+          "info": {
+            "name": "Get appearance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/appearance",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get appearance"
+        },
+        {
+          "info": {
+            "name": "Update appearance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/appearance",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update appearance"
+        },
+        {
+          "info": {
+            "name": "Issue signed app token for reconnecting PTY",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/applications/reconnecting-pty-signed-token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Issue signed app token for reconnecting PTY"
+        },
+        {
+          "info": {
+            "name": "Get connection logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/connectionlog",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page offset"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get connection logs"
+        },
+        {
+          "info": {
+            "name": "Get entitlements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/entitlements",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get entitlements"
+        },
+        {
+          "info": {
+            "name": "Get groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/groups",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID or name"
+              },
+              {
+                "name": "has_member",
+                "value": "",
+                "type": "query",
+                "description": "User ID or name"
+              },
+              {
+                "name": "group_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of group IDs"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get groups"
+        },
+        {
+          "info": {
+            "name": "Get group by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/groups/:group",
+            "params": [
+              {
+                "name": "group",
+                "value": "",
+                "type": "path",
+                "description": "Group id"
+              },
+              {
+                "name": "exclude_members",
+                "value": "",
+                "type": "query",
+                "description": "Exclude members from the response"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get group by ID"
+        },
+        {
+          "info": {
+            "name": "Update group by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/groups/:group",
+            "params": [
+              {
+                "name": "group",
+                "value": "",
+                "type": "path",
+                "description": "Group name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update group by name"
+        },
+        {
+          "info": {
+            "name": "Delete group by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/groups/:group",
+            "params": [
+              {
+                "name": "group",
+                "value": "",
+                "type": "path",
+                "description": "Group name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete group by name"
+        },
+        {
+          "info": {
+            "name": "Get group AI budget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/groups/:group/ai/budget",
+            "params": [
+              {
+                "name": "group",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get group AI budget"
+        },
+        {
+          "info": {
+            "name": "Upsert group AI budget",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/groups/:group/ai/budget",
+            "params": [
+              {
+                "name": "group",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upsert group AI budget"
+        },
+        {
+          "info": {
+            "name": "Delete group AI budget",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/groups/:group/ai/budget",
+            "params": [
+              {
+                "name": "group",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete group AI budget"
+        },
+        {
+          "info": {
+            "name": "Get group members by group ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/groups/:group/members",
+            "params": [
+              {
+                "name": "group",
+                "value": "",
+                "type": "path",
+                "description": "Group id"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Member search query"
+              },
+              {
+                "name": "after_id",
+                "value": "",
+                "type": "query",
+                "description": "After ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page offset"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get group members by group ID"
+        },
+        {
+          "info": {
+            "name": "Get licenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/licenses",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get licenses"
+        },
+        {
+          "info": {
+            "name": "Add new license",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/licenses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Add new license"
+        },
+        {
+          "info": {
+            "name": "Update license entitlements",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/licenses/refresh-entitlements",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update license entitlements"
+        },
+        {
+          "info": {
+            "name": "Delete license",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/licenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "License ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete license"
+        },
+        {
+          "info": {
+            "name": "Update notification template dispatch method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/notifications/templates/:notification_template/method",
+            "params": [
+              {
+                "name": "notification_template",
+                "value": "",
+                "type": "path",
+                "description": "Notification template UUID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update notification template dispatch method"
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 applications.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by applications authorized for a user"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get OAuth2 applications."
+        },
+        {
+          "info": {
+            "name": "Create OAuth2 application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create OAuth2 application."
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps/:app",
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "App ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get OAuth2 application."
+        },
+        {
+          "info": {
+            "name": "Update OAuth2 application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps/:app",
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "App ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update OAuth2 application."
+        },
+        {
+          "info": {
+            "name": "Delete OAuth2 application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps/:app",
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "App ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete OAuth2 application."
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 application secrets.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps/:app/secrets",
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "App ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get OAuth2 application secrets."
+        },
+        {
+          "info": {
+            "name": "Create OAuth2 application secret.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps/:app/secrets",
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "App ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create OAuth2 application secret."
+        },
+        {
+          "info": {
+            "name": "Delete OAuth2 application secret.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/oauth2-provider/apps/:app/secrets/:secretID",
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "App ID"
+              },
+              {
+                "name": "secretID",
+                "value": "",
+                "type": "path",
+                "description": "Secret ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete OAuth2 application secret."
+        },
+        {
+          "info": {
+            "name": "Get groups by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/groups",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get groups by organization"
+        },
+        {
+          "info": {
+            "name": "Create group for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/groups",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create group for organization"
+        },
+        {
+          "info": {
+            "name": "Get group by organization and group name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/groups/:groupName",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "groupName",
+                "value": "",
+                "type": "path",
+                "description": "Group name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get group by organization and group name"
+        },
+        {
+          "info": {
+            "name": "Get group members by organization and group name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/groups/:groupName/members",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "groupName",
+                "value": "",
+                "type": "path",
+                "description": "Group name"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Member search query"
+              },
+              {
+                "name": "after_id",
+                "value": "",
+                "type": "query",
+                "description": "After ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page limit"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page offset"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get group members by organization and group name"
+        },
+        {
+          "info": {
+            "name": "Get workspace quota by user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/members/:user/workspace-quota",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              },
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace quota by user"
+        },
+        {
+          "info": {
+            "name": "Serve provisioner daemon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerdaemons/serve",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Serve provisioner daemon"
+        },
+        {
+          "info": {
+            "name": "List provisioner key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerkeys",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List provisioner key"
+        },
+        {
+          "info": {
+            "name": "Create provisioner key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerkeys",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create provisioner key"
+        },
+        {
+          "info": {
+            "name": "List provisioner key daemons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerkeys/daemons",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List provisioner key daemons"
+        },
+        {
+          "info": {
+            "name": "Delete provisioner key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/provisionerkeys/:provisionerkey",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "provisionerkey",
+                "value": "",
+                "type": "path",
+                "description": "Provisioner key name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete provisioner key"
+        },
+        {
+          "info": {
+            "name": "Get the available organization idp sync claim fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/available-fields",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the available organization idp sync claim fields"
+        },
+        {
+          "info": {
+            "name": "Get the organization idp sync claim field values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/field-values",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "claimField",
+                "value": "",
+                "type": "query",
+                "description": "Claim Field"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the organization idp sync claim field values"
+        },
+        {
+          "info": {
+            "name": "Get group IdP Sync settings by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/groups",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get group IdP Sync settings by organization"
+        },
+        {
+          "info": {
+            "name": "Update group IdP Sync settings by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/groups",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update group IdP Sync settings by organization"
+        },
+        {
+          "info": {
+            "name": "Update group IdP Sync config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/groups/config",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID or name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update group IdP Sync config"
+        },
+        {
+          "info": {
+            "name": "Update group IdP Sync mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/groups/mapping",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID or name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update group IdP Sync mapping"
+        },
+        {
+          "info": {
+            "name": "Get role IdP Sync settings by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/roles",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get role IdP Sync settings by organization"
+        },
+        {
+          "info": {
+            "name": "Update role IdP Sync settings by organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/roles",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update role IdP Sync settings by organization"
+        },
+        {
+          "info": {
+            "name": "Update role IdP Sync config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/roles/config",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID or name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update role IdP Sync config"
+        },
+        {
+          "info": {
+            "name": "Update role IdP Sync mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/idpsync/roles/mapping",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID or name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update role IdP Sync mapping"
+        },
+        {
+          "info": {
+            "name": "Get workspace sharing settings for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/workspace-sharing",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace sharing settings for organization"
+        },
+        {
+          "info": {
+            "name": "Update workspace sharing settings for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/organizations/:organization/settings/workspace-sharing",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace sharing settings for organization"
+        },
+        {
+          "info": {
+            "name": "Fetch provisioner key details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/provisionerkeys/:provisionerkey",
+            "params": [
+              {
+                "name": "provisionerkey",
+                "value": "",
+                "type": "path",
+                "description": "Provisioner Key"
+              }
+            ]
+          },
+          "docs": "Fetch provisioner key details"
+        },
+        {
+          "info": {
+            "name": "Get active replicas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/replicas",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get active replicas"
+        },
+        {
+          "info": {
+            "name": "Get the available idp sync claim fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/settings/idpsync/available-fields",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the available idp sync claim fields"
+        },
+        {
+          "info": {
+            "name": "Get the idp sync claim field values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/settings/idpsync/field-values",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "claimField",
+                "value": "",
+                "type": "query",
+                "description": "Claim Field"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the idp sync claim field values"
+        },
+        {
+          "info": {
+            "name": "Get organization IdP Sync settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/settings/idpsync/organization",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get organization IdP Sync settings"
+        },
+        {
+          "info": {
+            "name": "Update organization IdP Sync settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/settings/idpsync/organization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update organization IdP Sync settings"
+        },
+        {
+          "info": {
+            "name": "Update organization IdP Sync config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/settings/idpsync/organization/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update organization IdP Sync config"
+        },
+        {
+          "info": {
+            "name": "Update organization IdP Sync mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/settings/idpsync/organization/mapping",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update organization IdP Sync mapping"
+        },
+        {
+          "info": {
+            "name": "Get template ACLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/acl",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template ACLs"
+        },
+        {
+          "info": {
+            "name": "Update template ACL",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/acl",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update template ACL"
+        },
+        {
+          "info": {
+            "name": "Get template available acl users/groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/acl/available",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get template available acl users/groups"
+        },
+        {
+          "info": {
+            "name": "Invalidate presets for template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/templates/:template/prebuilds/invalidate",
+            "params": [
+              {
+                "name": "template",
+                "value": "",
+                "type": "path",
+                "description": "Template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Invalidate presets for template"
+        },
+        {
+          "info": {
+            "name": "Get user AI budget override",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/ai/budget",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user AI budget override"
+        },
+        {
+          "info": {
+            "name": "Upsert user AI budget override",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/ai/budget",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upsert user AI budget override"
+        },
+        {
+          "info": {
+            "name": "Delete user AI budget override",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/ai/budget",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, username, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete user AI budget override"
+        },
+        {
+          "info": {
+            "name": "Get user quiet hours schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/quiet-hours",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get user quiet hours schedule"
+        },
+        {
+          "info": {
+            "name": "Update user quiet hours schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/api/v2/users/:user/quiet-hours",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update user quiet hours schedule"
+        },
+        {
+          "info": {
+            "name": "Get workspace quota by user deprecated",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspace-quota/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path",
+                "description": "User ID, name, or me"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace quota by user deprecated"
+        },
+        {
+          "info": {
+            "name": "Get workspace proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace proxies"
+        },
+        {
+          "info": {
+            "name": "Create workspace proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create workspace proxy"
+        },
+        {
+          "info": {
+            "name": "Report workspace app stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/me/app-stats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Report workspace app stats"
+        },
+        {
+          "info": {
+            "name": "Workspace Proxy Coordinate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/me/coordinate",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Workspace Proxy Coordinate"
+        },
+        {
+          "info": {
+            "name": "Get workspace proxy crypto keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/me/crypto-keys",
+            "params": [
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Feature key"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace proxy crypto keys"
+        },
+        {
+          "info": {
+            "name": "Deregister workspace proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/me/deregister",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deregister workspace proxy"
+        },
+        {
+          "info": {
+            "name": "Issue signed workspace app token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/me/issue-signed-app-token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Issue signed workspace app token"
+        },
+        {
+          "info": {
+            "name": "Register workspace proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/me/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Register workspace proxy"
+        },
+        {
+          "info": {
+            "name": "Get workspace proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/:workspaceproxy",
+            "params": [
+              {
+                "name": "workspaceproxy",
+                "value": "",
+                "type": "path",
+                "description": "Proxy ID or name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace proxy"
+        },
+        {
+          "info": {
+            "name": "Update workspace proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/:workspaceproxy",
+            "params": [
+              {
+                "name": "workspaceproxy",
+                "value": "",
+                "type": "path",
+                "description": "Proxy ID or name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update workspace proxy"
+        },
+        {
+          "info": {
+            "name": "Delete workspace proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaceproxies/:workspaceproxy",
+            "params": [
+              {
+                "name": "workspaceproxy",
+                "value": "",
+                "type": "path",
+                "description": "Proxy ID or name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete workspace proxy"
+        },
+        {
+          "info": {
+            "name": "Get workspace external agent credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/api/v2/workspaces/:workspace/external-agent/:agent/credentials",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              },
+              {
+                "name": "agent",
+                "value": "",
+                "type": "path",
+                "description": "Agent name"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get workspace external agent credentials"
+        },
+        {
+          "info": {
+            "name": "OAuth2 authorization request (GET - show authorization page).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/oauth2/authorize",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "Client ID"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "A random unguessable string"
+              },
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "Response type"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "Redirect here after authorization"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Token scopes (currently ignored)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OAuth2 authorization request (GET - show authorization page)."
+        },
+        {
+          "info": {
+            "name": "OAuth2 authorization request (POST - process authorization).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/oauth2/authorize",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "Client ID"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "A random unguessable string"
+              },
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "Response type"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "Redirect here after authorization"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Token scopes (currently ignored)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OAuth2 authorization request (POST - process authorization)."
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 client configuration (RFC 7592)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/oauth2/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Client ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get OAuth2 client configuration (RFC 7592)"
+        },
+        {
+          "info": {
+            "name": "Update OAuth2 client configuration (RFC 7592)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/oauth2/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Client ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update OAuth2 client configuration (RFC 7592)"
+        },
+        {
+          "info": {
+            "name": "Delete OAuth2 client registration (RFC 7592)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/oauth2/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "Client ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete OAuth2 client registration (RFC 7592)"
+        },
+        {
+          "info": {
+            "name": "OAuth2 dynamic client registration (RFC 7591)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/oauth2/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OAuth2 dynamic client registration (RFC 7591)"
+        },
+        {
+          "info": {
+            "name": "Revoke OAuth2 tokens (RFC 7009).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/oauth2/revoke",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Revoke OAuth2 tokens (RFC 7009)."
+        },
+        {
+          "info": {
+            "name": "OAuth2 token exchange.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/oauth2/tokens",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OAuth2 token exchange."
+        },
+        {
+          "info": {
+            "name": "Delete OAuth2 application tokens.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{coderHost}/api/v2/oauth2/tokens",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "Client ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete OAuth2 application tokens."
+        },
+        {
+          "info": {
+            "name": "SCIM 2.0: Service Provider Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/scim/v2/ServiceProviderConfig",
+            "auth": {
+              "type": "apikey",
+              "key": "Coder-Session-Token",
+              "value": "{{Coder-Session-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "SCIM 2.0: Service Provider Config"
+        },
+        {
+          "info": {
+            "name": "SCIM 2.0: Get users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/scim/v2/Users"
+          },
+          "docs": "SCIM 2.0: Get users"
+        },
+        {
+          "info": {
+            "name": "SCIM 2.0: Create new user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{coderHost}/api/v2/scim/v2/Users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SCIM 2.0: Create new user"
+        },
+        {
+          "info": {
+            "name": "SCIM 2.0: Get user by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{coderHost}/api/v2/scim/v2/Users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "SCIM 2.0: Get user by ID"
+        },
+        {
+          "info": {
+            "name": "SCIM 2.0: Replace user account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{coderHost}/api/v2/scim/v2/Users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SCIM 2.0: Replace user account"
+        },
+        {
+          "info": {
+            "name": "SCIM 2.0: Update user account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{coderHost}/api/v2/scim/v2/Users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SCIM 2.0: Update user account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
