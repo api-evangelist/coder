@@ -14,6 +14,18 @@ description: >-
   (codersdk) and a Terraform provider; a CLI with 40+ subcommands is also
   available for full programmatic control.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
