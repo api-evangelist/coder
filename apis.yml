@@ -39,7 +39,7 @@ accessModel:
   - plans
   - authentication
   - security
-  generated: '2026-08-26'
+  generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/coder.png
 tags:
@@ -478,6 +478,9 @@ apis:
   - type: Documentation
     url: https://coder.com/docs/reference/api
 common:
+  - type: CapabilityMap
+    url: capabilities/coder-capability-edges.yml
+    name: Coder Business Capability Map
   - type: AgenticAccess
     url: agentic-access/coder-agentic-access.yml
   - type: TrustCenter
