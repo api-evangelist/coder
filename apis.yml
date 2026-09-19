@@ -48,6 +48,13 @@ tags:
   - Cloud Development Environments
   - AI Agents
   - Infrastructure
+  - Workspace
+tags_raw:
+  - Developer Tools
+  - Remote Development
+  - Cloud Development Environments
+  - AI Agents
+  - Infrastructure
   - Workspaces
 url: https://raw.githubusercontent.com/api-evangelist/coder/refs/heads/main/apis.yml
 created: '2026-06-12'
@@ -62,6 +69,10 @@ apis:
     events and WebSockets.
   humanURL: https://coder.com/docs/reference/api/workspaces
   tags:
+  - Workspace
+  - Lifecycle
+  - ACL
+  tags_raw:
   - Workspaces
   - Lifecycle
   - ACL
@@ -111,6 +122,11 @@ apis:
     via WebSocket.
   humanURL: https://coder.com/docs/reference/api/agents
   tags:
+  - Agents
+  - Workspace
+  - Networking
+  - Containers
+  tags_raw:
   - Agents
   - Workspaces
   - Networking
@@ -471,6 +487,8 @@ apis:
   humanURL: https://coder.com/docs/reference/api
   baseURL: https://coder.example.com/api/v2
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
