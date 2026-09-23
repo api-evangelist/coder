@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents Organizations API
+  title: Coder Organizations API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -230,17 +230,16 @@ paths:
                 $ref: '#/components/schemas/codersdk.ProvisionerJob'
 components:
   schemas:
-    codersdk.ProvisionerJobInput:
+    codersdk.ValidationError:
       type: object
       properties:
-        error:
+        detail:
           type: string
-        template_version_id:
+        field:
           type: string
-          format: uuid
-        workspace_build_id:
-          type: string
-          format: uuid
+      required:
+      - detail
+      - field
     codersdk.ProvisionerJobMetadata:
       type: object
       properties:
@@ -262,6 +261,77 @@ components:
           format: uuid
         workspace_name:
           type: string
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
+    codersdk.Organization:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        default_org_member_roles:
+          type: array
+          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
+
+            roles at request time. Changes propagate to all members on the
+
+            next request.'
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        is_default:
+          type: boolean
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - created_at
+      - id
+      - is_default
+      - updated_at
+    codersdk.JobErrorCode:
+      type: string
+      enum:
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
+    codersdk.ProvisionerJobType:
+      type: string
+      enum:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
+    codersdk.UpdateOrganizationRequest:
+      type: object
+      properties:
+        default_org_member_roles:
+          type: array
+          description: 'DefaultOrgMemberRoles, when non-nil, replaces the org''s default
+
+            member roles.'
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
     codersdk.CreateOrganizationRequest:
       type: object
       properties:
@@ -276,16 +346,17 @@ components:
           type: string
       required:
       - name
-    codersdk.ProvisionerJobStatus:
-      type: string
-      enum:
-      - pending
-      - running
-      - succeeded
-      - canceling
-      - canceled
-      - failed
-      - unknown
+    codersdk.ProvisionerJobInput:
+      type: object
+      properties:
+        error:
+          type: string
+        template_version_id:
+          type: string
+          format: uuid
+        workspace_build_id:
+          type: string
+          format: uuid
     codersdk.ProvisionerJob:
       type: object
       properties:
@@ -357,52 +428,16 @@ components:
           format: uuid
         worker_name:
           type: string
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.Organization:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        default_org_member_roles:
-          type: array
-          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
-
-            roles at request time. Changes propagate to all members on the
-
-            next request.'
-          items:
-            type: string
-        description:
-          type: string
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        is_default:
-          type: boolean
-        name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - created_at
-      - id
-      - is_default
-      - updated_at
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
     codersdk.Response:
       type: object
       properties:
@@ -437,44 +472,8 @@ components:
             context if there is a set of errors in the primary ''Message''.'
           items:
             $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.JobErrorCode:
-      type: string
-      enum:
-      - REQUIRED_TEMPLATE_VARIABLES
-      - INSUFFICIENT_QUOTA
-    codersdk.WorkspaceTransition:
-      type: string
-      enum:
-      - start
-      - stop
-      - delete
-    codersdk.ProvisionerJobType:
-      type: string
-      enum:
-      - template_version_import
-      - workspace_build
-      - template_version_dry_run
-    codersdk.UpdateOrganizationRequest:
-      type: object
-      properties:
-        default_org_member_roles:
-          type: array
-          description: 'DefaultOrgMemberRoles, when non-nil, replaces the org''s default
-
-            member roles.'
-          items:
-            type: string
-        description:
-          type: string
-        display_name:
-          type: string
-        icon:
-          type: string
-        name:
-          type: string
   securitySchemes:
     CoderSessionToken:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}

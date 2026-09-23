@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents Git API
+  title: Coder Git API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -84,7 +84,7 @@ paths:
   /api/v2/external-auth/{externalauth}/device:
     get:
       operationId: get-external-auth-device-by-id
-      summary: Get external auth device by ID.
+      summary: Get external auth device by ID
       tags:
       - Git
       security:
@@ -122,6 +122,69 @@ paths:
           description: No Content
 components:
   schemas:
+    codersdk.ExternalAuthDevice:
+      type: object
+      properties:
+        device_code:
+          type: string
+        expires_in:
+          type: integer
+        interval:
+          type: integer
+        user_code:
+          type: string
+        verification_uri:
+          type: string
+    codersdk.DeleteExternalAuthByIDResponse:
+      type: object
+      properties:
+        token_revocation_error:
+          type: string
+        token_revoked:
+          type: boolean
+          description: TokenRevoked set to true if token revocation was attempted and was successful
+    codersdk.ExternalAuthUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+        id:
+          type: integer
+        login:
+          type: string
+        name:
+          type: string
+        profile_url:
+          type: string
+    codersdk.ExternalAuthAppInstallation:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/codersdk.ExternalAuthUser'
+        configure_url:
+          type: string
+        id:
+          type: integer
+    codersdk.ExternalAuthLink:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        expires:
+          type: string
+          format: date-time
+        has_refresh_token:
+          type: boolean
+        provider_id:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        validate_error:
+          type: string
     codersdk.ExternalAuth:
       type: object
       properties:
@@ -148,72 +211,8 @@ components:
           description: User is the user that authenticated with the provider.
           allOf:
           - $ref: '#/components/schemas/codersdk.ExternalAuthUser'
-    codersdk.ExternalAuthLink:
-      type: object
-      properties:
-        authenticated:
-          type: boolean
-        created_at:
-          type: string
-          format: date-time
-        expires:
-          type: string
-          format: date-time
-        has_refresh_token:
-          type: boolean
-        provider_id:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        validate_error:
-          type: string
-    codersdk.ExternalAuthUser:
-      type: object
-      properties:
-        avatar_url:
-          type: string
-        id:
-          type: integer
-        login:
-          type: string
-        name:
-          type: string
-        profile_url:
-          type: string
-    codersdk.ExternalAuthAppInstallation:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/codersdk.ExternalAuthUser'
-        configure_url:
-          type: string
-        id:
-          type: integer
-    codersdk.ExternalAuthDevice:
-      type: object
-      properties:
-        device_code:
-          type: string
-        expires_in:
-          type: integer
-        interval:
-          type: integer
-        user_code:
-          type: string
-        verification_uri:
-          type: string
-    codersdk.DeleteExternalAuthByIDResponse:
-      type: object
-      properties:
-        token_revocation_error:
-          type: string
-        token_revoked:
-          type: boolean
-          description: TokenRevoked set to true if token revocation was attempted and was successful
   securitySchemes:
     CoderSessionToken:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}

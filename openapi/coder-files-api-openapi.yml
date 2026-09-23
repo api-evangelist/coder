@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents Files API
+  title: Coder Files API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -89,4 +89,3 @@ components:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}

@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents Enterprise API
+  title: Coder Enterprise API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -26,7 +26,7 @@ paths:
   /.well-known/oauth-authorization-server:
     get:
       operationId: oauth2-authorization-server-metadata
-      summary: OAuth2 authorization server metadata.
+      summary: OAuth2 authorization server metadata
       tags:
       - Enterprise
       security:
@@ -41,7 +41,7 @@ paths:
   /.well-known/oauth-protected-resource:
     get:
       operationId: oauth2-protected-resource-metadata
-      summary: OAuth2 protected resource metadata.
+      summary: OAuth2 protected resource metadata
       tags:
       - Enterprise
       security:
@@ -530,7 +530,7 @@ paths:
   /api/v2/oauth2-provider/apps:
     get:
       operationId: get-oauth2-applications
-      summary: Get OAuth2 applications.
+      summary: Get OAuth2 applications
       tags:
       - Enterprise
       security:
@@ -553,7 +553,7 @@ paths:
                   $ref: '#/components/schemas/codersdk.OAuth2ProviderApp'
     post:
       operationId: create-oauth2-application
-      summary: Create OAuth2 application.
+      summary: Create OAuth2 application
       tags:
       - Enterprise
       security:
@@ -574,7 +574,7 @@ paths:
   /api/v2/oauth2-provider/apps/{app}:
     get:
       operationId: get-oauth2-application
-      summary: Get OAuth2 application.
+      summary: Get OAuth2 application
       tags:
       - Enterprise
       security:
@@ -595,7 +595,7 @@ paths:
                 $ref: '#/components/schemas/codersdk.OAuth2ProviderApp'
     put:
       operationId: update-oauth2-application
-      summary: Update OAuth2 application.
+      summary: Update OAuth2 application
       tags:
       - Enterprise
       security:
@@ -622,7 +622,7 @@ paths:
                 $ref: '#/components/schemas/codersdk.OAuth2ProviderApp'
     delete:
       operationId: delete-oauth2-application
-      summary: Delete OAuth2 application.
+      summary: Delete OAuth2 application
       tags:
       - Enterprise
       security:
@@ -640,7 +640,7 @@ paths:
   /api/v2/oauth2-provider/apps/{app}/secrets:
     get:
       operationId: get-oauth2-application-secrets
-      summary: Get OAuth2 application secrets.
+      summary: Get OAuth2 application secrets
       tags:
       - Enterprise
       security:
@@ -663,7 +663,7 @@ paths:
                   $ref: '#/components/schemas/codersdk.OAuth2ProviderAppSecret'
     post:
       operationId: create-oauth2-application-secret
-      summary: Create OAuth2 application secret.
+      summary: Create OAuth2 application secret
       tags:
       - Enterprise
       security:
@@ -687,7 +687,7 @@ paths:
   /api/v2/oauth2-provider/apps/{app}/secrets/{secretID}:
     delete:
       operationId: delete-oauth2-application-secret
-      summary: Delete OAuth2 application secret.
+      summary: Delete OAuth2 application secret
       tags:
       - Enterprise
       security:
@@ -1944,7 +1944,7 @@ paths:
   /oauth2/authorize:
     get:
       operationId: oauth2-authorization-request-get
-      summary: OAuth2 authorization request (GET - show authorization page).
+      summary: OAuth2 authorization request (GET - show authorization page)
       tags:
       - Enterprise
       security:
@@ -1988,7 +1988,7 @@ paths:
           description: Returns HTML authorization page
     post:
       operationId: oauth2-authorization-request-post
-      summary: OAuth2 authorization request (POST - process authorization).
+      summary: OAuth2 authorization request (POST - process authorization)
       tags:
       - Enterprise
       security:
@@ -2120,7 +2120,7 @@ paths:
   /oauth2/revoke:
     post:
       operationId: oauth2-token-revocation
-      summary: Revoke OAuth2 tokens (RFC 7009).
+      summary: Revoke OAuth2 tokens (RFC 7009)
       tags:
       - Enterprise
       security:
@@ -2150,7 +2150,7 @@ paths:
   /oauth2/tokens:
     post:
       operationId: oauth2-token-exchange
-      summary: OAuth2 token exchange.
+      summary: OAuth2 token exchange
       tags:
       - Enterprise
       security:
@@ -2201,7 +2201,7 @@ paths:
                 $ref: '#/components/schemas/oauth2.Token'
     delete:
       operationId: delete-oauth2-application-tokens
-      summary: Delete OAuth2 application tokens.
+      summary: Delete OAuth2 application tokens
       tags:
       - Enterprise
       security:
@@ -2332,97 +2332,98 @@ paths:
                 $ref: '#/components/schemas/codersdk.User'
 components:
   schemas:
-    codersdk.TemplateUser:
+    codersdk.UpsertGroupAIBudgetRequest:
       type: object
       properties:
-        avatar_url:
-          type: string
-          format: uri
-        created_at:
-          type: string
-          format: date-time
-        email:
-          type: string
-          format: email
-        has_ai_seat:
-          type: boolean
-          description: 'HasAISeat intentionally omits omitempty so the API always includes the
-
-            field, even when false.'
-        id:
-          type: string
-          format: uuid
-        is_service_account:
-          type: boolean
-        last_seen_at:
-          type: string
-          format: date-time
-        login_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-        name:
-          type: string
-        organization_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        role:
-          enum:
-          - admin
-          - use
-          allOf:
-          - $ref: '#/components/schemas/codersdk.TemplateRole'
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.SlimRole'
-        status:
-          enum:
-          - active
-          - suspended
-          allOf:
-          - $ref: '#/components/schemas/codersdk.UserStatus'
-        theme_preference:
-          type: string
-          description: 'Deprecated: this value should be retrieved from
-
-            `codersdk.UserPreferenceSettings` instead.'
-        updated_at:
-          type: string
-          format: date-time
-        username:
-          type: string
-      required:
-      - created_at
-      - email
-      - id
-      - username
-    codersdk.ProxyHealthStatus:
+        spend_limit_micros:
+          type: integer
+    workspaceapps.AccessMethod:
       type: string
       enum:
-      - ok
-      - unreachable
-      - unhealthy
-      - unregistered
-    codersdk.OAuth2ProviderAppSecretFull:
+      - path
+      - subdomain
+      - terminal
+    codersdk.OAuth2PKCECodeChallengeMethod:
+      type: string
+      enum:
+      - S256
+      - plain
+    codersdk.PatchWorkspaceProxy:
       type: object
       properties:
-        client_secret_full:
+        display_name:
+          type: string
+        icon:
           type: string
         id:
           type: string
           format: uuid
-    codersdk.IssueReconnectingPTYSignedTokenResponse:
-      type: object
-      properties:
-        signed_token:
+        name:
           type: string
-    codersdk.PatchOrganizationIDPSyncConfigRequest:
+        regenerate_token:
+          type: boolean
+      required:
+      - display_name
+      - icon
+      - id
+      - name
+    codersdk.UpdateTemplateACL:
       type: object
       properties:
-        assign_default:
-          type: boolean
-        field:
+        group_perms:
+          type: object
+          description: 'GroupPerms is a mapping from valid group UUIDs to the template role they
+
+            should be granted. To remove a group from the template, use "" as the role
+
+            (available as a constant named codersdk.TemplateRoleDeleted)'
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.TemplateRole'
+          example:
+            8bd26b20-f3e8-48be-a903-46bb920cf671: use
+            <group_id>: admin
+        user_perms:
+          type: object
+          description: 'UserPerms is a mapping from valid user UUIDs to the template role they
+
+            should be granted. To remove a user from the template, use "" as the role
+
+            (available as a constant named codersdk.TemplateRoleDeleted)'
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.TemplateRole'
+          example:
+            4df59e74-c027-470b-ab4d-cbba8963a5e9: use
+            <user_id>: admin
+    workspaceapps.Request:
+      type: object
+      properties:
+        access_method:
+          $ref: '#/components/schemas/workspaceapps.AccessMethod'
+        agent_name_or_id:
+          type: string
+          description: AgentNameOrID is not required if the workspace has only one agent.
+        app_prefix:
+          type: string
+          description: 'Prefix is the prefix of the subdomain app URL. Prefix should have a
+
+            trailing "---" if set.'
+        app_slug_or_port:
+          type: string
+        base_path:
+          type: string
+          description: 'BasePath of the app. For path apps, this is the path prefix in the router
+
+            for this particular app. For subdomain apps, this should be "/". This is
+
+            used for setting the cookie path.'
+        username_or_id:
+          type: string
+          description: 'For the following fields, if the AccessMethod is AccessMethodTerminal,
+
+            then only AgentNameOrID may be set and it must be a UUID. The other
+
+            fields must be left blank.'
+        workspace_name_or_id:
           type: string
     codersdk.InvalidatedPreset:
       type: object
@@ -2433,53 +2434,25 @@ components:
           type: string
         template_version_name:
           type: string
-    codersdk.PatchRoleIDPSyncMappingRequest:
+    codersdk.GroupMembersResponse:
       type: object
       properties:
-        add:
-          type: array
-          items:
-            type: object
-            properties:
-              gets:
-                type: string
-                description: The ID of the Coder resource the user should be added to
-              given:
-                type: string
-                description: The IdP claim the user has
-        remove:
-          type: array
-          items:
-            type: object
-            properties:
-              gets:
-                type: string
-                description: The ID of the Coder resource the user should be added to
-              given:
-                type: string
-                description: The IdP claim the user has
-    codersdk.CreateProvisionerKeyResponse:
-      type: object
-      properties:
-        key:
-          type: string
-    codersdk.UserAIBudgetOverride:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        group_id:
-          type: string
-          format: uuid
-        spend_limit_micros:
+        count:
           type: integer
-        updated_at:
-          type: string
-          format: date-time
-        user_id:
-          type: string
-          format: uuid
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+    codersdk.OAuth2ProviderResponseType:
+      type: string
+      enum:
+      - code
+      - token
+    codersdk.GroupSource:
+      type: string
+      enum:
+      - user
+      - oidc
     codersdk.OAuth2ProviderAppSecret:
       type: object
       properties:
@@ -2490,143 +2463,83 @@ components:
           format: uuid
         last_used_at:
           type: string
-    codersdk.ConnectionType:
-      type: string
-      enum:
-      - ssh
-      - vscode
-      - jetbrains
-      - reconnecting_pty
-      - workspace_app
-      - port_forwarding
-    codersdk.UserStatus:
-      type: string
-      enum:
-      - active
-      - dormant
-      - suspended
-    codersdk.OAuth2AuthorizationServerMetadata:
+    tailcfg.DERPHomeParams:
       type: object
       properties:
-        authorization_endpoint:
-          type: string
-        code_challenge_methods_supported:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2PKCECodeChallengeMethod'
-        grant_types_supported:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2ProviderGrantType'
-        issuer:
-          type: string
-        registration_endpoint:
-          type: string
-        response_types_supported:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2ProviderResponseType'
-        revocation_endpoint:
-          type: string
-        scopes_supported:
+        regionScore:
+          type: object
+          description: 'RegionScore scales latencies of DERP regions by a given scaling
+
+            factor when determining which region to use as the home
+
+            ("preferred") DERP. Scores in the range (0, 1) will cause this
+
+            region to be proportionally more preferred, and scores in the range
+
+            (1, ∞) will penalize a region.
+
+
+            If a region is not present in this map, it is treated as having a
+
+            score of 1.0.
+
+
+            Scores should not be 0 or negative; such scores will be ignored.
+
+
+            A nil map means no change from the previous value (if any); an empty
+
+            non-nil map can be sent to reset all scores back to 1.0.'
+          additionalProperties:
+            type: number
+            format: float64
+    codersdk.ProxyHealthStatus:
+      type: string
+      enum:
+      - ok
+      - unreachable
+      - unhealthy
+      - unregistered
+    codersdk.PatchGroupRequest:
+      type: object
+      properties:
+        add_users:
           type: array
           items:
             type: string
-        token_endpoint:
+        avatar_url:
           type: string
-        token_endpoint_auth_methods_supported:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2TokenEndpointAuthMethod'
-    codersdk.ProvisionerKey:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        organization:
-          type: string
-          format: uuid
-        tags:
-          $ref: '#/components/schemas/codersdk.ProvisionerKeyTags'
-    codersdk.WorkspaceProxy:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        deleted:
-          type: boolean
-        derp_enabled:
-          type: boolean
-        derp_only:
-          type: boolean
         display_name:
           type: string
-        healthy:
-          type: boolean
-        icon_url:
-          type: string
-        id:
-          type: string
-          format: uuid
         name:
           type: string
-        path_app_url:
-          type: string
-          description: 'PathAppURL is the URL to the base path for path apps. Optional
-
-            unless wildcard_hostname is set.
-
-            E.g. https://us.example.com'
-        status:
-          description: 'Status is the latest status check of the proxy. This will be empty for deleted
-
-            proxies. This value can be used to determine if a workspace proxy is healthy
-
-            and ready to use.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceProxyStatus'
-        updated_at:
-          type: string
-          format: date-time
-        version:
-          type: string
-        wildcard_hostname:
-          type: string
-          description: 'WildcardHostname is the wildcard hostname for subdomain apps.
-
-            E.g. *.us.example.com
-
-            E.g. *--suffix.au.example.com
-
-            Optional. Does not need to be on the same domain as PathAppURL.'
-    codersdk.ProvisionerDaemonJob:
+        quota_allowance:
+          type: integer
+        remove_users:
+          type: array
+          items:
+            type: string
+    workspaceapps.StatsReport:
       type: object
       properties:
-        id:
+        access_method:
+          $ref: '#/components/schemas/workspaceapps.AccessMethod'
+        agent_id:
           type: string
-          format: uuid
-        status:
-          enum:
-          - pending
-          - running
-          - succeeded
-          - canceling
-          - canceled
-          - failed
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
-        template_display_name:
+        requests:
+          type: integer
+        session_ended_at:
           type: string
-        template_icon:
+          description: Updated periodically while app is in use active and when the last connection is closed.
+        session_id:
           type: string
-        template_name:
+        session_started_at:
+          type: string
+        slug_or_port:
+          type: string
+        user_id:
+          type: string
+        workspace_id:
           type: string
     tailcfg.DERPMap:
       type: object
@@ -2657,24 +2570,25 @@ components:
             The numbers are not necessarily contiguous.'
           additionalProperties:
             $ref: '#/components/schemas/tailcfg.DERPRegion'
-    codersdk.OAuth2TokenEndpointAuthMethod:
-      type: string
-      enum:
-      - client_secret_basic
-      - client_secret_post
-      - none
-    codersdk.OAuth2AppEndpoints:
+    codersdk.PutOAuth2ProviderAppRequest:
       type: object
       properties:
-        authorization:
+        callback_url:
           type: string
-        device_authorization:
+        icon:
           type: string
-          description: DeviceAuth is optional.
-        token:
+        name:
           type: string
-        token_revoke:
-          type: string
+      required:
+      - callback_url
+      - name
+    codersdk.InvalidatePresetsResponse:
+      type: object
+      properties:
+        invalidated:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.InvalidatedPreset'
     codersdk.OAuth2ClientRegistrationResponse:
       type: object
       properties:
@@ -2728,21 +2642,6 @@ components:
           $ref: '#/components/schemas/codersdk.OAuth2TokenEndpointAuthMethod'
         tos_uri:
           type: string
-    codersdk.CreateAIGatewayKeyResponse:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        id:
-          type: string
-          format: uuid
-        key:
-          type: string
-        key_prefix:
-          type: string
-        name:
-          type: string
     codersdk.UpsertUserAIBudgetOverrideRequest:
       type: object
       properties:
@@ -2756,12 +2655,140 @@ components:
           type: integer
       required:
       - group_id
-    codersdk.Entitlement:
-      type: string
-      enum:
-      - entitled
-      - grace_period
-      - not_entitled
+    codersdk.IssueReconnectingPTYSignedTokenRequest:
+      type: object
+      properties:
+        agentID:
+          type: string
+          format: uuid
+        url:
+          type: string
+          description: URL is the URL of the reconnecting-pty endpoint you are connecting to.
+      required:
+      - agentID
+      - url
+    codersdk.OAuth2ClientConfiguration:
+      type: object
+      properties:
+        client_id:
+          type: string
+        client_id_issued_at:
+          type: integer
+        client_name:
+          type: string
+        client_secret_expires_at:
+          type: integer
+        client_uri:
+          type: string
+        contacts:
+          type: array
+          items:
+            type: string
+        grant_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2ProviderGrantType'
+        jwks:
+          type: object
+        jwks_uri:
+          type: string
+        logo_uri:
+          type: string
+        policy_uri:
+          type: string
+        redirect_uris:
+          type: array
+          items:
+            type: string
+        registration_access_token:
+          type: string
+        registration_client_uri:
+          type: string
+        response_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2ProviderResponseType'
+        scope:
+          type: string
+        software_id:
+          type: string
+        software_version:
+          type: string
+        token_endpoint_auth_method:
+          $ref: '#/components/schemas/codersdk.OAuth2TokenEndpointAuthMethod'
+        tos_uri:
+          type: string
+    regexp.Regexp:
+      type: object
+    codersdk.UpdateAppearanceConfig:
+      type: object
+      properties:
+        announcement_banners:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.BannerConfig'
+        application_name:
+          type: string
+        logo_url:
+          type: string
+        service_banner:
+          description: 'Deprecated: ServiceBanner has been replaced by AnnouncementBanners.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.BannerConfig'
+    codersdk.OAuth2ClientRegistrationRequest:
+      type: object
+      properties:
+        client_name:
+          type: string
+        client_uri:
+          type: string
+        contacts:
+          type: array
+          items:
+            type: string
+        grant_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2ProviderGrantType'
+        jwks:
+          type: object
+        jwks_uri:
+          type: string
+        logo_uri:
+          type: string
+        policy_uri:
+          type: string
+        redirect_uris:
+          type: array
+          items:
+            type: string
+        response_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2ProviderResponseType'
+        scope:
+          type: string
+        software_id:
+          type: string
+        software_statement:
+          type: string
+        software_version:
+          type: string
+        token_endpoint_auth_method:
+          $ref: '#/components/schemas/codersdk.OAuth2TokenEndpointAuthMethod'
+        tos_uri:
+          type: string
+    codersdk.CreateWorkspaceProxyRequest:
+      type: object
+      properties:
+        display_name:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+      required:
+      - name
     codersdk.AIGatewayKey:
       type: object
       properties:
@@ -2778,26 +2805,154 @@ components:
           format: date-time
         name:
           type: string
-    codersdk.ACLAvailable:
+    codersdk.OrganizationSyncSettings:
       type: object
       properties:
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Group'
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ReducedUser'
-    codersdk.GroupMembersResponse:
+        field:
+          type: string
+          description: 'Field selects the claim field to be used as the created user''s
+
+            organizations. If the field is the empty string, then no organization
+
+            updates will ever come from the OIDC provider.'
+        mapping:
+          type: object
+          description: Mapping maps from an OIDC claim --> Coder organization uuid
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        organization_assign_default:
+          type: boolean
+          description: 'AssignDefault will ensure the default org is always included
+
+            for every user, regardless of their claims. This preserves legacy behavior.'
+    codersdk.RoleSyncSettings:
       type: object
       properties:
-        count:
-          type: integer
-        users:
+        field:
+          type: string
+          description: 'Field is the name of the claim field that specifies what organization roles
+
+            a user should be given. If empty, no roles will be synced.'
+        mapping:
+          type: object
+          description: Mapping is a map from OIDC groups to Coder organization roles.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    codersdk.TemplateRole:
+      type: string
+      enum:
+      - admin
+      - use
+      - ''
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+    codersdk.PatchRoleIDPSyncConfigRequest:
+      type: object
+      properties:
+        field:
+          type: string
+    codersdk.ProvisionerDaemon:
+      type: object
+      properties:
+        api_version:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        current_job:
+          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
+        id:
+          type: string
+          format: uuid
+        key_id:
+          type: string
+          format: uuid
+        key_name:
+          type: string
+          description: Optional fields.
+        last_seen_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        previous_job:
+          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
+        provisioners:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.ReducedUser'
+            type: string
+        status:
+          enum:
+          - offline
+          - idle
+          - busy
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerDaemonStatus'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        version:
+          type: string
+    codersdk.BannerConfig:
+      type: object
+      properties:
+        background_color:
+          type: string
+        enabled:
+          type: boolean
+        message:
+          type: string
+    codersdk.ProvisionerKeyTags:
+      type: object
+      additionalProperties:
+        type: string
+    codersdk.PatchOrganizationIDPSyncConfigRequest:
+      type: object
+      properties:
+        assign_default:
+          type: boolean
+        field:
+          type: string
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    codersdk.ProvisionerKeyDaemons:
+      type: object
+      properties:
+        daemons:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ProvisionerDaemon'
+        key:
+          $ref: '#/components/schemas/codersdk.ProvisionerKey'
+    codersdk.CreateProvisionerKeyResponse:
+      type: object
+      properties:
+        key:
+          type: string
     codersdk.PatchGroupIDPSyncConfigRequest:
       type: object
       properties:
@@ -2807,54 +2962,199 @@ components:
           type: string
         regex_filter:
           $ref: '#/components/schemas/regexp.Regexp'
-    codersdk.GroupSyncSettings:
+    codersdk.CreateAIGatewayKeyResponse:
       type: object
       properties:
-        auto_create_missing_groups:
-          type: boolean
-          description: 'AutoCreateMissing controls whether groups returned by the OIDC provider
-
-            are automatically created in Coder if they are missing.'
-        field:
+        created_at:
           type: string
-          description: 'Field is the name of the claim field that specifies what groups a user
-
-            should be in. If empty, no groups will be synced.'
-        legacy_group_name_mapping:
-          type: object
-          description: 'LegacyNameMapping is deprecated. It remaps an IDP group name to
-
-            a Coder group name. Since configuration is now done at runtime,
-
-            group IDs are used to account for group renames.
-
-            For legacy configurations, this config option has to remain.
-
-            Deprecated: Use Mapping instead.'
-          additionalProperties:
-            type: string
-        mapping:
-          type: object
-          description: Mapping is a map from OIDC groups to Coder group IDs
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        regex_filter:
-          description: 'RegexFilter is a regular expression that filters the groups returned by
-
-            the OIDC provider. Any group not matched by this regex will be ignored.
-
-            If the group filter is nil, then no group filtering will occur.'
-          allOf:
-          - $ref: '#/components/schemas/regexp.Regexp'
-    codersdk.InvalidatePresetsResponse:
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        key:
+          type: string
+        key_prefix:
+          type: string
+        name:
+          type: string
+    codersdk.WorkspaceSharingSettings:
       type: object
       properties:
-        invalidated:
+        shareable_workspace_owners:
+          description: 'ShareableWorkspaceOwners controls whose workspaces can be shared
+
+            within the organization.'
+          enum:
+          - none
+          - everyone
+          - service_accounts
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ShareableWorkspaceOwners'
+        sharing_disabled:
+          type: boolean
+          description: 'SharingDisabled is deprecated and left for backward compatibility
+
+            purposes.
+
+            Deprecated: use `ShareableWorkspaceOwners` instead'
+        sharing_globally_disabled:
+          type: boolean
+          description: 'SharingGloballyDisabled is true if sharing has been disabled for this
+
+            organization because of a deployment-wide setting.'
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    codersdk.AddLicenseRequest:
+      type: object
+      properties:
+        license:
+          type: string
+      required:
+      - license
+    codersdk.ConnectionLog:
+      type: object
+      properties:
+        agent_name:
+          type: string
+        connect_time:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        ip:
+          type: string
+        organization:
+          $ref: '#/components/schemas/codersdk.MinimalOrganization'
+        ssh_info:
+          description: 'SSHInfo is only set when `type` is one of:
+
+            - `ConnectionTypeSSH`
+
+            - `ConnectionTypeReconnectingPTY`
+
+            - `ConnectionTypeVSCode`
+
+            - `ConnectionTypeJetBrains`'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ConnectionLogSSHInfo'
+        type:
+          $ref: '#/components/schemas/codersdk.ConnectionType'
+        web_info:
+          description: 'WebInfo is only set when `type` is one of:
+
+            - `ConnectionTypePortForwarding`
+
+            - `ConnectionTypeWorkspaceApp`'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ConnectionLogWebInfo'
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+        workspace_owner_id:
+          type: string
+          format: uuid
+        workspace_owner_username:
+          type: string
+    codersdk.WorkspaceProxy:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        derp_enabled:
+          type: boolean
+        derp_only:
+          type: boolean
+        display_name:
+          type: string
+        healthy:
+          type: boolean
+        icon_url:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        path_app_url:
+          type: string
+          description: 'PathAppURL is the URL to the base path for path apps. Optional
+
+            unless wildcard_hostname is set.
+
+            E.g. https://us.example.com'
+        status:
+          description: 'Status is the latest status check of the proxy. This will be empty for deleted
+
+            proxies. This value can be used to determine if a workspace proxy is healthy
+
+            and ready to use.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceProxyStatus'
+        updated_at:
+          type: string
+          format: date-time
+        version:
+          type: string
+        wildcard_hostname:
+          type: string
+          description: 'WildcardHostname is the wildcard hostname for subdomain apps.
+
+            E.g. *.us.example.com
+
+            E.g. *--suffix.au.example.com
+
+            Optional. Does not need to be on the same domain as PathAppURL.'
+    codersdk.TemplateGroup:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        members:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.InvalidatedPreset'
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        quota_allowance:
+          type: integer
+        role:
+          enum:
+          - admin
+          - use
+          allOf:
+          - $ref: '#/components/schemas/codersdk.TemplateRole'
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          type: integer
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
     codersdk.Feature:
       type: object
       properties:
@@ -2884,6 +3184,13 @@ components:
             - FeatureManagedAgentLimit'
           allOf:
           - $ref: '#/components/schemas/codersdk.UsagePeriod'
+    wsproxysdk.CryptoKeysResponse:
+      type: object
+      properties:
+        crypto_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.CryptoKey'
     codersdk.CryptoKey:
       type: object
       properties:
@@ -2899,6 +3206,540 @@ components:
         starts_at:
           type: string
           format: date-time
+    codersdk.OAuth2ProviderAppSecretFull:
+      type: object
+      properties:
+        client_secret_full:
+          type: string
+        id:
+          type: string
+          format: uuid
+    codersdk.ShareableWorkspaceOwners:
+      type: string
+      enum:
+      - none
+      - everyone
+      - service_accounts
+    codersdk.ProxyHealthReport:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: Errors are problems that prevent the workspace proxy from being healthy
+          items:
+            type: string
+        warnings:
+          type: array
+          description: 'Warnings do not prevent the workspace proxy from being healthy, but
+
+            should be addressed.'
+          items:
+            type: string
+    oauth2.Token:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: 'AccessToken is the token that authorizes and authenticates
+
+            the requests.'
+        expires_in:
+          type: integer
+          description: 'ExpiresIn is the OAuth2 wire format "expires_in" field,
+
+            which specifies how many seconds later the token expires,
+
+            relative to an unknown time base approximately around "now".
+
+            It is the application''s responsibility to populate
+
+            `Expiry` from `ExpiresIn` when required.'
+        expiry:
+          type: string
+          description: 'Expiry is the optional expiration time of the access token.
+
+
+            If zero, [TokenSource] implementations will reuse the same
+
+            token forever and RefreshToken or equivalent
+
+            mechanisms for that TokenSource will not be used.'
+        refresh_token:
+          type: string
+          description: 'RefreshToken is a token that''s used by the application
+
+            (as opposed to the user) to refresh the access token
+
+            if it expires.'
+        token_type:
+          type: string
+          description: 'TokenType is the type of token.
+
+            The Type method returns either this or "Bearer", the default.'
+    wsproxysdk.RegisterWorkspaceProxyResponse:
+      type: object
+      properties:
+        derp_force_websockets:
+          type: boolean
+        derp_map:
+          $ref: '#/components/schemas/tailcfg.DERPMap'
+        derp_mesh_key:
+          type: string
+        derp_region_id:
+          type: integer
+        sibling_replicas:
+          type: array
+          description: 'SiblingReplicas is a list of all other replicas of the proxy that have
+
+            not timed out.'
+          items:
+            $ref: '#/components/schemas/codersdk.Replica'
+    codersdk.ConnectionLogResponse:
+      type: object
+      properties:
+        connection_logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ConnectionLog'
+        count:
+          type: integer
+        count_cap:
+          type: integer
+    codersdk.ReducedUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        id:
+          type: string
+          format: uuid
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        theme_preference:
+          type: string
+          description: 'Deprecated: this value should be retrieved from
+
+            `codersdk.UserPreferenceSettings` instead.'
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+      required:
+      - created_at
+      - email
+      - id
+      - username
+    codersdk.SlimRole:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+    wsproxysdk.RegisterWorkspaceProxyRequest:
+      type: object
+      properties:
+        access_url:
+          type: string
+          description: AccessURL that hits the workspace proxy api.
+        derp_enabled:
+          type: boolean
+          description: 'DerpEnabled indicates whether the proxy should be included in the DERP
+
+            map or not.'
+        derp_only:
+          type: boolean
+          description: 'DerpOnly indicates whether the proxy should only be included in the DERP
+
+            map and should not be used for serving apps.'
+        hostname:
+          type: string
+          description: 'ReplicaHostname is the OS hostname of the machine that the proxy is running
+
+            on.  This is only used for tracking purposes in the replicas table.'
+        replica_error:
+          type: string
+          description: 'ReplicaError is the error that the replica encountered when trying to
+
+            dial it''s peers. This is stored in the replicas table for debugging
+
+            purposes but does not affect the proxy''s ability to register.
+
+
+            This value is only stored on subsequent requests to the register
+
+            endpoint, not the first request.'
+        replica_id:
+          type: string
+          description: 'ReplicaID is a unique identifier for the replica of the proxy that is
+
+            registering. It should be generated by the client on startup and
+
+            persisted (in memory only) until the process is restarted.'
+        replica_relay_address:
+          type: string
+          description: 'ReplicaRelayAddress is the DERP address of the replica that other
+
+            replicas may use to connect internally for DERP meshing.'
+        version:
+          type: string
+          description: Version is the Coder version of the proxy.
+        wildcard_hostname:
+          type: string
+          description: WildcardHostname that the workspace proxy api is serving for subdomain apps.
+    codersdk.IssueReconnectingPTYSignedTokenResponse:
+      type: object
+      properties:
+        signed_token:
+          type: string
+    codersdk.OAuth2ProtectedResourceMetadata:
+      type: object
+      properties:
+        authorization_servers:
+          type: array
+          items:
+            type: string
+        bearer_methods_supported:
+          type: array
+          items:
+            type: string
+        resource:
+          type: string
+        scopes_supported:
+          type: array
+          items:
+            type: string
+    codersdk.User:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        has_ai_seat:
+          type: boolean
+          description: 'HasAISeat intentionally omits omitempty so the API always includes the
+
+            field, even when false.'
+        id:
+          type: string
+          format: uuid
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        organization_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        theme_preference:
+          type: string
+          description: 'Deprecated: this value should be retrieved from
+
+            `codersdk.UserPreferenceSettings` instead.'
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+      required:
+      - created_at
+      - email
+      - id
+      - username
+    codersdk.OAuth2AuthorizationServerMetadata:
+      type: object
+      properties:
+        authorization_endpoint:
+          type: string
+        code_challenge_methods_supported:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2PKCECodeChallengeMethod'
+        grant_types_supported:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2ProviderGrantType'
+        issuer:
+          type: string
+        registration_endpoint:
+          type: string
+        response_types_supported:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2ProviderResponseType'
+        revocation_endpoint:
+          type: string
+        scopes_supported:
+          type: array
+          items:
+            type: string
+        token_endpoint:
+          type: string
+        token_endpoint_auth_methods_supported:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OAuth2TokenEndpointAuthMethod'
+    codersdk.OAuth2TokenEndpointAuthMethod:
+      type: string
+      enum:
+      - client_secret_basic
+      - client_secret_post
+      - none
+    codersdk.CreateGroupRequest:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+        display_name:
+          type: string
+        name:
+          type: string
+        quota_allowance:
+          type: integer
+      required:
+      - name
+    codersdk.ConnectionLogSSHInfo:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          format: uuid
+        disconnect_reason:
+          type: string
+          description: 'DisconnectReason is omitted if a disconnect event with the same connection ID
+
+            has not yet been seen.'
+        disconnect_time:
+          type: string
+          format: date-time
+          description: 'DisconnectTime is omitted if a disconnect event with the same connection ID
+
+            has not yet been seen.'
+        exit_code:
+          type: integer
+          description: 'ExitCode is the exit code of the SSH session. It is omitted if a
+
+            disconnect event with the same connection ID has not yet been seen.'
+    codersdk.PostOAuth2ProviderAppRequest:
+      type: object
+      properties:
+        callback_url:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+      required:
+      - callback_url
+      - name
+    codersdk.TemplateACL:
+      type: object
+      properties:
+        group:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateGroup'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateUser'
+    codersdk.OAuth2AppEndpoints:
+      type: object
+      properties:
+        authorization:
+          type: string
+        device_authorization:
+          type: string
+          description: DeviceAuth is optional.
+        token:
+          type: string
+        token_revoke:
+          type: string
+    codersdk.ConnectionLogWebInfo:
+      type: object
+      properties:
+        slug_or_port:
+          type: string
+        status_code:
+          type: integer
+          description: StatusCode is the HTTP status code of the request.
+        user:
+          description: User is omitted if the connection event was from an unauthenticated user.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.User'
+        user_agent:
+          type: string
+    wsproxysdk.ReportAppStatsRequest:
+      type: object
+      properties:
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceapps.StatsReport'
+    codersdk.ProvisionerDaemonJob:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_name:
+          type: string
+    codersdk.ConnectionType:
+      type: string
+      enum:
+      - ssh
+      - vscode
+      - jetbrains
+      - reconnecting_pty
+      - workspace_app
+      - port_forwarding
+    codersdk.UpdateUserQuietHoursScheduleRequest:
+      type: object
+      properties:
+        schedule:
+          type: string
+          description: 'Schedule is a cron expression that defines when the user''s quiet hours
+
+            window is. Schedule must not be empty. For new users, the schedule is set
+
+            to 2am in their browser or computer''s timezone. The schedule denotes the
+
+            beginning of a 4 hour window where the workspace is allowed to
+
+            automatically stop or restart due to maintenance or template schedule.
+
+
+            The schedule must be daily with a single time, and should have a timezone
+
+            specified via a CRON_TZ prefix (otherwise UTC will be used).
+
+
+            If the schedule is empty, the user will be updated to use the default
+
+            schedule.'
+      required:
+      - schedule
+    codersdk.ACLAvailable:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Group'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+    codersdk.OAuth2ProviderGrantType:
+      type: string
+      enum:
+      - authorization_code
+      - refresh_token
+      - password
+      - client_credentials
+      - implicit
+    codersdk.UserAIBudgetOverride:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        group_id:
+          type: string
+          format: uuid
+        spend_limit_micros:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
+    codersdk.Replica:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: CreatedAt is the timestamp when the replica was first seen.
+        database_latency:
+          type: integer
+          description: DatabaseLatency is the latency in microseconds to the database.
+        error:
+          type: string
+          description: Error is the replica error.
+        hostname:
+          type: string
+          description: Hostname is the hostname of the replica.
+        id:
+          type: string
+          format: uuid
+          description: ID is the unique identifier for the replica.
+        region_id:
+          type: integer
+          description: RegionID is the region of the replica.
+        relay_address:
+          type: string
+          description: RelayAddress is the accessible address to relay DERP connections.
     tailcfg.DERPRegion:
       type: object
       properties:
@@ -2976,69 +3817,230 @@ components:
           description: 'RegionName is a long English name for the region: "New York City",
 
             "San Francisco", "Singapore", "Frankfurt", etc.'
-    workspaceapps.StatsReport:
+    codersdk.Entitlements:
       type: object
       properties:
-        access_method:
-          $ref: '#/components/schemas/workspaceapps.AccessMethod'
-        agent_id:
+        errors:
+          type: array
+          items:
+            type: string
+        features:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.Feature'
+        has_license:
+          type: boolean
+        refreshed_at:
           type: string
-        requests:
+          format: date-time
+        require_telemetry:
+          type: boolean
+        trial:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+    codersdk.CryptoKeyFeature:
+      type: string
+      enum:
+      - workspace_apps_api_key
+      - workspace_apps_token
+      - oidc_convert
+      - tailnet_resume
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
+          type: string
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
+          type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.License:
+      type: object
+      properties:
+        claims:
+          type: object
+          description: 'Claims are the JWT claims asserted by the license.  Here we use
+
+            a generic string map to ensure that all data from the server is
+
+            parsed verbatim, not just the fields this version of Coder
+
+            understands.'
+          additionalProperties: true
+        id:
           type: integer
-        session_ended_at:
+        uploaded_at:
           type: string
-          description: Updated periodically while app is in use active and when the last connection is closed.
-        session_id:
+          format: date-time
+        uuid:
           type: string
-        session_started_at:
-          type: string
-        slug_or_port:
-          type: string
-        user_id:
-          type: string
-        workspace_id:
-          type: string
-    codersdk.TemplateGroup:
+          format: uuid
+    codersdk.CreateAIGatewayKeyRequest:
       type: object
       properties:
-        avatar_url:
+        name:
           type: string
-          format: uri
+      required:
+      - name
+    codersdk.GroupSyncSettings:
+      type: object
+      properties:
+        auto_create_missing_groups:
+          type: boolean
+          description: 'AutoCreateMissing controls whether groups returned by the OIDC provider
+
+            are automatically created in Coder if they are missing.'
+        field:
+          type: string
+          description: 'Field is the name of the claim field that specifies what groups a user
+
+            should be in. If empty, no groups will be synced.'
+        legacy_group_name_mapping:
+          type: object
+          description: 'LegacyNameMapping is deprecated. It remaps an IDP group name to
+
+            a Coder group name. Since configuration is now done at runtime,
+
+            group IDs are used to account for group renames.
+
+            For legacy configurations, this config option has to remain.
+
+            Deprecated: Use Mapping instead.'
+          additionalProperties:
+            type: string
+        mapping:
+          type: object
+          description: Mapping is a map from OIDC groups to Coder group IDs
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        regex_filter:
+          description: 'RegexFilter is a regular expression that filters the groups returned by
+
+            the OIDC provider. Any group not matched by this regex will be ignored.
+
+            If the group filter is nil, then no group filtering will occur.'
+          allOf:
+          - $ref: '#/components/schemas/regexp.Regexp'
+    codersdk.WorkspaceProxyStatus:
+      type: object
+      properties:
+        checked_at:
+          type: string
+          format: date-time
+        report:
+          description: Report provides more information about the health of the workspace proxy.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProxyHealthReport'
+        status:
+          $ref: '#/components/schemas/codersdk.ProxyHealthStatus'
+    codersdk.RegionsResponse-codersdk_WorkspaceProxy:
+      type: object
+      properties:
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceProxy'
+    wsproxysdk.IssueSignedAppTokenResponse:
+      type: object
+      properties:
+        signed_token_str:
+          type: string
+          description: SignedTokenStr should be set as a cookie on the response.
+    codersdk.Entitlement:
+      type: string
+      enum:
+      - entitled
+      - grace_period
+      - not_entitled
+    codersdk.UpdateWorkspaceSharingSettingsRequest:
+      type: object
+      properties:
+        shareable_workspace_owners:
+          description: 'ShareableWorkspaceOwners controls whose workspaces can be shared
+
+            within the organization.'
+          enum:
+          - none
+          - everyone
+          - service_accounts
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ShareableWorkspaceOwners'
+        sharing_disabled:
+          type: boolean
+          description: 'SharingDisabled is deprecated and left for backward compatibility
+
+            purposes.
+
+            Deprecated: use `ShareableWorkspaceOwners` instead'
+    codersdk.PatchOrganizationIDPSyncMappingRequest:
+      type: object
+      properties:
+        add:
+          type: array
+          items:
+            type: object
+            properties:
+              gets:
+                type: string
+                description: The ID of the Coder resource the user should be added to
+              given:
+                type: string
+                description: The IdP claim the user has
+        remove:
+          type: array
+          items:
+            type: object
+            properties:
+              gets:
+                type: string
+                description: The ID of the Coder resource the user should be added to
+              given:
+                type: string
+                description: The IdP claim the user has
+    codersdk.MinimalOrganization:
+      type: object
+      properties:
         display_name:
+          type: string
+        icon:
           type: string
         id:
           type: string
           format: uuid
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ReducedUser'
         name:
           type: string
-        organization_display_name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        organization_name:
-          type: string
-        quota_allowance:
-          type: integer
-        role:
-          enum:
-          - admin
-          - use
-          allOf:
-          - $ref: '#/components/schemas/codersdk.TemplateRole'
-        source:
-          $ref: '#/components/schemas/codersdk.GroupSource'
-        total_member_count:
-          type: integer
-          description: 'How many members are in this group. Shows the total count,
-
-            even if the user is not authorized to read group member details.
-
-            May be greater than `len(Group.Members)`.'
+      required:
+      - id
     codersdk.UserQuietHoursScheduleResponse:
       type: object
       properties:
@@ -3068,235 +4070,106 @@ components:
           description: 'UserSet is true if the user has set their own quiet hours schedule. If
 
             false, the user is using the default schedule.'
-    codersdk.OAuth2ProviderResponseType:
-      type: string
-      enum:
-      - code
-      - token
-    codersdk.PutOAuth2ProviderAppRequest:
+    codersdk.ProvisionerKey:
       type: object
       properties:
-        callback_url:
-          type: string
-        icon:
-          type: string
-        name:
-          type: string
-      required:
-      - callback_url
-      - name
-    oauth2.Token:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: 'AccessToken is the token that authorizes and authenticates
-
-            the requests.'
-        expires_in:
-          type: integer
-          description: 'ExpiresIn is the OAuth2 wire format "expires_in" field,
-
-            which specifies how many seconds later the token expires,
-
-            relative to an unknown time base approximately around "now".
-
-            It is the application''s responsibility to populate
-
-            `Expiry` from `ExpiresIn` when required.'
-        expiry:
-          type: string
-          description: 'Expiry is the optional expiration time of the access token.
-
-
-            If zero, [TokenSource] implementations will reuse the same
-
-            token forever and RefreshToken or equivalent
-
-            mechanisms for that TokenSource will not be used.'
-        refresh_token:
-          type: string
-          description: 'RefreshToken is a token that''s used by the application
-
-            (as opposed to the user) to refresh the access token
-
-            if it expires.'
-        token_type:
-          type: string
-          description: 'TokenType is the type of token.
-
-            The Type method returns either this or "Bearer", the default.'
-    codersdk.OAuth2ClientConfiguration:
-      type: object
-      properties:
-        client_id:
-          type: string
-        client_id_issued_at:
-          type: integer
-        client_name:
-          type: string
-        client_secret_expires_at:
-          type: integer
-        client_uri:
-          type: string
-        contacts:
-          type: array
-          items:
-            type: string
-        grant_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2ProviderGrantType'
-        jwks:
-          type: object
-        jwks_uri:
-          type: string
-        logo_uri:
-          type: string
-        policy_uri:
-          type: string
-        redirect_uris:
-          type: array
-          items:
-            type: string
-        registration_access_token:
-          type: string
-        registration_client_uri:
-          type: string
-        response_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2ProviderResponseType'
-        scope:
-          type: string
-        software_id:
-          type: string
-        software_version:
-          type: string
-        token_endpoint_auth_method:
-          $ref: '#/components/schemas/codersdk.OAuth2TokenEndpointAuthMethod'
-        tos_uri:
-          type: string
-    codersdk.GroupSource:
-      type: string
-      enum:
-      - user
-      - oidc
-    codersdk.ConnectionLogSSHInfo:
-      type: object
-      properties:
-        connection_id:
-          type: string
-          format: uuid
-        disconnect_reason:
-          type: string
-          description: 'DisconnectReason is omitted if a disconnect event with the same connection ID
-
-            has not yet been seen.'
-        disconnect_time:
+        created_at:
           type: string
           format: date-time
-          description: 'DisconnectTime is omitted if a disconnect event with the same connection ID
-
-            has not yet been seen.'
-        exit_code:
-          type: integer
-          description: 'ExitCode is the exit code of the SSH session. It is omitted if a
-
-            disconnect event with the same connection ID has not yet been seen.'
-    codersdk.IssueReconnectingPTYSignedTokenRequest:
-      type: object
-      properties:
-        agentID:
-          type: string
-          format: uuid
-        url:
-          type: string
-          description: URL is the URL of the reconnecting-pty endpoint you are connecting to.
-      required:
-      - agentID
-      - url
-    codersdk.TemplateRole:
-      type: string
-      enum:
-      - admin
-      - use
-      - ''
-    codersdk.UpsertGroupAIBudgetRequest:
-      type: object
-      properties:
-        spend_limit_micros:
-          type: integer
-    codersdk.OAuth2ProviderApp:
-      type: object
-      properties:
-        callback_url:
-          type: string
-        endpoints:
-          description: 'Endpoints are included in the app response for easier discovery. The OAuth2
-
-            spec does not have a defined place to find these (for comparison, OIDC has
-
-            a ''/.well-known/openid-configuration'' endpoint).'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.OAuth2AppEndpoints'
-        icon:
-          type: string
         id:
           type: string
           format: uuid
         name:
           type: string
-    codersdk.OrganizationSyncSettings:
+        organization:
+          type: string
+          format: uuid
+        tags:
+          $ref: '#/components/schemas/codersdk.ProvisionerKeyTags'
+    legacyscim.SCIMUser:
       type: object
       properties:
-        field:
-          type: string
-          description: 'Field selects the claim field to be used as the created user''s
-
-            organizations. If the field is the empty string, then no organization
-
-            updates will ever come from the OIDC provider.'
-        mapping:
-          type: object
-          description: Mapping maps from an OIDC claim --> Coder organization uuid
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        organization_assign_default:
+        active:
           type: boolean
-          description: 'AssignDefault will ensure the default org is always included
-
-            for every user, regardless of their claims. This preserves legacy behavior.'
-    codersdk.OAuth2ProviderGrantType:
+          description: Active is a ptr to prevent the empty value from being interpreted as false.
+        emails:
+          type: array
+          items:
+            type: object
+            properties:
+              display:
+                type: string
+              primary:
+                type: boolean
+              type:
+                type: string
+              value:
+                type: string
+                format: email
+        groups:
+          type: array
+          items: {}
+        id:
+          type: string
+        meta:
+          type: object
+          properties:
+            resourceType:
+              type: string
+        name:
+          type: object
+          properties:
+            familyName:
+              type: string
+            givenName:
+              type: string
+        schemas:
+          type: array
+          items:
+            type: string
+        userName:
+          type: string
+    codersdk.ProvisionerDaemonStatus:
       type: string
       enum:
-      - authorization_code
-      - refresh_token
-      - password
-      - client_credentials
-      - implicit
-    codersdk.CreateAIGatewayKeyRequest:
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-      - name
-    codersdk.CreateGroupRequest:
+      - offline
+      - idle
+      - busy
+    codersdk.Group:
       type: object
       properties:
         avatar_url:
           type: string
+          format: uri
         display_name:
           type: string
+        id:
+          type: string
+          format: uuid
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
         name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
           type: string
         quota_allowance:
           type: integer
-      required:
-      - name
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          type: integer
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
     codersdk.LoginType:
       type: string
       enum:
@@ -3306,47 +4179,7 @@ components:
       - oidc
       - token
       - none
-    codersdk.License:
-      type: object
-      properties:
-        claims:
-          type: object
-          description: 'Claims are the JWT claims asserted by the license.  Here we use
-
-            a generic string map to ensure that all data from the server is
-
-            parsed verbatim, not just the fields this version of Coder
-
-            understands.'
-          additionalProperties: true
-        id:
-          type: integer
-        uploaded_at:
-          type: string
-          format: date-time
-        uuid:
-          type: string
-          format: uuid
-    codersdk.LinkConfig:
-      type: object
-      properties:
-        icon:
-          type: string
-          enum:
-          - bug
-          - chat
-          - docs
-          - star
-        location:
-          type: string
-          enum:
-          - navbar
-          - dropdown
-        name:
-          type: string
-        target:
-          type: string
-    codersdk.User:
+    codersdk.TemplateUser:
       type: object
       properties:
         avatar_url:
@@ -3380,6 +4213,12 @@ components:
           items:
             type: string
             format: uuid
+        role:
+          enum:
+          - admin
+          - use
+          allOf:
+          - $ref: '#/components/schemas/codersdk.TemplateRole'
         roles:
           type: array
           items:
@@ -3405,98 +4244,38 @@ components:
       - email
       - id
       - username
-    codersdk.PostOAuth2ProviderAppRequest:
+    codersdk.PatchGroupIDPSyncMappingRequest:
       type: object
       properties:
-        callback_url:
-          type: string
-        icon:
-          type: string
-        name:
-          type: string
-      required:
-      - callback_url
-      - name
-    codersdk.TemplateACL:
-      type: object
-      properties:
-        group:
+        add:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.TemplateGroup'
-        users:
+            type: object
+            properties:
+              gets:
+                type: string
+                description: The ID of the Coder resource the user should be added to
+              given:
+                type: string
+                description: The IdP claim the user has
+        remove:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.TemplateUser'
-    codersdk.Replica:
+            type: object
+            properties:
+              gets:
+                type: string
+                description: The ID of the Coder resource the user should be added to
+              given:
+                type: string
+                description: The IdP claim the user has
+    codersdk.WorkspaceQuota:
       type: object
       properties:
-        created_at:
-          type: string
-          format: date-time
-          description: CreatedAt is the timestamp when the replica was first seen.
-        database_latency:
+        budget:
           type: integer
-          description: DatabaseLatency is the latency in microseconds to the database.
-        error:
-          type: string
-          description: Error is the replica error.
-        hostname:
-          type: string
-          description: Hostname is the hostname of the replica.
-        id:
-          type: string
-          format: uuid
-          description: ID is the unique identifier for the replica.
-        region_id:
+        credits_consumed:
           type: integer
-          description: RegionID is the region of the replica.
-        relay_address:
-          type: string
-          description: RelayAddress is the accessible address to relay DERP connections.
-    codersdk.OAuth2ClientRegistrationRequest:
-      type: object
-      properties:
-        client_name:
-          type: string
-        client_uri:
-          type: string
-        contacts:
-          type: array
-          items:
-            type: string
-        grant_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2ProviderGrantType'
-        jwks:
-          type: object
-        jwks_uri:
-          type: string
-        logo_uri:
-          type: string
-        policy_uri:
-          type: string
-        redirect_uris:
-          type: array
-          items:
-            type: string
-        response_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OAuth2ProviderResponseType'
-        scope:
-          type: string
-        software_id:
-          type: string
-        software_statement:
-          type: string
-        software_version:
-          type: string
-        token_endpoint_auth_method:
-          $ref: '#/components/schemas/codersdk.OAuth2TokenEndpointAuthMethod'
-        tos_uri:
-          type: string
     codersdk.ExternalAgentCredentials:
       type: object
       properties:
@@ -3504,20 +4283,46 @@ components:
           type: string
         command:
           type: string
-    codersdk.ConnectionLogWebInfo:
+    codersdk.LinkConfig:
       type: object
       properties:
-        slug_or_port:
+        icon:
           type: string
-        status_code:
-          type: integer
-          description: StatusCode is the HTTP status code of the request.
-        user:
-          description: User is omitted if the connection event was from an unauthenticated user.
+          enum:
+          - bug
+          - chat
+          - docs
+          - star
+        location:
+          type: string
+          enum:
+          - navbar
+          - dropdown
+        name:
+          type: string
+        target:
+          type: string
+    codersdk.AppearanceConfig:
+      type: object
+      properties:
+        announcement_banners:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.BannerConfig'
+        application_name:
+          type: string
+        docs_url:
+          type: string
+        logo_url:
+          type: string
+        service_banner:
+          description: 'Deprecated: ServiceBanner has been replaced by AnnouncementBanners.'
           allOf:
-          - $ref: '#/components/schemas/codersdk.User'
-        user_agent:
-          type: string
+          - $ref: '#/components/schemas/codersdk.BannerConfig'
+        support_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.LinkConfig'
     workspaceapps.IssueTokenRequest:
       type: object
       properties:
@@ -3540,6 +4345,87 @@ components:
         session_token:
           type: string
           description: SessionToken is the session token provided by the user.
+    codersdk.UsagePeriod:
+      type: object
+      properties:
+        end:
+          type: string
+          format: date-time
+        issued_at:
+          type: string
+          format: date-time
+        start:
+          type: string
+          format: date-time
+    wsproxysdk.DeregisterWorkspaceProxyRequest:
+      type: object
+      properties:
+        replica_id:
+          type: string
+          description: 'ReplicaID is a unique identifier for the replica of the proxy that is
+
+            deregistering. It should be generated by the client on startup and
+
+            should''ve already been passed to the register endpoint.'
+    codersdk.PatchRoleIDPSyncMappingRequest:
+      type: object
+      properties:
+        add:
+          type: array
+          items:
+            type: object
+            properties:
+              gets:
+                type: string
+                description: The ID of the Coder resource the user should be added to
+              given:
+                type: string
+                description: The IdP claim the user has
+        remove:
+          type: array
+          items:
+            type: object
+            properties:
+              gets:
+                type: string
+                description: The ID of the Coder resource the user should be added to
+              given:
+                type: string
+                description: The IdP claim the user has
+    codersdk.GroupAIBudget:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        group_id:
+          type: string
+          format: uuid
+        spend_limit_micros:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.OAuth2ProviderApp:
+      type: object
+      properties:
+        callback_url:
+          type: string
+        endpoints:
+          description: 'Endpoints are included in the app response for easier discovery. The OAuth2
+
+            spec does not have a defined place to find these (for comparison, OIDC has
+
+            a ''/.well-known/openid-configuration'' endpoint).'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.OAuth2AppEndpoints'
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
     tailcfg.DERPNode:
       type: object
       properties:
@@ -3636,895 +4522,8 @@ components:
           description: 'STUNTestIP is used in tests to override the STUN server''s IP.
 
             If empty, it''s assumed to be the same as the DERP server.'
-    codersdk.ProxyHealthReport:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: Errors are problems that prevent the workspace proxy from being healthy
-          items:
-            type: string
-        warnings:
-          type: array
-          description: 'Warnings do not prevent the workspace proxy from being healthy, but
-
-            should be addressed.'
-          items:
-            type: string
-    codersdk.UpdateWorkspaceSharingSettingsRequest:
-      type: object
-      properties:
-        shareable_workspace_owners:
-          description: 'ShareableWorkspaceOwners controls whose workspaces can be shared
-
-            within the organization.'
-          enum:
-          - none
-          - everyone
-          - service_accounts
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ShareableWorkspaceOwners'
-        sharing_disabled:
-          type: boolean
-          description: 'SharingDisabled is deprecated and left for backward compatibility
-
-            purposes.
-
-            Deprecated: use `ShareableWorkspaceOwners` instead'
-    codersdk.AddLicenseRequest:
-      type: object
-      properties:
-        license:
-          type: string
-      required:
-      - license
-    codersdk.ConnectionLogResponse:
-      type: object
-      properties:
-        connection_logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ConnectionLog'
-        count:
-          type: integer
-        count_cap:
-          type: integer
-    codersdk.PatchRoleIDPSyncConfigRequest:
-      type: object
-      properties:
-        field:
-          type: string
-    codersdk.MinimalOrganization:
-      type: object
-      properties:
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-      required:
-      - id
-    codersdk.ReducedUser:
-      type: object
-      properties:
-        avatar_url:
-          type: string
-          format: uri
-        created_at:
-          type: string
-          format: date-time
-        email:
-          type: string
-          format: email
-        id:
-          type: string
-          format: uuid
-        is_service_account:
-          type: boolean
-        last_seen_at:
-          type: string
-          format: date-time
-        login_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-        name:
-          type: string
-        status:
-          enum:
-          - active
-          - suspended
-          allOf:
-          - $ref: '#/components/schemas/codersdk.UserStatus'
-        theme_preference:
-          type: string
-          description: 'Deprecated: this value should be retrieved from
-
-            `codersdk.UserPreferenceSettings` instead.'
-        updated_at:
-          type: string
-          format: date-time
-        username:
-          type: string
-      required:
-      - created_at
-      - email
-      - id
-      - username
-    codersdk.CreateWorkspaceProxyRequest:
-      type: object
-      properties:
-        display_name:
-          type: string
-        icon:
-          type: string
-        name:
-          type: string
-      required:
-      - name
-    codersdk.ProvisionerDaemonStatus:
-      type: string
-      enum:
-      - offline
-      - idle
-      - busy
-    legacyscim.SCIMUser:
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: Active is a ptr to prevent the empty value from being interpreted as false.
-        emails:
-          type: array
-          items:
-            type: object
-            properties:
-              display:
-                type: string
-              primary:
-                type: boolean
-              type:
-                type: string
-              value:
-                type: string
-                format: email
-        groups:
-          type: array
-          items: {}
-        id:
-          type: string
-        meta:
-          type: object
-          properties:
-            resourceType:
-              type: string
-        name:
-          type: object
-          properties:
-            familyName:
-              type: string
-            givenName:
-              type: string
-        schemas:
-          type: array
-          items:
-            type: string
-        userName:
-          type: string
-    wsproxysdk.DeregisterWorkspaceProxyRequest:
-      type: object
-      properties:
-        replica_id:
-          type: string
-          description: 'ReplicaID is a unique identifier for the replica of the proxy that is
-
-            deregistering. It should be generated by the client on startup and
-
-            should''ve already been passed to the register endpoint.'
-    codersdk.UpdateTemplateACL:
-      type: object
-      properties:
-        group_perms:
-          type: object
-          description: 'GroupPerms is a mapping from valid group UUIDs to the template role they
-
-            should be granted. To remove a group from the template, use "" as the role
-
-            (available as a constant named codersdk.TemplateRoleDeleted)'
-          additionalProperties:
-            $ref: '#/components/schemas/codersdk.TemplateRole'
-          example:
-            8bd26b20-f3e8-48be-a903-46bb920cf671: use
-            <group_id>: admin
-        user_perms:
-          type: object
-          description: 'UserPerms is a mapping from valid user UUIDs to the template role they
-
-            should be granted. To remove a user from the template, use "" as the role
-
-            (available as a constant named codersdk.TemplateRoleDeleted)'
-          additionalProperties:
-            $ref: '#/components/schemas/codersdk.TemplateRole'
-          example:
-            4df59e74-c027-470b-ab4d-cbba8963a5e9: use
-            <user_id>: admin
-    wsproxysdk.CryptoKeysResponse:
-      type: object
-      properties:
-        crypto_keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.CryptoKey'
-    codersdk.UpdateAppearanceConfig:
-      type: object
-      properties:
-        announcement_banners:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.BannerConfig'
-        application_name:
-          type: string
-        logo_url:
-          type: string
-        service_banner:
-          description: 'Deprecated: ServiceBanner has been replaced by AnnouncementBanners.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.BannerConfig'
-    codersdk.WorkspaceProxyStatus:
-      type: object
-      properties:
-        checked_at:
-          type: string
-          format: date-time
-        report:
-          description: Report provides more information about the health of the workspace proxy.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ProxyHealthReport'
-        status:
-          $ref: '#/components/schemas/codersdk.ProxyHealthStatus'
-    workspaceapps.AccessMethod:
-      type: string
-      enum:
-      - path
-      - subdomain
-      - terminal
-    wsproxysdk.IssueSignedAppTokenResponse:
-      type: object
-      properties:
-        signed_token_str:
-          type: string
-          description: SignedTokenStr should be set as a cookie on the response.
-    codersdk.ProvisionerKeyDaemons:
-      type: object
-      properties:
-        daemons:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ProvisionerDaemon'
-        key:
-          $ref: '#/components/schemas/codersdk.ProvisionerKey'
-    codersdk.PatchGroupRequest:
-      type: object
-      properties:
-        add_users:
-          type: array
-          items:
-            type: string
-        avatar_url:
-          type: string
-        display_name:
-          type: string
-        name:
-          type: string
-        quota_allowance:
-          type: integer
-        remove_users:
-          type: array
-          items:
-            type: string
-    codersdk.OAuth2PKCECodeChallengeMethod:
-      type: string
-      enum:
-      - S256
-      - plain
-    codersdk.CryptoKeyFeature:
-      type: string
-      enum:
-      - workspace_apps_api_key
-      - workspace_apps_token
-      - oidc_convert
-      - tailnet_resume
-    codersdk.OAuth2ProtectedResourceMetadata:
-      type: object
-      properties:
-        authorization_servers:
-          type: array
-          items:
-            type: string
-        bearer_methods_supported:
-          type: array
-          items:
-            type: string
-        resource:
-          type: string
-        scopes_supported:
-          type: array
-          items:
-            type: string
-    codersdk.ProvisionerDaemon:
-      type: object
-      properties:
-        api_version:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        current_job:
-          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
-        id:
-          type: string
-          format: uuid
-        key_id:
-          type: string
-          format: uuid
-        key_name:
-          type: string
-          description: Optional fields.
-        last_seen_at:
-          type: string
-          format: date-time
-        name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        previous_job:
-          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
-        provisioners:
-          type: array
-          items:
-            type: string
-        status:
-          enum:
-          - offline
-          - idle
-          - busy
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ProvisionerDaemonStatus'
-        tags:
-          type: object
-          additionalProperties:
-            type: string
-        version:
-          type: string
-    codersdk.WorkspaceSharingSettings:
-      type: object
-      properties:
-        shareable_workspace_owners:
-          description: 'ShareableWorkspaceOwners controls whose workspaces can be shared
-
-            within the organization.'
-          enum:
-          - none
-          - everyone
-          - service_accounts
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ShareableWorkspaceOwners'
-        sharing_disabled:
-          type: boolean
-          description: 'SharingDisabled is deprecated and left for backward compatibility
-
-            purposes.
-
-            Deprecated: use `ShareableWorkspaceOwners` instead'
-        sharing_globally_disabled:
-          type: boolean
-          description: 'SharingGloballyDisabled is true if sharing has been disabled for this
-
-            organization because of a deployment-wide setting.'
-    codersdk.UsagePeriod:
-      type: object
-      properties:
-        end:
-          type: string
-          format: date-time
-        issued_at:
-          type: string
-          format: date-time
-        start:
-          type: string
-          format: date-time
-    codersdk.GroupAIBudget:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        group_id:
-          type: string
-          format: uuid
-        spend_limit_micros:
-          type: integer
-        updated_at:
-          type: string
-          format: date-time
-    regexp.Regexp:
-      type: object
-    codersdk.Group:
-      type: object
-      properties:
-        avatar_url:
-          type: string
-          format: uri
-        display_name:
-          type: string
-        id:
-          type: string
-          format: uuid
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ReducedUser'
-        name:
-          type: string
-        organization_display_name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        organization_name:
-          type: string
-        quota_allowance:
-          type: integer
-        source:
-          $ref: '#/components/schemas/codersdk.GroupSource'
-        total_member_count:
-          type: integer
-          description: 'How many members are in this group. Shows the total count,
-
-            even if the user is not authorized to read group member details.
-
-            May be greater than `len(Group.Members)`.'
-    wsproxysdk.RegisterWorkspaceProxyResponse:
-      type: object
-      properties:
-        derp_force_websockets:
-          type: boolean
-        derp_map:
-          $ref: '#/components/schemas/tailcfg.DERPMap'
-        derp_mesh_key:
-          type: string
-        derp_region_id:
-          type: integer
-        sibling_replicas:
-          type: array
-          description: 'SiblingReplicas is a list of all other replicas of the proxy that have
-
-            not timed out.'
-          items:
-            $ref: '#/components/schemas/codersdk.Replica'
-    codersdk.ShareableWorkspaceOwners:
-      type: string
-      enum:
-      - none
-      - everyone
-      - service_accounts
-    codersdk.RegionsResponse-codersdk_WorkspaceProxy:
-      type: object
-      properties:
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceProxy'
-    codersdk.RoleSyncSettings:
-      type: object
-      properties:
-        field:
-          type: string
-          description: 'Field is the name of the claim field that specifies what organization roles
-
-            a user should be given. If empty, no roles will be synced.'
-        mapping:
-          type: object
-          description: Mapping is a map from OIDC groups to Coder organization roles.
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    codersdk.ProvisionerKeyTags:
-      type: object
-      additionalProperties:
-        type: string
-    codersdk.WorkspaceQuota:
-      type: object
-      properties:
-        budget:
-          type: integer
-        credits_consumed:
-          type: integer
-    codersdk.ProvisionerJobStatus:
-      type: string
-      enum:
-      - pending
-      - running
-      - succeeded
-      - canceling
-      - canceled
-      - failed
-      - unknown
-    tailcfg.DERPHomeParams:
-      type: object
-      properties:
-        regionScore:
-          type: object
-          description: 'RegionScore scales latencies of DERP regions by a given scaling
-
-            factor when determining which region to use as the home
-
-            ("preferred") DERP. Scores in the range (0, 1) will cause this
-
-            region to be proportionally more preferred, and scores in the range
-
-            (1, ∞) will penalize a region.
-
-
-            If a region is not present in this map, it is treated as having a
-
-            score of 1.0.
-
-
-            Scores should not be 0 or negative; such scores will be ignored.
-
-
-            A nil map means no change from the previous value (if any); an empty
-
-            non-nil map can be sent to reset all scores back to 1.0.'
-          additionalProperties:
-            type: number
-            format: float64
-    codersdk.ConnectionLog:
-      type: object
-      properties:
-        agent_name:
-          type: string
-        connect_time:
-          type: string
-          format: date-time
-        id:
-          type: string
-          format: uuid
-        ip:
-          type: string
-        organization:
-          $ref: '#/components/schemas/codersdk.MinimalOrganization'
-        ssh_info:
-          description: 'SSHInfo is only set when `type` is one of:
-
-            - `ConnectionTypeSSH`
-
-            - `ConnectionTypeReconnectingPTY`
-
-            - `ConnectionTypeVSCode`
-
-            - `ConnectionTypeJetBrains`'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ConnectionLogSSHInfo'
-        type:
-          $ref: '#/components/schemas/codersdk.ConnectionType'
-        web_info:
-          description: 'WebInfo is only set when `type` is one of:
-
-            - `ConnectionTypePortForwarding`
-
-            - `ConnectionTypeWorkspaceApp`'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ConnectionLogWebInfo'
-        workspace_id:
-          type: string
-          format: uuid
-        workspace_name:
-          type: string
-        workspace_owner_id:
-          type: string
-          format: uuid
-        workspace_owner_username:
-          type: string
-    codersdk.PatchGroupIDPSyncMappingRequest:
-      type: object
-      properties:
-        add:
-          type: array
-          items:
-            type: object
-            properties:
-              gets:
-                type: string
-                description: The ID of the Coder resource the user should be added to
-              given:
-                type: string
-                description: The IdP claim the user has
-        remove:
-          type: array
-          items:
-            type: object
-            properties:
-              gets:
-                type: string
-                description: The ID of the Coder resource the user should be added to
-              given:
-                type: string
-                description: The IdP claim the user has
-    codersdk.PatchWorkspaceProxy:
-      type: object
-      properties:
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        regenerate_token:
-          type: boolean
-      required:
-      - display_name
-      - icon
-      - id
-      - name
-    codersdk.Response:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: 'Detail is a debug message that provides further insight into why the
-
-            action failed. This information can be technical and a regular golang
-
-            err.Error() text.
-
-            - "database: too many open connections"
-
-            - "stat: too many open files"'
-        message:
-          type: string
-          description: 'Message is an actionable message that depicts actions the request took.
-
-            These messages should be fully formed sentences with proper punctuation.
-
-            Examples:
-
-            - "A user has been created."
-
-            - "Failed to create a user."'
-        validations:
-          type: array
-          description: 'Validations are form field-specific friendly error messages. They will be
-
-            shown on a form field in the UI. These can also be used to add additional
-
-            context if there is a set of errors in the primary ''Message''.'
-          items:
-            $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.SlimRole:
-      type: object
-      properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.BannerConfig:
-      type: object
-      properties:
-        background_color:
-          type: string
-        enabled:
-          type: boolean
-        message:
-          type: string
-    wsproxysdk.RegisterWorkspaceProxyRequest:
-      type: object
-      properties:
-        access_url:
-          type: string
-          description: AccessURL that hits the workspace proxy api.
-        derp_enabled:
-          type: boolean
-          description: 'DerpEnabled indicates whether the proxy should be included in the DERP
-
-            map or not.'
-        derp_only:
-          type: boolean
-          description: 'DerpOnly indicates whether the proxy should only be included in the DERP
-
-            map and should not be used for serving apps.'
-        hostname:
-          type: string
-          description: 'ReplicaHostname is the OS hostname of the machine that the proxy is running
-
-            on.  This is only used for tracking purposes in the replicas table.'
-        replica_error:
-          type: string
-          description: 'ReplicaError is the error that the replica encountered when trying to
-
-            dial it''s peers. This is stored in the replicas table for debugging
-
-            purposes but does not affect the proxy''s ability to register.
-
-
-            This value is only stored on subsequent requests to the register
-
-            endpoint, not the first request.'
-        replica_id:
-          type: string
-          description: 'ReplicaID is a unique identifier for the replica of the proxy that is
-
-            registering. It should be generated by the client on startup and
-
-            persisted (in memory only) until the process is restarted.'
-        replica_relay_address:
-          type: string
-          description: 'ReplicaRelayAddress is the DERP address of the replica that other
-
-            replicas may use to connect internally for DERP meshing.'
-        version:
-          type: string
-          description: Version is the Coder version of the proxy.
-        wildcard_hostname:
-          type: string
-          description: WildcardHostname that the workspace proxy api is serving for subdomain apps.
-    wsproxysdk.ReportAppStatsRequest:
-      type: object
-      properties:
-        stats:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceapps.StatsReport'
-    codersdk.UpdateUserQuietHoursScheduleRequest:
-      type: object
-      properties:
-        schedule:
-          type: string
-          description: 'Schedule is a cron expression that defines when the user''s quiet hours
-
-            window is. Schedule must not be empty. For new users, the schedule is set
-
-            to 2am in their browser or computer''s timezone. The schedule denotes the
-
-            beginning of a 4 hour window where the workspace is allowed to
-
-            automatically stop or restart due to maintenance or template schedule.
-
-
-            The schedule must be daily with a single time, and should have a timezone
-
-            specified via a CRON_TZ prefix (otherwise UTC will be used).
-
-
-            If the schedule is empty, the user will be updated to use the default
-
-            schedule.'
-      required:
-      - schedule
-    codersdk.PatchOrganizationIDPSyncMappingRequest:
-      type: object
-      properties:
-        add:
-          type: array
-          items:
-            type: object
-            properties:
-              gets:
-                type: string
-                description: The ID of the Coder resource the user should be added to
-              given:
-                type: string
-                description: The IdP claim the user has
-        remove:
-          type: array
-          items:
-            type: object
-            properties:
-              gets:
-                type: string
-                description: The ID of the Coder resource the user should be added to
-              given:
-                type: string
-                description: The IdP claim the user has
-    workspaceapps.Request:
-      type: object
-      properties:
-        access_method:
-          $ref: '#/components/schemas/workspaceapps.AccessMethod'
-        agent_name_or_id:
-          type: string
-          description: AgentNameOrID is not required if the workspace has only one agent.
-        app_prefix:
-          type: string
-          description: 'Prefix is the prefix of the subdomain app URL. Prefix should have a
-
-            trailing "---" if set.'
-        app_slug_or_port:
-          type: string
-        base_path:
-          type: string
-          description: 'BasePath of the app. For path apps, this is the path prefix in the router
-
-            for this particular app. For subdomain apps, this should be "/". This is
-
-            used for setting the cookie path.'
-        username_or_id:
-          type: string
-          description: 'For the following fields, if the AccessMethod is AccessMethodTerminal,
-
-            then only AgentNameOrID may be set and it must be a UUID. The other
-
-            fields must be left blank.'
-        workspace_name_or_id:
-          type: string
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.AppearanceConfig:
-      type: object
-      properties:
-        announcement_banners:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.BannerConfig'
-        application_name:
-          type: string
-        docs_url:
-          type: string
-        logo_url:
-          type: string
-        service_banner:
-          description: 'Deprecated: ServiceBanner has been replaced by AnnouncementBanners.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.BannerConfig'
-        support_links:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.LinkConfig'
-    codersdk.Entitlements:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        features:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/codersdk.Feature'
-        has_license:
-          type: boolean
-        refreshed_at:
-          type: string
-          format: date-time
-        require_telemetry:
-          type: boolean
-        trial:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
   securitySchemes:
     CoderSessionToken:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}

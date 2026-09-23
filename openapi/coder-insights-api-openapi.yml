@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents Insights API
+  title: Coder Insights API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -192,16 +192,64 @@ paths:
                 $ref: '#/components/schemas/codersdk.GetUserStatusCountsResponse'
 components:
   schemas:
-    codersdk.TemplateInsightsResponse:
+    codersdk.UserStatusChangeCount:
       type: object
       properties:
-        interval_reports:
+        count:
+          type: integer
+          example: 10
+        date:
+          type: string
+          format: date-time
+    codersdk.TemplateParameterUsage:
+      type: object
+      properties:
+        description:
+          type: string
+        display_name:
+          type: string
+        name:
+          type: string
+        options:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.TemplateInsightsIntervalReport'
+            $ref: '#/components/schemas/codersdk.TemplateVersionParameterOption'
+        template_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        type:
+          type: string
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateParameterValue'
+    codersdk.InsightsReportInterval:
+      type: string
+      enum:
+      - day
+      - week
+    codersdk.UserLatencyInsightsResponse:
+      type: object
+      properties:
         report:
-          $ref: '#/components/schemas/codersdk.TemplateInsightsReport'
-    codersdk.UserLatencyInsightsReport:
+          $ref: '#/components/schemas/codersdk.UserLatencyInsightsReport'
+    codersdk.DAUsResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.DAUEntry'
+        tz_hour_offset:
+          type: integer
+    codersdk.TemplateAppsType:
+      type: string
+      enum:
+      - builtin
+      - app
+    codersdk.UserActivityInsightsReport:
       type: object
       properties:
         end_time:
@@ -218,21 +266,16 @@ components:
         users:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.UserLatency'
-    codersdk.InsightsReportInterval:
-      type: string
-      enum:
-      - day
-      - week
-    codersdk.ConnectionLatency:
+            $ref: '#/components/schemas/codersdk.UserActivity'
+    codersdk.TemplateInsightsResponse:
       type: object
       properties:
-        p50:
-          type: number
-          example: 31.312
-        p95:
-          type: number
-          example: 119.832
+        interval_reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateInsightsIntervalReport'
+        report:
+          $ref: '#/components/schemas/codersdk.TemplateInsightsReport'
     codersdk.UserActivity:
       type: object
       properties:
@@ -252,55 +295,17 @@ components:
           format: uuid
         username:
           type: string
-    codersdk.UserActivityInsightsReport:
+    codersdk.TemplateVersionParameterOption:
       type: object
       properties:
-        end_time:
+        description:
           type: string
-          format: date-time
-        start_time:
+        icon:
           type: string
-          format: date-time
-        template_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.UserActivity'
-    codersdk.DAUEntry:
-      type: object
-      properties:
-        amount:
-          type: integer
-        date:
+        name:
           type: string
-          description: 'Date is a string formatted as 2024-01-31.
-
-            Timezone and time information is not included.'
-    codersdk.TemplateInsightsIntervalReport:
-      type: object
-      properties:
-        active_users:
-          type: integer
-          example: 14
-        end_time:
+        value:
           type: string
-          format: date-time
-        interval:
-          allOf:
-          - $ref: '#/components/schemas/codersdk.InsightsReportInterval'
-          example: week
-        start_time:
-          type: string
-          format: date-time
-        template_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
     codersdk.UserLatency:
       type: object
       properties:
@@ -319,79 +324,30 @@ components:
           format: uuid
         username:
           type: string
+    codersdk.ConnectionLatency:
+      type: object
+      properties:
+        p50:
+          type: number
+          example: 31.312
+        p95:
+          type: number
+          example: 119.832
+    codersdk.DAUEntry:
+      type: object
+      properties:
+        amount:
+          type: integer
+        date:
+          type: string
+          description: 'Date is a string formatted as 2024-01-31.
+
+            Timezone and time information is not included.'
     codersdk.UserActivityInsightsResponse:
       type: object
       properties:
         report:
           $ref: '#/components/schemas/codersdk.UserActivityInsightsReport'
-    codersdk.TemplateVersionParameterOption:
-      type: object
-      properties:
-        description:
-          type: string
-        icon:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-    codersdk.GetUserStatusCountsResponse:
-      type: object
-      properties:
-        status_counts:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/codersdk.UserStatusChangeCount'
-    codersdk.UserLatencyInsightsResponse:
-      type: object
-      properties:
-        report:
-          $ref: '#/components/schemas/codersdk.UserLatencyInsightsReport'
-    codersdk.TemplateInsightsReport:
-      type: object
-      properties:
-        active_users:
-          type: integer
-          example: 22
-        apps_usage:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.TemplateAppUsage'
-        end_time:
-          type: string
-          format: date-time
-        parameters_usage:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.TemplateParameterUsage'
-        start_time:
-          type: string
-          format: date-time
-        template_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-    codersdk.UserStatusChangeCount:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 10
-        date:
-          type: string
-          format: date-time
-    codersdk.DAUsResponse:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.DAUEntry'
-        tz_hour_offset:
-          type: integer
     codersdk.TemplateAppUsage:
       type: object
       properties:
@@ -418,35 +374,54 @@ components:
           allOf:
           - $ref: '#/components/schemas/codersdk.TemplateAppsType'
           example: builtin
-    codersdk.TemplateParameterUsage:
+    codersdk.GetUserStatusCountsResponse:
       type: object
       properties:
-        description:
+        status_counts:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/codersdk.UserStatusChangeCount'
+    codersdk.UserLatencyInsightsReport:
+      type: object
+      properties:
+        end_time:
           type: string
-        display_name:
+          format: date-time
+        start_time:
           type: string
-        name:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.TemplateVersionParameterOption'
+          format: date-time
         template_ids:
           type: array
           items:
             type: string
             format: uuid
-        type:
-          type: string
-        values:
+        users:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.TemplateParameterValue'
-    codersdk.TemplateAppsType:
-      type: string
-      enum:
-      - builtin
-      - app
+            $ref: '#/components/schemas/codersdk.UserLatency'
+    codersdk.TemplateInsightsIntervalReport:
+      type: object
+      properties:
+        active_users:
+          type: integer
+          example: 14
+        end_time:
+          type: string
+          format: date-time
+        interval:
+          allOf:
+          - $ref: '#/components/schemas/codersdk.InsightsReportInterval'
+          example: week
+        start_time:
+          type: string
+          format: date-time
+        template_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
     codersdk.TemplateParameterValue:
       type: object
       properties:
@@ -454,9 +429,33 @@ components:
           type: integer
         value:
           type: string
+    codersdk.TemplateInsightsReport:
+      type: object
+      properties:
+        active_users:
+          type: integer
+          example: 22
+        apps_usage:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateAppUsage'
+        end_time:
+          type: string
+          format: date-time
+        parameters_usage:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TemplateParameterUsage'
+        start_time:
+          type: string
+          format: date-time
+        template_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
   securitySchemes:
     CoderSessionToken:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}

@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents AI Providers API
+  title: Coder AI Providers API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -168,31 +168,6 @@ components:
       - vercel
       - bedrock
       - copilot
-    codersdk.AIProviderKeyMutation:
-      type: object
-      properties:
-        api_key:
-          type: string
-        id:
-          type: string
-          format: uuid
-    codersdk.AIProviderSettings:
-      type: object
-    codersdk.UpdateAIProviderRequest:
-      type: object
-      properties:
-        api_keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.AIProviderKeyMutation'
-        base_url:
-          type: string
-        display_name:
-          type: string
-        enabled:
-          type: boolean
-        settings:
-          $ref: '#/components/schemas/codersdk.AIProviderSettings'
     codersdk.CreateAIProviderRequest:
       type: object
       properties:
@@ -212,6 +187,31 @@ components:
           $ref: '#/components/schemas/codersdk.AIProviderSettings'
         type:
           $ref: '#/components/schemas/codersdk.AIProviderType'
+    codersdk.UpdateAIProviderRequest:
+      type: object
+      properties:
+        api_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIProviderKeyMutation'
+        base_url:
+          type: string
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/codersdk.AIProviderSettings'
+    codersdk.AIProviderKeyMutation:
+      type: object
+      properties:
+        api_key:
+          type: string
+        id:
+          type: string
+          format: uuid
+    codersdk.AIProviderSettings:
+      type: object
     codersdk.AIProviderKey:
       type: object
       properties:
@@ -228,4 +228,3 @@ components:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}

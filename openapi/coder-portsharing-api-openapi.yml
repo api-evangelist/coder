@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents PortSharing API
+  title: Coder Port Sharing API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -97,13 +97,11 @@ paths:
           description: OK
 components:
   schemas:
-    codersdk.WorkspaceAgentPortShares:
-      type: object
-      properties:
-        shares:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
+    codersdk.WorkspaceAgentPortShareProtocol:
+      type: string
+      enum:
+      - http
+      - https
     codersdk.WorkspaceAgentPortShareLevel:
       type: string
       enum:
@@ -111,27 +109,13 @@ components:
       - authenticated
       - organization
       - public
-    codersdk.UpsertWorkspaceAgentPortShareRequest:
+    codersdk.WorkspaceAgentPortShares:
       type: object
       properties:
-        agent_name:
-          type: string
-        port:
-          type: integer
-        protocol:
-          enum:
-          - http
-          - https
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareProtocol'
-        share_level:
-          enum:
-          - owner
-          - authenticated
-          - organization
-          - public
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
+        shares:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
     codersdk.WorkspaceAgentPortShare:
       type: object
       properties:
@@ -163,14 +147,29 @@ components:
           type: string
         port:
           type: integer
-    codersdk.WorkspaceAgentPortShareProtocol:
-      type: string
-      enum:
-      - http
-      - https
+    codersdk.UpsertWorkspaceAgentPortShareRequest:
+      type: object
+      properties:
+        agent_name:
+          type: string
+        port:
+          type: integer
+        protocol:
+          enum:
+          - http
+          - https
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareProtocol'
+        share_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
   securitySchemes:
     CoderSessionToken:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}

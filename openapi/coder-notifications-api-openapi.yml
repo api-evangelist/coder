@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
-  title: Coder Agents Notifications API
+  title: Coder Notifications API
   termsOfService: https://coder.com/legal/terms-of-service
   contact:
     name: API Support
@@ -405,41 +405,6 @@ paths:
           description: No Content
 components:
   schemas:
-    codersdk.InboxNotificationAction:
-      type: object
-      properties:
-        label:
-          type: string
-        url:
-          type: string
-    codersdk.CustomNotificationRequest:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
-    codersdk.WebpushSubscription:
-      type: object
-      properties:
-        auth_key:
-          type: string
-        endpoint:
-          type: string
-        p256dh_key:
-          type: string
-    codersdk.ListInboxNotificationsResponse:
-      type: object
-      properties:
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.InboxNotification'
-        unread_count:
-          type: integer
-    codersdk.DeleteWebpushSubscription:
-      type: object
-      properties:
-        endpoint:
-          type: string
     codersdk.ValidationError:
       type: object
       properties:
@@ -450,6 +415,35 @@ components:
       required:
       - detail
       - field
+    codersdk.GetInboxNotificationResponse:
+      type: object
+      properties:
+        notification:
+          $ref: '#/components/schemas/codersdk.InboxNotification'
+        unread_count:
+          type: integer
+    codersdk.NotificationTemplate:
+      type: object
+      properties:
+        actions:
+          type: string
+        body_template:
+          type: string
+        enabled_by_default:
+          type: boolean
+        group:
+          type: string
+        id:
+          type: string
+          format: uuid
+        kind:
+          type: string
+        method:
+          type: string
+        name:
+          type: string
+        title_template:
+          type: string
     codersdk.InboxNotification:
       type: object
       properties:
@@ -482,11 +476,73 @@ components:
         user_id:
           type: string
           format: uuid
+    codersdk.NotificationMethodsResponse:
+      type: object
+      properties:
+        available:
+          type: array
+          items:
+            type: string
+        default:
+          type: string
+    codersdk.WebpushSubscription:
+      type: object
+      properties:
+        auth_key:
+          type: string
+        endpoint:
+          type: string
+        p256dh_key:
+          type: string
+    codersdk.ListInboxNotificationsResponse:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.InboxNotification'
+        unread_count:
+          type: integer
+    codersdk.CustomNotificationRequest:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
     codersdk.NotificationsSettings:
       type: object
       properties:
         notifier_paused:
           type: boolean
+    codersdk.NotificationPreference:
+      type: object
+      properties:
+        disabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.CustomNotificationContent:
+      type: object
+      properties:
+        message:
+          type: string
+        title:
+          type: string
+    codersdk.DeleteWebpushSubscription:
+      type: object
+      properties:
+        endpoint:
+          type: string
+    codersdk.InboxNotificationAction:
+      type: object
+      properties:
+        label:
+          type: string
+        url:
+          type: string
     codersdk.Response:
       type: object
       properties:
@@ -521,48 +577,6 @@ components:
             context if there is a set of errors in the primary ''Message''.'
           items:
             $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.NotificationMethodsResponse:
-      type: object
-      properties:
-        available:
-          type: array
-          items:
-            type: string
-        default:
-          type: string
-    codersdk.NotificationPreference:
-      type: object
-      properties:
-        disabled:
-          type: boolean
-        id:
-          type: string
-          format: uuid
-        updated_at:
-          type: string
-          format: date-time
-    codersdk.NotificationTemplate:
-      type: object
-      properties:
-        actions:
-          type: string
-        body_template:
-          type: string
-        enabled_by_default:
-          type: boolean
-        group:
-          type: string
-        id:
-          type: string
-          format: uuid
-        kind:
-          type: string
-        method:
-          type: string
-        name:
-          type: string
-        title_template:
-          type: string
     codersdk.UpdateUserNotificationPreferences:
       type: object
       properties:
@@ -570,23 +584,8 @@ components:
           type: object
           additionalProperties:
             type: boolean
-    codersdk.CustomNotificationContent:
-      type: object
-      properties:
-        message:
-          type: string
-        title:
-          type: string
-    codersdk.GetInboxNotificationResponse:
-      type: object
-      properties:
-        notification:
-          $ref: '#/components/schemas/codersdk.InboxNotification'
-        unread_count:
-          type: integer
   securitySchemes:
     CoderSessionToken:
       type: apiKey
       in: header
       name: Coder-Session-Token
-externalDocs: {}
