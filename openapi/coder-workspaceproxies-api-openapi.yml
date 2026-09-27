@@ -40,13 +40,6 @@ paths:
                 $ref: '#/components/schemas/codersdk.RegionsResponse-codersdk_Region'
 components:
   schemas:
-    codersdk.RegionsResponse-codersdk_Region:
-      type: object
-      properties:
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Region'
     codersdk.Region:
       type: object
       properties:
@@ -77,6 +70,13 @@ components:
             E.g. *--suffix.au.example.com
 
             Optional. Does not need to be on the same domain as PathAppURL.'
+    codersdk.RegionsResponse-codersdk_Region:
+      type: object
+      properties:
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Region'
   securitySchemes:
     CoderSessionToken:
       type: apiKey

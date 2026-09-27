@@ -139,80 +139,6 @@ paths:
                 $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsResponse'
 components:
   schemas:
-    codersdk.AIBridgeSessionTokenUsageSummary:
-      type: object
-      properties:
-        cache_read_input_tokens:
-          type: integer
-        cache_write_input_tokens:
-          type: integer
-        input_tokens:
-          type: integer
-        output_tokens:
-          type: integer
-    codersdk.AIBridgeListSessionsResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-        sessions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.AIBridgeSession'
-    codersdk.AIBridgeSessionThreadsTokenUsage:
-      type: object
-      properties:
-        cache_read_input_tokens:
-          type: integer
-        cache_write_input_tokens:
-          type: integer
-        input_tokens:
-          type: integer
-        metadata:
-          type: object
-          additionalProperties: {}
-        output_tokens:
-          type: integer
-    codersdk.AIBridgeAgenticAction:
-      type: object
-      properties:
-        model:
-          type: string
-        thinking:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.AIBridgeModelThought'
-        token_usage:
-          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
-        tool_calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.AIBridgeToolCall'
-    codersdk.AIBridgeToolCall:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        id:
-          type: string
-          format: uuid
-        injected:
-          type: boolean
-        input:
-          type: string
-        interception_id:
-          type: string
-          format: uuid
-        metadata:
-          type: object
-          additionalProperties: {}
-        provider_response_id:
-          type: string
-        server_url:
-          type: string
-        tool:
-          type: string
     codersdk.MinimalUser:
       type: object
       properties:
@@ -229,46 +155,35 @@ components:
       required:
       - id
       - username
-    codersdk.AIBridgeSession:
-      type: object
-      properties:
-        client:
-          type: string
-        ended_at:
-          type: string
-          format: date-time
-        id:
-          type: string
-        initiator:
-          $ref: '#/components/schemas/codersdk.MinimalUser'
-        last_active_at:
-          type: string
-          format: date-time
-        last_prompt:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: {}
-        models:
-          type: array
-          items:
-            type: string
-        providers:
-          type: array
-          items:
-            type: string
-        started_at:
-          type: string
-          format: date-time
-        threads:
-          type: integer
-        token_usage_summary:
-          $ref: '#/components/schemas/codersdk.AIBridgeSessionTokenUsageSummary'
     codersdk.AIBridgeModelThought:
       type: object
       properties:
         text:
           type: string
+    codersdk.AIBridgeAgenticAction:
+      type: object
+      properties:
+        model:
+          type: string
+        thinking:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeModelThought'
+        token_usage:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeToolCall'
+    codersdk.AIBridgeListSessionsResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeSession'
     codersdk.AIBridgeSessionThreadsResponse:
       type: object
       properties:
@@ -335,6 +250,91 @@ components:
           format: date-time
         token_usage:
           $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+    codersdk.AIBridgeSessionThreadsTokenUsage:
+      type: object
+      properties:
+        cache_read_input_tokens:
+          type: integer
+        cache_write_input_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+        metadata:
+          type: object
+          additionalProperties: {}
+        output_tokens:
+          type: integer
+    codersdk.AIBridgeSession:
+      type: object
+      properties:
+        client:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+        initiator:
+          $ref: '#/components/schemas/codersdk.MinimalUser'
+        last_active_at:
+          type: string
+          format: date-time
+        last_prompt:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: {}
+        models:
+          type: array
+          items:
+            type: string
+        providers:
+          type: array
+          items:
+            type: string
+        started_at:
+          type: string
+          format: date-time
+        threads:
+          type: integer
+        token_usage_summary:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionTokenUsageSummary'
+    codersdk.AIBridgeToolCall:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        injected:
+          type: boolean
+        input:
+          type: string
+        interception_id:
+          type: string
+          format: uuid
+        metadata:
+          type: object
+          additionalProperties: {}
+        provider_response_id:
+          type: string
+        server_url:
+          type: string
+        tool:
+          type: string
+    codersdk.AIBridgeSessionTokenUsageSummary:
+      type: object
+      properties:
+        cache_read_input_tokens:
+          type: integer
+        cache_write_input_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+        output_tokens:
+          type: integer
   securitySchemes:
     CoderSessionToken:
       type: apiKey

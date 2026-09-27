@@ -229,313 +229,6 @@ paths:
                 $ref: '#/components/schemas/codersdk.Response'
 components:
   schemas:
-    derp.ServerInfoMessage:
-      type: object
-      properties:
-        tokenBucketBytesBurst:
-          type: integer
-          description: 'TokenBucketBytesBurst is how many bytes the server will
-
-            allow to burst, temporarily violating
-
-            TokenBucketBytesPerSecond.
-
-
-            Zero means unspecified. There might be a limit, but the
-
-            client need not try to respect it.'
-        tokenBucketBytesPerSecond:
-          type: integer
-          description: 'TokenBucketBytesPerSecond is how many bytes per second the
-
-            server says it will accept, including all framing bytes.
-
-
-            Zero means unspecified. There might be a limit, but the
-
-            client need not try to respect it.'
-    healthsdk.UpdateHealthSettings:
-      type: object
-      properties:
-        dismissed_healthchecks:
-          type: array
-          items:
-            $ref: '#/components/schemas/healthsdk.HealthSection'
-    codersdk.ProvisionerDaemon:
-      type: object
-      properties:
-        api_version:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        current_job:
-          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
-        id:
-          type: string
-          format: uuid
-        key_id:
-          type: string
-          format: uuid
-        key_name:
-          type: string
-          description: Optional fields.
-        last_seen_at:
-          type: string
-          format: date-time
-        name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        previous_job:
-          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
-        provisioners:
-          type: array
-          items:
-            type: string
-        status:
-          enum:
-          - offline
-          - idle
-          - busy
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ProvisionerDaemonStatus'
-        tags:
-          type: object
-          additionalProperties:
-            type: string
-        version:
-          type: string
-    netcheck.Report:
-      type: object
-      properties:
-        captivePortal:
-          type: string
-          description: 'CaptivePortal is set when we think there''s a captive portal that is
-
-            intercepting HTTP traffic.'
-        globalV4:
-          type: string
-          description: ip:port of global IPv4
-        globalV6:
-          type: string
-          description: '[ip]:port of global IPv6'
-        hairPinning:
-          type: string
-          description: 'HairPinning is whether the router supports communicating
-
-            between two local devices through the NATted public IP address
-
-            (on IPv4).'
-        icmpv4:
-          type: boolean
-          description: an ICMPv4 round trip completed
-        ipv4:
-          type: boolean
-          description: an IPv4 STUN round trip completed
-        ipv4CanSend:
-          type: boolean
-          description: an IPv4 packet was able to be sent
-        ipv6:
-          type: boolean
-          description: an IPv6 STUN round trip completed
-        ipv6CanSend:
-          type: boolean
-          description: an IPv6 packet was able to be sent
-        mappingVariesByDestIP:
-          type: string
-          description: 'MappingVariesByDestIP is whether STUN results depend which
-
-            STUN server you''re talking to (on IPv4).'
-        oshasIPv6:
-          type: boolean
-          description: could bind a socket to ::1
-        pcp:
-          type: string
-          description: 'PCP is whether PCP appears present on the LAN.
-
-            Empty means not checked.'
-        pmp:
-          type: string
-          description: 'PMP is whether NAT-PMP appears present on the LAN.
-
-            Empty means not checked.'
-        preferredDERP:
-          type: integer
-          description: or 0 for unknown
-        regionLatency:
-          type: object
-          description: keyed by DERP Region ID
-          additionalProperties:
-            type: integer
-            format: int64
-        regionV4Latency:
-          type: object
-          description: keyed by DERP Region ID
-          additionalProperties:
-            type: integer
-            format: int64
-        regionV6Latency:
-          type: object
-          description: keyed by DERP Region ID
-          additionalProperties:
-            type: integer
-            format: int64
-        udp:
-          type: boolean
-          description: a UDP STUN round trip completed
-        upnP:
-          type: string
-          description: 'UPnP is whether UPnP appears present on the LAN.
-
-            Empty means not checked.'
-    health.Code:
-      type: string
-      enum:
-      - EUNKNOWN
-      - EWP01
-      - EWP02
-      - EWP04
-      - EDB01
-      - EDB02
-      - EWS01
-      - EWS02
-      - EWS03
-      - EACS01
-      - EACS02
-      - EACS03
-      - EACS04
-      - EDERP01
-      - EDERP02
-      - EDERP03
-      - EPD01
-      - EPD02
-      - EPD03
-    healthsdk.WebsocketReport:
-      type: object
-      properties:
-        body:
-          type: string
-        code:
-          type: integer
-        dismissed:
-          type: boolean
-        error:
-          type: string
-        healthy:
-          type: boolean
-          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
-        severity:
-          enum:
-          - ok
-          - warning
-          - error
-          allOf:
-          - $ref: '#/components/schemas/health.Severity'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/health.Message'
-    codersdk.WorkspaceProxyStatus:
-      type: object
-      properties:
-        checked_at:
-          type: string
-          format: date-time
-        report:
-          description: Report provides more information about the health of the workspace proxy.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ProxyHealthReport'
-        status:
-          $ref: '#/components/schemas/codersdk.ProxyHealthStatus'
-    healthsdk.STUNReport:
-      type: object
-      properties:
-        canSTUN:
-          type: boolean
-        enabled:
-          type: boolean
-        error:
-          type: string
-    derp.BytesSentRecv:
-      type: object
-      properties:
-        key:
-          description: Key is the public key of the client which sent/received these bytes.
-          allOf:
-          - $ref: '#/components/schemas/key.NodePublic'
-        recv:
-          type: integer
-          format: int64
-        sent:
-          type: integer
-          format: int64
-    healthsdk.DERPHealthReport:
-      type: object
-      properties:
-        dismissed:
-          type: boolean
-        error:
-          type: string
-        healthy:
-          type: boolean
-          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
-        netcheck:
-          $ref: '#/components/schemas/netcheck.Report'
-        netcheck_err:
-          type: string
-        netcheck_logs:
-          type: array
-          items:
-            type: string
-        regions:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/healthsdk.DERPRegionReport'
-        severity:
-          enum:
-          - ok
-          - warning
-          - error
-          allOf:
-          - $ref: '#/components/schemas/health.Severity'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/health.Message'
-    healthsdk.ProvisionerDaemonsReport:
-      type: object
-      properties:
-        dismissed:
-          type: boolean
-        error:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/healthsdk.ProvisionerDaemonsReportItem'
-        severity:
-          enum:
-          - ok
-          - warning
-          - error
-          allOf:
-          - $ref: '#/components/schemas/health.Severity'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/health.Message'
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
     codersdk.RegionsResponse-codersdk_WorkspaceProxy:
       type: object
       properties:
@@ -543,35 +236,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.WorkspaceProxy'
-    healthsdk.AccessURLReport:
+    codersdk.ProvisionerDaemonStatus:
+      type: string
+      enum:
+      - offline
+      - idle
+      - busy
+    healthsdk.HealthSettings:
       type: object
       properties:
-        access_url:
-          type: string
-        dismissed:
-          type: boolean
-        error:
-          type: string
-        healthy:
-          type: boolean
-          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
-        healthz_response:
-          type: string
-        reachable:
-          type: boolean
-        severity:
-          enum:
-          - ok
-          - warning
-          - error
-          allOf:
-          - $ref: '#/components/schemas/health.Severity'
-        status_code:
-          type: integer
-        warnings:
+        dismissed_healthchecks:
           type: array
           items:
-            $ref: '#/components/schemas/health.Message'
+            $ref: '#/components/schemas/healthsdk.HealthSection'
     healthsdk.DERPNodeReport:
       type: object
       properties:
@@ -626,6 +303,71 @@ components:
       - Database
       - WorkspaceProxy
       - ProvisionerDaemons
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
+          type: string
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
+          type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    health.Severity:
+      type: string
+      enum:
+      - ok
+      - warning
+      - error
+    codersdk.ProxyHealthReport:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: Errors are problems that prevent the workspace proxy from being healthy
+          items:
+            type: string
+        warnings:
+          type: array
+          description: 'Warnings do not prevent the workspace proxy from being healthy, but
+
+            should be addressed.'
+          items:
+            type: string
     codersdk.ProvisionerDaemonJob:
       type: object
       properties:
@@ -648,38 +390,40 @@ components:
           type: string
         template_name:
           type: string
-    healthsdk.ProvisionerDaemonsReportItem:
+    healthsdk.STUNReport:
       type: object
       properties:
-        provisioner_daemon:
-          $ref: '#/components/schemas/codersdk.ProvisionerDaemon'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/health.Message'
-    healthsdk.WorkspaceProxyReport:
-      type: object
-      properties:
-        dismissed:
+        canSTUN:
+          type: boolean
+        enabled:
           type: boolean
         error:
           type: string
-        healthy:
-          type: boolean
-          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
-        severity:
-          enum:
-          - ok
-          - warning
-          - error
-          allOf:
-          - $ref: '#/components/schemas/health.Severity'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/health.Message'
-        workspace_proxies:
-          $ref: '#/components/schemas/codersdk.RegionsResponse-codersdk_WorkspaceProxy'
+    derp.ServerInfoMessage:
+      type: object
+      properties:
+        tokenBucketBytesBurst:
+          type: integer
+          description: 'TokenBucketBytesBurst is how many bytes the server will
+
+            allow to burst, temporarily violating
+
+            TokenBucketBytesPerSecond.
+
+
+            Zero means unspecified. There might be a limit, but the
+
+            client need not try to respect it.'
+        tokenBucketBytesPerSecond:
+          type: integer
+          description: 'TokenBucketBytesPerSecond is how many bytes per second the
+
+            server says it will accept, including all framing bytes.
+
+
+            Zero means unspecified. There might be a limit, but the
+
+            client need not try to respect it.'
     codersdk.ProxyHealthStatus:
       type: string
       enum:
@@ -687,154 +431,18 @@ components:
       - unreachable
       - unhealthy
       - unregistered
-    codersdk.WorkspaceProxy:
+    codersdk.WorkspaceProxyStatus:
       type: object
       properties:
-        created_at:
+        checked_at:
           type: string
           format: date-time
-        deleted:
-          type: boolean
-        derp_enabled:
-          type: boolean
-        derp_only:
-          type: boolean
-        display_name:
-          type: string
-        healthy:
-          type: boolean
-        icon_url:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        path_app_url:
-          type: string
-          description: 'PathAppURL is the URL to the base path for path apps. Optional
-
-            unless wildcard_hostname is set.
-
-            E.g. https://us.example.com'
+        report:
+          description: Report provides more information about the health of the workspace proxy.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProxyHealthReport'
         status:
-          description: 'Status is the latest status check of the proxy. This will be empty for deleted
-
-            proxies. This value can be used to determine if a workspace proxy is healthy
-
-            and ready to use.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceProxyStatus'
-        updated_at:
-          type: string
-          format: date-time
-        version:
-          type: string
-        wildcard_hostname:
-          type: string
-          description: 'WildcardHostname is the wildcard hostname for subdomain apps.
-
-            E.g. *.us.example.com
-
-            E.g. *--suffix.au.example.com
-
-            Optional. Does not need to be on the same domain as PathAppURL.'
-    codersdk.ProvisionerDaemonStatus:
-      type: string
-      enum:
-      - offline
-      - idle
-      - busy
-    healthsdk.DERPRegionReport:
-      type: object
-      properties:
-        error:
-          type: string
-        healthy:
-          type: boolean
-          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
-        node_reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/healthsdk.DERPNodeReport'
-        region:
-          $ref: '#/components/schemas/tailcfg.DERPRegion'
-        severity:
-          enum:
-          - ok
-          - warning
-          - error
-          allOf:
-          - $ref: '#/components/schemas/health.Severity'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/health.Message'
-    health.Message:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/health.Code'
-        message:
-          type: string
-    healthsdk.HealthcheckReport:
-      type: object
-      properties:
-        access_url:
-          $ref: '#/components/schemas/healthsdk.AccessURLReport'
-        coder_version:
-          type: string
-          description: The Coder version of the server that the report was generated on.
-        database:
-          $ref: '#/components/schemas/healthsdk.DatabaseReport'
-        derp:
-          $ref: '#/components/schemas/healthsdk.DERPHealthReport'
-        healthy:
-          type: boolean
-          description: 'Healthy is true if the report returns no errors.
-
-            Deprecated: use `Severity` instead'
-        provisioner_daemons:
-          $ref: '#/components/schemas/healthsdk.ProvisionerDaemonsReport'
-        severity:
-          description: Severity indicates the status of Coder health.
-          enum:
-          - ok
-          - warning
-          - error
-          allOf:
-          - $ref: '#/components/schemas/health.Severity'
-        time:
-          type: string
-          format: date-time
-          description: Time is the time the report was generated at.
-        websocket:
-          $ref: '#/components/schemas/healthsdk.WebsocketReport'
-        workspace_proxy:
-          $ref: '#/components/schemas/healthsdk.WorkspaceProxyReport'
-    codersdk.ProxyHealthReport:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: Errors are problems that prevent the workspace proxy from being healthy
-          items:
-            type: string
-        warnings:
-          type: array
-          description: 'Warnings do not prevent the workspace proxy from being healthy, but
-
-            should be addressed.'
-          items:
-            type: string
-    health.Severity:
-      type: string
-      enum:
-      - ok
-      - warning
-      - error
-    key.NodePublic:
-      type: object
+          $ref: '#/components/schemas/codersdk.ProxyHealthStatus'
     tailcfg.DERPRegion:
       type: object
       properties:
@@ -912,13 +520,341 @@ components:
           description: 'RegionName is a long English name for the region: "New York City",
 
             "San Francisco", "Singapore", "Frankfurt", etc.'
-    healthsdk.HealthSettings:
+    codersdk.WorkspaceProxy:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        derp_enabled:
+          type: boolean
+        derp_only:
+          type: boolean
+        display_name:
+          type: string
+        healthy:
+          type: boolean
+        icon_url:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        path_app_url:
+          type: string
+          description: 'PathAppURL is the URL to the base path for path apps. Optional
+
+            unless wildcard_hostname is set.
+
+            E.g. https://us.example.com'
+        status:
+          description: 'Status is the latest status check of the proxy. This will be empty for deleted
+
+            proxies. This value can be used to determine if a workspace proxy is healthy
+
+            and ready to use.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceProxyStatus'
+        updated_at:
+          type: string
+          format: date-time
+        version:
+          type: string
+        wildcard_hostname:
+          type: string
+          description: 'WildcardHostname is the wildcard hostname for subdomain apps.
+
+            E.g. *.us.example.com
+
+            E.g. *--suffix.au.example.com
+
+            Optional. Does not need to be on the same domain as PathAppURL.'
+    healthsdk.ProvisionerDaemonsReportItem:
+      type: object
+      properties:
+        provisioner_daemon:
+          $ref: '#/components/schemas/codersdk.ProvisionerDaemon'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/health.Message'
+    healthsdk.HealthcheckReport:
+      type: object
+      properties:
+        access_url:
+          $ref: '#/components/schemas/healthsdk.AccessURLReport'
+        coder_version:
+          type: string
+          description: The Coder version of the server that the report was generated on.
+        database:
+          $ref: '#/components/schemas/healthsdk.DatabaseReport'
+        derp:
+          $ref: '#/components/schemas/healthsdk.DERPHealthReport'
+        healthy:
+          type: boolean
+          description: 'Healthy is true if the report returns no errors.
+
+            Deprecated: use `Severity` instead'
+        provisioner_daemons:
+          $ref: '#/components/schemas/healthsdk.ProvisionerDaemonsReport'
+        severity:
+          description: Severity indicates the status of Coder health.
+          enum:
+          - ok
+          - warning
+          - error
+          allOf:
+          - $ref: '#/components/schemas/health.Severity'
+        time:
+          type: string
+          format: date-time
+          description: Time is the time the report was generated at.
+        websocket:
+          $ref: '#/components/schemas/healthsdk.WebsocketReport'
+        workspace_proxy:
+          $ref: '#/components/schemas/healthsdk.WorkspaceProxyReport'
+    codersdk.ProvisionerDaemon:
+      type: object
+      properties:
+        api_version:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        current_job:
+          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
+        id:
+          type: string
+          format: uuid
+        key_id:
+          type: string
+          format: uuid
+        key_name:
+          type: string
+          description: Optional fields.
+        last_seen_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        previous_job:
+          $ref: '#/components/schemas/codersdk.ProvisionerDaemonJob'
+        provisioners:
+          type: array
+          items:
+            type: string
+        status:
+          enum:
+          - offline
+          - idle
+          - busy
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerDaemonStatus'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        version:
+          type: string
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+    healthsdk.ProvisionerDaemonsReport:
+      type: object
+      properties:
+        dismissed:
+          type: boolean
+        error:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/healthsdk.ProvisionerDaemonsReportItem'
+        severity:
+          enum:
+          - ok
+          - warning
+          - error
+          allOf:
+          - $ref: '#/components/schemas/health.Severity'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/health.Message'
+    healthsdk.WorkspaceProxyReport:
+      type: object
+      properties:
+        dismissed:
+          type: boolean
+        error:
+          type: string
+        healthy:
+          type: boolean
+          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
+        severity:
+          enum:
+          - ok
+          - warning
+          - error
+          allOf:
+          - $ref: '#/components/schemas/health.Severity'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/health.Message'
+        workspace_proxies:
+          $ref: '#/components/schemas/codersdk.RegionsResponse-codersdk_WorkspaceProxy'
+    derp.BytesSentRecv:
+      type: object
+      properties:
+        key:
+          description: Key is the public key of the client which sent/received these bytes.
+          allOf:
+          - $ref: '#/components/schemas/key.NodePublic'
+        recv:
+          type: integer
+          format: int64
+        sent:
+          type: integer
+          format: int64
+    key.NodePublic:
+      type: object
+    health.Code:
+      type: string
+      enum:
+      - EUNKNOWN
+      - EWP01
+      - EWP02
+      - EWP04
+      - EDB01
+      - EDB02
+      - EWS01
+      - EWS02
+      - EWS03
+      - EACS01
+      - EACS02
+      - EACS03
+      - EACS04
+      - EDERP01
+      - EDERP02
+      - EDERP03
+      - EPD01
+      - EPD02
+      - EPD03
+    health.Message:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/health.Code'
+        message:
+          type: string
+    healthsdk.DERPHealthReport:
+      type: object
+      properties:
+        dismissed:
+          type: boolean
+        error:
+          type: string
+        healthy:
+          type: boolean
+          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
+        netcheck:
+          $ref: '#/components/schemas/netcheck.Report'
+        netcheck_err:
+          type: string
+        netcheck_logs:
+          type: array
+          items:
+            type: string
+        regions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/healthsdk.DERPRegionReport'
+        severity:
+          enum:
+          - ok
+          - warning
+          - error
+          allOf:
+          - $ref: '#/components/schemas/health.Severity'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/health.Message'
+    healthsdk.DatabaseReport:
+      type: object
+      properties:
+        dismissed:
+          type: boolean
+        error:
+          type: string
+        healthy:
+          type: boolean
+          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
+        latency:
+          type: string
+        latency_ms:
+          type: integer
+        reachable:
+          type: boolean
+        severity:
+          enum:
+          - ok
+          - warning
+          - error
+          allOf:
+          - $ref: '#/components/schemas/health.Severity'
+        threshold_ms:
+          type: integer
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/health.Message'
+    healthsdk.UpdateHealthSettings:
       type: object
       properties:
         dismissed_healthchecks:
           type: array
           items:
             $ref: '#/components/schemas/healthsdk.HealthSection'
+    healthsdk.DERPRegionReport:
+      type: object
+      properties:
+        error:
+          type: string
+        healthy:
+          type: boolean
+          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
+        node_reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/healthsdk.DERPNodeReport'
+        region:
+          $ref: '#/components/schemas/tailcfg.DERPRegion'
+        severity:
+          enum:
+          - ok
+          - warning
+          - error
+          allOf:
+          - $ref: '#/components/schemas/health.Severity'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/health.Message'
     tailcfg.DERPNode:
       type: object
       properties:
@@ -1015,53 +951,11 @@ components:
           description: 'STUNTestIP is used in tests to override the STUN server''s IP.
 
             If empty, it''s assumed to be the same as the DERP server.'
-    codersdk.ProvisionerJobStatus:
-      type: string
-      enum:
-      - pending
-      - running
-      - succeeded
-      - canceling
-      - canceled
-      - failed
-      - unknown
-    codersdk.Response:
+    healthsdk.AccessURLReport:
       type: object
       properties:
-        detail:
+        access_url:
           type: string
-          description: 'Detail is a debug message that provides further insight into why the
-
-            action failed. This information can be technical and a regular golang
-
-            err.Error() text.
-
-            - "database: too many open connections"
-
-            - "stat: too many open files"'
-        message:
-          type: string
-          description: 'Message is an actionable message that depicts actions the request took.
-
-            These messages should be fully formed sentences with proper punctuation.
-
-            Examples:
-
-            - "A user has been created."
-
-            - "Failed to create a user."'
-        validations:
-          type: array
-          description: 'Validations are form field-specific friendly error messages. They will be
-
-            shown on a form field in the UI. These can also be used to add additional
-
-            context if there is a set of errors in the primary ''Message''.'
-          items:
-            $ref: '#/components/schemas/codersdk.ValidationError'
-    healthsdk.DatabaseReport:
-      type: object
-      properties:
         dismissed:
           type: boolean
         error:
@@ -1069,10 +963,8 @@ components:
         healthy:
           type: boolean
           description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
-        latency:
+        healthz_response:
           type: string
-        latency_ms:
-          type: integer
         reachable:
           type: boolean
         severity:
@@ -1082,8 +974,116 @@ components:
           - error
           allOf:
           - $ref: '#/components/schemas/health.Severity'
-        threshold_ms:
+        status_code:
           type: integer
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/health.Message'
+    netcheck.Report:
+      type: object
+      properties:
+        captivePortal:
+          type: string
+          description: 'CaptivePortal is set when we think there''s a captive portal that is
+
+            intercepting HTTP traffic.'
+        globalV4:
+          type: string
+          description: ip:port of global IPv4
+        globalV6:
+          type: string
+          description: '[ip]:port of global IPv6'
+        hairPinning:
+          type: string
+          description: 'HairPinning is whether the router supports communicating
+
+            between two local devices through the NATted public IP address
+
+            (on IPv4).'
+        icmpv4:
+          type: boolean
+          description: an ICMPv4 round trip completed
+        ipv4:
+          type: boolean
+          description: an IPv4 STUN round trip completed
+        ipv4CanSend:
+          type: boolean
+          description: an IPv4 packet was able to be sent
+        ipv6:
+          type: boolean
+          description: an IPv6 STUN round trip completed
+        ipv6CanSend:
+          type: boolean
+          description: an IPv6 packet was able to be sent
+        mappingVariesByDestIP:
+          type: string
+          description: 'MappingVariesByDestIP is whether STUN results depend which
+
+            STUN server you''re talking to (on IPv4).'
+        oshasIPv6:
+          type: boolean
+          description: could bind a socket to ::1
+        pcp:
+          type: string
+          description: 'PCP is whether PCP appears present on the LAN.
+
+            Empty means not checked.'
+        pmp:
+          type: string
+          description: 'PMP is whether NAT-PMP appears present on the LAN.
+
+            Empty means not checked.'
+        preferredDERP:
+          type: integer
+          description: or 0 for unknown
+        regionLatency:
+          type: object
+          description: keyed by DERP Region ID
+          additionalProperties:
+            type: integer
+            format: int64
+        regionV4Latency:
+          type: object
+          description: keyed by DERP Region ID
+          additionalProperties:
+            type: integer
+            format: int64
+        regionV6Latency:
+          type: object
+          description: keyed by DERP Region ID
+          additionalProperties:
+            type: integer
+            format: int64
+        udp:
+          type: boolean
+          description: a UDP STUN round trip completed
+        upnP:
+          type: string
+          description: 'UPnP is whether UPnP appears present on the LAN.
+
+            Empty means not checked.'
+    healthsdk.WebsocketReport:
+      type: object
+      properties:
+        body:
+          type: string
+        code:
+          type: integer
+        dismissed:
+          type: boolean
+        error:
+          type: string
+        healthy:
+          type: boolean
+          description: Healthy is deprecated and left for backward compatibility purposes, use `Severity` instead.
+        severity:
+          enum:
+          - ok
+          - warning
+          - error
+          allOf:
+          - $ref: '#/components/schemas/health.Severity'
         warnings:
           type: array
           items:

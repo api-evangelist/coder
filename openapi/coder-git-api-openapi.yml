@@ -122,6 +122,14 @@ paths:
           description: No Content
 components:
   schemas:
+    codersdk.DeleteExternalAuthByIDResponse:
+      type: object
+      properties:
+        token_revocation_error:
+          type: string
+        token_revoked:
+          type: boolean
+          description: TokenRevoked set to true if token revocation was attempted and was successful
     codersdk.ExternalAuthDevice:
       type: object
       properties:
@@ -135,27 +143,6 @@ components:
           type: string
         verification_uri:
           type: string
-    codersdk.DeleteExternalAuthByIDResponse:
-      type: object
-      properties:
-        token_revocation_error:
-          type: string
-        token_revoked:
-          type: boolean
-          description: TokenRevoked set to true if token revocation was attempted and was successful
-    codersdk.ExternalAuthUser:
-      type: object
-      properties:
-        avatar_url:
-          type: string
-        id:
-          type: integer
-        login:
-          type: string
-        name:
-          type: string
-        profile_url:
-          type: string
     codersdk.ExternalAuthAppInstallation:
       type: object
       properties:
@@ -165,26 +152,6 @@ components:
           type: string
         id:
           type: integer
-    codersdk.ExternalAuthLink:
-      type: object
-      properties:
-        authenticated:
-          type: boolean
-        created_at:
-          type: string
-          format: date-time
-        expires:
-          type: string
-          format: date-time
-        has_refresh_token:
-          type: boolean
-        provider_id:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        validate_error:
-          type: string
     codersdk.ExternalAuth:
       type: object
       properties:
@@ -211,6 +178,39 @@ components:
           description: User is the user that authenticated with the provider.
           allOf:
           - $ref: '#/components/schemas/codersdk.ExternalAuthUser'
+    codersdk.ExternalAuthUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+        id:
+          type: integer
+        login:
+          type: string
+        name:
+          type: string
+        profile_url:
+          type: string
+    codersdk.ExternalAuthLink:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        expires:
+          type: string
+          format: date-time
+        has_refresh_token:
+          type: boolean
+        provider_id:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        validate_error:
+          type: string
   securitySchemes:
     CoderSessionToken:
       type: apiKey

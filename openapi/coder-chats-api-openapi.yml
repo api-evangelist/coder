@@ -630,129 +630,67 @@ paths:
                 $ref: '#/components/schemas/codersdk.Chat'
 components:
   schemas:
-    codersdk.ChatStreamEventType:
+    codersdk.ChatModelProviderUnavailableReason:
       type: string
       enum:
-      - message_part
-      - message
-      - status
-      - error
-      - queue_update
-      - retry
-      - action_required
-      - preview_reset
-      - history_reset
-    codersdk.ChatError:
+      - missing_api_key
+      - fetch_failed
+      - user_api_key_required
+    codersdk.ChatUser:
       type: object
       properties:
-        detail:
+        avatar_url:
           type: string
-          description: 'Detail is optional provider-specific context shown alongside the
-
-            normalized error message when available.'
-        kind:
-          description: Kind classifies the error for consistent client rendering.
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        role:
+          enum:
+          - read
           allOf:
-          - $ref: '#/components/schemas/codersdk.ChatErrorKind'
-        message:
+          - $ref: '#/components/schemas/codersdk.ChatRole'
+        username:
           type: string
-          description: Message is the normalized, user-facing error message.
+      required:
+      - id
+      - username
+    codersdk.ChatModel:
+      type: object
+      properties:
+        display_name:
+          type: string
+        id:
+          type: string
+        model:
+          type: string
         provider:
           type: string
-          description: Provider identifies the upstream model provider when known.
-        retryable:
-          type: boolean
-          description: Retryable reports whether the underlying error is transient.
-        status_code:
-          type: integer
-          description: StatusCode is the best-effort upstream HTTP status code.
-    codersdk.ChatRole:
+    codersdk.ChatInputPartType:
       type: string
       enum:
-      - read
-      - ''
-    codersdk.ChatStreamMessagePart:
+      - text
+      - file
+      - file-reference
+    codersdk.PRInsightsResponse:
       type: object
       properties:
-        generation_attempt:
-          type: integer
-        history_version:
-          type: integer
-        part:
-          $ref: '#/components/schemas/codersdk.ChatMessagePart'
-        role:
-          $ref: '#/components/schemas/codersdk.ChatMessageRole'
-        seq:
-          type: integer
-    codersdk.ChatPromptsResponse:
-      type: object
-      properties:
-        prompts:
+        by_model:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.ChatPrompt'
-    codersdk.ChatInputPart:
-      type: object
-      properties:
-        content:
-          type: string
-          description: The code content from the diff that was commented on.
-        end_line:
-          type: integer
-        file_id:
-          type: string
-          format: uuid
-        file_name:
-          type: string
-          description: 'The following fields are only set when Type is
-
-            ChatInputPartTypeFileReference.'
-        start_line:
-          type: integer
-        text:
-          type: string
-        type:
-          $ref: '#/components/schemas/codersdk.ChatInputPartType'
-    codersdk.CreateChatRequest:
-      type: object
-      properties:
-        client_type:
-          $ref: '#/components/schemas/codersdk.ChatClientType'
-        content:
+            $ref: '#/components/schemas/codersdk.PRInsightsModelBreakdown'
+        recent_prs:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.ChatInputPart'
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        mcp_server_ids:
+            $ref: '#/components/schemas/codersdk.PRInsightsPullRequest'
+        summary:
+          $ref: '#/components/schemas/codersdk.PRInsightsSummary'
+        time_series:
           type: array
           items:
-            type: string
-            format: uuid
-        model_config_id:
-          type: string
-          format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        plan_mode:
-          $ref: '#/components/schemas/codersdk.ChatPlanMode'
-        system_prompt:
-          type: string
-        unsafe_dynamic_tools:
-          type: array
-          description: 'UnsafeDynamicTools declares client-executed tools that the
-
-            LLM can invoke. This API is highly experimental and highly
-
-            subject to change.'
-          items:
-            $ref: '#/components/schemas/codersdk.DynamicTool'
-        workspace_id:
-          type: string
-          format: uuid
+            $ref: '#/components/schemas/codersdk.PRInsightsTimeSeriesEntry'
     codersdk.EditChatMessageResponse:
       type: object
       properties:
@@ -762,95 +700,50 @@ components:
           type: array
           items:
             type: string
-    codersdk.WorkspaceAgentGitServerMessageType:
-      type: string
-      enum:
-      - changes
-      - error
-    codersdk.ChatMessagePartType:
-      type: string
-      enum:
-      - text
-      - reasoning
-      - tool-call
-      - tool-result
-      - source
-      - file
-      - file-reference
-      - context-file
-      - skill
-    codersdk.ChatStreamToolCall:
+    codersdk.WorkspaceAgentGitServerMessage:
       type: object
       properties:
-        args:
+        message:
           type: string
-        tool_call_id:
-          type: string
-        tool_name:
-          type: string
-    codersdk.ChatStreamActionRequired:
-      type: object
-      properties:
-        tool_calls:
+        repositories:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.ChatStreamToolCall'
-    codersdk.UpdateChatRequest:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentRepoChanges'
+        scanned_at:
+          type: string
+          format: date-time
+        type:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentGitServerMessageType'
+    codersdk.ChatClientType:
+      type: string
+      enum:
+      - ui
+      - api
+    codersdk.ChatMessage:
       type: object
       properties:
-        archived:
-          type: boolean
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        pin_order:
-          type: integer
-          description: "PinOrder controls the chat's pinned state and position.\n- nil: no change to pin state.\n- 0: unpin the chat.\n- >0 (chat is unpinned): pin the chat, appending it to\n  the end of the pinned list. The specific value is\n  ignored; the server assigns the next available position.\n- >0 (chat is already pinned): move the chat to the\n  requested position, shifting neighbors as needed. The\n  value is clamped to [1, pinned_count]."
-        plan_mode:
-          description: 'PlanMode switches the chat''s persistent plan mode.
-
-            nil: no change, ptr to "plan": enable, ptr to "": clear.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ChatPlanMode'
-        title:
-          type: string
-        workspace_id:
+        chat_id:
           type: string
           format: uuid
-    codersdk.ChatMessageUsage:
-      type: object
-      properties:
-        cache_creation_tokens:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        id:
           type: integer
-        cache_read_tokens:
-          type: integer
-        context_limit:
-          type: integer
-        input_tokens:
-          type: integer
-        output_tokens:
-          type: integer
-        reasoning_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-    codersdk.ChatWatchEventKind:
-      type: string
-      enum:
-      - status_change
-      - summary_change
-      - title_change
-      - created
-      - deleted
-      - diff_status_change
-      - action_required
-    codersdk.ChatModelProviderUnavailableReason:
-      type: string
-      enum:
-      - missing_api_key
-      - fetch_failed
-      - user_api_key_required
+        model_config_id:
+          type: string
+          format: uuid
+        role:
+          $ref: '#/components/schemas/codersdk.ChatMessageRole'
+        usage:
+          $ref: '#/components/schemas/codersdk.ChatMessageUsage'
     codersdk.ChatACL:
       type: object
       properties:
@@ -862,221 +755,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.ChatUser'
-    codersdk.ChatStreamEvent:
-      type: object
-      properties:
-        action_required:
-          $ref: '#/components/schemas/codersdk.ChatStreamActionRequired'
-        chat_id:
-          type: string
-          format: uuid
-        error:
-          $ref: '#/components/schemas/codersdk.ChatError'
-        message:
-          $ref: '#/components/schemas/codersdk.ChatMessage'
-        message_part:
-          $ref: '#/components/schemas/codersdk.ChatStreamMessagePart'
-        queued_messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
-        retry:
-          $ref: '#/components/schemas/codersdk.ChatStreamRetry'
-        status:
-          $ref: '#/components/schemas/codersdk.ChatStreamStatus'
-        type:
-          $ref: '#/components/schemas/codersdk.ChatStreamEventType'
-    codersdk.CreateChatMessageResponse:
-      type: object
-      properties:
-        message:
-          $ref: '#/components/schemas/codersdk.ChatMessage'
-        queued:
-          type: boolean
-        queued_message:
-          $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
-        warnings:
-          type: array
-          items:
-            type: string
-    codersdk.UpdateChatACL:
-      type: object
-      properties:
-        group_roles:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/codersdk.ChatRole'
-        user_roles:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/codersdk.ChatRole'
-    codersdk.PRInsightsSummary:
-      type: object
-      properties:
-        approval_rate:
-          type: number
-        cost_per_merged_pr_micros:
-          type: integer
-        merge_rate:
-          type: number
-        prev_cost_per_merged_pr_micros:
-          type: integer
-        prev_merge_rate:
-          type: number
-        prev_total_prs_created:
-          type: integer
-        prev_total_prs_merged:
-          type: integer
-        total_additions:
-          type: integer
-        total_cost_micros:
-          type: integer
-        total_deletions:
-          type: integer
-        total_prs_created:
-          type: integer
-        total_prs_merged:
-          type: integer
-    codersdk.ChatPlanMode:
-      type: string
-      enum:
-      - plan
-    codersdk.CreateChatMessageRequest:
-      type: object
-      properties:
-        busy_behavior:
-          enum:
-          - queue
-          - interrupt
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ChatBusyBehavior'
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatInputPart'
-        mcp_server_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        model_config_id:
-          type: string
-          format: uuid
-        plan_mode:
-          description: 'PlanMode switches the chat''s persistent plan mode.
-
-            nil: no change, ptr to "plan": enable, ptr to "": clear.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ChatPlanMode'
-    codersdk.Chat:
-      type: object
-      properties:
-        agent_id:
-          type: string
-          format: uuid
-        archived:
-          type: boolean
-        build_id:
-          type: string
-          format: uuid
-        children:
-          type: array
-          description: 'Children holds child (subagent) chats nested under this root
-
-            chat. Always initialized to an empty slice so the JSON field
-
-            is present as []. Child chats cannot create their own
-
-            subagents, so nesting depth is capped at 1 and this slice is
-
-            always empty for child chats.'
-          items:
-            $ref: '#/components/schemas/codersdk.Chat'
-        client_type:
-          $ref: '#/components/schemas/codersdk.ChatClientType'
-        created_at:
-          type: string
-          format: date-time
-        diff_status:
-          $ref: '#/components/schemas/codersdk.ChatDiffStatus'
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatFileMetadata'
-        has_unread:
-          type: boolean
-          description: 'HasUnread is true when assistant messages exist beyond
-
-            the owner''s read cursor, which updates on stream
-
-            connect and disconnect.'
-        id:
-          type: string
-          format: uuid
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        last_error:
-          $ref: '#/components/schemas/codersdk.ChatError'
-        last_injected_context:
-          type: array
-          description: 'LastInjectedContext holds the most recently persisted
-
-            injected context parts (AGENTS.md files and skills). It
-
-            is updated only when context changes, on first workspace
-
-            attach or agent change.'
-          items:
-            $ref: '#/components/schemas/codersdk.ChatMessagePart'
-        last_model_config_id:
-          type: string
-          format: uuid
-        last_turn_summary:
-          type: string
-        mcp_server_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        organization_id:
-          type: string
-          format: uuid
-        owner_id:
-          type: string
-          format: uuid
-        owner_name:
-          type: string
-        owner_username:
-          type: string
-        parent_chat_id:
-          type: string
-          format: uuid
-        pin_order:
-          type: integer
-        plan_mode:
-          $ref: '#/components/schemas/codersdk.ChatPlanMode'
-        root_chat_id:
-          type: string
-          format: uuid
-        shared:
-          type: boolean
-          description: Shared is true when this chat's root chat has explicit user or group ACL entries.
-        status:
-          $ref: '#/components/schemas/codersdk.ChatStatus'
-        title:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        warnings:
-          type: array
-          items:
-            type: string
-        workspace_id:
-          type: string
-          format: uuid
     codersdk.ChatPrompt:
       type: object
       properties:
@@ -1124,11 +802,168 @@ components:
             even if the user is not authorized to read group member details.
 
             May be greater than `len(Group.Members)`.'
-    codersdk.ChatRetentionDaysResponse:
+    codersdk.ChatError:
       type: object
       properties:
-        retention_days:
+        detail:
+          type: string
+          description: 'Detail is optional provider-specific context shown alongside the
+
+            normalized error message when available.'
+        kind:
+          description: Kind classifies the error for consistent client rendering.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatErrorKind'
+        message:
+          type: string
+          description: Message is the normalized, user-facing error message.
+        provider:
+          type: string
+          description: Provider identifies the upstream model provider when known.
+        retryable:
+          type: boolean
+          description: Retryable reports whether the underlying error is transient.
+        status_code:
           type: integer
+          description: StatusCode is the best-effort upstream HTTP status code.
+    codersdk.ChatStreamRetry:
+      type: object
+      properties:
+        attempt:
+          type: integer
+          description: Attempt is the 1-indexed retry attempt number.
+        delay_ms:
+          type: integer
+          description: DelayMs is the backoff delay in milliseconds before the retry.
+        error:
+          type: string
+          description: Error is the normalized error message from the failed attempt.
+        kind:
+          description: Kind classifies the retry reason for consistent client rendering.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatErrorKind'
+        provider:
+          type: string
+          description: Provider identifies the upstream model provider when known.
+        retrying_at:
+          type: string
+          format: date-time
+          description: RetryingAt is the timestamp when the retry will be attempted.
+        status_code:
+          type: integer
+          description: StatusCode is the best-effort upstream HTTP status code.
+    codersdk.ChatWatchEventKind:
+      type: string
+      enum:
+      - status_change
+      - summary_change
+      - title_change
+      - created
+      - deleted
+      - diff_status_change
+      - action_required
+    codersdk.ChatPromptsResponse:
+      type: object
+      properties:
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatPrompt'
+    codersdk.ChatMessageRole:
+      type: string
+      enum:
+      - system
+      - user
+      - assistant
+      - tool
+    codersdk.ChatStreamActionRequired:
+      type: object
+      properties:
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatStreamToolCall'
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.WorkspaceAgentGitServerMessageType:
+      type: string
+      enum:
+      - changes
+      - error
+    codersdk.ChatRole:
+      type: string
+      enum:
+      - read
+      - ''
+    codersdk.PRInsightsSummary:
+      type: object
+      properties:
+        approval_rate:
+          type: number
+        cost_per_merged_pr_micros:
+          type: integer
+        merge_rate:
+          type: number
+        prev_cost_per_merged_pr_micros:
+          type: integer
+        prev_merge_rate:
+          type: number
+        prev_total_prs_created:
+          type: integer
+        prev_total_prs_merged:
+          type: integer
+        total_additions:
+          type: integer
+        total_cost_micros:
+          type: integer
+        total_deletions:
+          type: integer
+        total_prs_created:
+          type: integer
+        total_prs_merged:
+          type: integer
+    codersdk.ChatMessagesResponse:
+      type: object
+      properties:
+        has_more:
+          type: boolean
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessage'
+        queued_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
+    codersdk.UpdateChatACL:
+      type: object
+      properties:
+        group_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.ChatRole'
+        user_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.ChatRole'
+    codersdk.ChatWatchEvent:
+      type: object
+      properties:
+        chat:
+          $ref: '#/components/schemas/codersdk.Chat'
+        kind:
+          $ref: '#/components/schemas/codersdk.ChatWatchEventKind'
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatStreamToolCall'
     codersdk.ChatMessagePart:
       type: object
       properties:
@@ -1324,445 +1159,23 @@ components:
           $ref: '#/components/schemas/codersdk.ChatMessagePartType'
         url:
           type: string
-    codersdk.ChatStreamStatus:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/codersdk.ChatStatus'
-    codersdk.WorkspaceAgentRepoChanges:
-      type: object
-      properties:
-        branch:
-          type: string
-        remote_origin:
-          type: string
-        removed:
-          type: boolean
-        repo_root:
-          type: string
-        unified_diff:
-          type: string
-    codersdk.ChatWatchEvent:
-      type: object
-      properties:
-        chat:
-          $ref: '#/components/schemas/codersdk.Chat'
-        kind:
-          $ref: '#/components/schemas/codersdk.ChatWatchEventKind'
-        tool_calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatStreamToolCall'
-    codersdk.GroupSource:
+    codersdk.ChatStreamEventType:
       type: string
       enum:
-      - user
-      - oidc
-    codersdk.UserStatus:
-      type: string
-      enum:
-      - active
-      - dormant
-      - suspended
+      - message_part
+      - message
+      - status
+      - error
+      - queue_update
+      - retry
+      - action_required
+      - preview_reset
+      - history_reset
     codersdk.UpdateChatRetentionDaysRequest:
       type: object
       properties:
         retention_days:
           type: integer
-    codersdk.PRInsightsPullRequest:
-      type: object
-      properties:
-        additions:
-          type: integer
-        approved:
-          type: boolean
-        author_avatar_url:
-          type: string
-        author_login:
-          type: string
-        base_branch:
-          type: string
-        changed_files:
-          type: integer
-        changes_requested:
-          type: boolean
-        chat_id:
-          type: string
-          format: uuid
-        commits:
-          type: integer
-        cost_micros:
-          type: integer
-        created_at:
-          type: string
-          format: date-time
-        deletions:
-          type: integer
-        draft:
-          type: boolean
-        model_display_name:
-          type: string
-        pr_number:
-          type: integer
-        pr_title:
-          type: string
-        pr_url:
-          type: string
-        reviewer_count:
-          type: integer
-        state:
-          type: string
-    codersdk.ChatModelProvider:
-      type: object
-      properties:
-        available:
-          type: boolean
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatModel'
-        provider:
-          type: string
-        unavailable_reason:
-          $ref: '#/components/schemas/codersdk.ChatModelProviderUnavailableReason'
-    codersdk.ChatModelsResponse:
-      type: object
-      properties:
-        providers:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatModelProvider'
-    codersdk.PRInsightsModelBreakdown:
-      type: object
-      properties:
-        cost_per_merged_pr_micros:
-          type: integer
-        display_name:
-          type: string
-        merge_rate:
-          type: number
-        merged_prs:
-          type: integer
-        model_config_id:
-          type: string
-          format: uuid
-        provider:
-          type: string
-        total_additions:
-          type: integer
-        total_cost_micros:
-          type: integer
-        total_deletions:
-          type: integer
-        total_prs:
-          type: integer
-    codersdk.ChatMessagesResponse:
-      type: object
-      properties:
-        has_more:
-          type: boolean
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatMessage'
-        queued_messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
-    codersdk.ChatDiffStatus:
-      type: object
-      properties:
-        additions:
-          type: integer
-        approved:
-          type: boolean
-        author_avatar_url:
-          type: string
-        author_login:
-          type: string
-        base_branch:
-          type: string
-        changed_files:
-          type: integer
-        changes_requested:
-          type: boolean
-        chat_id:
-          type: string
-          format: uuid
-        commits:
-          type: integer
-        deletions:
-          type: integer
-        head_branch:
-          type: string
-        pr_number:
-          type: integer
-        pull_request_draft:
-          type: boolean
-        pull_request_state:
-          type: string
-        pull_request_title:
-          type: string
-        refreshed_at:
-          type: string
-          format: date-time
-        reviewer_count:
-          type: integer
-        stale_at:
-          type: string
-          format: date-time
-        url:
-          type: string
-    codersdk.PRInsightsResponse:
-      type: object
-      properties:
-        by_model:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.PRInsightsModelBreakdown'
-        recent_prs:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.PRInsightsPullRequest'
-        summary:
-          $ref: '#/components/schemas/codersdk.PRInsightsSummary'
-        time_series:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.PRInsightsTimeSeriesEntry'
-    codersdk.ChatStatus:
-      type: string
-      enum:
-      - waiting
-      - pending
-      - running
-      - paused
-      - completed
-      - error
-      - requires_action
-      - interrupting
-    codersdk.UploadChatFileResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-    uuid.NullUUID:
-      type: object
-      properties:
-        uuid:
-          type: string
-        valid:
-          type: boolean
-          description: Valid is true if UUID is not NULL
-    codersdk.DynamicTool:
-      type: object
-      properties:
-        description:
-          type: string
-        input_schema:
-          type: array
-          description: 'InputSchema''s JSON key "input_schema" uses snake_case for
-
-            SDK consistency, deviating from the camelCase "inputSchema"
-
-            convention used by MCP.'
-          items:
-            type: integer
-        name:
-          type: string
-    codersdk.ChatMessage:
-      type: object
-      properties:
-        chat_id:
-          type: string
-          format: uuid
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatMessagePart'
-        created_at:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        id:
-          type: integer
-        model_config_id:
-          type: string
-          format: uuid
-        role:
-          $ref: '#/components/schemas/codersdk.ChatMessageRole'
-        usage:
-          $ref: '#/components/schemas/codersdk.ChatMessageUsage'
-    codersdk.ChatUser:
-      type: object
-      properties:
-        avatar_url:
-          type: string
-          format: uri
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        role:
-          enum:
-          - read
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ChatRole'
-        username:
-          type: string
-      required:
-      - id
-      - username
-    codersdk.PRInsightsTimeSeriesEntry:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date-time
-        prs_closed:
-          type: integer
-        prs_created:
-          type: integer
-        prs_merged:
-          type: integer
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
-    codersdk.ChatInputPartType:
-      type: string
-      enum:
-      - text
-      - file
-      - file-reference
-    codersdk.WorkspaceAgentGitServerMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        repositories:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentRepoChanges'
-        scanned_at:
-          type: string
-          format: date-time
-        type:
-          $ref: '#/components/schemas/codersdk.WorkspaceAgentGitServerMessageType'
-    codersdk.ChatStreamRetry:
-      type: object
-      properties:
-        attempt:
-          type: integer
-          description: Attempt is the 1-indexed retry attempt number.
-        delay_ms:
-          type: integer
-          description: DelayMs is the backoff delay in milliseconds before the retry.
-        error:
-          type: string
-          description: Error is the normalized error message from the failed attempt.
-        kind:
-          description: Kind classifies the retry reason for consistent client rendering.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ChatErrorKind'
-        provider:
-          type: string
-          description: Provider identifies the upstream model provider when known.
-        retrying_at:
-          type: string
-          format: date-time
-          description: RetryingAt is the timestamp when the retry will be attempted.
-        status_code:
-          type: integer
-          description: StatusCode is the best-effort upstream HTTP status code.
-    codersdk.ChatMessageRole:
-      type: string
-      enum:
-      - system
-      - user
-      - assistant
-      - tool
-    codersdk.ChatClientType:
-      type: string
-      enum:
-      - ui
-      - api
-    codersdk.EditChatMessageRequest:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatInputPart'
-        model_config_id:
-          type: string
-          format: uuid
-          description: 'ModelConfigID, when set, overrides the model used for the
-
-            replacement user message and the assistant turn that follows.
-
-            When nil the original message''s model is preserved.'
-    codersdk.ChatQueuedMessage:
-      type: object
-      properties:
-        chat_id:
-          type: string
-          format: uuid
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ChatMessagePart'
-        created_at:
-          type: string
-          format: date-time
-        id:
-          type: integer
-        model_config_id:
-          type: string
-          format: uuid
-    codersdk.ChatDiffContents:
-      type: object
-      properties:
-        branch:
-          type: string
-        chat_id:
-          type: string
-          format: uuid
-        diff:
-          type: string
-        provider:
-          type: string
-        pull_request_url:
-          type: string
-        remote_origin:
-          type: string
-    codersdk.ChatBusyBehavior:
-      type: string
-      enum:
-      - queue
-      - interrupt
-    codersdk.ChatErrorKind:
-      type: string
-      enum:
-      - generic
-      - overloaded
-      - rate_limit
-      - timeout
-      - stream_silence_timeout
-      - auth
-      - config
-      - usage_limit
-      - missing_key
-      - provider_disabled
     codersdk.ReducedUser:
       type: object
       properties:
@@ -1808,6 +1221,74 @@ components:
       - email
       - id
       - username
+    codersdk.ChatPlanMode:
+      type: string
+      enum:
+      - plan
+    codersdk.ChatStreamToolCall:
+      type: object
+      properties:
+        args:
+          type: string
+        tool_call_id:
+          type: string
+        tool_name:
+          type: string
+    codersdk.ChatDiffContents:
+      type: object
+      properties:
+        branch:
+          type: string
+        chat_id:
+          type: string
+          format: uuid
+        diff:
+          type: string
+        provider:
+          type: string
+        pull_request_url:
+          type: string
+        remote_origin:
+          type: string
+    codersdk.WorkspaceAgentRepoChanges:
+      type: object
+      properties:
+        branch:
+          type: string
+        remote_origin:
+          type: string
+        removed:
+          type: boolean
+        repo_root:
+          type: string
+        unified_diff:
+          type: string
+    codersdk.ChatModelsResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatModelProvider'
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    codersdk.ChatModelProvider:
+      type: object
+      properties:
+        available:
+          type: boolean
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatModel'
+        provider:
+          type: string
+        unavailable_reason:
+          $ref: '#/components/schemas/codersdk.ChatModelProviderUnavailableReason'
     codersdk.ChatFileMetadata:
       type: object
       properties:
@@ -1827,17 +1308,536 @@ components:
         owner_id:
           type: string
           format: uuid
-    codersdk.ChatModel:
+    codersdk.ChatMessagePartType:
+      type: string
+      enum:
+      - text
+      - reasoning
+      - tool-call
+      - tool-result
+      - source
+      - file
+      - file-reference
+      - context-file
+      - skill
+    codersdk.DynamicTool:
       type: object
       properties:
-        display_name:
+        description:
           type: string
+        input_schema:
+          type: array
+          description: 'InputSchema''s JSON key "input_schema" uses snake_case for
+
+            SDK consistency, deviating from the camelCase "inputSchema"
+
+            convention used by MCP.'
+          items:
+            type: integer
+        name:
+          type: string
+    codersdk.ChatStreamMessagePart:
+      type: object
+      properties:
+        generation_attempt:
+          type: integer
+        history_version:
+          type: integer
+        part:
+          $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        role:
+          $ref: '#/components/schemas/codersdk.ChatMessageRole'
+        seq:
+          type: integer
+    codersdk.ChatMessageUsage:
+      type: object
+      properties:
+        cache_creation_tokens:
+          type: integer
+        cache_read_tokens:
+          type: integer
+        context_limit:
+          type: integer
+        input_tokens:
+          type: integer
+        output_tokens:
+          type: integer
+        reasoning_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    codersdk.ChatStreamStatus:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/codersdk.ChatStatus'
+    codersdk.ChatStreamEvent:
+      type: object
+      properties:
+        action_required:
+          $ref: '#/components/schemas/codersdk.ChatStreamActionRequired'
+        chat_id:
+          type: string
+          format: uuid
+        error:
+          $ref: '#/components/schemas/codersdk.ChatError'
+        message:
+          $ref: '#/components/schemas/codersdk.ChatMessage'
+        message_part:
+          $ref: '#/components/schemas/codersdk.ChatStreamMessagePart'
+        queued_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
+        retry:
+          $ref: '#/components/schemas/codersdk.ChatStreamRetry'
+        status:
+          $ref: '#/components/schemas/codersdk.ChatStreamStatus'
+        type:
+          $ref: '#/components/schemas/codersdk.ChatStreamEventType'
+    codersdk.UpdateChatRequest:
+      type: object
+      properties:
+        archived:
+          type: boolean
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        pin_order:
+          type: integer
+          description: "PinOrder controls the chat's pinned state and position.\n- nil: no change to pin state.\n- 0: unpin the chat.\n- >0 (chat is unpinned): pin the chat, appending it to\n  the end of the pinned list. The specific value is\n  ignored; the server assigns the next available position.\n- >0 (chat is already pinned): move the chat to the\n  requested position, shifting neighbors as needed. The\n  value is clamped to [1, pinned_count]."
+        plan_mode:
+          description: 'PlanMode switches the chat''s persistent plan mode.
+
+            nil: no change, ptr to "plan": enable, ptr to "": clear.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatPlanMode'
+        title:
+          type: string
+        workspace_id:
+          type: string
+          format: uuid
+    uuid.NullUUID:
+      type: object
+      properties:
+        uuid:
+          type: string
+        valid:
+          type: boolean
+          description: Valid is true if UUID is not NULL
+    codersdk.UploadChatFileResponse:
+      type: object
+      properties:
         id:
           type: string
-        model:
+          format: uuid
+    codersdk.ChatQueuedMessage:
+      type: object
+      properties:
+        chat_id:
           type: string
+          format: uuid
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: integer
+        model_config_id:
+          type: string
+          format: uuid
+    codersdk.Chat:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        archived:
+          type: boolean
+        build_id:
+          type: string
+          format: uuid
+        children:
+          type: array
+          description: 'Children holds child (subagent) chats nested under this root
+
+            chat. Always initialized to an empty slice so the JSON field
+
+            is present as []. Child chats cannot create their own
+
+            subagents, so nesting depth is capped at 1 and this slice is
+
+            always empty for child chats.'
+          items:
+            $ref: '#/components/schemas/codersdk.Chat'
+        client_type:
+          $ref: '#/components/schemas/codersdk.ChatClientType'
+        created_at:
+          type: string
+          format: date-time
+        diff_status:
+          $ref: '#/components/schemas/codersdk.ChatDiffStatus'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatFileMetadata'
+        has_unread:
+          type: boolean
+          description: 'HasUnread is true when assistant messages exist beyond
+
+            the owner''s read cursor, which updates on stream
+
+            connect and disconnect.'
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        last_error:
+          $ref: '#/components/schemas/codersdk.ChatError'
+        last_injected_context:
+          type: array
+          description: 'LastInjectedContext holds the most recently persisted
+
+            injected context parts (AGENTS.md files and skills). It
+
+            is updated only when context changes, on first workspace
+
+            attach or agent change.'
+          items:
+            $ref: '#/components/schemas/codersdk.ChatMessagePart'
+        last_model_config_id:
+          type: string
+          format: uuid
+        last_turn_summary:
+          type: string
+        mcp_server_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        owner_id:
+          type: string
+          format: uuid
+        owner_name:
+          type: string
+        owner_username:
+          type: string
+        parent_chat_id:
+          type: string
+          format: uuid
+        pin_order:
+          type: integer
+        plan_mode:
+          $ref: '#/components/schemas/codersdk.ChatPlanMode'
+        root_chat_id:
+          type: string
+          format: uuid
+        shared:
+          type: boolean
+          description: Shared is true when this chat's root chat has explicit user or group ACL entries.
+        status:
+          $ref: '#/components/schemas/codersdk.ChatStatus'
+        title:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        warnings:
+          type: array
+          items:
+            type: string
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.ChatErrorKind:
+      type: string
+      enum:
+      - generic
+      - overloaded
+      - rate_limit
+      - timeout
+      - stream_silence_timeout
+      - auth
+      - config
+      - usage_limit
+      - missing_key
+      - provider_disabled
+    codersdk.CreateChatMessageResponse:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/codersdk.ChatMessage'
+        queued:
+          type: boolean
+        queued_message:
+          $ref: '#/components/schemas/codersdk.ChatQueuedMessage'
+        warnings:
+          type: array
+          items:
+            type: string
+    codersdk.ChatStatus:
+      type: string
+      enum:
+      - waiting
+      - pending
+      - running
+      - paused
+      - completed
+      - error
+      - requires_action
+      - interrupting
+    codersdk.GroupSource:
+      type: string
+      enum:
+      - user
+      - oidc
+    codersdk.ChatInputPart:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The code content from the diff that was commented on.
+        end_line:
+          type: integer
+        file_id:
+          type: string
+          format: uuid
+        file_name:
+          type: string
+          description: 'The following fields are only set when Type is
+
+            ChatInputPartTypeFileReference.'
+        start_line:
+          type: integer
+        text:
+          type: string
+        type:
+          $ref: '#/components/schemas/codersdk.ChatInputPartType'
+    codersdk.ChatBusyBehavior:
+      type: string
+      enum:
+      - queue
+      - interrupt
+    codersdk.PRInsightsPullRequest:
+      type: object
+      properties:
+        additions:
+          type: integer
+        approved:
+          type: boolean
+        author_avatar_url:
+          type: string
+        author_login:
+          type: string
+        base_branch:
+          type: string
+        changed_files:
+          type: integer
+        changes_requested:
+          type: boolean
+        chat_id:
+          type: string
+          format: uuid
+        commits:
+          type: integer
+        cost_micros:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        deletions:
+          type: integer
+        draft:
+          type: boolean
+        model_display_name:
+          type: string
+        pr_number:
+          type: integer
+        pr_title:
+          type: string
+        pr_url:
+          type: string
+        reviewer_count:
+          type: integer
+        state:
+          type: string
+    codersdk.CreateChatRequest:
+      type: object
+      properties:
+        client_type:
+          $ref: '#/components/schemas/codersdk.ChatClientType'
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatInputPart'
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        mcp_server_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        model_config_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        plan_mode:
+          $ref: '#/components/schemas/codersdk.ChatPlanMode'
+        system_prompt:
+          type: string
+        unsafe_dynamic_tools:
+          type: array
+          description: 'UnsafeDynamicTools declares client-executed tools that the
+
+            LLM can invoke. This API is highly experimental and highly
+
+            subject to change.'
+          items:
+            $ref: '#/components/schemas/codersdk.DynamicTool'
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.PRInsightsModelBreakdown:
+      type: object
+      properties:
+        cost_per_merged_pr_micros:
+          type: integer
+        display_name:
+          type: string
+        merge_rate:
+          type: number
+        merged_prs:
+          type: integer
+        model_config_id:
+          type: string
+          format: uuid
         provider:
           type: string
+        total_additions:
+          type: integer
+        total_cost_micros:
+          type: integer
+        total_deletions:
+          type: integer
+        total_prs:
+          type: integer
+    codersdk.PRInsightsTimeSeriesEntry:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        prs_closed:
+          type: integer
+        prs_created:
+          type: integer
+        prs_merged:
+          type: integer
+    codersdk.CreateChatMessageRequest:
+      type: object
+      properties:
+        busy_behavior:
+          enum:
+          - queue
+          - interrupt
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatBusyBehavior'
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatInputPart'
+        mcp_server_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        model_config_id:
+          type: string
+          format: uuid
+        plan_mode:
+          description: 'PlanMode switches the chat''s persistent plan mode.
+
+            nil: no change, ptr to "plan": enable, ptr to "": clear.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ChatPlanMode'
+    codersdk.ChatRetentionDaysResponse:
+      type: object
+      properties:
+        retention_days:
+          type: integer
+    codersdk.ChatDiffStatus:
+      type: object
+      properties:
+        additions:
+          type: integer
+        approved:
+          type: boolean
+        author_avatar_url:
+          type: string
+        author_login:
+          type: string
+        base_branch:
+          type: string
+        changed_files:
+          type: integer
+        changes_requested:
+          type: boolean
+        chat_id:
+          type: string
+          format: uuid
+        commits:
+          type: integer
+        deletions:
+          type: integer
+        head_branch:
+          type: string
+        pr_number:
+          type: integer
+        pull_request_draft:
+          type: boolean
+        pull_request_state:
+          type: string
+        pull_request_title:
+          type: string
+        refreshed_at:
+          type: string
+          format: date-time
+        reviewer_count:
+          type: integer
+        stale_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+    codersdk.EditChatMessageRequest:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ChatInputPart'
+        model_config_id:
+          type: string
+          format: uuid
+          description: 'ModelConfigID, when set, overrides the model used for the
+
+            replacement user message and the assistant turn that follows.
+
+            When nil the original message''s model is preserved.'
   securitySchemes:
     CoderSessionToken:
       type: apiKey

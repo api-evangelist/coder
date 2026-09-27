@@ -960,130 +960,82 @@ paths:
                 $ref: '#/components/schemas/codersdk.User'
 components:
   schemas:
-    codersdk.RBACResource:
+    codersdk.TerminalFontName:
       type: string
       enum:
-      - '*'
-      - ai_gateway_key
-      - ai_model_price
-      - ai_provider
-      - ai_seat
-      - aibridge_interception
-      - api_key
-      - assign_org_role
-      - assign_role
-      - audit_log
-      - boundary_log
-      - boundary_usage
-      - chat
-      - connection_log
-      - crypto_key
-      - debug_info
-      - deployment_config
-      - deployment_stats
-      - file
-      - group
-      - group_member
-      - idpsync_settings
-      - inbox_notification
-      - license
-      - notification_message
-      - notification_preference
-      - notification_template
-      - oauth2_app
-      - oauth2_app_code_token
-      - oauth2_app_secret
-      - organization
-      - organization_member
-      - prebuilt_workspace
-      - provisioner_daemon
-      - provisioner_jobs
-      - replicas
-      - system
-      - tailnet_coordinator
-      - task
-      - template
-      - usage_event
-      - user
-      - user_secret
-      - user_skill
-      - webpush_subscription
-      - workspace
-      - workspace_agent_devcontainers
-      - workspace_agent_resource_monitor
-      - workspace_dormant
-      - workspace_proxy
-    codersdk.CreateUserSkillRequest:
+      - ''
+      - geist-mono
+      - ibm-plex-mono
+      - fira-code
+      - source-code-pro
+      - jetbrains-mono
+    codersdk.UpdateUserAppearanceSettingsRequest:
       type: object
       properties:
-        content:
+        terminal_font:
+          $ref: '#/components/schemas/codersdk.TerminalFontName'
+        theme_dark:
           type: string
-          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
+          description: 'ThemeDark is required when ThemeMode is "sync". In "single" mode
 
-            frontmatter must include name, may include description, and must be
+            an empty value means "preserve the previously persisted slot"
 
-            followed by a non-empty body.'
-    codersdk.OIDCClaimsResponse:
-      type: object
-      properties:
-        claims:
-          type: object
-          description: 'Claims are the merged claims from the OIDC provider. These
+            rather than "clear the slot", so partial updates that send only
 
-            are the union of the ID token claims and the userinfo claims,
-
-            where userinfo claims take precedence on conflict.'
-          additionalProperties: true
-    codersdk.GetUsersResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.User'
-    codersdk.CreateFirstUserRequest:
-      type: object
-      properties:
-        email:
+            one slot keep the other intact.'
+          enum:
+          - light
+          - light-protan-deuter
+          - light-tritan
+          - dark
+          - dark-protan-deuter
+          - dark-tritan
+        theme_light:
           type: string
-        name:
-          type: string
-        onboarding_info:
-          $ref: '#/components/schemas/codersdk.CreateFirstUserOnboardingInfo'
-        password:
-          type: string
-        trial:
-          type: boolean
-        trial_info:
-          $ref: '#/components/schemas/codersdk.CreateFirstUserTrialInfo'
-        username:
+          description: 'ThemeLight is required when ThemeMode is "sync". In "single"
+
+            mode an empty value means "preserve the previously persisted
+
+            slot" rather than "clear the slot", so partial updates that send
+
+            only one slot keep the other intact.'
+          enum:
+          - light
+          - light-protan-deuter
+          - light-tritan
+          - dark
+          - dark-protan-deuter
+          - dark-tritan
+        theme_mode:
+          description: 'ThemeMode is optional for backward compatibility. When empty,
+
+            the server leaves theme_mode, theme_light, and theme_dark
+
+            unchanged so older CLI clients do not erase sync-mode settings.
+
+            Legacy auto preferences are the exception: they clear theme_mode
+
+            so clients can migrate the old sync-with-system setting.'
+          enum:
+          - sync
+          - single
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ThemeMode'
+        theme_preference:
           type: string
       required:
-      - email
-      - password
-      - username
-    codersdk.UpdateUserPasswordRequest:
+      - terminal_font
+      - theme_preference
+    codersdk.UserLoginType:
       type: object
       properties:
-        old_password:
-          type: string
-        password:
-          type: string
-      required:
-      - password
-    codersdk.AuthMethods:
-      type: object
-      properties:
-        github:
-          $ref: '#/components/schemas/codersdk.GithubAuthMethod'
-        oidc:
-          $ref: '#/components/schemas/codersdk.OIDCAuthMethod'
-        password:
-          $ref: '#/components/schemas/codersdk.AuthMethod'
-        terms_of_service_url:
-          type: string
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+    codersdk.AgentChatSendShortcut:
+      type: string
+      enum:
+      - enter
+      - modifier_enter
     codersdk.APIKeyScope:
       type: string
       enum:
@@ -1319,6 +1271,506 @@ components:
       - workspace_proxy:delete
       - workspace_proxy:read
       - workspace_proxy:update
+    codersdk.CreateFirstUserTrialInfo:
+      type: object
+      properties:
+        company_name:
+          type: string
+        country:
+          type: string
+        developers:
+          type: string
+        first_name:
+          type: string
+        job_title:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+    codersdk.UpdateUserPasswordRequest:
+      type: object
+      properties:
+        old_password:
+          type: string
+        password:
+          type: string
+      required:
+      - password
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
+          type: string
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
+          type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.OIDCAuthMethod:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        iconUrl:
+          type: string
+        signInText:
+          type: string
+    codersdk.RBACResource:
+      type: string
+      enum:
+      - '*'
+      - ai_gateway_key
+      - ai_model_price
+      - ai_provider
+      - ai_seat
+      - aibridge_interception
+      - api_key
+      - assign_org_role
+      - assign_role
+      - audit_log
+      - boundary_log
+      - boundary_usage
+      - chat
+      - connection_log
+      - crypto_key
+      - debug_info
+      - deployment_config
+      - deployment_stats
+      - file
+      - group
+      - group_member
+      - idpsync_settings
+      - inbox_notification
+      - license
+      - notification_message
+      - notification_preference
+      - notification_template
+      - oauth2_app
+      - oauth2_app_code_token
+      - oauth2_app_secret
+      - organization
+      - organization_member
+      - prebuilt_workspace
+      - provisioner_daemon
+      - provisioner_jobs
+      - replicas
+      - system
+      - tailnet_coordinator
+      - task
+      - template
+      - usage_event
+      - user
+      - user_secret
+      - user_skill
+      - webpush_subscription
+      - workspace
+      - workspace_agent_devcontainers
+      - workspace_agent_resource_monitor
+      - workspace_dormant
+      - workspace_proxy
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    codersdk.UserPreferenceSettings:
+      type: object
+      properties:
+        agent_chat_send_shortcut:
+          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
+        code_diff_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        shell_tool_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        task_notification_alert_dismissed:
+          type: boolean
+        thinking_display_mode:
+          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
+    codersdk.ThinkingDisplayMode:
+      type: string
+      enum:
+      - auto
+      - preview
+      - always_expanded
+      - always_collapsed
+    codersdk.UpdateRoles:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            type: string
+    codersdk.UserSkill:
+      type: object
+      properties:
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.GenerateAPIKeyResponse:
+      type: object
+      properties:
+        key:
+          type: string
+    codersdk.GitSSHKey:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        public_key:
+          type: string
+          description: 'PublicKey is the SSH public key in OpenSSH format.
+
+            Example: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3OmYJvT7q1cF1azbybYy0OZ9yrXfA+M6Lr4vzX5zlp\n"
+
+            Note: The key includes a trailing newline (\n).'
+        updated_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
+    codersdk.ExternalAuthDevice:
+      type: object
+      properties:
+        device_code:
+          type: string
+        expires_in:
+          type: integer
+        interval:
+          type: integer
+        user_code:
+          type: string
+        verification_uri:
+          type: string
+    codersdk.AuthMethod:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    codersdk.Organization:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        default_org_member_roles:
+          type: array
+          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
+
+            roles at request time. Changes propagate to all members on the
+
+            next request.'
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        is_default:
+          type: boolean
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - created_at
+      - id
+      - is_default
+      - updated_at
+    codersdk.OIDCClaimsResponse:
+      type: object
+      properties:
+        claims:
+          type: object
+          description: 'Claims are the merged claims from the OIDC provider. These
+
+            are the union of the ID token claims and the userinfo claims,
+
+            where userinfo claims take precedence on conflict.'
+          additionalProperties: true
+    codersdk.CreateTokenRequest:
+      type: object
+      properties:
+        allow_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.APIAllowListTarget'
+        lifetime:
+          type: integer
+        scope:
+          description: 'Deprecated: use Scopes instead.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.APIKeyScope'
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.APIKeyScope'
+        token_name:
+          type: string
+    codersdk.UserParameter:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    codersdk.GithubAuthMethod:
+      type: object
+      properties:
+        default_provider_configured:
+          type: boolean
+        enabled:
+          type: boolean
+    codersdk.CreateFirstUserResponse:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+    codersdk.UpdateUserProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        username:
+          type: string
+      required:
+      - username
+    codersdk.CreateFirstUserOnboardingInfo:
+      type: object
+      properties:
+        newsletter_marketing:
+          type: boolean
+        newsletter_releases:
+          type: boolean
+    codersdk.CreateUserSkillRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
+
+            frontmatter must include name, may include description, and must be
+
+            followed by a non-empty body.'
+    codersdk.CreateFirstUserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        onboarding_info:
+          $ref: '#/components/schemas/codersdk.CreateFirstUserOnboardingInfo'
+        password:
+          type: string
+        trial:
+          type: boolean
+        trial_info:
+          $ref: '#/components/schemas/codersdk.CreateFirstUserTrialInfo'
+        username:
+          type: string
+      required:
+      - email
+      - password
+      - username
+    codersdk.AgentDisplayMode:
+      type: string
+      enum:
+      - auto
+      - always_expanded
+      - always_collapsed
+    codersdk.APIAllowListTarget:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.UserSkillMetadata:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.UserAppearanceSettings:
+      type: object
+      properties:
+        terminal_font:
+          $ref: '#/components/schemas/codersdk.TerminalFontName'
+        theme_dark:
+          type: string
+          description: Ignored when ThemeMode is "single"
+        theme_light:
+          type: string
+          description: Ignored when ThemeMode is "single"
+        theme_mode:
+          $ref: '#/components/schemas/codersdk.ThemeMode'
+        theme_preference:
+          type: string
+          description: 'ThemePreference is the legacy single-field appearance setting. In
+
+            "single" mode it mirrors the active theme. In "sync" mode modern
+
+            clients normally mirror the active OS slot, but older clients can
+
+            update only this field, so it may diverge from ThemeLight or
+
+            ThemeDark until a modern client saves the full appearance state
+
+            again.'
+    codersdk.SlimRole:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+    codersdk.CreateUserRequestWithOrgs:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        login_type:
+          description: UserLoginType defaults to LoginTypePassword.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        organization_ids:
+          type: array
+          description: OrganizationIDs is a list of organization IDs that the user should be a member of.
+          items:
+            type: string
+            format: uuid
+        password:
+          type: string
+        roles:
+          type: array
+          description: Roles is an optional list of site-level roles to assign at creation.
+          items:
+            type: string
+        service_account:
+          type: boolean
+          description: Service accounts are admin-managed accounts that cannot login.
+        user_status:
+          description: UserStatus defaults to UserStatusDormant.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        username:
+          type: string
+      required:
+      - username
+    codersdk.ThemeMode:
+      type: string
+      enum:
+      - ''
+      - sync
+      - single
+    codersdk.AuthMethods:
+      type: object
+      properties:
+        github:
+          $ref: '#/components/schemas/codersdk.GithubAuthMethod'
+        oidc:
+          $ref: '#/components/schemas/codersdk.OIDCAuthMethod'
+        password:
+          $ref: '#/components/schemas/codersdk.AuthMethod'
+        terms_of_service_url:
+          type: string
+    codersdk.UpdateUserPreferenceSettingsRequest:
+      type: object
+      properties:
+        agent_chat_send_shortcut:
+          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
+        code_diff_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        shell_tool_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        task_notification_alert_dismissed:
+          type: boolean
+        thinking_display_mode:
+          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
     codersdk.User:
       type: object
       properties:
@@ -1378,185 +1830,15 @@ components:
       - email
       - id
       - username
-    codersdk.OIDCAuthMethod:
+    codersdk.GetUsersResponse:
       type: object
       properties:
-        enabled:
-          type: boolean
-        iconUrl:
-          type: string
-        signInText:
-          type: string
-    codersdk.UserSkillMetadata:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-    codersdk.APIAllowListTarget:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          $ref: '#/components/schemas/codersdk.RBACResource'
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.UserPreferenceSettings:
-      type: object
-      properties:
-        agent_chat_send_shortcut:
-          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
-        code_diff_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        shell_tool_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        task_notification_alert_dismissed:
-          type: boolean
-        thinking_display_mode:
-          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
-    codersdk.CreateFirstUserResponse:
-      type: object
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-    codersdk.AgentChatSendShortcut:
-      type: string
-      enum:
-      - enter
-      - modifier_enter
-    codersdk.Organization:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        default_org_member_roles:
-          type: array
-          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
-
-            roles at request time. Changes propagate to all members on the
-
-            next request.'
-          items:
-            type: string
-        description:
-          type: string
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        is_default:
-          type: boolean
-        name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - created_at
-      - id
-      - is_default
-      - updated_at
-    codersdk.AgentDisplayMode:
-      type: string
-      enum:
-      - auto
-      - always_expanded
-      - always_collapsed
-    codersdk.CreateTokenRequest:
-      type: object
-      properties:
-        allow_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.APIAllowListTarget'
-        lifetime:
+        count:
           type: integer
-        scope:
-          description: 'Deprecated: use Scopes instead.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.APIKeyScope'
-        scopes:
+        users:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.APIKeyScope'
-        token_name:
-          type: string
-    codersdk.UpdateRoles:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            type: string
-    codersdk.UserStatus:
-      type: string
-      enum:
-      - active
-      - dormant
-      - suspended
-    codersdk.CreateUserRequestWithOrgs:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        login_type:
-          description: UserLoginType defaults to LoginTypePassword.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.LoginType'
-        name:
-          type: string
-        organization_ids:
-          type: array
-          description: OrganizationIDs is a list of organization IDs that the user should be a member of.
-          items:
-            type: string
-            format: uuid
-        password:
-          type: string
-        roles:
-          type: array
-          description: Roles is an optional list of site-level roles to assign at creation.
-          items:
-            type: string
-        service_account:
-          type: boolean
-          description: Service accounts are admin-managed accounts that cannot login.
-        user_status:
-          description: UserStatus defaults to UserStatusDormant.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.UserStatus'
-        username:
-          type: string
-      required:
-      - username
+            $ref: '#/components/schemas/codersdk.User'
     codersdk.UpdateUserSkillRequest:
       type: object
       properties:
@@ -1567,74 +1849,6 @@ components:
             frontmatter must include name, may include description, and must be
 
             followed by a non-empty body.'
-    codersdk.GitSSHKey:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        public_key:
-          type: string
-          description: 'PublicKey is the SSH public key in OpenSSH format.
-
-            Example: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3OmYJvT7q1cF1azbybYy0OZ9yrXfA+M6Lr4vzX5zlp\n"
-
-            Note: The key includes a trailing newline (\n).'
-        updated_at:
-          type: string
-          format: date-time
-        user_id:
-          type: string
-          format: uuid
-    codersdk.UserAppearanceSettings:
-      type: object
-      properties:
-        terminal_font:
-          $ref: '#/components/schemas/codersdk.TerminalFontName'
-        theme_dark:
-          type: string
-          description: Ignored when ThemeMode is "single"
-        theme_light:
-          type: string
-          description: Ignored when ThemeMode is "single"
-        theme_mode:
-          $ref: '#/components/schemas/codersdk.ThemeMode'
-        theme_preference:
-          type: string
-          description: 'ThemePreference is the legacy single-field appearance setting. In
-
-            "single" mode it mirrors the active theme. In "sync" mode modern
-
-            clients normally mirror the active OS slot, but older clients can
-
-            update only this field, so it may diverge from ThemeLight or
-
-            ThemeDark until a modern client saves the full appearance state
-
-            again.'
-    codersdk.AuthMethod:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-    codersdk.UserSkill:
-      type: object
-      properties:
-        content:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
     codersdk.APIKey:
       type: object
       properties:
@@ -1692,220 +1906,6 @@ components:
       - token_name
       - updated_at
       - user_id
-    codersdk.ThinkingDisplayMode:
-      type: string
-      enum:
-      - auto
-      - preview
-      - always_expanded
-      - always_collapsed
-    codersdk.UserLoginType:
-      type: object
-      properties:
-        login_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-    codersdk.ThemeMode:
-      type: string
-      enum:
-      - ''
-      - sync
-      - single
-    codersdk.TerminalFontName:
-      type: string
-      enum:
-      - ''
-      - geist-mono
-      - ibm-plex-mono
-      - fira-code
-      - source-code-pro
-      - jetbrains-mono
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
-    codersdk.GenerateAPIKeyResponse:
-      type: object
-      properties:
-        key:
-          type: string
-    codersdk.UpdateUserProfileRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        username:
-          type: string
-      required:
-      - username
-    codersdk.GithubAuthMethod:
-      type: object
-      properties:
-        default_provider_configured:
-          type: boolean
-        enabled:
-          type: boolean
-    codersdk.UserParameter:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    codersdk.ExternalAuthDevice:
-      type: object
-      properties:
-        device_code:
-          type: string
-        expires_in:
-          type: integer
-        interval:
-          type: integer
-        user_code:
-          type: string
-        verification_uri:
-          type: string
-    codersdk.CreateFirstUserOnboardingInfo:
-      type: object
-      properties:
-        newsletter_marketing:
-          type: boolean
-        newsletter_releases:
-          type: boolean
-    codersdk.UpdateUserAppearanceSettingsRequest:
-      type: object
-      properties:
-        terminal_font:
-          $ref: '#/components/schemas/codersdk.TerminalFontName'
-        theme_dark:
-          type: string
-          description: 'ThemeDark is required when ThemeMode is "sync". In "single" mode
-
-            an empty value means "preserve the previously persisted slot"
-
-            rather than "clear the slot", so partial updates that send only
-
-            one slot keep the other intact.'
-          enum:
-          - light
-          - light-protan-deuter
-          - light-tritan
-          - dark
-          - dark-protan-deuter
-          - dark-tritan
-        theme_light:
-          type: string
-          description: 'ThemeLight is required when ThemeMode is "sync". In "single"
-
-            mode an empty value means "preserve the previously persisted
-
-            slot" rather than "clear the slot", so partial updates that send
-
-            only one slot keep the other intact.'
-          enum:
-          - light
-          - light-protan-deuter
-          - light-tritan
-          - dark
-          - dark-protan-deuter
-          - dark-tritan
-        theme_mode:
-          description: 'ThemeMode is optional for backward compatibility. When empty,
-
-            the server leaves theme_mode, theme_light, and theme_dark
-
-            unchanged so older CLI clients do not erase sync-mode settings.
-
-            Legacy auto preferences are the exception: they clear theme_mode
-
-            so clients can migrate the old sync-with-system setting.'
-          enum:
-          - sync
-          - single
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ThemeMode'
-        theme_preference:
-          type: string
-      required:
-      - terminal_font
-      - theme_preference
-    codersdk.SlimRole:
-      type: object
-      properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.UpdateUserPreferenceSettingsRequest:
-      type: object
-      properties:
-        agent_chat_send_shortcut:
-          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
-        code_diff_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        shell_tool_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        task_notification_alert_dismissed:
-          type: boolean
-        thinking_display_mode:
-          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
-    codersdk.CreateFirstUserTrialInfo:
-      type: object
-      properties:
-        company_name:
-          type: string
-        country:
-          type: string
-        developers:
-          type: string
-        first_name:
-          type: string
-        job_title:
-          type: string
-        last_name:
-          type: string
-        phone_number:
-          type: string
-    codersdk.Response:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: 'Detail is a debug message that provides further insight into why the
-
-            action failed. This information can be technical and a regular golang
-
-            err.Error() text.
-
-            - "database: too many open connections"
-
-            - "stat: too many open files"'
-        message:
-          type: string
-          description: 'Message is an actionable message that depicts actions the request took.
-
-            These messages should be fully formed sentences with proper punctuation.
-
-            Examples:
-
-            - "A user has been created."
-
-            - "Failed to create a user."'
-        validations:
-          type: array
-          description: 'Validations are form field-specific friendly error messages. They will be
-
-            shown on a form field in the UI. These can also be used to add additional
-
-            context if there is a set of errors in the primary ''Message''.'
-          items:
-            $ref: '#/components/schemas/codersdk.ValidationError'
   securitySchemes:
     CoderSessionToken:
       type: apiKey

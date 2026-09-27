@@ -76,20 +76,52 @@ paths:
           description: No Content
 components:
   schemas:
-    codersdk.MinimalOrganization:
+    codersdk.CreateTestAuditLogRequest:
       type: object
       properties:
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
+        action:
+          enum:
+          - create
+          - write
+          - delete
+          - start
+          - stop
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AuditAction'
+        additional_fields:
+          type: array
+          items:
+            type: integer
+        build_reason:
+          enum:
+          - autostart
+          - autostop
+          - initiator
+          allOf:
+          - $ref: '#/components/schemas/codersdk.BuildReason'
+        organization_id:
           type: string
           format: uuid
-        name:
+        request_id:
           type: string
-      required:
-      - id
+          format: uuid
+        resource_id:
+          type: string
+          format: uuid
+        resource_type:
+          enum:
+          - template
+          - template_version
+          - user
+          - workspace
+          - workspace_build
+          - git_ssh_key
+          - auditable_group
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ResourceType'
+        time:
+          type: string
+          format: date-time
     codersdk.AuditLog:
       type: object
       properties:
@@ -138,65 +170,30 @@ components:
           $ref: '#/components/schemas/codersdk.User'
         user_agent:
           type: string
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
-    codersdk.AuditDiff:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/codersdk.AuditDiffField'
-    codersdk.CreateTestAuditLogRequest:
+    codersdk.SlimRole:
       type: object
       properties:
-        action:
-          enum:
-          - create
-          - write
-          - delete
-          - start
-          - stop
-          allOf:
-          - $ref: '#/components/schemas/codersdk.AuditAction'
-        additional_fields:
-          type: array
-          items:
-            type: integer
-        build_reason:
-          enum:
-          - autostart
-          - autostop
-          - initiator
-          allOf:
-          - $ref: '#/components/schemas/codersdk.BuildReason'
+        display_name:
+          type: string
+        name:
+          type: string
         organization_id:
           type: string
-          format: uuid
-        request_id:
-          type: string
-          format: uuid
-        resource_id:
-          type: string
-          format: uuid
-        resource_type:
-          enum:
-          - template
-          - template_version
-          - user
-          - workspace
-          - workspace_build
-          - git_ssh_key
-          - auditable_group
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ResourceType'
-        time:
-          type: string
-          format: date-time
+    codersdk.BuildReason:
+      type: string
+      enum:
+      - initiator
+      - autostart
+      - autostop
+      - dormancy
+      - dashboard
+      - cli
+      - ssh_connection
+      - vscode_connection
+      - jetbrains_connection
+      - task_auto_pause
+      - task_manual_pause
+      - task_resume
     codersdk.AuditAction:
       type: string
       enum:
@@ -213,21 +210,38 @@ components:
       - disconnect
       - open
       - close
-    codersdk.BuildReason:
-      type: string
-      enum:
-      - initiator
-      - autostart
-      - autostop
-      - dormancy
-      - dashboard
-      - cli
-      - ssh_connection
-      - vscode_connection
-      - jetbrains_connection
-      - task_auto_pause
-      - task_manual_pause
-      - task_resume
+    codersdk.AuditLogResponse:
+      type: object
+      properties:
+        audit_logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AuditLog'
+        count:
+          type: integer
+        count_cap:
+          type: integer
+    codersdk.AuditDiffField:
+      type: object
+      properties:
+        new: {}
+        old: {}
+        secret:
+          type: boolean
+    codersdk.MinimalOrganization:
+      type: object
+      properties:
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      required:
+      - id
     codersdk.User:
       type: object
       properties:
@@ -287,32 +301,25 @@ components:
       - email
       - id
       - username
-    codersdk.SlimRole:
-      type: object
-      properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.AuditLogResponse:
-      type: object
-      properties:
-        audit_logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.AuditLog'
-        count:
-          type: integer
-        count_cap:
-          type: integer
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
     codersdk.UserStatus:
       type: string
       enum:
       - active
       - dormant
       - suspended
+    codersdk.AuditDiff:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/codersdk.AuditDiffField'
     codersdk.ResourceType:
       type: string
       enum:
@@ -351,13 +358,6 @@ components:
       - chat
       - user_secret
       - user_skill
-    codersdk.AuditDiffField:
-      type: object
-      properties:
-        new: {}
-        old: {}
-        secret:
-          type: boolean
   securitySchemes:
     CoderSessionToken:
       type: apiKey

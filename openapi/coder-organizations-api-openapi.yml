@@ -230,43 +230,29 @@ paths:
                 $ref: '#/components/schemas/codersdk.ProvisionerJob'
 components:
   schemas:
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.ProvisionerJobMetadata:
-      type: object
-      properties:
-        template_display_name:
-          type: string
-        template_icon:
-          type: string
-        template_id:
-          type: string
-          format: uuid
-        template_name:
-          type: string
-        template_version_name:
-          type: string
-        workspace_build_transition:
-          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
-        workspace_id:
-          type: string
-          format: uuid
-        workspace_name:
-          type: string
-    codersdk.WorkspaceTransition:
+    codersdk.JobErrorCode:
       type: string
       enum:
-      - start
-      - stop
-      - delete
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
+    codersdk.UpdateOrganizationRequest:
+      type: object
+      properties:
+        default_org_member_roles:
+          type: array
+          description: 'DefaultOrgMemberRoles, when non-nil, replaces the org''s default
+
+            member roles.'
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
     codersdk.Organization:
       type: object
       properties:
@@ -303,35 +289,6 @@ components:
       - id
       - is_default
       - updated_at
-    codersdk.JobErrorCode:
-      type: string
-      enum:
-      - REQUIRED_TEMPLATE_VARIABLES
-      - INSUFFICIENT_QUOTA
-    codersdk.ProvisionerJobType:
-      type: string
-      enum:
-      - template_version_import
-      - workspace_build
-      - template_version_dry_run
-    codersdk.UpdateOrganizationRequest:
-      type: object
-      properties:
-        default_org_member_roles:
-          type: array
-          description: 'DefaultOrgMemberRoles, when non-nil, replaces the org''s default
-
-            member roles.'
-          items:
-            type: string
-        description:
-          type: string
-        display_name:
-          type: string
-        icon:
-          type: string
-        name:
-          type: string
     codersdk.CreateOrganizationRequest:
       type: object
       properties:
@@ -346,17 +303,12 @@ components:
           type: string
       required:
       - name
-    codersdk.ProvisionerJobInput:
-      type: object
-      properties:
-        error:
-          type: string
-        template_version_id:
-          type: string
-          format: uuid
-        workspace_build_id:
-          type: string
-          format: uuid
+    codersdk.ProvisionerJobType:
+      type: string
+      enum:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
     codersdk.ProvisionerJob:
       type: object
       properties:
@@ -438,6 +390,44 @@ components:
       - canceled
       - failed
       - unknown
+    codersdk.ProvisionerJobMetadata:
+      type: object
+      properties:
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
+          type: string
+        template_version_name:
+          type: string
+        workspace_build_transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+    codersdk.ProvisionerJobInput:
+      type: object
+      properties:
+        error:
+          type: string
+        template_version_id:
+          type: string
+          format: uuid
+        workspace_build_id:
+          type: string
+          format: uuid
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
     codersdk.Response:
       type: object
       properties:
@@ -472,6 +462,16 @@ components:
             context if there is a set of errors in the primary ''Message''.'
           items:
             $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
   securitySchemes:
     CoderSessionToken:
       type: apiKey

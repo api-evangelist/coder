@@ -102,20 +102,6 @@ components:
       enum:
       - http
       - https
-    codersdk.WorkspaceAgentPortShareLevel:
-      type: string
-      enum:
-      - owner
-      - authenticated
-      - organization
-      - public
-    codersdk.WorkspaceAgentPortShares:
-      type: object
-      properties:
-        shares:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
     codersdk.WorkspaceAgentPortShare:
       type: object
       properties:
@@ -140,6 +126,20 @@ components:
         workspace_id:
           type: string
           format: uuid
+    codersdk.WorkspaceAgentPortShareLevel:
+      type: string
+      enum:
+      - owner
+      - authenticated
+      - organization
+      - public
+    codersdk.WorkspaceAgentPortShares:
+      type: object
+      properties:
+        shares:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
     codersdk.DeleteWorkspaceAgentPortShareRequest:
       type: object
       properties:
