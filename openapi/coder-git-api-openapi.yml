@@ -122,6 +122,19 @@ paths:
           description: No Content
 components:
   schemas:
+    codersdk.ExternalAuthUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+        id:
+          type: integer
+        login:
+          type: string
+        name:
+          type: string
+        profile_url:
+          type: string
     codersdk.DeleteExternalAuthByIDResponse:
       type: object
       properties:
@@ -143,15 +156,6 @@ components:
           type: string
         verification_uri:
           type: string
-    codersdk.ExternalAuthAppInstallation:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/codersdk.ExternalAuthUser'
-        configure_url:
-          type: string
-        id:
-          type: integer
     codersdk.ExternalAuth:
       type: object
       properties:
@@ -178,19 +182,15 @@ components:
           description: User is the user that authenticated with the provider.
           allOf:
           - $ref: '#/components/schemas/codersdk.ExternalAuthUser'
-    codersdk.ExternalAuthUser:
+    codersdk.ExternalAuthAppInstallation:
       type: object
       properties:
-        avatar_url:
+        account:
+          $ref: '#/components/schemas/codersdk.ExternalAuthUser'
+        configure_url:
           type: string
         id:
           type: integer
-        login:
-          type: string
-        name:
-          type: string
-        profile_url:
-          type: string
     codersdk.ExternalAuthLink:
       type: object
       properties:

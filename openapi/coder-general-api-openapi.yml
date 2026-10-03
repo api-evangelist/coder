@@ -188,11 +188,6 @@ paths:
                 $ref: '#/components/schemas/codersdk.TokenConfig'
 components:
   schemas:
-    codersdk.SupportConfig:
-      type: object
-      properties:
-        links:
-          $ref: '#/components/schemas/serpent.Struct-array_codersdk_LinkConfig'
     codersdk.ChatConfig:
       type: object
       properties:
@@ -200,221 +195,67 @@ components:
           type: integer
         debug_logging_enabled:
           type: boolean
-    codersdk.NotificationsConfig:
+    serpent.HostPort:
       type: object
       properties:
-        dispatch_timeout:
-          type: integer
-          description: How long to wait while a notification is being sent before giving up.
-        email:
-          description: SMTP settings.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.NotificationsEmailConfig'
-        fetch_interval:
-          type: integer
-          description: How often to query the database for queued notifications.
-        inbox:
-          description: Inbox settings.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.NotificationsInboxConfig'
-        lease_count:
-          type: integer
-          description: How many notifications a notifier should lease per fetch interval.
-        lease_period:
-          type: integer
-          description: 'How long a notifier should lease a message. This is effectively how long a notification is ''owned''
-
-            by a notifier, and once this period expires it will be available for lease by another notifier. Leasing
-
-            is important in order for multiple running notifiers to not pick the same messages to deliver concurrently.
-
-            This lease period will only expire if a notifier shuts down ungracefully; a dispatch of the notification
-
-            releases the lease.'
-        max_send_attempts:
-          type: integer
-          description: The upper limit of attempts to send a notification.
-        method:
+        host:
           type: string
-          description: 'Which delivery method to use (available options: ''smtp'', ''webhook'').'
-        retry_interval:
-          type: integer
-          description: The minimum time between retries.
-        sync_buffer_size:
-          type: integer
-          description: 'The notifications system buffers message updates in memory to ease pressure on the database.
-
-            This option controls how many updates are kept in memory. The lower this value the
-
-            lower the change of state inconsistency in a non-graceful shutdown - but it also increases load on the
-
-            database. It is recommended to keep this option at its default value.'
-        sync_interval:
-          type: integer
-          description: 'The notifications system buffers message updates in memory to ease pressure on the database.
-
-            This option controls how often it synchronizes its state with the database. The shorter this value the
-
-            lower the change of state inconsistency in a non-graceful shutdown - but it also increases load on the
-
-            database. It is recommended to keep this option at its default value.'
-        webhook:
-          description: Webhook settings.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.NotificationsWebhookConfig'
-    codersdk.TelemetryConfig:
+        port:
+          type: string
+    codersdk.RateLimitConfig:
       type: object
       properties:
-        enable:
+        api:
+          type: integer
+        disable_all:
           type: boolean
-        trace:
-          type: boolean
-        url:
-          $ref: '#/components/schemas/serpent.URL'
-    codersdk.AIConfig:
+    codersdk.UserQuietHoursScheduleConfig:
       type: object
       properties:
-        aibridge_proxy:
-          $ref: '#/components/schemas/codersdk.AIBridgeProxyConfig'
-        bridge:
-          $ref: '#/components/schemas/codersdk.AIBridgeConfig'
-        chat:
-          $ref: '#/components/schemas/codersdk.ChatConfig'
-    codersdk.AIBridgeConfig:
-      type: object
-      properties:
-        allow_byok:
+        allow_user_custom:
           type: boolean
-        anthropic:
-          description: 'Deprecated: Use Providers with indexed CODER_AI_GATEWAY_PROVIDER_<N>_* env vars instead.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.AIBridgeAnthropicConfig'
-        api_dump_dir:
+        default_schedule:
           type: string
-          description: 'APIDumpDir is the base directory under which each provider''s
+    codersdk.OAuth2Config:
+      type: object
+      properties:
+        github:
+          $ref: '#/components/schemas/codersdk.OAuth2GithubConfig'
+    codersdk.RetentionConfig:
+      type: object
+      properties:
+        api_keys:
+          type: integer
+          description: 'APIKeys controls how long expired API keys are retained before being deleted.
 
-            request/response dumps are written, in a subdirectory named after
+            Keys are only deleted if they have been expired for at least this duration.
 
-            the provider. Empty disables dumping.'
-        bedrock:
-          description: 'Deprecated: Use Providers with indexed CODER_AI_GATEWAY_PROVIDER_<N>_* env vars instead.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.AIBridgeBedrockConfig'
-        budget_period:
-          type: string
-        budget_policy:
-          type: string
-          description: Budget settings for AI Governance cost controls.
-        circuit_breaker_enabled:
-          type: boolean
-          description: 'Circuit breaker protects against cascading failures from upstream AI
+            Defaults to 7 days to preserve existing behavior.'
+        audit_logs:
+          type: integer
+          description: 'AuditLogs controls how long audit log entries are retained.
 
-            provider overload (503, 529).'
-        circuit_breaker_failure_threshold:
+            Set to 0 to disable (keep indefinitely).'
+        connection_logs:
           type: integer
-        circuit_breaker_interval:
-          type: integer
-        circuit_breaker_max_requests:
-          type: integer
-        circuit_breaker_timeout:
-          type: integer
-        enabled:
-          type: boolean
-        inject_coder_mcp_tools:
-          type: boolean
-          description: 'Deprecated: Injected MCP in AI Bridge is deprecated and will be removed in a future release.'
-        max_concurrency:
-          type: integer
-        openai:
-          description: 'Deprecated: Use Providers with indexed CODER_AI_GATEWAY_PROVIDER_<N>_* env vars instead.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.AIBridgeOpenAIConfig'
-        providers:
-          type: array
-          description: 'Providers holds provider instances populated from CODER_AI_GATEWAY_PROVIDER_<N>_<KEY>
+          description: 'ConnectionLogs controls how long connection log entries are retained.
 
-            env vars and/or the deprecated LegacyOpenAI/LegacyAnthropic/LegacyBedrock fields above.'
-          items:
-            $ref: '#/components/schemas/codersdk.AIProviderConfig'
-        rate_limit:
+            Set to 0 to disable (keep indefinitely).'
+        workspace_agent_logs:
           type: integer
-        retention:
-          type: integer
-        send_actor_headers:
-          type: boolean
-        structured_logging:
-          type: boolean
-    codersdk.AIBridgeProxyConfig:
+          description: 'WorkspaceAgentLogs controls how long workspace agent logs are retained.
+
+            Logs are deleted if the agent hasn''t connected within this period.
+
+            Logs from the latest build are always retained regardless of age.
+
+            Defaults to 7 days to preserve existing behavior.'
+    coderd.cspViolation:
       type: object
       properties:
-        allowed_private_cidrs:
-          type: array
-          items:
-            type: string
-        api_dump_dir:
-          type: string
-        cert_file:
-          type: string
-        domain_allowlist:
-          type: array
-          items:
-            type: string
-        enabled:
-          type: boolean
-        key_file:
-          type: string
-        listen_addr:
-          type: string
-        tls_cert_file:
-          type: string
-        tls_key_file:
-          type: string
-        upstream_proxy:
-          type: string
-        upstream_proxy_ca:
-          type: string
-    codersdk.HTTPCookieConfig:
-      type: object
-      properties:
-        host_prefix:
-          type: boolean
-        same_site:
-          type: string
-        secure_auth_cookie:
-          type: boolean
-    codersdk.WorkspaceConnectionLatencyMS:
-      type: object
-      properties:
-        p50:
-          type: number
-          format: float64
-        p95:
-          type: number
-          format: float64
-    codersdk.SSHConfigResponse:
-      type: object
-      properties:
-        hostname_prefix:
-          type: string
-          description: 'HostnamePrefix is the prefix we append to workspace names for SSH hostnames.
-
-            Deprecated: use HostnameSuffix instead.'
-        hostname_suffix:
-          type: string
-          description: HostnameSuffix is the suffix to append to workspace names for SSH hostnames.
-        ssh_config_options:
+        csp-report:
           type: object
-          additionalProperties:
-            type: string
-    serpent.Annotations:
-      type: object
-      additionalProperties:
-        type: string
-    codersdk.StatsCollectionConfig:
-      type: object
-      properties:
-        usage_stats:
-          $ref: '#/components/schemas/codersdk.UsageStatsConfig'
+          additionalProperties: true
     codersdk.SessionCountDeploymentStats:
       type: object
       properties:
@@ -426,18 +267,19 @@ components:
           type: integer
         vscode:
           type: integer
-    serpent.HostPort:
+    codersdk.SSHConfig:
       type: object
       properties:
-        host:
+        deploymentName:
           type: string
-        port:
-          type: string
-    codersdk.UsageStatsConfig:
-      type: object
-      properties:
-        enable:
-          type: boolean
+          description: DeploymentName is the config-ssh Hostname prefix
+        sshconfigOptions:
+          type: array
+          description: 'SSHConfigOptions are additional options to add to the ssh config file.
+
+            This will override defaults.'
+          items:
+            type: string
     codersdk.PrometheusConfig:
       type: object
       properties:
@@ -453,133 +295,60 @@ components:
           type: boolean
         enable:
           type: boolean
-    codersdk.ValidationError:
+    codersdk.HTTPCookieConfig:
       type: object
       properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.Response:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: 'Detail is a debug message that provides further insight into why the
-
-            action failed. This information can be technical and a regular golang
-
-            err.Error() text.
-
-            - "database: too many open connections"
-
-            - "stat: too many open files"'
-        message:
-          type: string
-          description: 'Message is an actionable message that depicts actions the request took.
-
-            These messages should be fully formed sentences with proper punctuation.
-
-            Examples:
-
-            - "A user has been created."
-
-            - "Failed to create a user."'
-        validations:
-          type: array
-          description: 'Validations are form field-specific friendly error messages. They will be
-
-            shown on a form field in the UI. These can also be used to add additional
-
-            context if there is a set of errors in the primary ''Message''.'
-          items:
-            $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.OAuth2GithubConfig:
-      type: object
-      properties:
-        allow_everyone:
+        host_prefix:
           type: boolean
-        allow_signups:
+        same_site:
+          type: string
+        secure_auth_cookie:
           type: boolean
-        allowed_orgs:
+    codersdk.DeploymentConfig:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/codersdk.DeploymentValues'
+        options:
           type: array
           items:
-            type: string
-        allowed_teams:
-          type: array
-          items:
-            type: string
-        client_id:
-          type: string
-        client_secret:
-          type: string
-        default_provider_enable:
-          type: boolean
-        device_flow:
-          type: boolean
-        enterprise_base_url:
-          type: string
-    serpent.Struct-array_codersdk_ExternalAuthConfig:
+            $ref: '#/components/schemas/serpent.Option'
+    codersdk.AIBridgeAnthropicConfig:
       type: object
       properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.ExternalAuthConfig'
-    codersdk.AIBridgeBedrockConfig:
-      type: object
-      properties:
-        access_key:
-          type: string
-        access_key_secret:
-          type: string
         base_url:
           type: string
-        model:
+        key:
           type: string
-        region:
-          type: string
-        small_fast_model:
-          type: string
-    codersdk.Experiment:
-      type: string
-      enum:
-      - example
-      - auto-fill-parameters
-      - notifications
-      - workspace-usage
-      - oauth2
-      - mcp-server-http
-      - workspace-build-updates
-      - nats_pubsub
-      - minimum-implicit-member
-      x-enum-comments:
-        ExperimentAutoFillParameters: This should not be taken out of experiments until we have redesigned the feature.
-        ExperimentExample: This isn't used for anything.
-        ExperimentMCPServerHTTP: Enables the MCP HTTP server functionality.
-        ExperimentMinimumImplicitMember: Allows organizations to deviate from the default organization-member roles, in support of Gateway Accounts.
-        ExperimentNATSPubsub: Enables embedded NATS pubsub.
-        ExperimentNotifications: Sends notifications via SMTP and webhooks following certain events.
-        ExperimentOAuth2: Enables OAuth2 provider functionality.
-        ExperimentWorkspaceBuildUpdates: Enables publishing workspace build updates to the all builds pubsub channel.
-        ExperimentWorkspaceUsage: Enables the new workspace usage tracking.
-    codersdk.DangerousConfig:
+    codersdk.HealthcheckConfig:
       type: object
       properties:
-        allow_all_cors:
-          type: boolean
-        allow_path_app_sharing:
-          type: boolean
-        allow_path_app_site_owner_access:
-          type: boolean
-    codersdk.OAuth2Config:
+        refresh:
+          type: integer
+        threshold_database:
+          type: integer
+    codersdk.NotificationsWebhookConfig:
       type: object
       properties:
-        github:
-          $ref: '#/components/schemas/codersdk.OAuth2GithubConfig'
+        endpoint:
+          description: The URL to which the payload will be sent with an HTTP POST request.
+          allOf:
+          - $ref: '#/components/schemas/serpent.URL'
+    codersdk.NotificationsEmailAuthConfig:
+      type: object
+      properties:
+        identity:
+          type: string
+          description: Identity for PLAIN auth.
+        password:
+          type: string
+          description: Password for LOGIN/PLAIN auth.
+        password_file:
+          type: string
+          description: File from which to load the password for LOGIN/PLAIN auth.
+        username:
+          type: string
+          description: Username for LOGIN/PLAIN auth.
     codersdk.TemplateBuilderConfig:
       type: object
       properties:
@@ -587,88 +356,11 @@ components:
           type: boolean
         registry_url:
           type: string
-    codersdk.SSHConfig:
+    codersdk.TokenConfig:
       type: object
       properties:
-        deploymentName:
-          type: string
-          description: DeploymentName is the config-ssh Hostname prefix
-        sshconfigOptions:
-          type: array
-          description: 'SSHConfigOptions are additional options to add to the ssh config file.
-
-            This will override defaults.'
-          items:
-            type: string
-    codersdk.ProvisionerConfig:
-      type: object
-      properties:
-        daemon_poll_interval:
+        max_token_lifetime:
           type: integer
-        daemon_poll_jitter:
-          type: integer
-        daemon_psk:
-          type: string
-        daemon_types:
-          type: array
-          items:
-            type: string
-        daemons:
-          type: integer
-          description: Daemons is the number of built-in terraform provisioners.
-        force_cancel_interval:
-          type: integer
-    serpent.Struct-array_codersdk_LinkConfig:
-      type: object
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.LinkConfig'
-    codersdk.PprofConfig:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/serpent.HostPort'
-        enable:
-          type: boolean
-    codersdk.WorkspaceDeploymentStats:
-      type: object
-      properties:
-        building:
-          type: integer
-        connection_latency_ms:
-          $ref: '#/components/schemas/codersdk.WorkspaceConnectionLatencyMS'
-        failed:
-          type: integer
-        pending:
-          type: integer
-        running:
-          type: integer
-        rx_bytes:
-          type: integer
-        stopped:
-          type: integer
-        tx_bytes:
-          type: integer
-    codersdk.NotificationsInboxConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-    codersdk.LoggingConfig:
-      type: object
-      properties:
-        human:
-          type: string
-        json:
-          type: string
-        log_filter:
-          type: array
-          items:
-            type: string
-        stackdriver:
-          type: string
     serpent.ValueSource:
       type: string
       enum:
@@ -677,125 +369,60 @@ components:
       - env
       - yaml
       - default
-    serpent.URL:
+    codersdk.AIBridgeOpenAIConfig:
       type: object
       properties:
-        forceQuery:
+        base_url:
+          type: string
+        key:
+          type: string
+    codersdk.SupportConfig:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/serpent.Struct-array_codersdk_LinkConfig'
+    codersdk.TLSConfig:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/serpent.HostPort'
+        allow_insecure_ciphers:
           type: boolean
-          description: 'ForceQuery indicates whether the original URL contained a query (''?'') character.
-
-            When set, the String method will include a trailing ''?'', even when RawQuery is empty.'
-        fragment:
+        cert_file:
+          type: array
+          items:
+            type: string
+        client_auth:
           type: string
-          description: fragment for references (without '#')
-        host:
+        client_ca_file:
           type: string
-          description: '"host" or "host:port" (see Hostname and Port methods)'
-        omitHost:
+        client_cert_file:
+          type: string
+        client_key_file:
+          type: string
+        enable:
           type: boolean
-          description: 'OmitHost indicates the URL has an empty host (authority).
-
-            When set, the String method will not include the host when it is empty.'
-        opaque:
+        key_file:
+          type: array
+          items:
+            type: string
+        min_version:
           type: string
-          description: encoded opaque data
-        path:
-          type: string
-          description: path (relative paths may omit leading slash)
-        rawFragment:
-          type: string
-          description: 'RawFragment is an optional field containing an encoded fragment hint.
-
-            See the EscapedFragment method for more details.
-
-
-            In general, code should call EscapedFragment instead of reading RawFragment.'
-        rawPath:
-          type: string
-          description: 'RawPath is an optional field containing an encoded path hint.
-
-            See the EscapedPath method for more details.
-
-
-            In general, code should call EscapedPath instead of reading RawPath.'
-        rawQuery:
-          type: string
-          description: 'RawQuery contains the encoded query values, without the initial ''?''.
-
-            Use URL.Query to decode the query.'
-        scheme:
-          type: string
-        user:
-          description: username and password information
-          allOf:
-          - $ref: '#/components/schemas/url.Userinfo'
-    codersdk.NotificationsWebhookConfig:
-      type: object
-      properties:
-        endpoint:
-          description: The URL to which the payload will be sent with an HTTP POST request.
-          allOf:
-          - $ref: '#/components/schemas/serpent.URL'
-    codersdk.UpdateCheckResponse:
-      type: object
-      properties:
-        current:
+        redirect_http:
           type: boolean
-          description: Current indicates whether the server version is the same as the latest.
-        url:
-          type: string
-          description: URL to download the latest release of Coder.
-        version:
-          type: string
-          description: Version is the semantic version for the latest release of Coder.
-    codersdk.DeploymentStats:
+        supported_ciphers:
+          type: array
+          items:
+            type: string
+    codersdk.AIConfig:
       type: object
       properties:
-        aggregated_from:
-          type: string
-          format: date-time
-          description: 'AggregatedFrom is the time in which stats are aggregated from.
-
-            This might be back in time a specific duration or interval.'
-        collected_at:
-          type: string
-          format: date-time
-          description: CollectedAt is the time in which stats are collected at.
-        next_update_at:
-          type: string
-          format: date-time
-          description: 'NextUpdateAt is the time when the next batch of stats will
-
-            be updated.'
-        session_count:
-          $ref: '#/components/schemas/codersdk.SessionCountDeploymentStats'
-        workspaces:
-          $ref: '#/components/schemas/codersdk.WorkspaceDeploymentStats'
-    codersdk.PrebuildsConfig:
-      type: object
-      properties:
-        failure_hard_limit:
-          type: integer
-          description: 'FailureHardLimit defines the maximum number of consecutive failed prebuild attempts allowed
-
-            before a preset is considered to be in a hard limit state. When a preset hits this limit,
-
-            no new prebuilds will be created until the limit is reset.
-
-            FailureHardLimit is disabled when set to zero.'
-        reconciliation_backoff_interval:
-          type: integer
-          description: 'ReconciliationBackoffInterval specifies the amount of time to increase the backoff interval
-
-            when errors occur during reconciliation.'
-        reconciliation_backoff_lookback:
-          type: integer
-          description: 'ReconciliationBackoffLookback determines the time window to look back when calculating
-
-            the number of failed prebuilds, which influences the backoff strategy.'
-        reconciliation_interval:
-          type: integer
-          description: ReconciliationInterval defines how often the workspace prebuilds state should be reconciled.
+        aibridge_proxy:
+          $ref: '#/components/schemas/codersdk.AIBridgeProxyConfig'
+        bridge:
+          $ref: '#/components/schemas/codersdk.AIBridgeConfig'
+        chat:
+          $ref: '#/components/schemas/codersdk.ChatConfig'
     codersdk.AIProviderConfig:
       type: object
       properties:
@@ -820,19 +447,6 @@ components:
             "anthropic", "azure", "bedrock", "google", "openai-compat",
 
             "openrouter", "vercel", "copilot".'
-    serpent.Group:
-      type: object
-      properties:
-        description:
-          type: string
-        name:
-          type: string
-        parent:
-          $ref: '#/components/schemas/serpent.Group'
-        yaml:
-          type: string
-    serpent.Regexp:
-      type: object
     codersdk.NotificationsEmailConfig:
       type: object
       properties:
@@ -856,25 +470,6 @@ components:
           description: TLS details.
           allOf:
           - $ref: '#/components/schemas/codersdk.NotificationsEmailTLSConfig'
-    codersdk.LinkConfig:
-      type: object
-      properties:
-        icon:
-          type: string
-          enum:
-          - bug
-          - chat
-          - docs
-          - star
-        location:
-          type: string
-          enum:
-          - navbar
-          - dropdown
-        name:
-          type: string
-        target:
-          type: string
     codersdk.DERPServerConfig:
       type: object
       properties:
@@ -892,47 +487,62 @@ components:
           type: array
           items:
             type: string
-    codersdk.UserQuietHoursScheduleConfig:
+    codersdk.SSHConfigResponse:
       type: object
       properties:
-        allow_user_custom:
-          type: boolean
-        default_schedule:
+        hostname_prefix:
           type: string
-    codersdk.AIBridgeAnthropicConfig:
-      type: object
-      properties:
-        base_url:
+          description: 'HostnamePrefix is the prefix we append to workspace names for SSH hostnames.
+
+            Deprecated: use HostnameSuffix instead.'
+        hostname_suffix:
           type: string
-        key:
-          type: string
-    codersdk.NotificationsEmailTLSConfig:
-      type: object
-      properties:
-        ca_file:
-          type: string
-          description: CAFile specifies the location of the CA certificate to use.
-        cert_file:
-          type: string
-          description: CertFile specifies the location of the certificate to use.
-        insecure_skip_verify:
-          type: boolean
-          description: InsecureSkipVerify skips target certificate validation.
-        key_file:
-          type: string
-          description: KeyFile specifies the location of the key to use.
-        server_name:
-          type: string
-          description: ServerName to verify the hostname for the targets.
-        start_tls:
-          type: boolean
-          description: StartTLS attempts to upgrade plain connections to TLS.
-    coderd.cspViolation:
-      type: object
-      properties:
-        csp-report:
+          description: HostnameSuffix is the suffix to append to workspace names for SSH hostnames.
+        ssh_config_options:
           type: object
-          additionalProperties: true
+          additionalProperties:
+            type: string
+    codersdk.DERPConfig:
+      type: object
+      properties:
+        block_direct:
+          type: boolean
+        force_websockets:
+          type: boolean
+        path:
+          type: string
+        url:
+          type: string
+    codersdk.PprofConfig:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/serpent.HostPort'
+        enable:
+          type: boolean
+    codersdk.DeploymentStats:
+      type: object
+      properties:
+        aggregated_from:
+          type: string
+          format: date-time
+          description: 'AggregatedFrom is the time in which stats are aggregated from.
+
+            This might be back in time a specific duration or interval.'
+        collected_at:
+          type: string
+          format: date-time
+          description: CollectedAt is the time in which stats are collected at.
+        next_update_at:
+          type: string
+          format: date-time
+          description: 'NextUpdateAt is the time when the next batch of stats will
+
+            be updated.'
+        session_count:
+          $ref: '#/components/schemas/codersdk.SessionCountDeploymentStats'
+        workspaces:
+          $ref: '#/components/schemas/codersdk.WorkspaceDeploymentStats'
     codersdk.DeploymentValues:
       type: object
       properties:
@@ -1099,6 +709,475 @@ components:
           $ref: '#/components/schemas/codersdk.PrebuildsConfig'
         write_config:
           type: boolean
+    codersdk.DangerousConfig:
+      type: object
+      properties:
+        allow_all_cors:
+          type: boolean
+        allow_path_app_sharing:
+          type: boolean
+        allow_path_app_site_owner_access:
+          type: boolean
+    codersdk.ProvisionerConfig:
+      type: object
+      properties:
+        daemon_poll_interval:
+          type: integer
+        daemon_poll_jitter:
+          type: integer
+        daemon_psk:
+          type: string
+        daemon_types:
+          type: array
+          items:
+            type: string
+        daemons:
+          type: integer
+          description: Daemons is the number of built-in terraform provisioners.
+        force_cancel_interval:
+          type: integer
+    serpent.Struct-array_codersdk_LinkConfig:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.LinkConfig'
+    codersdk.DERP:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/codersdk.DERPConfig'
+        server:
+          $ref: '#/components/schemas/codersdk.DERPServerConfig'
+    codersdk.TelemetryConfig:
+      type: object
+      properties:
+        enable:
+          type: boolean
+        trace:
+          type: boolean
+        url:
+          $ref: '#/components/schemas/serpent.URL'
+    serpent.URL:
+      type: object
+      properties:
+        forceQuery:
+          type: boolean
+          description: 'ForceQuery indicates whether the original URL contained a query (''?'') character.
+
+            When set, the String method will include a trailing ''?'', even when RawQuery is empty.'
+        fragment:
+          type: string
+          description: fragment for references (without '#')
+        host:
+          type: string
+          description: '"host" or "host:port" (see Hostname and Port methods)'
+        omitHost:
+          type: boolean
+          description: 'OmitHost indicates the URL has an empty host (authority).
+
+            When set, the String method will not include the host when it is empty.'
+        opaque:
+          type: string
+          description: encoded opaque data
+        path:
+          type: string
+          description: path (relative paths may omit leading slash)
+        rawFragment:
+          type: string
+          description: 'RawFragment is an optional field containing an encoded fragment hint.
+
+            See the EscapedFragment method for more details.
+
+
+            In general, code should call EscapedFragment instead of reading RawFragment.'
+        rawPath:
+          type: string
+          description: 'RawPath is an optional field containing an encoded path hint.
+
+            See the EscapedPath method for more details.
+
+
+            In general, code should call EscapedPath instead of reading RawPath.'
+        rawQuery:
+          type: string
+          description: 'RawQuery contains the encoded query values, without the initial ''?''.
+
+            Use URL.Query to decode the query.'
+        scheme:
+          type: string
+        user:
+          description: username and password information
+          allOf:
+          - $ref: '#/components/schemas/url.Userinfo'
+    codersdk.LoggingConfig:
+      type: object
+      properties:
+        human:
+          type: string
+        json:
+          type: string
+        log_filter:
+          type: array
+          items:
+            type: string
+        stackdriver:
+          type: string
+    codersdk.NotificationsConfig:
+      type: object
+      properties:
+        dispatch_timeout:
+          type: integer
+          description: How long to wait while a notification is being sent before giving up.
+        email:
+          description: SMTP settings.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.NotificationsEmailConfig'
+        fetch_interval:
+          type: integer
+          description: How often to query the database for queued notifications.
+        inbox:
+          description: Inbox settings.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.NotificationsInboxConfig'
+        lease_count:
+          type: integer
+          description: How many notifications a notifier should lease per fetch interval.
+        lease_period:
+          type: integer
+          description: 'How long a notifier should lease a message. This is effectively how long a notification is ''owned''
+
+            by a notifier, and once this period expires it will be available for lease by another notifier. Leasing
+
+            is important in order for multiple running notifiers to not pick the same messages to deliver concurrently.
+
+            This lease period will only expire if a notifier shuts down ungracefully; a dispatch of the notification
+
+            releases the lease.'
+        max_send_attempts:
+          type: integer
+          description: The upper limit of attempts to send a notification.
+        method:
+          type: string
+          description: 'Which delivery method to use (available options: ''smtp'', ''webhook'').'
+        retry_interval:
+          type: integer
+          description: The minimum time between retries.
+        sync_buffer_size:
+          type: integer
+          description: 'The notifications system buffers message updates in memory to ease pressure on the database.
+
+            This option controls how many updates are kept in memory. The lower this value the
+
+            lower the change of state inconsistency in a non-graceful shutdown - but it also increases load on the
+
+            database. It is recommended to keep this option at its default value.'
+        sync_interval:
+          type: integer
+          description: 'The notifications system buffers message updates in memory to ease pressure on the database.
+
+            This option controls how often it synchronizes its state with the database. The shorter this value the
+
+            lower the change of state inconsistency in a non-graceful shutdown - but it also increases load on the
+
+            database. It is recommended to keep this option at its default value.'
+        webhook:
+          description: Webhook settings.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.NotificationsWebhookConfig'
+    codersdk.NotificationsEmailTLSConfig:
+      type: object
+      properties:
+        ca_file:
+          type: string
+          description: CAFile specifies the location of the CA certificate to use.
+        cert_file:
+          type: string
+          description: CertFile specifies the location of the certificate to use.
+        insecure_skip_verify:
+          type: boolean
+          description: InsecureSkipVerify skips target certificate validation.
+        key_file:
+          type: string
+          description: KeyFile specifies the location of the key to use.
+        server_name:
+          type: string
+          description: ServerName to verify the hostname for the targets.
+        start_tls:
+          type: boolean
+          description: StartTLS attempts to upgrade plain connections to TLS.
+    codersdk.UpdateCheckResponse:
+      type: object
+      properties:
+        current:
+          type: boolean
+          description: Current indicates whether the server version is the same as the latest.
+        url:
+          type: string
+          description: URL to download the latest release of Coder.
+        version:
+          type: string
+          description: Version is the semantic version for the latest release of Coder.
+    serpent.Regexp:
+      type: object
+    codersdk.UsageStatsConfig:
+      type: object
+      properties:
+        enable:
+          type: boolean
+    serpent.Struct-array_codersdk_ExternalAuthConfig:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ExternalAuthConfig'
+    codersdk.TraceConfig:
+      type: object
+      properties:
+        capture_logs:
+          type: boolean
+        data_dog:
+          type: boolean
+        enable:
+          type: boolean
+        honeycomb_api_key:
+          type: string
+    codersdk.SessionLifetime:
+      type: object
+      properties:
+        default_duration:
+          type: integer
+          description: DefaultDuration is only for browser, workspace app and oauth sessions.
+        default_token_lifetime:
+          type: integer
+        disable_expiry_refresh:
+          type: boolean
+          description: 'DisableExpiryRefresh will disable automatically refreshing api
+
+            keys when they are used from the api. This means the api key lifetime at
+
+            creation is the lifetime of the api key.'
+        max_admin_token_lifetime:
+          type: integer
+        max_token_lifetime:
+          type: integer
+        refresh_default_duration:
+          type: integer
+          description: 'RefreshDefaultDuration is the default lifetime for OAuth2 refresh tokens.
+
+            This should generally be longer than access token lifetimes to allow
+
+            refreshing after access token expiry.'
+    codersdk.BuildInfoResponse:
+      type: object
+      properties:
+        agent_api_version:
+          type: string
+          description: 'AgentAPIVersion is the current version of the Agent API (back versions
+
+            MAY still be supported).'
+        dashboard_url:
+          type: string
+          description: 'DashboardURL is the URL to hit the deployment''s dashboard.
+
+            For external workspace proxies, this is the coderd they are connected
+
+            to.'
+        deployment_id:
+          type: string
+          description: DeploymentID is the unique identifier for this deployment.
+        external_url:
+          type: string
+          description: 'ExternalURL references the current Coder version.
+
+            For production builds, this will link directly to a release. For development builds, this will link to a commit.'
+        provisioner_api_version:
+          type: string
+          description: ProvisionerAPIVersion is the current version of the Provisioner API
+        telemetry:
+          type: boolean
+          description: Telemetry is a boolean that indicates whether telemetry is enabled.
+        upgrade_message:
+          type: string
+          description: 'UpgradeMessage is the message displayed to users when an outdated client
+
+            is detected.'
+        version:
+          type: string
+          description: Version returns the semantic version of the build.
+        webpush_public_key:
+          type: string
+          description: WebPushPublicKey is the public key for push notifications via Web Push.
+        workspace_proxy:
+          type: boolean
+    codersdk.AIBridgeBedrockConfig:
+      type: object
+      properties:
+        access_key:
+          type: string
+        access_key_secret:
+          type: string
+        base_url:
+          type: string
+        model:
+          type: string
+        region:
+          type: string
+        small_fast_model:
+          type: string
+    serpent.Annotations:
+      type: object
+      additionalProperties:
+        type: string
+    codersdk.AIBridgeProxyConfig:
+      type: object
+      properties:
+        allowed_private_cidrs:
+          type: array
+          items:
+            type: string
+        api_dump_dir:
+          type: string
+        cert_file:
+          type: string
+        domain_allowlist:
+          type: array
+          items:
+            type: string
+        enabled:
+          type: boolean
+        key_file:
+          type: string
+        listen_addr:
+          type: string
+        tls_cert_file:
+          type: string
+        tls_key_file:
+          type: string
+        upstream_proxy:
+          type: string
+        upstream_proxy_ca:
+          type: string
+    codersdk.LinkConfig:
+      type: object
+      properties:
+        icon:
+          type: string
+          enum:
+          - bug
+          - chat
+          - docs
+          - star
+        location:
+          type: string
+          enum:
+          - navbar
+          - dropdown
+        name:
+          type: string
+        target:
+          type: string
+    codersdk.PrebuildsConfig:
+      type: object
+      properties:
+        failure_hard_limit:
+          type: integer
+          description: 'FailureHardLimit defines the maximum number of consecutive failed prebuild attempts allowed
+
+            before a preset is considered to be in a hard limit state. When a preset hits this limit,
+
+            no new prebuilds will be created until the limit is reset.
+
+            FailureHardLimit is disabled when set to zero.'
+        reconciliation_backoff_interval:
+          type: integer
+          description: 'ReconciliationBackoffInterval specifies the amount of time to increase the backoff interval
+
+            when errors occur during reconciliation.'
+        reconciliation_backoff_lookback:
+          type: integer
+          description: 'ReconciliationBackoffLookback determines the time window to look back when calculating
+
+            the number of failed prebuilds, which influences the backoff strategy.'
+        reconciliation_interval:
+          type: integer
+          description: ReconciliationInterval defines how often the workspace prebuilds state should be reconciled.
+    codersdk.StatsCollectionConfig:
+      type: object
+      properties:
+        usage_stats:
+          $ref: '#/components/schemas/codersdk.UsageStatsConfig'
+    codersdk.SwaggerConfig:
+      type: object
+      properties:
+        enable:
+          type: boolean
+    serpent.Option:
+      type: object
+      properties:
+        annotations:
+          description: 'Annotations enable extensions to serpent higher up in the stack. It''s useful for
+
+            help formatting and documentation generation.'
+          allOf:
+          - $ref: '#/components/schemas/serpent.Annotations'
+        default:
+          type: string
+          description: 'Default is parsed into Value if set.
+
+            Must be `""` if `DefaultFn` != nil'
+        description:
+          type: string
+        env:
+          type: string
+          description: 'Env is the environment variable used to configure this option. If unset,
+
+            environment configuring is disabled.'
+        flag:
+          type: string
+          description: 'Flag is the long name of the flag used to configure this option. If unset,
+
+            flag configuring is disabled.'
+        flag_shorthand:
+          type: string
+          description: 'FlagShorthand is the one-character shorthand for the flag. If unset, no
+
+            shorthand is used.'
+        group:
+          description: 'Group is a group hierarchy that helps organize this option in help, configs
+
+            and other documentation.'
+          allOf:
+          - $ref: '#/components/schemas/serpent.Group'
+        hidden:
+          type: boolean
+        name:
+          type: string
+        required:
+          type: boolean
+          description: 'Required means this value must be set by some means. It requires
+
+            `ValueSource != ValueSourceNone`
+
+            If `Default` is set, then `Required` is ignored.'
+        use_instead:
+          type: array
+          description: 'UseInstead is a list of options that should be used instead of this one.
+
+            The field is used to generate a deprecation warning.'
+          items:
+            $ref: '#/components/schemas/serpent.Option'
+        value:
+          description: Value includes the types listed in values.go.
+        value_source:
+          $ref: '#/components/schemas/serpent.ValueSource'
+        yaml:
+          type: string
+          description: 'YAML is the YAML key used to configure this option. If unset, YAML
+
+            configuring is disabled.'
     codersdk.OIDCConfig:
       type: object
       properties:
@@ -1195,267 +1274,186 @@ components:
             type: string
         username_field:
           type: string
-    codersdk.NotificationsEmailAuthConfig:
+    codersdk.Response:
       type: object
       properties:
-        identity:
+        detail:
           type: string
-          description: Identity for PLAIN auth.
-        password:
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
           type: string
-          description: Password for LOGIN/PLAIN auth.
-        password_file:
-          type: string
-          description: File from which to load the password for LOGIN/PLAIN auth.
-        username:
-          type: string
-          description: Username for LOGIN/PLAIN auth.
-    codersdk.DeploymentConfig:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/codersdk.DeploymentValues'
-        options:
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
           type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
           items:
-            $ref: '#/components/schemas/serpent.Option'
-    codersdk.RetentionConfig:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.AIBridgeConfig:
       type: object
       properties:
-        api_keys:
-          type: integer
-          description: 'APIKeys controls how long expired API keys are retained before being deleted.
-
-            Keys are only deleted if they have been expired for at least this duration.
-
-            Defaults to 7 days to preserve existing behavior.'
-        audit_logs:
-          type: integer
-          description: 'AuditLogs controls how long audit log entries are retained.
-
-            Set to 0 to disable (keep indefinitely).'
-        connection_logs:
-          type: integer
-          description: 'ConnectionLogs controls how long connection log entries are retained.
-
-            Set to 0 to disable (keep indefinitely).'
-        workspace_agent_logs:
-          type: integer
-          description: 'WorkspaceAgentLogs controls how long workspace agent logs are retained.
-
-            Logs are deleted if the agent hasn''t connected within this period.
-
-            Logs from the latest build are always retained regardless of age.
-
-            Defaults to 7 days to preserve existing behavior.'
-    codersdk.RateLimitConfig:
-      type: object
-      properties:
-        api:
-          type: integer
-        disable_all:
+        allow_byok:
           type: boolean
-    codersdk.SessionLifetime:
-      type: object
-      properties:
-        default_duration:
-          type: integer
-          description: DefaultDuration is only for browser, workspace app and oauth sessions.
-        default_token_lifetime:
-          type: integer
-        disable_expiry_refresh:
-          type: boolean
-          description: 'DisableExpiryRefresh will disable automatically refreshing api
-
-            keys when they are used from the api. This means the api key lifetime at
-
-            creation is the lifetime of the api key.'
-        max_admin_token_lifetime:
-          type: integer
-        max_token_lifetime:
-          type: integer
-        refresh_default_duration:
-          type: integer
-          description: 'RefreshDefaultDuration is the default lifetime for OAuth2 refresh tokens.
-
-            This should generally be longer than access token lifetimes to allow
-
-            refreshing after access token expiry.'
-    codersdk.HealthcheckConfig:
-      type: object
-      properties:
-        refresh:
-          type: integer
-        threshold_database:
-          type: integer
-    serpent.Option:
-      type: object
-      properties:
-        annotations:
-          description: 'Annotations enable extensions to serpent higher up in the stack. It''s useful for
-
-            help formatting and documentation generation.'
+        anthropic:
+          description: 'Deprecated: Use Providers with indexed CODER_AI_GATEWAY_PROVIDER_<N>_* env vars instead.'
           allOf:
-          - $ref: '#/components/schemas/serpent.Annotations'
-        default:
+          - $ref: '#/components/schemas/codersdk.AIBridgeAnthropicConfig'
+        api_dump_dir:
           type: string
-          description: 'Default is parsed into Value if set.
+          description: 'APIDumpDir is the base directory under which each provider''s
 
-            Must be `""` if `DefaultFn` != nil'
-        description:
-          type: string
-        env:
-          type: string
-          description: 'Env is the environment variable used to configure this option. If unset,
+            request/response dumps are written, in a subdirectory named after
 
-            environment configuring is disabled.'
-        flag:
-          type: string
-          description: 'Flag is the long name of the flag used to configure this option. If unset,
-
-            flag configuring is disabled.'
-        flag_shorthand:
-          type: string
-          description: 'FlagShorthand is the one-character shorthand for the flag. If unset, no
-
-            shorthand is used.'
-        group:
-          description: 'Group is a group hierarchy that helps organize this option in help, configs
-
-            and other documentation.'
+            the provider. Empty disables dumping.'
+        bedrock:
+          description: 'Deprecated: Use Providers with indexed CODER_AI_GATEWAY_PROVIDER_<N>_* env vars instead.'
           allOf:
-          - $ref: '#/components/schemas/serpent.Group'
-        hidden:
-          type: boolean
-        name:
+          - $ref: '#/components/schemas/codersdk.AIBridgeBedrockConfig'
+        budget_period:
           type: string
-        required:
+        budget_policy:
+          type: string
+          description: Budget settings for AI Governance cost controls.
+        circuit_breaker_enabled:
           type: boolean
-          description: 'Required means this value must be set by some means. It requires
+          description: 'Circuit breaker protects against cascading failures from upstream AI
 
-            `ValueSource != ValueSourceNone`
+            provider overload (503, 529).'
+        circuit_breaker_failure_threshold:
+          type: integer
+        circuit_breaker_interval:
+          type: integer
+        circuit_breaker_max_requests:
+          type: integer
+        circuit_breaker_timeout:
+          type: integer
+        enabled:
+          type: boolean
+        inject_coder_mcp_tools:
+          type: boolean
+          description: 'Deprecated: Injected MCP in AI Bridge is deprecated and will be removed in a future release.'
+        max_concurrency:
+          type: integer
+        openai:
+          description: 'Deprecated: Use Providers with indexed CODER_AI_GATEWAY_PROVIDER_<N>_* env vars instead.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AIBridgeOpenAIConfig'
+        providers:
+          type: array
+          description: 'Providers holds provider instances populated from CODER_AI_GATEWAY_PROVIDER_<N>_<KEY>
 
-            If `Default` is set, then `Required` is ignored.'
-        use_instead:
-          type: array
-          description: 'UseInstead is a list of options that should be used instead of this one.
-
-            The field is used to generate a deprecation warning.'
+            env vars and/or the deprecated LegacyOpenAI/LegacyAnthropic/LegacyBedrock fields above.'
           items:
-            $ref: '#/components/schemas/serpent.Option'
-        value:
-          description: Value includes the types listed in values.go.
-        value_source:
-          $ref: '#/components/schemas/serpent.ValueSource'
-        yaml:
-          type: string
-          description: 'YAML is the YAML key used to configure this option. If unset, YAML
-
-            configuring is disabled.'
-    codersdk.DERPConfig:
-      type: object
-      properties:
-        block_direct:
+            $ref: '#/components/schemas/codersdk.AIProviderConfig'
+        rate_limit:
+          type: integer
+        retention:
+          type: integer
+        send_actor_headers:
           type: boolean
-        force_websockets:
-          type: boolean
-        path:
-          type: string
-        url:
-          type: string
-    codersdk.TraceConfig:
-      type: object
-      properties:
-        capture_logs:
-          type: boolean
-        data_dog:
-          type: boolean
-        enable:
-          type: boolean
-        honeycomb_api_key:
-          type: string
-    codersdk.TLSConfig:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/serpent.HostPort'
-        allow_insecure_ciphers:
-          type: boolean
-        cert_file:
-          type: array
-          items:
-            type: string
-        client_auth:
-          type: string
-        client_ca_file:
-          type: string
-        client_cert_file:
-          type: string
-        client_key_file:
-          type: string
-        enable:
-          type: boolean
-        key_file:
-          type: array
-          items:
-            type: string
-        min_version:
-          type: string
-        redirect_http:
-          type: boolean
-        supported_ciphers:
-          type: array
-          items:
-            type: string
-    codersdk.SwaggerConfig:
-      type: object
-      properties:
-        enable:
+        structured_logging:
           type: boolean
     url.Userinfo:
       type: object
-    codersdk.BuildInfoResponse:
+    codersdk.OAuth2GithubConfig:
       type: object
       properties:
-        agent_api_version:
-          type: string
-          description: 'AgentAPIVersion is the current version of the Agent API (back versions
-
-            MAY still be supported).'
-        dashboard_url:
-          type: string
-          description: 'DashboardURL is the URL to hit the deployment''s dashboard.
-
-            For external workspace proxies, this is the coderd they are connected
-
-            to.'
-        deployment_id:
-          type: string
-          description: DeploymentID is the unique identifier for this deployment.
-        external_url:
-          type: string
-          description: 'ExternalURL references the current Coder version.
-
-            For production builds, this will link directly to a release. For development builds, this will link to a commit.'
-        provisioner_api_version:
-          type: string
-          description: ProvisionerAPIVersion is the current version of the Provisioner API
-        telemetry:
+        allow_everyone:
           type: boolean
-          description: Telemetry is a boolean that indicates whether telemetry is enabled.
-        upgrade_message:
-          type: string
-          description: 'UpgradeMessage is the message displayed to users when an outdated client
-
-            is detected.'
-        version:
-          type: string
-          description: Version returns the semantic version of the build.
-        webpush_public_key:
-          type: string
-          description: WebPushPublicKey is the public key for push notifications via Web Push.
-        workspace_proxy:
+        allow_signups:
           type: boolean
+        allowed_orgs:
+          type: array
+          items:
+            type: string
+        allowed_teams:
+          type: array
+          items:
+            type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        default_provider_enable:
+          type: boolean
+        device_flow:
+          type: boolean
+        enterprise_base_url:
+          type: string
+    codersdk.WorkspaceConnectionLatencyMS:
+      type: object
+      properties:
+        p50:
+          type: number
+          format: float64
+        p95:
+          type: number
+          format: float64
+    codersdk.WorkspaceDeploymentStats:
+      type: object
+      properties:
+        building:
+          type: integer
+        connection_latency_ms:
+          $ref: '#/components/schemas/codersdk.WorkspaceConnectionLatencyMS'
+        failed:
+          type: integer
+        pending:
+          type: integer
+        running:
+          type: integer
+        rx_bytes:
+          type: integer
+        stopped:
+          type: integer
+        tx_bytes:
+          type: integer
+    codersdk.NotificationsInboxConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+    codersdk.Experiment:
+      type: string
+      enum:
+      - example
+      - auto-fill-parameters
+      - notifications
+      - workspace-usage
+      - oauth2
+      - mcp-server-http
+      - workspace-build-updates
+      - nats_pubsub
+      - minimum-implicit-member
+      x-enum-comments:
+        ExperimentAutoFillParameters: This should not be taken out of experiments until we have redesigned the feature.
+        ExperimentExample: This isn't used for anything.
+        ExperimentMCPServerHTTP: Enables the MCP HTTP server functionality.
+        ExperimentMinimumImplicitMember: Allows organizations to deviate from the default organization-member roles, in support of Gateway Accounts.
+        ExperimentNATSPubsub: Enables embedded NATS pubsub.
+        ExperimentNotifications: Sends notifications via SMTP and webhooks following certain events.
+        ExperimentOAuth2: Enables OAuth2 provider functionality.
+        ExperimentWorkspaceBuildUpdates: Enables publishing workspace build updates to the all builds pubsub channel.
+        ExperimentWorkspaceUsage: Enables the new workspace usage tracking.
     codersdk.ExternalAuthConfig:
       type: object
       properties:
@@ -1532,25 +1530,27 @@ components:
           description: Type is the type of external auth config.
         validate_url:
           type: string
-    codersdk.TokenConfig:
+    codersdk.ValidationError:
       type: object
       properties:
-        max_token_lifetime:
-          type: integer
-    codersdk.AIBridgeOpenAIConfig:
-      type: object
-      properties:
-        base_url:
+        detail:
           type: string
-        key:
+        field:
           type: string
-    codersdk.DERP:
+      required:
+      - detail
+      - field
+    serpent.Group:
       type: object
       properties:
-        config:
-          $ref: '#/components/schemas/codersdk.DERPConfig'
-        server:
-          $ref: '#/components/schemas/codersdk.DERPServerConfig'
+        description:
+          type: string
+        name:
+          type: string
+        parent:
+          $ref: '#/components/schemas/serpent.Group'
+        yaml:
+          type: string
   securitySchemes:
     CoderSessionToken:
       type: apiKey

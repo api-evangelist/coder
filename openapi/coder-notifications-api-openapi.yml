@@ -405,36 +405,6 @@ paths:
           description: No Content
 components:
   schemas:
-    codersdk.InboxNotificationAction:
-      type: object
-      properties:
-        label:
-          type: string
-        url:
-          type: string
-    codersdk.NotificationsSettings:
-      type: object
-      properties:
-        notifier_paused:
-          type: boolean
-    codersdk.ListInboxNotificationsResponse:
-      type: object
-      properties:
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.InboxNotification'
-        unread_count:
-          type: integer
-    codersdk.WebpushSubscription:
-      type: object
-      properties:
-        auth_key:
-          type: string
-        endpoint:
-          type: string
-        p256dh_key:
-          type: string
     codersdk.NotificationPreference:
       type: object
       properties:
@@ -446,6 +416,30 @@ components:
         updated_at:
           type: string
           format: date-time
+    codersdk.DeleteWebpushSubscription:
+      type: object
+      properties:
+        endpoint:
+          type: string
+    codersdk.UpdateUserNotificationPreferences:
+      type: object
+      properties:
+        template_disabled_map:
+          type: object
+          additionalProperties:
+            type: boolean
+    codersdk.GetInboxNotificationResponse:
+      type: object
+      properties:
+        notification:
+          $ref: '#/components/schemas/codersdk.InboxNotification'
+        unread_count:
+          type: integer
+    codersdk.CustomNotificationRequest:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
     codersdk.NotificationTemplate:
       type: object
       properties:
@@ -468,37 +462,20 @@ components:
           type: string
         title_template:
           type: string
-    codersdk.DeleteWebpushSubscription:
+    codersdk.NotificationsSettings:
       type: object
       properties:
-        endpoint:
+        notifier_paused:
+          type: boolean
+    codersdk.NotificationMethodsResponse:
+      type: object
+      properties:
+        available:
+          type: array
+          items:
+            type: string
+        default:
           type: string
-    codersdk.CustomNotificationRequest:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
-    codersdk.CustomNotificationContent:
-      type: object
-      properties:
-        message:
-          type: string
-        title:
-          type: string
-    codersdk.GetInboxNotificationResponse:
-      type: object
-      properties:
-        notification:
-          $ref: '#/components/schemas/codersdk.InboxNotification'
-        unread_count:
-          type: integer
-    codersdk.UpdateUserNotificationPreferences:
-      type: object
-      properties:
-        template_disabled_map:
-          type: object
-          additionalProperties:
-            type: boolean
     codersdk.Response:
       type: object
       properties:
@@ -533,6 +510,38 @@ components:
             context if there is a set of errors in the primary ''Message''.'
           items:
             $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.ListInboxNotificationsResponse:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.InboxNotification'
+        unread_count:
+          type: integer
+    codersdk.WebpushSubscription:
+      type: object
+      properties:
+        auth_key:
+          type: string
+        endpoint:
+          type: string
+        p256dh_key:
+          type: string
+    codersdk.CustomNotificationContent:
+      type: object
+      properties:
+        message:
+          type: string
+        title:
+          type: string
+    codersdk.InboxNotificationAction:
+      type: object
+      properties:
+        label:
+          type: string
+        url:
+          type: string
     codersdk.ValidationError:
       type: object
       properties:
@@ -543,15 +552,6 @@ components:
       required:
       - detail
       - field
-    codersdk.NotificationMethodsResponse:
-      type: object
-      properties:
-        available:
-          type: array
-          items:
-            type: string
-        default:
-          type: string
     codersdk.InboxNotification:
       type: object
       properties:

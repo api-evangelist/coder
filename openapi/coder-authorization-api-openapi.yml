@@ -165,13 +165,113 @@ paths:
                 $ref: '#/components/schemas/codersdk.OAuthConversionResponse'
 components:
   schemas:
-    codersdk.ValidateUserPasswordResponse:
+    codersdk.OAuthConversionResponse:
       type: object
       properties:
-        details:
+        expires_at:
           type: string
-        valid:
-          type: boolean
+          format: date-time
+        state_string:
+          type: string
+        to_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        user_id:
+          type: string
+          format: uuid
+    codersdk.ConvertLoginRequest:
+      type: object
+      properties:
+        password:
+          type: string
+        to_type:
+          description: ToType is the login type to convert to.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.LoginType'
+      required:
+      - password
+      - to_type
+    codersdk.RBACAction:
+      type: string
+      enum:
+      - application_connect
+      - assign
+      - create
+      - create_agent
+      - delete
+      - delete_agent
+      - read
+      - read_personal
+      - ssh
+      - share
+      - unassign
+      - update
+      - update_agent
+      - update_personal
+      - use
+      - view_insights
+      - start
+      - stop
+    codersdk.RBACResource:
+      type: string
+      enum:
+      - '*'
+      - ai_gateway_key
+      - ai_model_price
+      - ai_provider
+      - ai_seat
+      - aibridge_interception
+      - api_key
+      - assign_org_role
+      - assign_role
+      - audit_log
+      - boundary_log
+      - boundary_usage
+      - chat
+      - connection_log
+      - crypto_key
+      - debug_info
+      - deployment_config
+      - deployment_stats
+      - file
+      - group
+      - group_member
+      - idpsync_settings
+      - inbox_notification
+      - license
+      - notification_message
+      - notification_preference
+      - notification_template
+      - oauth2_app
+      - oauth2_app_code_token
+      - oauth2_app_secret
+      - organization
+      - organization_member
+      - prebuilt_workspace
+      - provisioner_daemon
+      - provisioner_jobs
+      - replicas
+      - system
+      - tailnet_coordinator
+      - task
+      - template
+      - usage_event
+      - user
+      - user_secret
+      - user_skill
+      - webpush_subscription
+      - workspace
+      - workspace_agent_devcontainers
+      - workspace_agent_resource_monitor
+      - workspace_dormant
+      - workspace_proxy
+    codersdk.RequestOneTimePasscodeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
     codersdk.AuthorizationRequest:
       type: object
       properties:
@@ -188,47 +288,6 @@ components:
             response.'
           additionalProperties:
             $ref: '#/components/schemas/codersdk.AuthorizationCheck'
-    codersdk.ExternalAPIKeyScopes:
-      type: object
-      properties:
-        external:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.APIKeyScope'
-    codersdk.ValidateUserPasswordRequest:
-      type: object
-      properties:
-        password:
-          type: string
-      required:
-      - password
-    codersdk.RequestOneTimePasscodeRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-      required:
-      - email
-    codersdk.LoginWithPasswordResponse:
-      type: object
-      properties:
-        session_token:
-          type: string
-      required:
-      - session_token
-    codersdk.ConvertLoginRequest:
-      type: object
-      properties:
-        password:
-          type: string
-        to_type:
-          description: ToType is the login type to convert to.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.LoginType'
-      required:
-      - password
-      - to_type
     codersdk.AuthorizationCheck:
       type: object
       description: AuthorizationCheck is used to check if the currently authenticated user (or the specified user) can do a given action to a given set of objects.
@@ -257,6 +316,56 @@ components:
             workspaces have both `user` and `organization` owners.'
           allOf:
           - $ref: '#/components/schemas/codersdk.AuthorizationObject'
+    codersdk.ValidateUserPasswordRequest:
+      type: object
+      properties:
+        password:
+          type: string
+      required:
+      - password
+    codersdk.AuthorizationObject:
+      type: object
+      description: 'AuthorizationObject can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, all workspaces across the entire product.'
+      properties:
+        any_org:
+          type: boolean
+          description: 'AnyOrgOwner (optional) will disregard the org_owner when checking for permissions.
+
+            This cannot be set to true if the OrganizationID is set.'
+        organization_id:
+          type: string
+          description: OrganizationID (optional) adds the set constraint to all resources owned by a given organization.
+        owner_id:
+          type: string
+          description: OwnerID (optional) adds the set constraint to all resources owned by a given user.
+        resource_id:
+          type: string
+          description: 'ResourceID (optional) reduces the set to a singular resource. This assigns
+
+            a resource ID to the resource type, eg: a single workspace.
+
+            The rbac library will not fetch the resource from the database, so if you
+
+            are using this option, you should also set the owner ID and organization ID
+
+            if possible. Be as specific as possible using all the fields relevant.'
+        resource_type:
+          description: 'ResourceType is the name of the resource.
+
+            `./coderd/rbac/object.go` has the list of valid resource types.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.AuthorizationResponse:
+      type: object
+      additionalProperties:
+        type: boolean
+    codersdk.ValidateUserPasswordResponse:
+      type: object
+      properties:
+        details:
+          type: string
+        valid:
+          type: boolean
     codersdk.APIKeyScope:
       type: string
       enum:
@@ -492,66 +601,6 @@ components:
       - workspace_proxy:delete
       - workspace_proxy:read
       - workspace_proxy:update
-    codersdk.AuthorizationResponse:
-      type: object
-      additionalProperties:
-        type: boolean
-    codersdk.AuthorizationObject:
-      type: object
-      description: 'AuthorizationObject can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, all workspaces across the entire product.'
-      properties:
-        any_org:
-          type: boolean
-          description: 'AnyOrgOwner (optional) will disregard the org_owner when checking for permissions.
-
-            This cannot be set to true if the OrganizationID is set.'
-        organization_id:
-          type: string
-          description: OrganizationID (optional) adds the set constraint to all resources owned by a given organization.
-        owner_id:
-          type: string
-          description: OwnerID (optional) adds the set constraint to all resources owned by a given user.
-        resource_id:
-          type: string
-          description: 'ResourceID (optional) reduces the set to a singular resource. This assigns
-
-            a resource ID to the resource type, eg: a single workspace.
-
-            The rbac library will not fetch the resource from the database, so if you
-
-            are using this option, you should also set the owner ID and organization ID
-
-            if possible. Be as specific as possible using all the fields relevant.'
-        resource_type:
-          description: 'ResourceType is the name of the resource.
-
-            `./coderd/rbac/object.go` has the list of valid resource types.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.RBACResource'
-    codersdk.OAuthConversionResponse:
-      type: object
-      properties:
-        expires_at:
-          type: string
-          format: date-time
-        state_string:
-          type: string
-        to_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-        user_id:
-          type: string
-          format: uuid
-    codersdk.LoginWithPasswordRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-      required:
-      - email
-      - password
     codersdk.LoginType:
       type: string
       enum:
@@ -561,6 +610,20 @@ components:
       - oidc
       - token
       - none
+    codersdk.LoginWithPasswordResponse:
+      type: object
+      properties:
+        session_token:
+          type: string
+      required:
+      - session_token
+    codersdk.ExternalAPIKeyScopes:
+      type: object
+      properties:
+        external:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.APIKeyScope'
     codersdk.ChangePasswordWithOneTimePasscodeRequest:
       type: object
       properties:
@@ -575,80 +638,17 @@ components:
       - email
       - one_time_passcode
       - password
-    codersdk.RBACResource:
-      type: string
-      enum:
-      - '*'
-      - ai_gateway_key
-      - ai_model_price
-      - ai_provider
-      - ai_seat
-      - aibridge_interception
-      - api_key
-      - assign_org_role
-      - assign_role
-      - audit_log
-      - boundary_log
-      - boundary_usage
-      - chat
-      - connection_log
-      - crypto_key
-      - debug_info
-      - deployment_config
-      - deployment_stats
-      - file
-      - group
-      - group_member
-      - idpsync_settings
-      - inbox_notification
-      - license
-      - notification_message
-      - notification_preference
-      - notification_template
-      - oauth2_app
-      - oauth2_app_code_token
-      - oauth2_app_secret
-      - organization
-      - organization_member
-      - prebuilt_workspace
-      - provisioner_daemon
-      - provisioner_jobs
-      - replicas
-      - system
-      - tailnet_coordinator
-      - task
-      - template
-      - usage_event
-      - user
-      - user_secret
-      - user_skill
-      - webpush_subscription
-      - workspace
-      - workspace_agent_devcontainers
-      - workspace_agent_resource_monitor
-      - workspace_dormant
-      - workspace_proxy
-    codersdk.RBACAction:
-      type: string
-      enum:
-      - application_connect
-      - assign
-      - create
-      - create_agent
-      - delete
-      - delete_agent
-      - read
-      - read_personal
-      - ssh
-      - share
-      - unassign
-      - update
-      - update_agent
-      - update_personal
-      - use
-      - view_insights
-      - start
-      - stop
+    codersdk.LoginWithPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - email
+      - password
   securitySchemes:
     CoderSessionToken:
       type: apiKey

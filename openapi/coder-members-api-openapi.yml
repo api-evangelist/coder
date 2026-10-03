@@ -338,6 +338,15 @@ paths:
                   $ref: '#/components/schemas/codersdk.AssignableRoles'
 components:
   schemas:
+    codersdk.PaginatedMembersResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
     codersdk.Role:
       type: object
       properties:
@@ -366,28 +375,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.Permission'
-    codersdk.UserStatus:
-      type: string
-      enum:
-      - active
-      - dormant
-      - suspended
-    codersdk.UpdateRoles:
+    codersdk.SlimRole:
       type: object
       properties:
-        roles:
-          type: array
-          items:
-            type: string
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
     codersdk.OrganizationMember:
       type: object
       properties:
@@ -407,48 +403,80 @@ components:
         user_id:
           type: string
           format: uuid
-    codersdk.SlimRole:
-      type: object
-      properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.AssignableRoles:
-      type: object
-      properties:
-        assignable:
-          type: boolean
-        built_in:
-          type: boolean
-          description: BuiltIn roles are immutable
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        organization_member_permissions:
-          type: array
-          description: OrganizationMemberPermissions are specific for the organization in the field 'OrganizationID' above.
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        organization_permissions:
-          type: array
-          description: OrganizationPermissions are specific for the organization in the field 'OrganizationID' above.
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        site_permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        user_permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
+    codersdk.RBACAction:
+      type: string
+      enum:
+      - application_connect
+      - assign
+      - create
+      - create_agent
+      - delete
+      - delete_agent
+      - read
+      - read_personal
+      - ssh
+      - share
+      - unassign
+      - update
+      - update_agent
+      - update_personal
+      - use
+      - view_insights
+      - start
+      - stop
+    codersdk.RBACResource:
+      type: string
+      enum:
+      - '*'
+      - ai_gateway_key
+      - ai_model_price
+      - ai_provider
+      - ai_seat
+      - aibridge_interception
+      - api_key
+      - assign_org_role
+      - assign_role
+      - audit_log
+      - boundary_log
+      - boundary_usage
+      - chat
+      - connection_log
+      - crypto_key
+      - debug_info
+      - deployment_config
+      - deployment_stats
+      - file
+      - group
+      - group_member
+      - idpsync_settings
+      - inbox_notification
+      - license
+      - notification_message
+      - notification_preference
+      - notification_template
+      - oauth2_app
+      - oauth2_app_code_token
+      - oauth2_app_secret
+      - organization
+      - organization_member
+      - prebuilt_workspace
+      - provisioner_daemon
+      - provisioner_jobs
+      - replicas
+      - system
+      - tailnet_coordinator
+      - task
+      - template
+      - usage_event
+      - user
+      - user_secret
+      - user_skill
+      - webpush_subscription
+      - workspace
+      - workspace_agent_devcontainers
+      - workspace_agent_resource_monitor
+      - workspace_dormant
+      - workspace_proxy
     codersdk.OrganizationMemberWithUserData:
       type: object
       properties:
@@ -504,78 +532,39 @@ components:
           format: date-time
         username:
           type: string
-    codersdk.PaginatedMembersResponse:
+    codersdk.AssignableRoles:
       type: object
       properties:
-        count:
-          type: integer
-        members:
+        assignable:
+          type: boolean
+        built_in:
+          type: boolean
+          description: BuiltIn roles are immutable
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_member_permissions:
+          type: array
+          description: OrganizationMemberPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        organization_permissions:
+          type: array
+          description: OrganizationPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        site_permissions:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
-    codersdk.RBACResource:
-      type: string
-      enum:
-      - '*'
-      - ai_gateway_key
-      - ai_model_price
-      - ai_provider
-      - ai_seat
-      - aibridge_interception
-      - api_key
-      - assign_org_role
-      - assign_role
-      - audit_log
-      - boundary_log
-      - boundary_usage
-      - chat
-      - connection_log
-      - crypto_key
-      - debug_info
-      - deployment_config
-      - deployment_stats
-      - file
-      - group
-      - group_member
-      - idpsync_settings
-      - inbox_notification
-      - license
-      - notification_message
-      - notification_preference
-      - notification_template
-      - oauth2_app
-      - oauth2_app_code_token
-      - oauth2_app_secret
-      - organization
-      - organization_member
-      - prebuilt_workspace
-      - provisioner_daemon
-      - provisioner_jobs
-      - replicas
-      - system
-      - tailnet_coordinator
-      - task
-      - template
-      - usage_event
-      - user
-      - user_secret
-      - user_skill
-      - webpush_subscription
-      - workspace
-      - workspace_agent_devcontainers
-      - workspace_agent_resource_monitor
-      - workspace_dormant
-      - workspace_proxy
-    codersdk.Permission:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/codersdk.RBACAction'
-        negate:
-          type: boolean
-          description: Negate makes this a negative permission
-        resource_type:
-          $ref: '#/components/schemas/codersdk.RBACResource'
+            $ref: '#/components/schemas/codersdk.Permission'
+        user_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
     codersdk.CustomRoleRequest:
       type: object
       properties:
@@ -601,27 +590,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.Permission'
-    codersdk.RBACAction:
+    codersdk.Permission:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/codersdk.RBACAction'
+        negate:
+          type: boolean
+          description: Negate makes this a negative permission
+        resource_type:
+          $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.LoginType:
       type: string
       enum:
-      - application_connect
-      - assign
-      - create
-      - create_agent
-      - delete
-      - delete_agent
-      - read
-      - read_personal
-      - ssh
-      - share
-      - unassign
-      - update
-      - update_agent
-      - update_personal
-      - use
-      - view_insights
-      - start
-      - stop
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    codersdk.UpdateRoles:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            type: string
   securitySchemes:
     CoderSessionToken:
       type: apiKey

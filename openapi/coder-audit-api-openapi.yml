@@ -76,6 +76,30 @@ paths:
           description: No Content
 components:
   schemas:
+    codersdk.BuildReason:
+      type: string
+      enum:
+      - initiator
+      - autostart
+      - autostop
+      - dormancy
+      - dashboard
+      - cli
+      - ssh_connection
+      - vscode_connection
+      - jetbrains_connection
+      - task_auto_pause
+      - task_manual_pause
+      - task_resume
+    codersdk.SlimRole:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
     codersdk.CreateTestAuditLogRequest:
       type: object
       properties:
@@ -122,6 +146,31 @@ components:
         time:
           type: string
           format: date-time
+    codersdk.MinimalOrganization:
+      type: object
+      properties:
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      required:
+      - id
+    codersdk.AuditLogResponse:
+      type: object
+      properties:
+        audit_logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AuditLog'
+        count:
+          type: integer
+        count_cap:
+          type: integer
     codersdk.AuditLog:
       type: object
       properties:
@@ -170,30 +219,6 @@ components:
           $ref: '#/components/schemas/codersdk.User'
         user_agent:
           type: string
-    codersdk.SlimRole:
-      type: object
-      properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.BuildReason:
-      type: string
-      enum:
-      - initiator
-      - autostart
-      - autostop
-      - dormancy
-      - dashboard
-      - cli
-      - ssh_connection
-      - vscode_connection
-      - jetbrains_connection
-      - task_auto_pause
-      - task_manual_pause
-      - task_resume
     codersdk.AuditAction:
       type: string
       enum:
@@ -210,17 +235,6 @@ components:
       - disconnect
       - open
       - close
-    codersdk.AuditLogResponse:
-      type: object
-      properties:
-        audit_logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.AuditLog'
-        count:
-          type: integer
-        count_cap:
-          type: integer
     codersdk.AuditDiffField:
       type: object
       properties:
@@ -228,20 +242,6 @@ components:
         old: {}
         secret:
           type: boolean
-    codersdk.MinimalOrganization:
-      type: object
-      properties:
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-      required:
-      - id
     codersdk.User:
       type: object
       properties:
@@ -301,25 +301,12 @@ components:
       - email
       - id
       - username
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
     codersdk.UserStatus:
       type: string
       enum:
       - active
       - dormant
       - suspended
-    codersdk.AuditDiff:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/codersdk.AuditDiffField'
     codersdk.ResourceType:
       type: string
       enum:
@@ -358,6 +345,19 @@ components:
       - chat
       - user_secret
       - user_skill
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.AuditDiff:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/codersdk.AuditDiffField'
   securitySchemes:
     CoderSessionToken:
       type: apiKey
