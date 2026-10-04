@@ -230,6 +230,17 @@ paths:
                 $ref: '#/components/schemas/codersdk.ProvisionerJob'
 components:
   schemas:
+    codersdk.ProvisionerJobType:
+      type: string
+      enum:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
+    codersdk.JobErrorCode:
+      type: string
+      enum:
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
     codersdk.ProvisionerJobStatus:
       type: string
       enum:
@@ -240,6 +251,57 @@ components:
       - canceled
       - failed
       - unknown
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
+    codersdk.ProvisionerJobMetadata:
+      type: object
+      properties:
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
+          type: string
+        template_version_name:
+          type: string
+        workspace_build_transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+    codersdk.CreateOrganizationRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        display_name:
+          type: string
+          description: DisplayName will default to the same value as `Name` if not provided.
+        icon:
+          type: string
+        name:
+          type: string
+      required:
+      - name
     codersdk.Organization:
       type: object
       properties:
@@ -276,17 +338,40 @@ components:
       - id
       - is_default
       - updated_at
-    codersdk.ProvisionerJobInput:
+    codersdk.Response:
       type: object
       properties:
-        error:
+        detail:
           type: string
-        template_version_id:
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+        message:
           type: string
-          format: uuid
-        workspace_build_id:
-          type: string
-          format: uuid
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+        validations:
+          type: array
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
     codersdk.ProvisionerJob:
       type: object
       properties:
@@ -376,102 +461,17 @@ components:
           type: string
         name:
           type: string
-    codersdk.Response:
+    codersdk.ProvisionerJobInput:
       type: object
       properties:
-        detail:
+        error:
           type: string
-          description: 'Detail is a debug message that provides further insight into why the
-
-            action failed. This information can be technical and a regular golang
-
-            err.Error() text.
-
-            - "database: too many open connections"
-
-            - "stat: too many open files"'
-        message:
-          type: string
-          description: 'Message is an actionable message that depicts actions the request took.
-
-            These messages should be fully formed sentences with proper punctuation.
-
-            Examples:
-
-            - "A user has been created."
-
-            - "Failed to create a user."'
-        validations:
-          type: array
-          description: 'Validations are form field-specific friendly error messages. They will be
-
-            shown on a form field in the UI. These can also be used to add additional
-
-            context if there is a set of errors in the primary ''Message''.'
-          items:
-            $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.ProvisionerJobType:
-      type: string
-      enum:
-      - template_version_import
-      - workspace_build
-      - template_version_dry_run
-    codersdk.ProvisionerJobMetadata:
-      type: object
-      properties:
-        template_display_name:
-          type: string
-        template_icon:
-          type: string
-        template_id:
+        template_version_id:
           type: string
           format: uuid
-        template_name:
-          type: string
-        template_version_name:
-          type: string
-        workspace_build_transition:
-          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
-        workspace_id:
+        workspace_build_id:
           type: string
           format: uuid
-        workspace_name:
-          type: string
-    codersdk.CreateOrganizationRequest:
-      type: object
-      properties:
-        description:
-          type: string
-        display_name:
-          type: string
-          description: DisplayName will default to the same value as `Name` if not provided.
-        icon:
-          type: string
-        name:
-          type: string
-      required:
-      - name
-    codersdk.JobErrorCode:
-      type: string
-      enum:
-      - REQUIRED_TEMPLATE_VARIABLES
-      - INSUFFICIENT_QUOTA
-    codersdk.WorkspaceTransition:
-      type: string
-      enum:
-      - start
-      - stop
-      - delete
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
   securitySchemes:
     CoderSessionToken:
       type: apiKey

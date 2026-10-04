@@ -338,15 +338,61 @@ paths:
                   $ref: '#/components/schemas/codersdk.AssignableRoles'
 components:
   schemas:
-    codersdk.PaginatedMembersResponse:
+    codersdk.OrganizationMemberWithUserData:
       type: object
       properties:
-        count:
-          type: integer
-        members:
+        avatar_url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+        global_roles:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        has_ai_seat:
+          type: boolean
+          description: 'HasAISeat intentionally omits omitempty so the API always includes the
+
+            field, even when false.'
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        updated_at:
+          type: string
+          format: date-time
+        user_created_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
+        user_updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
     codersdk.Role:
       type: object
       properties:
@@ -375,34 +421,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.Permission'
-    codersdk.SlimRole:
-      type: object
-      properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.OrganizationMember:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        organization_id:
-          type: string
-          format: uuid
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.SlimRole'
-        updated_at:
-          type: string
-          format: date-time
-        user_id:
-          type: string
-          format: uuid
     codersdk.RBACAction:
       type: string
       enum:
@@ -477,34 +495,37 @@ components:
       - workspace_agent_resource_monitor
       - workspace_dormant
       - workspace_proxy
-    codersdk.OrganizationMemberWithUserData:
+    codersdk.CustomRoleRequest:
       type: object
       properties:
-        avatar_url:
+        display_name:
           type: string
+        name:
+          type: string
+        organization_member_permissions:
+          type: array
+          description: OrganizationMemberPermissions are specific to the organization the role belongs to.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        organization_permissions:
+          type: array
+          description: OrganizationPermissions are specific to the organization the role belongs to.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        site_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        user_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+    codersdk.OrganizationMember:
+      type: object
+      properties:
         created_at:
           type: string
           format: date-time
-        email:
-          type: string
-        global_roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.SlimRole'
-        has_ai_seat:
-          type: boolean
-          description: 'HasAISeat intentionally omits omitempty so the API always includes the
-
-            field, even when false.'
-        is_service_account:
-          type: boolean
-        last_seen_at:
-          type: string
-          format: date-time
-        login_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-        name:
-          type: string
         organization_id:
           type: string
           format: uuid
@@ -512,26 +533,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.SlimRole'
-        status:
-          enum:
-          - active
-          - suspended
-          allOf:
-          - $ref: '#/components/schemas/codersdk.UserStatus'
         updated_at:
-          type: string
-          format: date-time
-        user_created_at:
           type: string
           format: date-time
         user_id:
           type: string
           format: uuid
-        user_updated_at:
-          type: string
-          format: date-time
-        username:
-          type: string
+    codersdk.PaginatedMembersResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
     codersdk.AssignableRoles:
       type: object
       properties:
@@ -565,31 +587,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.Permission'
-    codersdk.CustomRoleRequest:
+    codersdk.SlimRole:
       type: object
       properties:
         display_name:
           type: string
         name:
           type: string
-        organization_member_permissions:
-          type: array
-          description: OrganizationMemberPermissions are specific to the organization the role belongs to.
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        organization_permissions:
-          type: array
-          description: OrganizationPermissions are specific to the organization the role belongs to.
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        site_permissions:
+        organization_id:
+          type: string
+    codersdk.UpdateRoles:
+      type: object
+      properties:
+        roles:
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        user_permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
+            type: string
     codersdk.Permission:
       type: object
       properties:
@@ -609,19 +622,6 @@ components:
       - oidc
       - token
       - none
-    codersdk.UserStatus:
-      type: string
-      enum:
-      - active
-      - dormant
-      - suspended
-    codersdk.UpdateRoles:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            type: string
   securitySchemes:
     CoderSessionToken:
       type: apiKey

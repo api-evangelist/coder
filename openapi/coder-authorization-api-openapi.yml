@@ -165,31 +165,6 @@ paths:
                 $ref: '#/components/schemas/codersdk.OAuthConversionResponse'
 components:
   schemas:
-    codersdk.OAuthConversionResponse:
-      type: object
-      properties:
-        expires_at:
-          type: string
-          format: date-time
-        state_string:
-          type: string
-        to_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-        user_id:
-          type: string
-          format: uuid
-    codersdk.ConvertLoginRequest:
-      type: object
-      properties:
-        password:
-          type: string
-        to_type:
-          description: ToType is the login type to convert to.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.LoginType'
-      required:
-      - password
-      - to_type
     codersdk.RBACAction:
       type: string
       enum:
@@ -211,6 +186,20 @@ components:
       - view_insights
       - start
       - stop
+    codersdk.ChangePasswordWithOneTimePasscodeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        one_time_passcode:
+          type: string
+        password:
+          type: string
+      required:
+      - email
+      - one_time_passcode
+      - password
     codersdk.RBACResource:
       type: string
       enum:
@@ -264,97 +253,6 @@ components:
       - workspace_agent_resource_monitor
       - workspace_dormant
       - workspace_proxy
-    codersdk.RequestOneTimePasscodeRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-      required:
-      - email
-    codersdk.AuthorizationRequest:
-      type: object
-      properties:
-        checks:
-          type: object
-          description: 'Checks is a map keyed with an arbitrary string to a permission check.
-
-            The key can be any string that is helpful to the caller, and allows
-
-            multiple permission checks to be run in a single request.
-
-            The key ensures that each permission check has the same key in the
-
-            response.'
-          additionalProperties:
-            $ref: '#/components/schemas/codersdk.AuthorizationCheck'
-    codersdk.AuthorizationCheck:
-      type: object
-      description: AuthorizationCheck is used to check if the currently authenticated user (or the specified user) can do a given action to a given set of objects.
-      properties:
-        action:
-          enum:
-          - create
-          - read
-          - update
-          - delete
-          allOf:
-          - $ref: '#/components/schemas/codersdk.RBACAction'
-        object:
-          description: 'Object can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, and all workspaces across the entire product.
-
-            When defining an object, use the most specific language when possible to
-
-            produce the smallest set. Meaning to set as many fields on ''Object'' as
-
-            you can. Example, if you want to check if you can update all workspaces
-
-            owned by ''me'', try to also add an ''OrganizationID'' to the settings.
-
-            Omitting the ''OrganizationID'' could produce the incorrect value, as
-
-            workspaces have both `user` and `organization` owners.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.AuthorizationObject'
-    codersdk.ValidateUserPasswordRequest:
-      type: object
-      properties:
-        password:
-          type: string
-      required:
-      - password
-    codersdk.AuthorizationObject:
-      type: object
-      description: 'AuthorizationObject can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, all workspaces across the entire product.'
-      properties:
-        any_org:
-          type: boolean
-          description: 'AnyOrgOwner (optional) will disregard the org_owner when checking for permissions.
-
-            This cannot be set to true if the OrganizationID is set.'
-        organization_id:
-          type: string
-          description: OrganizationID (optional) adds the set constraint to all resources owned by a given organization.
-        owner_id:
-          type: string
-          description: OwnerID (optional) adds the set constraint to all resources owned by a given user.
-        resource_id:
-          type: string
-          description: 'ResourceID (optional) reduces the set to a singular resource. This assigns
-
-            a resource ID to the resource type, eg: a single workspace.
-
-            The rbac library will not fetch the resource from the database, so if you
-
-            are using this option, you should also set the owner ID and organization ID
-
-            if possible. Be as specific as possible using all the fields relevant.'
-        resource_type:
-          description: 'ResourceType is the name of the resource.
-
-            `./coderd/rbac/object.go` has the list of valid resource types.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.RBACResource'
     codersdk.AuthorizationResponse:
       type: object
       additionalProperties:
@@ -366,6 +264,13 @@ components:
           type: string
         valid:
           type: boolean
+    codersdk.ValidateUserPasswordRequest:
+      type: object
+      properties:
+        password:
+          type: string
+      required:
+      - password
     codersdk.APIKeyScope:
       type: string
       enum:
@@ -610,34 +515,39 @@ components:
       - oidc
       - token
       - none
-    codersdk.LoginWithPasswordResponse:
-      type: object
-      properties:
-        session_token:
-          type: string
-      required:
-      - session_token
-    codersdk.ExternalAPIKeyScopes:
-      type: object
-      properties:
-        external:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.APIKeyScope'
-    codersdk.ChangePasswordWithOneTimePasscodeRequest:
+    codersdk.RequestOneTimePasscodeRequest:
       type: object
       properties:
         email:
           type: string
           format: email
-        one_time_passcode:
-          type: string
-        password:
-          type: string
       required:
       - email
-      - one_time_passcode
+    codersdk.OAuthConversionResponse:
+      type: object
+      properties:
+        expires_at:
+          type: string
+          format: date-time
+        state_string:
+          type: string
+        to_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        user_id:
+          type: string
+          format: uuid
+    codersdk.ConvertLoginRequest:
+      type: object
+      properties:
+        password:
+          type: string
+        to_type:
+          description: ToType is the login type to convert to.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.LoginType'
+      required:
       - password
+      - to_type
     codersdk.LoginWithPasswordRequest:
       type: object
       properties:
@@ -649,6 +559,96 @@ components:
       required:
       - email
       - password
+    codersdk.ExternalAPIKeyScopes:
+      type: object
+      properties:
+        external:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.APIKeyScope'
+    codersdk.AuthorizationCheck:
+      type: object
+      description: AuthorizationCheck is used to check if the currently authenticated user (or the specified user) can do a given action to a given set of objects.
+      properties:
+        action:
+          enum:
+          - create
+          - read
+          - update
+          - delete
+          allOf:
+          - $ref: '#/components/schemas/codersdk.RBACAction'
+        object:
+          description: 'Object can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, and all workspaces across the entire product.
+
+            When defining an object, use the most specific language when possible to
+
+            produce the smallest set. Meaning to set as many fields on ''Object'' as
+
+            you can. Example, if you want to check if you can update all workspaces
+
+            owned by ''me'', try to also add an ''OrganizationID'' to the settings.
+
+            Omitting the ''OrganizationID'' could produce the incorrect value, as
+
+            workspaces have both `user` and `organization` owners.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AuthorizationObject'
+    codersdk.AuthorizationRequest:
+      type: object
+      properties:
+        checks:
+          type: object
+          description: 'Checks is a map keyed with an arbitrary string to a permission check.
+
+            The key can be any string that is helpful to the caller, and allows
+
+            multiple permission checks to be run in a single request.
+
+            The key ensures that each permission check has the same key in the
+
+            response.'
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.AuthorizationCheck'
+    codersdk.AuthorizationObject:
+      type: object
+      description: 'AuthorizationObject can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, all workspaces across the entire product.'
+      properties:
+        any_org:
+          type: boolean
+          description: 'AnyOrgOwner (optional) will disregard the org_owner when checking for permissions.
+
+            This cannot be set to true if the OrganizationID is set.'
+        organization_id:
+          type: string
+          description: OrganizationID (optional) adds the set constraint to all resources owned by a given organization.
+        owner_id:
+          type: string
+          description: OwnerID (optional) adds the set constraint to all resources owned by a given user.
+        resource_id:
+          type: string
+          description: 'ResourceID (optional) reduces the set to a singular resource. This assigns
+
+            a resource ID to the resource type, eg: a single workspace.
+
+            The rbac library will not fetch the resource from the database, so if you
+
+            are using this option, you should also set the owner ID and organization ID
+
+            if possible. Be as specific as possible using all the fields relevant.'
+        resource_type:
+          description: 'ResourceType is the name of the resource.
+
+            `./coderd/rbac/object.go` has the list of valid resource types.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.LoginWithPasswordResponse:
+      type: object
+      properties:
+        session_token:
+          type: string
+      required:
+      - session_token
   securitySchemes:
     CoderSessionToken:
       type: apiKey

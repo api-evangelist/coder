@@ -97,6 +97,13 @@ paths:
           description: OK
 components:
   schemas:
+    codersdk.DeleteWorkspaceAgentPortShareRequest:
+      type: object
+      properties:
+        agent_name:
+          type: string
+        port:
+          type: integer
     codersdk.WorkspaceAgentPortShareProtocol:
       type: string
       enum:
@@ -123,13 +130,13 @@ components:
           - public
           allOf:
           - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
-    codersdk.DeleteWorkspaceAgentPortShareRequest:
+    codersdk.WorkspaceAgentPortShares:
       type: object
       properties:
-        agent_name:
-          type: string
-        port:
-          type: integer
+        shares:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
     codersdk.WorkspaceAgentPortShareLevel:
       type: string
       enum:
@@ -161,13 +168,6 @@ components:
         workspace_id:
           type: string
           format: uuid
-    codersdk.WorkspaceAgentPortShares:
-      type: object
-      properties:
-        shares:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
   securitySchemes:
     CoderSessionToken:
       type: apiKey

@@ -89,6 +89,44 @@ paths:
                   $ref: '#/components/schemas/codersdk.ProvisionerDaemon'
 components:
   schemas:
+    codersdk.ProvisionerDaemonStatus:
+      type: string
+      enum:
+      - offline
+      - idle
+      - busy
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+    codersdk.ProvisionerDaemonJob:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          enum:
+          - pending
+          - running
+          - succeeded
+          - canceling
+          - canceled
+          - failed
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_name:
+          type: string
     codersdk.ProvisionerDaemon:
       type: object
       properties:
@@ -134,44 +172,6 @@ components:
           additionalProperties:
             type: string
         version:
-          type: string
-    codersdk.ProvisionerDaemonStatus:
-      type: string
-      enum:
-      - offline
-      - idle
-      - busy
-    codersdk.ProvisionerJobStatus:
-      type: string
-      enum:
-      - pending
-      - running
-      - succeeded
-      - canceling
-      - canceled
-      - failed
-      - unknown
-    codersdk.ProvisionerDaemonJob:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          enum:
-          - pending
-          - running
-          - succeeded
-          - canceling
-          - canceled
-          - failed
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ProvisionerJobStatus'
-        template_display_name:
-          type: string
-        template_icon:
-          type: string
-        template_name:
           type: string
   securitySchemes:
     CoderSessionToken:

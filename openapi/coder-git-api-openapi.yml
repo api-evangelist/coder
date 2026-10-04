@@ -122,27 +122,6 @@ paths:
           description: No Content
 components:
   schemas:
-    codersdk.ExternalAuthUser:
-      type: object
-      properties:
-        avatar_url:
-          type: string
-        id:
-          type: integer
-        login:
-          type: string
-        name:
-          type: string
-        profile_url:
-          type: string
-    codersdk.DeleteExternalAuthByIDResponse:
-      type: object
-      properties:
-        token_revocation_error:
-          type: string
-        token_revoked:
-          type: boolean
-          description: TokenRevoked set to true if token revocation was attempted and was successful
     codersdk.ExternalAuthDevice:
       type: object
       properties:
@@ -156,32 +135,6 @@ components:
           type: string
         verification_uri:
           type: string
-    codersdk.ExternalAuth:
-      type: object
-      properties:
-        app_install_url:
-          type: string
-          description: AppInstallURL is the URL to install the app.
-        app_installable:
-          type: boolean
-          description: AppInstallable is true if the request for app installs was successful.
-        authenticated:
-          type: boolean
-        device:
-          type: boolean
-        display_name:
-          type: string
-        installations:
-          type: array
-          description: AppInstallations are the installations that the user has access to.
-          items:
-            $ref: '#/components/schemas/codersdk.ExternalAuthAppInstallation'
-        supports_revocation:
-          type: boolean
-        user:
-          description: User is the user that authenticated with the provider.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ExternalAuthUser'
     codersdk.ExternalAuthAppInstallation:
       type: object
       properties:
@@ -210,6 +163,53 @@ components:
           type: string
           format: date-time
         validate_error:
+          type: string
+    codersdk.DeleteExternalAuthByIDResponse:
+      type: object
+      properties:
+        token_revocation_error:
+          type: string
+        token_revoked:
+          type: boolean
+          description: TokenRevoked set to true if token revocation was attempted and was successful
+    codersdk.ExternalAuth:
+      type: object
+      properties:
+        app_install_url:
+          type: string
+          description: AppInstallURL is the URL to install the app.
+        app_installable:
+          type: boolean
+          description: AppInstallable is true if the request for app installs was successful.
+        authenticated:
+          type: boolean
+        device:
+          type: boolean
+        display_name:
+          type: string
+        installations:
+          type: array
+          description: AppInstallations are the installations that the user has access to.
+          items:
+            $ref: '#/components/schemas/codersdk.ExternalAuthAppInstallation'
+        supports_revocation:
+          type: boolean
+        user:
+          description: User is the user that authenticated with the provider.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ExternalAuthUser'
+    codersdk.ExternalAuthUser:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+        id:
+          type: integer
+        login:
+          type: string
+        name:
+          type: string
+        profile_url:
           type: string
   securitySchemes:
     CoderSessionToken:

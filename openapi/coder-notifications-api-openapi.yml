@@ -416,6 +416,38 @@ components:
         updated_at:
           type: string
           format: date-time
+    codersdk.InboxNotification:
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.InboxNotificationAction'
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        read_at:
+          type: string
+        targets:
+          type: array
+          items:
+            type: string
+            format: uuid
+        template_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        user_id:
+          type: string
+          format: uuid
     codersdk.DeleteWebpushSubscription:
       type: object
       properties:
@@ -428,18 +460,15 @@ components:
           type: object
           additionalProperties:
             type: boolean
-    codersdk.GetInboxNotificationResponse:
+    codersdk.WebpushSubscription:
       type: object
       properties:
-        notification:
-          $ref: '#/components/schemas/codersdk.InboxNotification'
-        unread_count:
-          type: integer
-    codersdk.CustomNotificationRequest:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
+        auth_key:
+          type: string
+        endpoint:
+          type: string
+        p256dh_key:
+          type: string
     codersdk.NotificationTemplate:
       type: object
       properties:
@@ -462,11 +491,21 @@ components:
           type: string
         title_template:
           type: string
-    codersdk.NotificationsSettings:
+    codersdk.ValidationError:
       type: object
       properties:
-        notifier_paused:
-          type: boolean
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    codersdk.CustomNotificationRequest:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
     codersdk.NotificationMethodsResponse:
       type: object
       properties:
@@ -476,6 +515,18 @@ components:
             type: string
         default:
           type: string
+    codersdk.GetInboxNotificationResponse:
+      type: object
+      properties:
+        notification:
+          $ref: '#/components/schemas/codersdk.InboxNotification'
+        unread_count:
+          type: integer
+    codersdk.NotificationsSettings:
+      type: object
+      properties:
+        notifier_paused:
+          type: boolean
     codersdk.Response:
       type: object
       properties:
@@ -510,6 +561,20 @@ components:
             context if there is a set of errors in the primary ''Message''.'
           items:
             $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.InboxNotificationAction:
+      type: object
+      properties:
+        label:
+          type: string
+        url:
+          type: string
+    codersdk.CustomNotificationContent:
+      type: object
+      properties:
+        message:
+          type: string
+        title:
+          type: string
     codersdk.ListInboxNotificationsResponse:
       type: object
       properties:
@@ -519,71 +584,6 @@ components:
             $ref: '#/components/schemas/codersdk.InboxNotification'
         unread_count:
           type: integer
-    codersdk.WebpushSubscription:
-      type: object
-      properties:
-        auth_key:
-          type: string
-        endpoint:
-          type: string
-        p256dh_key:
-          type: string
-    codersdk.CustomNotificationContent:
-      type: object
-      properties:
-        message:
-          type: string
-        title:
-          type: string
-    codersdk.InboxNotificationAction:
-      type: object
-      properties:
-        label:
-          type: string
-        url:
-          type: string
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.InboxNotification:
-      type: object
-      properties:
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.InboxNotificationAction'
-        content:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        read_at:
-          type: string
-        targets:
-          type: array
-          items:
-            type: string
-            format: uuid
-        template_id:
-          type: string
-          format: uuid
-        title:
-          type: string
-        user_id:
-          type: string
-          format: uuid
   securitySchemes:
     CoderSessionToken:
       type: apiKey
