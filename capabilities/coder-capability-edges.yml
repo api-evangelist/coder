@@ -1,0 +1,58 @@
+slug: coder
+provider: Coder
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Authorization
+  spec_file: coder-authorization-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /api/v2/users/login log-in-user; POST /api/v2/authcheck check-authorization; POST /api/v2/users/{user}/convert-login
+    convert-user-from-password-to-oauth-authentication
+  reason: Operations perform authentication (login, OTP password reset, password validation, OAuth conversion)
+    and authorization checks with RBAC resources/actions — identity and access management, not a domain
+    business capability.
+- tag: Users
+  spec_file: coder-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /api/v2/users create-new-user; GET /api/v2/users/authmethods get-authentication-methods;
+    codersdk.UpdateUserPasswordRequest, codersdk.UpdateRoles
+  reason: User account provisioning, authentication methods, GitHub OAuth callback, password and role
+    updates — platform user/identity administration, mapped to Identity & Access Management rather than
+    any HR capability.
+- tag: Members
+  spec_file: coder-members-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: PUT /api/v2/organizations/{organization}/members/roles update-a-custom-organization-role;
+    PUT /api/v2/organizations/{organization}/members/{user}/roles assign-role-to-organization-member
+  reason: Despite the HR-sounding 'Members' tag, the operations manage organization membership, custom
+    roles and permission assignment (codersdk.Permission, RBACAction/RBACResource) — role-based access
+    administration, i.e. Identity & Access Management, not Human Capital Management.
+- tag: Secrets
+  spec_file: coder-secrets-api-openapi.yml
+  capability_id: BC-4210.60
+  capability_id_l1: BC-4210
+  capability_name: Configuration & Secrets Management
+  confidence: 0.72
+  evidence: POST /api/v2/users/{user}/secrets create-a-new-user-secret; codersdk.UserSecret
+  reason: CRUD over named user secrets on a developer-workspace platform corresponds to management of
+    secrets consumed by product/runtime services (Configuration & Secrets Management). Thin surface, so
+    moderate confidence.
