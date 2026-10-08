@@ -192,3 +192,35 @@ plans:
         unit: 1
         price: 'contact sales'
         userMultiplied: false
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  units:
+  - feature
+  - object
+  - period
+  - seat
+  plans:
+  - name: Community
+    access: free
+    model: free
+    model_how: derived
+    units:
+    - object
+    - other
+    - period
+    - seat
+    periods:
+    - month
+  - name: Premium
+    access: enterprise
+    model: free
+    model_how: derived
+    units:
+    - feature
+    - object
+    - other
+    periods:
+    - month
