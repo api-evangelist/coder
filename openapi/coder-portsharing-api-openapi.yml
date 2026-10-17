@@ -104,6 +104,37 @@ components:
           type: string
         port:
           type: integer
+    codersdk.WorkspaceAgentPortShares:
+      type: object
+      properties:
+        shares:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
+    codersdk.WorkspaceAgentPortShare:
+      type: object
+      properties:
+        agent_name:
+          type: string
+        port:
+          type: integer
+        protocol:
+          enum:
+          - http
+          - https
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareProtocol'
+        share_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
+        workspace_id:
+          type: string
+          format: uuid
     codersdk.WorkspaceAgentPortShareProtocol:
       type: string
       enum:
@@ -130,13 +161,6 @@ components:
           - public
           allOf:
           - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
-    codersdk.WorkspaceAgentPortShares:
-      type: object
-      properties:
-        shares:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShare'
     codersdk.WorkspaceAgentPortShareLevel:
       type: string
       enum:
@@ -144,30 +168,6 @@ components:
       - authenticated
       - organization
       - public
-    codersdk.WorkspaceAgentPortShare:
-      type: object
-      properties:
-        agent_name:
-          type: string
-        port:
-          type: integer
-        protocol:
-          enum:
-          - http
-          - https
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareProtocol'
-        share_level:
-          enum:
-          - owner
-          - authenticated
-          - organization
-          - public
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceAgentPortShareLevel'
-        workspace_id:
-          type: string
-          format: uuid
   securitySchemes:
     CoderSessionToken:
       type: apiKey

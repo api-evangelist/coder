@@ -302,51 +302,6 @@ paths:
           description: No Content
 components:
   schemas:
-    codersdk.WorkspaceAppOpenIn:
-      type: string
-      enum:
-      - slim-window
-      - tab
-    codersdk.WorkspaceStatus:
-      type: string
-      enum:
-      - pending
-      - starting
-      - running
-      - stopping
-      - stopped
-      - failed
-      - canceling
-      - canceled
-      - deleting
-      - deleted
-    codersdk.WorkspaceTransition:
-      type: string
-      enum:
-      - start
-      - stop
-      - delete
-    codersdk.ProvisionerJobMetadata:
-      type: object
-      properties:
-        template_display_name:
-          type: string
-        template_icon:
-          type: string
-        template_id:
-          type: string
-          format: uuid
-        template_name:
-          type: string
-        template_version_name:
-          type: string
-        workspace_build_transition:
-          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
-        workspace_id:
-          type: string
-          format: uuid
-        workspace_name:
-          type: string
     codersdk.WorkspaceAgent:
       type: object
       properties:
@@ -450,6 +405,27 @@ components:
           format: date-time
         version:
           type: string
+    codersdk.JobErrorCode:
+      type: string
+      enum:
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
+    codersdk.TaskLogsResponse:
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.TaskLogEntry'
+        snapshot:
+          type: boolean
+        snapshot_at:
+          type: string
+    codersdk.PauseTaskResponse:
+      type: object
+      properties:
+        workspace_build:
+          $ref: '#/components/schemas/codersdk.WorkspaceBuild'
     codersdk.ProvisionerJob:
       type: object
       properties:
@@ -521,40 +497,32 @@ components:
           format: uuid
         worker_name:
           type: string
-    codersdk.JobErrorCode:
+    codersdk.TaskStatus:
       type: string
       enum:
-      - REQUIRED_TEMPLATE_VARIABLES
-      - INSUFFICIENT_QUOTA
-    codersdk.WorkspaceAgentScript:
+      - pending
+      - initializing
+      - active
+      - paused
+      - unknown
+      - error
+    codersdk.WorkspaceAppOpenIn:
+      type: string
+      enum:
+      - slim-window
+      - tab
+    codersdk.ResumeTaskResponse:
       type: object
       properties:
-        cron:
-          type: string
-        display_name:
-          type: string
-        exit_code:
-          type: integer
-        id:
-          type: string
-          format: uuid
-        log_path:
-          type: string
-        log_source_id:
-          type: string
-          format: uuid
-        run_on_start:
-          type: boolean
-        run_on_stop:
-          type: boolean
-        script:
-          type: string
-        start_blocks_login:
-          type: boolean
-        status:
-          $ref: '#/components/schemas/codersdk.WorkspaceAgentScriptStatus'
-        timeout:
-          type: integer
+        workspace_build:
+          $ref: '#/components/schemas/codersdk.WorkspaceBuild'
+    codersdk.TaskState:
+      type: string
+      enum:
+      - working
+      - idle
+      - complete
+      - failed
     codersdk.ProvisionerJobStatus:
       type: string
       enum:
@@ -565,60 +533,6 @@ components:
       - canceled
       - failed
       - unknown
-    codersdk.Healthcheck:
-      type: object
-      properties:
-        interval:
-          type: integer
-          description: Interval specifies the seconds between each health check.
-        threshold:
-          type: integer
-          description: Threshold specifies the number of consecutive failed health checks before returning "unhealthy".
-        url:
-          type: string
-          description: URL specifies the endpoint to check for the app health.
-    codersdk.WorkspaceAgentStartupScriptBehavior:
-      type: string
-      enum:
-      - blocking
-      - non-blocking
-    codersdk.WorkspaceResource:
-      type: object
-      properties:
-        agents:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgent'
-        created_at:
-          type: string
-          format: date-time
-        daily_cost:
-          type: integer
-        hide:
-          type: boolean
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        job_id:
-          type: string
-          format: uuid
-        metadata:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceResourceMetadata'
-        name:
-          type: string
-        type:
-          type: string
-        workspace_transition:
-          enum:
-          - start
-          - stop
-          - delete
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceTransition'
     codersdk.BuildReason:
       type: string
       enum:
@@ -634,94 +548,46 @@ components:
       - task_auto_pause
       - task_manual_pause
       - task_resume
-    codersdk.TaskLogEntry:
+    codersdk.ProvisionerJobMetadata:
       type: object
       properties:
-        content:
+        template_display_name:
           type: string
-        id:
-          type: integer
-        time:
+        template_icon:
           type: string
-          format: date-time
-        type:
-          $ref: '#/components/schemas/codersdk.TaskLogType'
-    codersdk.TaskLogType:
-      type: string
-      enum:
-      - input
-      - output
-    codersdk.WorkspaceApp:
-      type: object
-      properties:
-        command:
-          type: string
-        display_name:
-          type: string
-          description: DisplayName is a friendly name for the app.
-        external:
-          type: boolean
-          description: 'External specifies whether the URL should be opened externally on
-
-            the client or not.'
-        group:
-          type: string
-        health:
-          $ref: '#/components/schemas/codersdk.WorkspaceAppHealth'
-        healthcheck:
-          description: Healthcheck specifies the configuration for checking app health.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.Healthcheck'
-        hidden:
-          type: boolean
-        icon:
-          type: string
-          description: 'Icon is a relative path or external URL that specifies
-
-            an icon to be displayed in the dashboard.'
-        id:
+        template_id:
           type: string
           format: uuid
-        open_in:
-          $ref: '#/components/schemas/codersdk.WorkspaceAppOpenIn'
-        sharing_level:
-          enum:
-          - owner
-          - authenticated
-          - organization
-          - public
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceAppSharingLevel'
-        slug:
+        template_name:
           type: string
-          description: Slug is a unique identifier within the agent.
-        statuses:
-          type: array
-          description: Statuses is a list of statuses for the app.
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAppStatus'
-        subdomain:
-          type: boolean
-          description: 'Subdomain denotes whether the app should be accessed via a path on the
-
-            `coder server` or via a hostname-based dev URL. If this is set to true
-
-            and there is no app wildcard configured on the server, the app will not
-
-            be accessible in the UI.'
-        subdomain_name:
+        template_version_name:
           type: string
-          description: SubdomainName is the application domain exposed on the `coder server`.
-        tooltip:
+        workspace_build_transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        workspace_id:
           type: string
-          description: 'Tooltip is an optional markdown supported field that is displayed
-
-            when hovering over workspace apps in the UI.'
-        url:
+          format: uuid
+        workspace_name:
           type: string
-          description: 'URL is the address being proxied to inside the workspace.
-
-            If external is specified, this will be opened on the client.'
+    codersdk.WorkspaceAgentScriptStatus:
+      type: string
+      enum:
+      - ok
+      - exit_failure
+      - timed_out
+      - pipes_left_open
+    codersdk.UpdateTaskInputRequest:
+      type: object
+      properties:
+        input:
+          type: string
+    codersdk.WorkspaceAppSharingLevel:
+      type: string
+      enum:
+      - owner
+      - authenticated
+      - organization
+      - public
     codersdk.WorkspaceAgentLogSource:
       type: object
       properties:
@@ -738,162 +604,73 @@ components:
         workspace_agent_id:
           type: string
           format: uuid
-    codersdk.WorkspaceAgentHealth:
+    codersdk.WorkspaceAppStatus:
       type: object
       properties:
-        healthy:
-          type: boolean
-          description: Healthy is true if the agent is healthy.
-          example: false
-        reason:
+        agent_id:
           type: string
-          description: Reason is a human-readable explanation of the agent's health. It is empty if Healthy is true.
-          example: agent has lost connection
-    codersdk.Task:
-      type: object
-      properties:
+          format: uuid
+        app_id:
+          type: string
+          format: uuid
         created_at:
           type: string
           format: date-time
-        current_state:
-          $ref: '#/components/schemas/codersdk.TaskStateEntry'
-        display_name:
+        icon:
           type: string
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            Icon is an external URL to an icon that will be rendered in the UI.'
         id:
           type: string
           format: uuid
-        initial_prompt:
+        message:
           type: string
-        name:
+        needs_user_attention:
+          type: boolean
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            NeedsUserAttention specifies whether the status needs user attention.'
+        state:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppStatusState'
+        uri:
           type: string
-        organization_id:
-          type: string
-          format: uuid
-        owner_avatar_url:
-          type: string
-        owner_id:
-          type: string
-          format: uuid
-        owner_name:
-          type: string
-        status:
-          enum:
-          - pending
-          - initializing
-          - active
-          - paused
-          - unknown
-          - error
-          allOf:
-          - $ref: '#/components/schemas/codersdk.TaskStatus'
-        template_display_name:
-          type: string
-        template_icon:
-          type: string
-        template_id:
+          description: 'URI is the URI of the resource that the status is for.
+
+            e.g. https://github.com/org/repo/pull/123
+
+            e.g. file:///path/to/file'
+        workspace_id:
           type: string
           format: uuid
-        template_name:
+    codersdk.ProvisionerJobInput:
+      type: object
+      properties:
+        error:
           type: string
         template_version_id:
           type: string
           format: uuid
-        updated_at:
+        workspace_build_id:
+          type: string
+          format: uuid
+    codersdk.TaskLogType:
+      type: string
+      enum:
+      - input
+      - output
+    codersdk.TaskLogEntry:
+      type: object
+      properties:
+        content:
+          type: string
+        id:
+          type: integer
+        time:
           type: string
           format: date-time
-        workspace_agent_health:
-          $ref: '#/components/schemas/codersdk.WorkspaceAgentHealth'
-        workspace_agent_id:
-          format: uuid
-          allOf:
-          - $ref: '#/components/schemas/uuid.NullUUID'
-        workspace_agent_lifecycle:
-          $ref: '#/components/schemas/codersdk.WorkspaceAgentLifecycle'
-        workspace_app_id:
-          format: uuid
-          allOf:
-          - $ref: '#/components/schemas/uuid.NullUUID'
-        workspace_build_number:
-          type: integer
-        workspace_id:
-          format: uuid
-          allOf:
-          - $ref: '#/components/schemas/uuid.NullUUID'
-        workspace_name:
-          type: string
-        workspace_status:
-          enum:
-          - pending
-          - starting
-          - running
-          - stopping
-          - stopped
-          - failed
-          - canceling
-          - canceled
-          - deleting
-          - deleted
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceStatus'
-    codersdk.UpdateTaskInputRequest:
-      type: object
-      properties:
-        input:
-          type: string
-    codersdk.TaskState:
-      type: string
-      enum:
-      - working
-      - idle
-      - complete
-      - failed
-    codersdk.WorkspaceAgentScriptStatus:
-      type: string
-      enum:
-      - ok
-      - exit_failure
-      - timed_out
-      - pipes_left_open
-    codersdk.WorkspaceResourceMetadata:
-      type: object
-      properties:
-        key:
-          type: string
-        sensitive:
-          type: boolean
-        value:
-          type: string
-    codersdk.MatchedProvisioners:
-      type: object
-      properties:
-        available:
-          type: integer
-          description: 'Available is the number of provisioner daemons that are available to
-
-            take jobs. This may be less than the count if some provisioners are
-
-            busy or have been stopped.'
-        count:
-          type: integer
-          description: 'Count is the number of provisioner daemons that matched the given
-
-            tags. If the count is 0, it means no provisioner daemons matched the
-
-            requested tags.'
-        most_recently_seen:
-          type: string
-          format: date-time
-          description: 'MostRecentlySeen is the most recently seen time of the set of matched
-
-            provisioners. If no provisioners matched, this field will be null.'
-    codersdk.DisplayApp:
-      type: string
-      enum:
-      - vscode
-      - vscode_insiders
-      - web_terminal
-      - port_forwarding_helper
-      - ssh_helper
+        type:
+          $ref: '#/components/schemas/codersdk.TaskLogType'
     codersdk.TaskStateEntry:
       type: object
       properties:
@@ -906,53 +683,29 @@ components:
           format: date-time
         uri:
           type: string
-    codersdk.CreateTaskRequest:
+    codersdk.WorkspaceAgentLifecycle:
+      type: string
+      enum:
+      - created
+      - starting
+      - start_timeout
+      - start_error
+      - ready
+      - shutting_down
+      - shutdown_timeout
+      - shutdown_error
+      - 'off'
+    codersdk.WorkspaceAgentHealth:
       type: object
       properties:
-        display_name:
+        healthy:
+          type: boolean
+          description: Healthy is true if the agent is healthy.
+          example: false
+        reason:
           type: string
-        input:
-          type: string
-        name:
-          type: string
-        template_version_id:
-          type: string
-          format: uuid
-        template_version_preset_id:
-          type: string
-          format: uuid
-    codersdk.WorkspaceAppHealth:
-      type: string
-      enum:
-      - disabled
-      - initializing
-      - healthy
-      - unhealthy
-    codersdk.WorkspaceAppSharingLevel:
-      type: string
-      enum:
-      - owner
-      - authenticated
-      - organization
-      - public
-    codersdk.TasksListResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-        tasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Task'
-    codersdk.TaskStatus:
-      type: string
-      enum:
-      - pending
-      - initializing
-      - active
-      - paused
-      - unknown
-      - error
+          description: Reason is a human-readable explanation of the agent's health. It is empty if Healthy is true.
+          example: agent has lost connection
     codersdk.WorkspaceBuild:
       type: object
       properties:
@@ -1042,104 +795,62 @@ components:
         workspace_owner_name:
           type: string
           description: WorkspaceOwnerName is the username of the owner of the workspace.
-    codersdk.WorkspaceAppStatusState:
+    codersdk.WorkspaceAppHealth:
       type: string
       enum:
-      - working
-      - idle
-      - complete
-      - failure
-    codersdk.AgentSubsystem:
-      type: string
-      enum:
-      - envbox
-      - envbuilder
-      - exectrace
-    codersdk.WorkspaceAgentStatus:
-      type: string
-      enum:
-      - connecting
-      - connected
-      - disconnected
-      - timeout
-    codersdk.ProvisionerJobType:
-      type: string
-      enum:
-      - template_version_import
-      - workspace_build
-      - template_version_dry_run
-    codersdk.PauseTaskResponse:
-      type: object
-      properties:
-        workspace_build:
-          $ref: '#/components/schemas/codersdk.WorkspaceBuild'
-    codersdk.ResumeTaskResponse:
-      type: object
-      properties:
-        workspace_build:
-          $ref: '#/components/schemas/codersdk.WorkspaceBuild'
-    codersdk.TaskLogsResponse:
-      type: object
-      properties:
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.TaskLogEntry'
-        snapshot:
-          type: boolean
-        snapshot_at:
-          type: string
+      - disabled
+      - initializing
+      - healthy
+      - unhealthy
     codersdk.TaskSendRequest:
       type: object
       properties:
         input:
           type: string
-    codersdk.WorkspaceAppStatus:
+    codersdk.WorkspaceAgentScript:
       type: object
       properties:
-        agent_id:
+        cron:
           type: string
-          format: uuid
-        app_id:
+        display_name:
           type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        icon:
-          type: string
-          description: 'Deprecated: This field is unused and will be removed in a future version.
-
-            Icon is an external URL to an icon that will be rendered in the UI.'
+        exit_code:
+          type: integer
         id:
           type: string
           format: uuid
-        message:
+        log_path:
           type: string
-        needs_user_attention:
-          type: boolean
-          description: 'Deprecated: This field is unused and will be removed in a future version.
-
-            NeedsUserAttention specifies whether the status needs user attention.'
-        state:
-          $ref: '#/components/schemas/codersdk.WorkspaceAppStatusState'
-        uri:
-          type: string
-          description: 'URI is the URI of the resource that the status is for.
-
-            e.g. https://github.com/org/repo/pull/123
-
-            e.g. file:///path/to/file'
-        workspace_id:
+        log_source_id:
           type: string
           format: uuid
-    codersdk.DERPRegion:
+        run_on_start:
+          type: boolean
+        run_on_stop:
+          type: boolean
+        script:
+          type: string
+        start_blocks_login:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentScriptStatus'
+        timeout:
+          type: integer
+    codersdk.CreateTaskRequest:
       type: object
       properties:
-        latency_ms:
-          type: number
-        preferred:
-          type: boolean
+        display_name:
+          type: string
+        input:
+          type: string
+        name:
+          type: string
+        template_version_id:
+          type: string
+          format: uuid
+        template_version_preset_id:
+          type: string
+          format: uuid
     uuid.NullUUID:
       type: object
       properties:
@@ -1148,29 +859,318 @@ components:
         valid:
           type: boolean
           description: Valid is true if UUID is not NULL
-    codersdk.WorkspaceAgentLifecycle:
-      type: string
-      enum:
-      - created
-      - starting
-      - start_timeout
-      - start_error
-      - ready
-      - shutting_down
-      - shutdown_timeout
-      - shutdown_error
-      - 'off'
-    codersdk.ProvisionerJobInput:
+    codersdk.Healthcheck:
       type: object
       properties:
-        error:
+        interval:
+          type: integer
+          description: Interval specifies the seconds between each health check.
+        threshold:
+          type: integer
+          description: Threshold specifies the number of consecutive failed health checks before returning "unhealthy".
+        url:
+          type: string
+          description: URL specifies the endpoint to check for the app health.
+    codersdk.ProvisionerJobType:
+      type: string
+      enum:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
+    codersdk.WorkspaceStatus:
+      type: string
+      enum:
+      - pending
+      - starting
+      - running
+      - stopping
+      - stopped
+      - failed
+      - canceling
+      - canceled
+      - deleting
+      - deleted
+    codersdk.WorkspaceResource:
+      type: object
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgent'
+        created_at:
+          type: string
+          format: date-time
+        daily_cost:
+          type: integer
+        hide:
+          type: boolean
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        job_id:
+          type: string
+          format: uuid
+        metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceResourceMetadata'
+        name:
+          type: string
+        type:
+          type: string
+        workspace_transition:
+          enum:
+          - start
+          - stop
+          - delete
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+    codersdk.TasksListResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Task'
+    codersdk.Task:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        current_state:
+          $ref: '#/components/schemas/codersdk.TaskStateEntry'
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        initial_prompt:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        owner_avatar_url:
+          type: string
+        owner_id:
+          type: string
+          format: uuid
+        owner_name:
+          type: string
+        status:
+          enum:
+          - pending
+          - initializing
+          - active
+          - paused
+          - unknown
+          - error
+          allOf:
+          - $ref: '#/components/schemas/codersdk.TaskStatus'
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
           type: string
         template_version_id:
           type: string
           format: uuid
-        workspace_build_id:
+        updated_at:
+          type: string
+          format: date-time
+        workspace_agent_health:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentHealth'
+        workspace_agent_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        workspace_agent_lifecycle:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentLifecycle'
+        workspace_app_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        workspace_build_number:
+          type: integer
+        workspace_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        workspace_name:
+          type: string
+        workspace_status:
+          enum:
+          - pending
+          - starting
+          - running
+          - stopping
+          - stopped
+          - failed
+          - canceling
+          - canceled
+          - deleting
+          - deleted
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceStatus'
+    codersdk.WorkspaceResourceMetadata:
+      type: object
+      properties:
+        key:
+          type: string
+        sensitive:
+          type: boolean
+        value:
+          type: string
+    codersdk.DisplayApp:
+      type: string
+      enum:
+      - vscode
+      - vscode_insiders
+      - web_terminal
+      - port_forwarding_helper
+      - ssh_helper
+    codersdk.WorkspaceAgentStatus:
+      type: string
+      enum:
+      - connecting
+      - connected
+      - disconnected
+      - timeout
+    codersdk.AgentSubsystem:
+      type: string
+      enum:
+      - envbox
+      - envbuilder
+      - exectrace
+    codersdk.MatchedProvisioners:
+      type: object
+      properties:
+        available:
+          type: integer
+          description: 'Available is the number of provisioner daemons that are available to
+
+            take jobs. This may be less than the count if some provisioners are
+
+            busy or have been stopped.'
+        count:
+          type: integer
+          description: 'Count is the number of provisioner daemons that matched the given
+
+            tags. If the count is 0, it means no provisioner daemons matched the
+
+            requested tags.'
+        most_recently_seen:
+          type: string
+          format: date-time
+          description: 'MostRecentlySeen is the most recently seen time of the set of matched
+
+            provisioners. If no provisioners matched, this field will be null.'
+    codersdk.WorkspaceApp:
+      type: object
+      properties:
+        command:
+          type: string
+        display_name:
+          type: string
+          description: DisplayName is a friendly name for the app.
+        external:
+          type: boolean
+          description: 'External specifies whether the URL should be opened externally on
+
+            the client or not.'
+        group:
+          type: string
+        health:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppHealth'
+        healthcheck:
+          description: Healthcheck specifies the configuration for checking app health.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.Healthcheck'
+        hidden:
+          type: boolean
+        icon:
+          type: string
+          description: 'Icon is a relative path or external URL that specifies
+
+            an icon to be displayed in the dashboard.'
+        id:
           type: string
           format: uuid
+        open_in:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppOpenIn'
+        sharing_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAppSharingLevel'
+        slug:
+          type: string
+          description: Slug is a unique identifier within the agent.
+        statuses:
+          type: array
+          description: Statuses is a list of statuses for the app.
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAppStatus'
+        subdomain:
+          type: boolean
+          description: 'Subdomain denotes whether the app should be accessed via a path on the
+
+            `coder server` or via a hostname-based dev URL. If this is set to true
+
+            and there is no app wildcard configured on the server, the app will not
+
+            be accessible in the UI.'
+        subdomain_name:
+          type: string
+          description: SubdomainName is the application domain exposed on the `coder server`.
+        tooltip:
+          type: string
+          description: 'Tooltip is an optional markdown supported field that is displayed
+
+            when hovering over workspace apps in the UI.'
+        url:
+          type: string
+          description: 'URL is the address being proxied to inside the workspace.
+
+            If external is specified, this will be opened on the client.'
+    codersdk.WorkspaceAgentStartupScriptBehavior:
+      type: string
+      enum:
+      - blocking
+      - non-blocking
+    codersdk.DERPRegion:
+      type: object
+      properties:
+        latency_ms:
+          type: number
+        preferred:
+          type: boolean
+    codersdk.WorkspaceAppStatusState:
+      type: string
+      enum:
+      - working
+      - idle
+      - complete
+      - failure
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
   securitySchemes:
     CoderSessionToken:
       type: apiKey

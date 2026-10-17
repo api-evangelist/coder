@@ -135,34 +135,18 @@ components:
           type: string
         verification_uri:
           type: string
-    codersdk.ExternalAuthAppInstallation:
+    codersdk.ExternalAuthUser:
       type: object
       properties:
-        account:
-          $ref: '#/components/schemas/codersdk.ExternalAuthUser'
-        configure_url:
+        avatar_url:
           type: string
         id:
           type: integer
-    codersdk.ExternalAuthLink:
-      type: object
-      properties:
-        authenticated:
-          type: boolean
-        created_at:
+        login:
           type: string
-          format: date-time
-        expires:
+        name:
           type: string
-          format: date-time
-        has_refresh_token:
-          type: boolean
-        provider_id:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        validate_error:
+        profile_url:
           type: string
     codersdk.DeleteExternalAuthByIDResponse:
       type: object
@@ -172,6 +156,15 @@ components:
         token_revoked:
           type: boolean
           description: TokenRevoked set to true if token revocation was attempted and was successful
+    codersdk.ExternalAuthAppInstallation:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/codersdk.ExternalAuthUser'
+        configure_url:
+          type: string
+        id:
+          type: integer
     codersdk.ExternalAuth:
       type: object
       properties:
@@ -198,18 +191,25 @@ components:
           description: User is the user that authenticated with the provider.
           allOf:
           - $ref: '#/components/schemas/codersdk.ExternalAuthUser'
-    codersdk.ExternalAuthUser:
+    codersdk.ExternalAuthLink:
       type: object
       properties:
-        avatar_url:
+        authenticated:
+          type: boolean
+        created_at:
           type: string
-        id:
-          type: integer
-        login:
+          format: date-time
+        expires:
           type: string
-        name:
+          format: date-time
+        has_refresh_token:
+          type: boolean
+        provider_id:
           type: string
-        profile_url:
+        updated_at:
+          type: string
+          format: date-time
+        validate_error:
           type: string
   securitySchemes:
     CoderSessionToken:

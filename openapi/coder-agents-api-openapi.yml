@@ -677,67 +677,6 @@ paths:
                 $ref: '#/components/schemas/codersdk.ServerSentEvent'
 components:
   schemas:
-    codersdk.WorkspaceAgentDevcontainer:
-      type: object
-      properties:
-        agent:
-          $ref: '#/components/schemas/codersdk.WorkspaceAgentDevcontainerAgent'
-        config_path:
-          type: string
-        container:
-          $ref: '#/components/schemas/codersdk.WorkspaceAgentContainer'
-        dirty:
-          type: boolean
-        error:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        status:
-          description: Additional runtime fields.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceAgentDevcontainerStatus'
-        subagent_id:
-          format: uuid
-          allOf:
-          - $ref: '#/components/schemas/uuid.NullUUID'
-        workspace_folder:
-          type: string
-    codersdk.ServerSentEvent:
-      type: object
-      properties:
-        data: {}
-        type:
-          $ref: '#/components/schemas/codersdk.ServerSentEventType'
-    agentsdk.GitSSHKey:
-      type: object
-      properties:
-        private_key:
-          type: string
-        public_key:
-          type: string
-    codersdk.WorkspaceAppOpenIn:
-      type: string
-      enum:
-      - slim-window
-      - tab
-    agentsdk.AuthenticateResponse:
-      type: object
-      properties:
-        session_token:
-          type: string
-    codersdk.WorkspaceAgentDevcontainerAgent:
-      type: object
-      properties:
-        directory:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
     codersdk.WorkspaceAgent:
       type: object
       properties:
@@ -841,99 +780,58 @@ components:
           format: date-time
         version:
           type: string
-    agentsdk.PatchAppStatus:
-      type: object
-      properties:
-        app_slug:
-          type: string
-        icon:
-          type: string
-          description: 'Deprecated: this field is unused and will be removed in a future version.'
-        message:
-          type: string
-        needs_user_attention:
-          type: boolean
-          description: 'Deprecated: this field is unused and will be removed in a future version.'
-        state:
-          $ref: '#/components/schemas/codersdk.WorkspaceAppStatusState'
-        uri:
-          type: string
     agentsdk.ReinitializationReason:
       type: string
       enum:
       - prebuild_claimed
-    agentsdk.ReinitializationEvent:
+    codersdk.WorkspaceAgentListeningPort:
       type: object
       properties:
-        owner_id:
+        network:
           type: string
-          format: uuid
-        reason:
-          $ref: '#/components/schemas/agentsdk.ReinitializationReason'
-        workspace_id:
-          type: string
-          format: uuid
-    codersdk.WorkspaceAgentListeningPortsResponse:
-      type: object
-      properties:
-        ports:
-          type: array
-          description: 'If there are no ports in the list, nothing should be displayed in the UI.
-
-            There must not be a "no ports available" message or anything similar, as
-
-            there will always be no ports displayed on platforms where our port
-
-            detection logic is unsupported.'
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentListeningPort'
-    codersdk.WorkspaceAgentScript:
-      type: object
-      properties:
-        cron:
-          type: string
-        display_name:
-          type: string
-        exit_code:
+          description: only "tcp" at the moment
+        port:
           type: integer
+        process_name:
+          type: string
+          description: may be empty
+    codersdk.LogLevel:
+      type: string
+      enum:
+      - trace
+      - debug
+      - info
+      - warn
+      - error
+    codersdk.WorkspaceAgentDevcontainer:
+      type: object
+      properties:
+        agent:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentDevcontainerAgent'
+        config_path:
+          type: string
+        container:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentContainer'
+        dirty:
+          type: boolean
+        error:
+          type: string
         id:
           type: string
           format: uuid
-        log_path:
+        name:
           type: string
-        log_source_id:
-          type: string
-          format: uuid
-        run_on_start:
-          type: boolean
-        run_on_stop:
-          type: boolean
-        script:
-          type: string
-        start_blocks_login:
-          type: boolean
         status:
-          $ref: '#/components/schemas/codersdk.WorkspaceAgentScriptStatus'
-        timeout:
-          type: integer
-    codersdk.Healthcheck:
-      type: object
-      properties:
-        interval:
-          type: integer
-          description: Interval specifies the seconds between each health check.
-        threshold:
-          type: integer
-          description: Threshold specifies the number of consecutive failed health checks before returning "unhealthy".
-        url:
+          description: Additional runtime fields.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAgentDevcontainerStatus'
+        subagent_id:
+          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/uuid.NullUUID'
+        workspace_folder:
           type: string
-          description: URL specifies the endpoint to check for the app health.
-    codersdk.WorkspaceAgentStartupScriptBehavior:
-      type: string
-      enum:
-      - blocking
-      - non-blocking
-    agentsdk.AzureInstanceIdentityToken:
+    agentsdk.AWSInstanceIdentityToken:
       type: object
       properties:
         agent_name:
@@ -943,157 +841,13 @@ components:
             agents share the same instance identity. An empty string is
 
             treated as unspecified.'
-        encoding:
+        document:
           type: string
         signature:
           type: string
       required:
-      - encoding
+      - document
       - signature
-    agentsdk.PostLogSourceRequest:
-      type: object
-      properties:
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          description: 'ID is a unique identifier for the log source.
-
-            It is scoped to a workspace agent, and can be statically
-
-            defined inside code to prevent duplicate sources from being
-
-            created for the same agent.'
-    agentsdk.ExternalAuthResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-        password:
-          type: string
-        token_extra:
-          type: object
-          additionalProperties: true
-        type:
-          type: string
-        url:
-          type: string
-        username:
-          type: string
-          description: 'Deprecated: Only supported on `/workspaceagents/me/gitauth`
-
-            for backwards compatibility.'
-    workspacesdk.AgentConnectionInfo:
-      type: object
-      properties:
-        derp_force_websockets:
-          type: boolean
-        derp_map:
-          $ref: '#/components/schemas/tailcfg.DERPMap'
-        disable_direct_connections:
-          type: boolean
-        hostname_suffix:
-          type: string
-    codersdk.ServerSentEventType:
-      type: string
-      enum:
-      - ping
-      - data
-      - error
-    agentsdk.PatchLogs:
-      type: object
-      properties:
-        log_source_id:
-          type: string
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/agentsdk.Log'
-    codersdk.WorkspaceAgentLifecycle:
-      type: string
-      enum:
-      - created
-      - starting
-      - start_timeout
-      - start_error
-      - ready
-      - shutting_down
-      - shutdown_timeout
-      - shutdown_error
-      - 'off'
-    codersdk.WorkspaceApp:
-      type: object
-      properties:
-        command:
-          type: string
-        display_name:
-          type: string
-          description: DisplayName is a friendly name for the app.
-        external:
-          type: boolean
-          description: 'External specifies whether the URL should be opened externally on
-
-            the client or not.'
-        group:
-          type: string
-        health:
-          $ref: '#/components/schemas/codersdk.WorkspaceAppHealth'
-        healthcheck:
-          description: Healthcheck specifies the configuration for checking app health.
-          allOf:
-          - $ref: '#/components/schemas/codersdk.Healthcheck'
-        hidden:
-          type: boolean
-        icon:
-          type: string
-          description: 'Icon is a relative path or external URL that specifies
-
-            an icon to be displayed in the dashboard.'
-        id:
-          type: string
-          format: uuid
-        open_in:
-          $ref: '#/components/schemas/codersdk.WorkspaceAppOpenIn'
-        sharing_level:
-          enum:
-          - owner
-          - authenticated
-          - organization
-          - public
-          allOf:
-          - $ref: '#/components/schemas/codersdk.WorkspaceAppSharingLevel'
-        slug:
-          type: string
-          description: Slug is a unique identifier within the agent.
-        statuses:
-          type: array
-          description: Statuses is a list of statuses for the app.
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAppStatus'
-        subdomain:
-          type: boolean
-          description: 'Subdomain denotes whether the app should be accessed via a path on the
-
-            `coder server` or via a hostname-based dev URL. If this is set to true
-
-            and there is no app wildcard configured on the server, the app will not
-
-            be accessible in the UI.'
-        subdomain_name:
-          type: string
-          description: SubdomainName is the application domain exposed on the `coder server`.
-        tooltip:
-          type: string
-          description: 'Tooltip is an optional markdown supported field that is displayed
-
-            when hovering over workspace apps in the UI.'
-        url:
-          type: string
-          description: 'URL is the address being proxied to inside the workspace.
-
-            If external is specified, this will be opened on the client.'
     codersdk.Response:
       type: object
       properties:
@@ -1128,155 +882,17 @@ components:
             context if there is a set of errors in the primary ''Message''.'
           items:
             $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.WorkspaceAgentLogSource:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        workspace_agent_id:
-          type: string
-          format: uuid
-    codersdk.WorkspaceAgentHealth:
-      type: object
-      properties:
-        healthy:
-          type: boolean
-          description: Healthy is true if the agent is healthy.
-          example: false
-        reason:
-          type: string
-          description: Reason is a human-readable explanation of the agent's health. It is empty if Healthy is true.
-          example: agent has lost connection
-    codersdk.WorkspaceAgentScriptStatus:
+    codersdk.WorkspaceAppOpenIn:
       type: string
       enum:
-      - ok
-      - exit_failure
-      - timed_out
-      - pipes_left_open
-    codersdk.WorkspaceAgentListContainersResponse:
+      - slim-window
+      - tab
+    codersdk.ServerSentEvent:
       type: object
       properties:
-        containers:
-          type: array
-          description: Containers is a list of containers visible to the workspace agent.
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentContainer'
-        devcontainers:
-          type: array
-          description: Devcontainers is a list of devcontainers visible to the workspace agent.
-          items:
-            $ref: '#/components/schemas/codersdk.WorkspaceAgentDevcontainer'
-        warnings:
-          type: array
-          description: 'Warnings is a list of warnings that may have occurred during the
-
-            process of listing containers. This should not include fatal errors.'
-          items:
-            type: string
-    codersdk.WorkspaceAgentContainerPort:
-      type: object
-      properties:
-        host_ip:
-          type: string
-          description: 'HostIP is the IP address of the host interface to which the port is
-
-            bound. Note that this can be an IPv4 or IPv6 address.'
-        host_port:
-          type: integer
-          description: HostPort is the port number *outside* the container.
-        network:
-          type: string
-          description: Network is the network protocol used by the port (tcp, udp, etc).
-        port:
-          type: integer
-          description: Port is the port number *inside* the container.
-    codersdk.DisplayApp:
-      type: string
-      enum:
-      - vscode
-      - vscode_insiders
-      - web_terminal
-      - port_forwarding_helper
-      - ssh_helper
-    tailcfg.DERPMap:
-      type: object
-      properties:
-        homeParams:
-          description: 'HomeParams, if non-nil, is a change in home parameters.
-
-
-            The rest of the DEPRMap fields, if zero, means unchanged.'
-          allOf:
-          - $ref: '#/components/schemas/tailcfg.DERPHomeParams'
-        omitDefaultRegions:
-          type: boolean
-          description: 'OmitDefaultRegions specifies to not use Tailscale''s DERP servers, and only use those
-
-            specified in this DERPMap. If there are none set outside of the defaults, this is a noop.
-
-
-            This field is only meaningful if the Regions map is non-nil (indicating a change).'
-        regions:
-          type: object
-          description: 'Regions is the set of geographic regions running DERP node(s).
-
-
-            It''s keyed by the DERPRegion.RegionID.
-
-
-            The numbers are not necessarily contiguous.'
-          additionalProperties:
-            $ref: '#/components/schemas/tailcfg.DERPRegion'
-    agentsdk.AWSInstanceIdentityToken:
-      type: object
-      properties:
-        agent_name:
-          type: string
-          description: 'AgentName optionally selects a specific agent when multiple
-
-            agents share the same instance identity. An empty string is
-
-            treated as unspecified.'
-        document:
-          type: string
-        signature:
-          type: string
-      required:
-      - document
-      - signature
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.WorkspaceAppHealth:
-      type: string
-      enum:
-      - disabled
-      - initializing
-      - healthy
-      - unhealthy
-    codersdk.WorkspaceAppSharingLevel:
-      type: string
-      enum:
-      - owner
-      - authenticated
-      - organization
-      - public
+        data: {}
+        type:
+          $ref: '#/components/schemas/codersdk.ServerSentEventType'
     agentsdk.GoogleInstanceIdentityToken:
       type: object
       properties:
@@ -1291,19 +907,6 @@ components:
           type: string
       required:
       - json_web_token
-    codersdk.AgentSubsystem:
-      type: string
-      enum:
-      - envbox
-      - envbuilder
-      - exectrace
-    codersdk.WorkspaceAppStatusState:
-      type: string
-      enum:
-      - working
-      - idle
-      - complete
-      - failure
     codersdk.WorkspaceAgentContainer:
       type: object
       properties:
@@ -1347,6 +950,43 @@ components:
             is somewhat implementation-dependent.'
           additionalProperties:
             type: string
+    tailcfg.DERPHomeParams:
+      type: object
+      properties:
+        regionScore:
+          type: object
+          description: 'RegionScore scales latencies of DERP regions by a given scaling
+
+            factor when determining which region to use as the home
+
+            ("preferred") DERP. Scores in the range (0, 1) will cause this
+
+            region to be proportionally more preferred, and scores in the range
+
+            (1, ∞) will penalize a region.
+
+
+            If a region is not present in this map, it is treated as having a
+
+            score of 1.0.
+
+
+            Scores should not be 0 or negative; such scores will be ignored.
+
+
+            A nil map means no change from the previous value (if any); an empty
+
+            non-nil map can be sent to reset all scores back to 1.0.'
+          additionalProperties:
+            type: number
+            format: float64
+    codersdk.WorkspaceAgentScriptStatus:
+      type: string
+      enum:
+      - ok
+      - exit_failure
+      - timed_out
+      - pipes_left_open
     codersdk.WorkspaceAgentLog:
       type: object
       properties:
@@ -1362,6 +1002,23 @@ components:
         source_id:
           type: string
           format: uuid
+    codersdk.WorkspaceAgentContainerPort:
+      type: object
+      properties:
+        host_ip:
+          type: string
+          description: 'HostIP is the IP address of the host interface to which the port is
+
+            bound. Note that this can be an IPv4 or IPv6 address.'
+        host_port:
+          type: integer
+          description: HostPort is the port number *outside* the container.
+        network:
+          type: string
+          description: Network is the network protocol used by the port (tcp, udp, etc).
+        port:
+          type: integer
+          description: Port is the port number *inside* the container.
     codersdk.WorkspaceAgentDevcontainerStatus:
       type: string
       enum:
@@ -1371,15 +1028,223 @@ components:
       - stopping
       - deleting
       - error
-    agentsdk.Log:
+    codersdk.WorkspaceAppSharingLevel:
+      type: string
+      enum:
+      - owner
+      - authenticated
+      - organization
+      - public
+    codersdk.WorkspaceAgentLogSource:
       type: object
       properties:
         created_at:
           type: string
-        level:
-          $ref: '#/components/schemas/codersdk.LogLevel'
-        output:
+          format: date-time
+        display_name:
           type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        workspace_agent_id:
+          type: string
+          format: uuid
+    codersdk.WorkspaceAppStatus:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        app_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        icon:
+          type: string
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            Icon is an external URL to an icon that will be rendered in the UI.'
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        needs_user_attention:
+          type: boolean
+          description: 'Deprecated: This field is unused and will be removed in a future version.
+
+            NeedsUserAttention specifies whether the status needs user attention.'
+        state:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppStatusState'
+        uri:
+          type: string
+          description: 'URI is the URI of the resource that the status is for.
+
+            e.g. https://github.com/org/repo/pull/123
+
+            e.g. file:///path/to/file'
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+      required:
+      - detail
+      - field
+    agentsdk.PostLogSourceRequest:
+      type: object
+      properties:
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          description: 'ID is a unique identifier for the log source.
+
+            It is scoped to a workspace agent, and can be statically
+
+            defined inside code to prevent duplicate sources from being
+
+            created for the same agent.'
+    codersdk.WorkspaceAgentLifecycle:
+      type: string
+      enum:
+      - created
+      - starting
+      - start_timeout
+      - start_error
+      - ready
+      - shutting_down
+      - shutdown_timeout
+      - shutdown_error
+      - 'off'
+    codersdk.WorkspaceAgentHealth:
+      type: object
+      properties:
+        healthy:
+          type: boolean
+          description: Healthy is true if the agent is healthy.
+          example: false
+        reason:
+          type: string
+          description: Reason is a human-readable explanation of the agent's health. It is empty if Healthy is true.
+          example: agent has lost connection
+    codersdk.WorkspaceAppHealth:
+      type: string
+      enum:
+      - disabled
+      - initializing
+      - healthy
+      - unhealthy
+    agentsdk.ReinitializationEvent:
+      type: object
+      properties:
+        owner_id:
+          type: string
+          format: uuid
+        reason:
+          $ref: '#/components/schemas/agentsdk.ReinitializationReason'
+        workspace_id:
+          type: string
+          format: uuid
+    codersdk.WorkspaceAgentScript:
+      type: object
+      properties:
+        cron:
+          type: string
+        display_name:
+          type: string
+        exit_code:
+          type: integer
+        id:
+          type: string
+          format: uuid
+        log_path:
+          type: string
+        log_source_id:
+          type: string
+          format: uuid
+        run_on_start:
+          type: boolean
+        run_on_stop:
+          type: boolean
+        script:
+          type: string
+        start_blocks_login:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/codersdk.WorkspaceAgentScriptStatus'
+        timeout:
+          type: integer
+    codersdk.WorkspaceAgentDevcontainerAgent:
+      type: object
+      properties:
+        directory:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    tailcfg.DERPMap:
+      type: object
+      properties:
+        homeParams:
+          description: 'HomeParams, if non-nil, is a change in home parameters.
+
+
+            The rest of the DEPRMap fields, if zero, means unchanged.'
+          allOf:
+          - $ref: '#/components/schemas/tailcfg.DERPHomeParams'
+        omitDefaultRegions:
+          type: boolean
+          description: 'OmitDefaultRegions specifies to not use Tailscale''s DERP servers, and only use those
+
+            specified in this DERPMap. If there are none set outside of the defaults, this is a noop.
+
+
+            This field is only meaningful if the Regions map is non-nil (indicating a change).'
+        regions:
+          type: object
+          description: 'Regions is the set of geographic regions running DERP node(s).
+
+
+            It''s keyed by the DERPRegion.RegionID.
+
+
+            The numbers are not necessarily contiguous.'
+          additionalProperties:
+            $ref: '#/components/schemas/tailcfg.DERPRegion'
+    codersdk.WorkspaceAgentListContainersResponse:
+      type: object
+      properties:
+        containers:
+          type: array
+          description: Containers is a list of containers visible to the workspace agent.
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentContainer'
+        devcontainers:
+          type: array
+          description: Devcontainers is a list of devcontainers visible to the workspace agent.
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentDevcontainer'
+        warnings:
+          type: array
+          description: 'Warnings is a list of warnings that may have occurred during the
+
+            process of listing containers. This should not include fatal errors.'
+          items:
+            type: string
     tailcfg.DERPNode:
       type: object
       properties:
@@ -1476,93 +1341,38 @@ components:
           description: 'STUNTestIP is used in tests to override the STUN server''s IP.
 
             If empty, it''s assumed to be the same as the DERP server.'
-    codersdk.WorkspaceAppStatus:
+    codersdk.ServerSentEventType:
+      type: string
+      enum:
+      - ping
+      - data
+      - error
+    agentsdk.PatchAppStatus:
       type: object
       properties:
-        agent_id:
+        app_slug:
           type: string
-          format: uuid
-        app_id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
         icon:
           type: string
-          description: 'Deprecated: This field is unused and will be removed in a future version.
-
-            Icon is an external URL to an icon that will be rendered in the UI.'
-        id:
-          type: string
-          format: uuid
+          description: 'Deprecated: this field is unused and will be removed in a future version.'
         message:
           type: string
         needs_user_attention:
           type: boolean
-          description: 'Deprecated: This field is unused and will be removed in a future version.
-
-            NeedsUserAttention specifies whether the status needs user attention.'
+          description: 'Deprecated: this field is unused and will be removed in a future version.'
         state:
           $ref: '#/components/schemas/codersdk.WorkspaceAppStatusState'
         uri:
           type: string
-          description: 'URI is the URI of the resource that the status is for.
-
-            e.g. https://github.com/org/repo/pull/123
-
-            e.g. file:///path/to/file'
-        workspace_id:
-          type: string
-          format: uuid
-    codersdk.DERPRegion:
+    agentsdk.Log:
       type: object
       properties:
-        latency_ms:
-          type: number
-        preferred:
-          type: boolean
-    tailcfg.DERPHomeParams:
-      type: object
-      properties:
-        regionScore:
-          type: object
-          description: 'RegionScore scales latencies of DERP regions by a given scaling
-
-            factor when determining which region to use as the home
-
-            ("preferred") DERP. Scores in the range (0, 1) will cause this
-
-            region to be proportionally more preferred, and scores in the range
-
-            (1, ∞) will penalize a region.
-
-
-            If a region is not present in this map, it is treated as having a
-
-            score of 1.0.
-
-
-            Scores should not be 0 or negative; such scores will be ignored.
-
-
-            A nil map means no change from the previous value (if any); an empty
-
-            non-nil map can be sent to reset all scores back to 1.0.'
-          additionalProperties:
-            type: number
-            format: float64
-    codersdk.WorkspaceAgentListeningPort:
-      type: object
-      properties:
-        network:
+        created_at:
           type: string
-          description: only "tcp" at the moment
-        port:
-          type: integer
-        process_name:
+        level:
+          $ref: '#/components/schemas/codersdk.LogLevel'
+        output:
           type: string
-          description: may be empty
     uuid.NullUUID:
       type: object
       properties:
@@ -1571,6 +1381,48 @@ components:
         valid:
           type: boolean
           description: Valid is true if UUID is not NULL
+    codersdk.Healthcheck:
+      type: object
+      properties:
+        interval:
+          type: integer
+          description: Interval specifies the seconds between each health check.
+        threshold:
+          type: integer
+          description: Threshold specifies the number of consecutive failed health checks before returning "unhealthy".
+        url:
+          type: string
+          description: URL specifies the endpoint to check for the app health.
+    workspacesdk.AgentConnectionInfo:
+      type: object
+      properties:
+        derp_force_websockets:
+          type: boolean
+        derp_map:
+          $ref: '#/components/schemas/tailcfg.DERPMap'
+        disable_direct_connections:
+          type: boolean
+        hostname_suffix:
+          type: string
+    agentsdk.ExternalAuthResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        password:
+          type: string
+        token_extra:
+          type: object
+          additionalProperties: true
+        type:
+          type: string
+        url:
+          type: string
+        username:
+          type: string
+          description: 'Deprecated: Only supported on `/workspaceagents/me/gitauth`
+
+            for backwards compatibility.'
     tailcfg.DERPRegion:
       type: object
       properties:
@@ -1648,6 +1500,38 @@ components:
           description: 'RegionName is a long English name for the region: "New York City",
 
             "San Francisco", "Singapore", "Frankfurt", etc.'
+    agentsdk.GitSSHKey:
+      type: object
+      properties:
+        private_key:
+          type: string
+        public_key:
+          type: string
+    agentsdk.AzureInstanceIdentityToken:
+      type: object
+      properties:
+        agent_name:
+          type: string
+          description: 'AgentName optionally selects a specific agent when multiple
+
+            agents share the same instance identity. An empty string is
+
+            treated as unspecified.'
+        encoding:
+          type: string
+        signature:
+          type: string
+      required:
+      - encoding
+      - signature
+    codersdk.DisplayApp:
+      type: string
+      enum:
+      - vscode
+      - vscode_insiders
+      - web_terminal
+      - port_forwarding_helper
+      - ssh_helper
     codersdk.WorkspaceAgentStatus:
       type: string
       enum:
@@ -1655,14 +1539,130 @@ components:
       - connected
       - disconnected
       - timeout
-    codersdk.LogLevel:
+    codersdk.AgentSubsystem:
       type: string
       enum:
-      - trace
-      - debug
-      - info
-      - warn
-      - error
+      - envbox
+      - envbuilder
+      - exectrace
+    agentsdk.PatchLogs:
+      type: object
+      properties:
+        log_source_id:
+          type: string
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/agentsdk.Log'
+    codersdk.WorkspaceApp:
+      type: object
+      properties:
+        command:
+          type: string
+        display_name:
+          type: string
+          description: DisplayName is a friendly name for the app.
+        external:
+          type: boolean
+          description: 'External specifies whether the URL should be opened externally on
+
+            the client or not.'
+        group:
+          type: string
+        health:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppHealth'
+        healthcheck:
+          description: Healthcheck specifies the configuration for checking app health.
+          allOf:
+          - $ref: '#/components/schemas/codersdk.Healthcheck'
+        hidden:
+          type: boolean
+        icon:
+          type: string
+          description: 'Icon is a relative path or external URL that specifies
+
+            an icon to be displayed in the dashboard.'
+        id:
+          type: string
+          format: uuid
+        open_in:
+          $ref: '#/components/schemas/codersdk.WorkspaceAppOpenIn'
+        sharing_level:
+          enum:
+          - owner
+          - authenticated
+          - organization
+          - public
+          allOf:
+          - $ref: '#/components/schemas/codersdk.WorkspaceAppSharingLevel'
+        slug:
+          type: string
+          description: Slug is a unique identifier within the agent.
+        statuses:
+          type: array
+          description: Statuses is a list of statuses for the app.
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAppStatus'
+        subdomain:
+          type: boolean
+          description: 'Subdomain denotes whether the app should be accessed via a path on the
+
+            `coder server` or via a hostname-based dev URL. If this is set to true
+
+            and there is no app wildcard configured on the server, the app will not
+
+            be accessible in the UI.'
+        subdomain_name:
+          type: string
+          description: SubdomainName is the application domain exposed on the `coder server`.
+        tooltip:
+          type: string
+          description: 'Tooltip is an optional markdown supported field that is displayed
+
+            when hovering over workspace apps in the UI.'
+        url:
+          type: string
+          description: 'URL is the address being proxied to inside the workspace.
+
+            If external is specified, this will be opened on the client.'
+    agentsdk.AuthenticateResponse:
+      type: object
+      properties:
+        session_token:
+          type: string
+    codersdk.WorkspaceAgentListeningPortsResponse:
+      type: object
+      properties:
+        ports:
+          type: array
+          description: 'If there are no ports in the list, nothing should be displayed in the UI.
+
+            There must not be a "no ports available" message or anything similar, as
+
+            there will always be no ports displayed on platforms where our port
+
+            detection logic is unsupported.'
+          items:
+            $ref: '#/components/schemas/codersdk.WorkspaceAgentListeningPort'
+    codersdk.WorkspaceAgentStartupScriptBehavior:
+      type: string
+      enum:
+      - blocking
+      - non-blocking
+    codersdk.DERPRegion:
+      type: object
+      properties:
+        latency_ms:
+          type: number
+        preferred:
+          type: boolean
+    codersdk.WorkspaceAppStatusState:
+      type: string
+      enum:
+      - working
+      - idle
+      - complete
+      - failure
   securitySchemes:
     CoderSessionToken:
       type: apiKey

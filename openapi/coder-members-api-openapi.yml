@@ -393,6 +393,33 @@ components:
           format: date-time
         username:
           type: string
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+    codersdk.RBACAction:
+      type: string
+      enum:
+      - application_connect
+      - assign
+      - create
+      - create_agent
+      - delete
+      - delete_agent
+      - read
+      - read_personal
+      - ssh
+      - share
+      - unassign
+      - update
+      - update_agent
+      - update_personal
+      - use
+      - view_insights
+      - start
+      - stop
     codersdk.Role:
       type: object
       properties:
@@ -421,27 +448,95 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.Permission'
-    codersdk.RBACAction:
+    codersdk.Permission:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/codersdk.RBACAction'
+        negate:
+          type: boolean
+          description: Negate makes this a negative permission
+        resource_type:
+          $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.SlimRole:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+    codersdk.LoginType:
       type: string
       enum:
-      - application_connect
-      - assign
-      - create
-      - create_agent
-      - delete
-      - delete_agent
-      - read
-      - read_personal
-      - ssh
-      - share
-      - unassign
-      - update
-      - update_agent
-      - update_personal
-      - use
-      - view_insights
-      - start
-      - stop
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+    codersdk.AssignableRoles:
+      type: object
+      properties:
+        assignable:
+          type: boolean
+        built_in:
+          type: boolean
+          description: BuiltIn roles are immutable
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_member_permissions:
+          type: array
+          description: OrganizationMemberPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        organization_permissions:
+          type: array
+          description: OrganizationPermissions are specific for the organization in the field 'OrganizationID' above.
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        site_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+        user_permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Permission'
+    codersdk.PaginatedMembersResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
+    codersdk.OrganizationMember:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        organization_id:
+          type: string
+          format: uuid
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.SlimRole'
+        updated_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
     codersdk.RBACResource:
       type: string
       enum:
@@ -495,6 +590,13 @@ components:
       - workspace_agent_resource_monitor
       - workspace_dormant
       - workspace_proxy
+    codersdk.UpdateRoles:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            type: string
     codersdk.CustomRoleRequest:
       type: object
       properties:
@@ -520,108 +622,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/codersdk.Permission'
-    codersdk.OrganizationMember:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        organization_id:
-          type: string
-          format: uuid
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.SlimRole'
-        updated_at:
-          type: string
-          format: date-time
-        user_id:
-          type: string
-          format: uuid
-    codersdk.PaginatedMembersResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.OrganizationMemberWithUserData'
-    codersdk.UserStatus:
-      type: string
-      enum:
-      - active
-      - dormant
-      - suspended
-    codersdk.AssignableRoles:
-      type: object
-      properties:
-        assignable:
-          type: boolean
-        built_in:
-          type: boolean
-          description: BuiltIn roles are immutable
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-          format: uuid
-        organization_member_permissions:
-          type: array
-          description: OrganizationMemberPermissions are specific for the organization in the field 'OrganizationID' above.
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        organization_permissions:
-          type: array
-          description: OrganizationPermissions are specific for the organization in the field 'OrganizationID' above.
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        site_permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-        user_permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.Permission'
-    codersdk.SlimRole:
-      type: object
-      properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.UpdateRoles:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            type: string
-    codersdk.Permission:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/codersdk.RBACAction'
-        negate:
-          type: boolean
-          description: Negate makes this a negative permission
-        resource_type:
-          $ref: '#/components/schemas/codersdk.RBACResource'
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
   securitySchemes:
     CoderSessionToken:
       type: apiKey

@@ -128,18 +128,19 @@ paths:
                 $ref: '#/components/schemas/codersdk.AIProvider'
 components:
   schemas:
-    codersdk.AIProviderType:
-      type: string
-      enum:
-      - openai
-      - anthropic
-      - azure
-      - google
-      - openai-compat
-      - openrouter
-      - vercel
-      - bedrock
-      - copilot
+    codersdk.AIProviderSettings:
+      type: object
+    codersdk.AIProviderKey:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        masked:
+          type: string
     codersdk.CreateAIProviderRequest:
       type: object
       properties:
@@ -159,34 +160,26 @@ components:
           $ref: '#/components/schemas/codersdk.AIProviderSettings'
         type:
           $ref: '#/components/schemas/codersdk.AIProviderType'
-    codersdk.AIProviderSettings:
-      type: object
-    codersdk.AIProviderKey:
+    codersdk.AIProviderKeyMutation:
       type: object
       properties:
-        created_at:
+        api_key:
           type: string
-          format: date-time
         id:
           type: string
           format: uuid
-        masked:
-          type: string
-    codersdk.UpdateAIProviderRequest:
-      type: object
-      properties:
-        api_keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.AIProviderKeyMutation'
-        base_url:
-          type: string
-        display_name:
-          type: string
-        enabled:
-          type: boolean
-        settings:
-          $ref: '#/components/schemas/codersdk.AIProviderSettings'
+    codersdk.AIProviderType:
+      type: string
+      enum:
+      - openai
+      - anthropic
+      - azure
+      - google
+      - openai-compat
+      - openrouter
+      - vercel
+      - bedrock
+      - copilot
     codersdk.AIProvider:
       type: object
       properties:
@@ -215,14 +208,21 @@ components:
         updated_at:
           type: string
           format: date-time
-    codersdk.AIProviderKeyMutation:
+    codersdk.UpdateAIProviderRequest:
       type: object
       properties:
-        api_key:
+        api_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIProviderKeyMutation'
+        base_url:
           type: string
-        id:
+        display_name:
           type: string
-          format: uuid
+        enabled:
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/codersdk.AIProviderSettings'
   securitySchemes:
     CoderSessionToken:
       type: apiKey
