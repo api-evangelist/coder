@@ -12,30 +12,41 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: Users
 paths:
-  /api/experimental/users/{user}/skills:
-    get:
-      operationId: list-user-skills
-      summary: List user skills
+  /api/experimental/users/email:
+    put:
       tags:
       - Users
+      summary: Update user email
+      operationId: update-user-email-experimental
+      responses:
+        '204':
+          description: No Content
       security:
       - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateUserEmailRequest'
+        description: Update email request
+        required: true
+  /api/experimental/users/{user}/skills:
+    get:
+      tags:
+      - Users
+      summary: List user skills
+      operationId: list-user-skills
       parameters:
-      - name: user
+      - description: User ID, username, or me
+        name: user
         in: path
         required: true
-        description: User ID, username, or me
         schema:
           type: string
       responses:
@@ -46,53 +57,58 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/codersdk.UserSkillMetadata'
-    post:
-      operationId: create-a-user-skill
-      summary: Create a user skill
-      tags:
-      - Users
+                  $ref: '#/components/schemas/codersdk.SkillMetadata'
       security:
       - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    post:
+      tags:
+      - Users
+      summary: Create a user skill
+      operationId: create-a-user-skill
       parameters:
-      - name: user
+      - description: User ID, username, or me
+        name: user
         in: path
         required: true
-        description: User ID, username, or me
         schema:
           type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.CreateUserSkillRequest'
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/codersdk.UserSkill'
-  /api/experimental/users/{user}/skills/{skillName}:
-    get:
-      operationId: get-a-user-skill-by-name
-      summary: Get a user skill by name
-      tags:
-      - Users
+                $ref: '#/components/schemas/codersdk.Skill'
       security:
       - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateSkillRequest'
+        description: Create user skill request
+        required: true
+  /api/experimental/users/{user}/skills/{skillName}:
+    get:
+      tags:
+      - Users
+      summary: Get a user skill by name
+      operationId: get-a-user-skill-by-name
       parameters:
-      - name: user
+      - description: User ID, username, or me
+        name: user
         in: path
         required: true
-        description: User ID, username, or me
         schema:
           type: string
-      - name: skillName
+      - description: Skill name
+        name: skillName
         in: path
         required: true
-        description: Skill name
         schema:
           type: string
       responses:
@@ -101,94 +117,98 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/codersdk.UserSkill'
-    delete:
-      operationId: delete-a-user-skill
-      summary: Delete a user skill
-      tags:
-      - Users
+                $ref: '#/components/schemas/codersdk.Skill'
       security:
       - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    delete:
+      tags:
+      - Users
+      summary: Delete a user skill
+      operationId: delete-a-user-skill
       parameters:
-      - name: user
+      - description: User ID, username, or me
+        name: user
         in: path
         required: true
-        description: User ID, username, or me
         schema:
           type: string
-      - name: skillName
+      - description: Skill name
+        name: skillName
         in: path
         required: true
-        description: Skill name
         schema:
           type: string
       responses:
         '204':
           description: No Content
-    patch:
-      operationId: update-a-user-skill
-      summary: Update a user skill
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    patch:
+      tags:
+      - Users
+      summary: Update a user skill
+      operationId: update-a-user-skill
       parameters:
-      - name: user
+      - description: User ID, username, or me
+        name: user
         in: path
         required: true
-        description: User ID, username, or me
         schema:
           type: string
-      - name: skillName
+      - description: Skill name
+        name: skillName
         in: path
         required: true
-        description: Skill name
         schema:
           type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.UpdateUserSkillRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/codersdk.UserSkill'
-  /api/v2/users:
-    get:
-      operationId: get-users
-      summary: Get users
-      tags:
-      - Users
+                $ref: '#/components/schemas/codersdk.Skill'
       security:
       - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateSkillRequest'
+        description: Update user skill request
+        required: true
+  /api/v2/users:
+    get:
+      tags:
+      - Users
+      summary: Get users
+      operationId: get-users
       parameters:
-      - name: q
+      - description: Search query
+        name: q
         in: query
-        required: false
-        description: Search query
         schema:
           type: string
-      - name: after_id
+      - description: After ID
+        name: after_id
         in: query
-        required: false
-        description: After ID
         schema:
           type: string
-      - name: limit
+          format: uuid
+      - description: Page limit
+        name: limit
         in: query
-        required: false
-        description: Page limit
         schema:
           type: integer
-      - name: offset
+      - description: Page offset
+        name: offset
         in: query
-        required: false
-        description: Page offset
         schema:
           type: integer
       responses:
@@ -198,19 +218,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.GetUsersResponse'
-    post:
-      operationId: create-new-user
-      summary: Create new user
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.CreateUserRequestWithOrgs'
+    post:
+      tags:
+      - Users
+      summary: Create new user
+      operationId: create-new-user
       responses:
         '201':
           description: Created
@@ -218,14 +232,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.User'
-  /api/v2/users/authmethods:
-    get:
-      operationId: get-authentication-methods
-      summary: Get authentication methods
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateUserRequest'
+        description: Create user request
+        required: true
+  /api/v2/users/authmethods:
+    get:
+      tags:
+      - Users
+      summary: Get authentication methods
+      operationId: get-authentication-methods
       responses:
         '200':
           description: OK
@@ -233,14 +254,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.AuthMethods'
-  /api/v2/users/first:
-    get:
-      operationId: check-initial-user-created
-      summary: Check initial user created
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/first:
+    get:
+      tags:
+      - Users
+      summary: Check initial user created
+      operationId: check-initial-user-created
       responses:
         '200':
           description: OK
@@ -248,19 +269,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-    post:
-      operationId: create-initial-user
-      summary: Create initial user
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.CreateFirstUserRequest'
+    post:
+      tags:
+      - Users
+      summary: Create initial user
+      operationId: create-initial-user
       responses:
         '201':
           description: Created
@@ -268,14 +283,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.CreateFirstUserResponse'
-  /api/v2/users/logout:
-    post:
-      operationId: log-out-user
-      summary: Log out user
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateFirstUserRequest'
+        description: First user request
+        required: true
+  /api/v2/users/logout:
+    post:
+      tags:
+      - Users
+      summary: Log out user
+      operationId: log-out-user
       responses:
         '200':
           description: OK
@@ -283,25 +305,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-  /api/v2/users/oauth2/github/callback:
-    get:
-      operationId: oauth-20-github-callback
-      summary: OAuth 2.0 GitHub Callback
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/oauth2/github/callback:
+    get:
+      tags:
+      - Users
+      summary: OAuth 2.0 GitHub Callback
+      operationId: oauth-20-github-callback
       responses:
         '307':
           description: Temporary Redirect
-  /api/v2/users/oauth2/github/device:
-    get:
-      operationId: get-github-device-auth
-      summary: Get Github device auth
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/oauth2/github/device:
+    get:
+      tags:
+      - Users
+      summary: Get Github device auth
+      operationId: get-github-device-auth
       responses:
         '200':
           description: OK
@@ -309,14 +331,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.ExternalAuthDevice'
-  /api/v2/users/oidc-claims:
-    get:
-      operationId: get-oidc-claims-for-the-authenticated-user
-      summary: Get OIDC claims for the authenticated user
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/oidc-claims:
+    get:
+      tags:
+      - Users
+      summary: Get OIDC claims for the authenticated user
+      operationId: get-oidc-claims-for-the-authenticated-user
       responses:
         '200':
           description: OK
@@ -324,30 +346,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.OIDCClaimsResponse'
-  /api/v2/users/oidc/callback:
-    get:
-      operationId: openid-connect-callback
-      summary: OpenID Connect Callback
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/oidc/callback:
+    get:
+      tags:
+      - Users
+      summary: OpenID Connect Callback
+      operationId: openid-connect-callback
       responses:
         '307':
           description: Temporary Redirect
-  /api/v2/users/{user}:
-    get:
-      operationId: get-user-by-name
-      summary: Get user by name
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}:
+    get:
+      tags:
+      - Users
+      summary: Get user by name
+      operationId: get-user-by-name
       parameters:
-      - name: user
+      - description: User ID, username, or me
+        name: user
         in: path
         required: true
-        description: User ID, username, or me
         schema:
           type: string
       responses:
@@ -357,36 +379,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.User'
-    delete:
-      operationId: delete-user
-      summary: Delete user
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+    delete:
+      tags:
+      - Users
+      summary: Delete user
+      operationId: delete-user
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
         '200':
           description: OK
-  /api/v2/users/{user}/appearance:
-    get:
-      operationId: get-user-appearance-settings
-      summary: Get user appearance settings
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/appearance:
+    get:
+      tags:
+      - Users
+      summary: Get user appearance settings
+      operationId: get-user-appearance-settings
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -396,76 +418,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.UserAppearanceSettings'
-    put:
-      operationId: update-user-appearance-settings
-      summary: Update user appearance settings
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+    put:
+      tags:
+      - Users
+      summary: Update user appearance settings
+      operationId: update-user-appearance-settings
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.UserAppearanceSettings'
+      security:
+      - CoderSessionToken: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.UpdateUserAppearanceSettingsRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/codersdk.UserAppearanceSettings'
-  /api/v2/users/{user}/autofill-parameters:
-    get:
-      operationId: get-autofill-build-parameters-for-user
-      summary: Get autofill build parameters for user
-      tags:
-      - Users
-      security:
-      - CoderSessionToken: []
-      parameters:
-      - name: user
-        in: path
+        description: New appearance settings
         required: true
-        description: User ID, username, or me
-        schema:
-          type: string
-      - name: template_id
-        in: query
-        required: true
-        description: Template ID
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/codersdk.UserParameter'
   /api/v2/users/{user}/gitsshkey:
     get:
-      operationId: get-user-git-ssh-key
+      tags:
+      - Users
       summary: Get user Git SSH key
-      tags:
-      - Users
-      security:
-      - CoderSessionToken: []
+      operationId: get-user-git-ssh-key
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -475,18 +468,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.GitSSHKey'
+      security:
+      - CoderSessionToken: []
     put:
-      operationId: regenerate-user-ssh-key
-      summary: Regenerate user SSH key
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Regenerate user SSH key
+      operationId: regenerate-user-ssh-key
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -496,19 +489,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.GitSSHKey'
+      security:
+      - CoderSessionToken: []
   /api/v2/users/{user}/keys:
     post:
-      operationId: create-new-session-key
-      summary: Create new session key
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Create new session key
+      operationId: create-new-session-key
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -518,25 +511,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.GenerateAPIKeyResponse'
-  /api/v2/users/{user}/keys/tokens:
-    get:
-      operationId: get-user-tokens
-      summary: Get user tokens
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/keys/tokens:
+    get:
+      tags:
+      - Users
+      summary: Get user tokens
+      operationId: get-user-tokens
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
-      - name: include_expired
+      - description: Include expired tokens in the list
+        name: include_expired
         in: query
-        required: false
-        description: Include expired tokens in the list
         schema:
           type: boolean
       responses:
@@ -548,26 +540,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/codersdk.APIKey'
-    post:
-      operationId: create-token-api-key
-      summary: Create token API key
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+    post:
+      tags:
+      - Users
+      summary: Create token API key
+      operationId: create-token-api-key
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.CreateTokenRequest'
       responses:
         '201':
           description: Created
@@ -575,27 +561,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.GenerateAPIKeyResponse'
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateTokenRequest'
+        description: Create token request
+        required: true
   /api/v2/users/{user}/keys/tokens/{keyname}:
     get:
-      operationId: get-api-key-by-token-name
-      summary: Get API key by token name
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Get API key by token name
+      operationId: get-api-key-by-token-name
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
-      - name: keyname
+      - description: Key Name
+        name: keyname
         in: path
         required: true
-        description: Key Name
         schema:
           type: string
+          format: string
       responses:
         '200':
           description: OK
@@ -603,27 +597,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.APIKey'
+      security:
+      - CoderSessionToken: []
   /api/v2/users/{user}/keys/{keyid}:
     get:
-      operationId: get-api-key-by-id
-      summary: Get API key by ID
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Get API key by ID
+      operationId: get-api-key-by-id
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
-      - name: keyid
+      - description: Key ID
+        name: keyid
         in: path
         required: true
-        description: Key ID
         schema:
           type: string
+          format: string
       responses:
         '200':
           description: OK
@@ -631,50 +626,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.APIKey'
-    delete:
-      operationId: delete-api-key
-      summary: Delete API key
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+    delete:
+      tags:
+      - Users
+      summary: Delete API key
+      operationId: delete-api-key
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
-      - name: keyid
+      - description: Key ID
+        name: keyid
         in: path
         required: true
-        description: Key ID
         schema:
           type: string
+          format: string
       responses:
         '204':
           description: No Content
-  /api/v2/users/{user}/keys/{keyid}/expire:
-    put:
-      operationId: expire-api-key
-      summary: Expire API key
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/keys/{keyid}/expire:
+    put:
+      tags:
+      - Users
+      summary: Expire API key
+      operationId: expire-api-key
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
-      - name: keyid
+      - description: Key ID
+        name: keyid
         in: path
         required: true
-        description: Key ID
         schema:
           type: string
+          format: string
       responses:
         '204':
           description: No Content
@@ -690,19 +687,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-  /api/v2/users/{user}/login-type:
-    get:
-      operationId: get-user-login-type
-      summary: Get user login type
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/login-type:
+    get:
+      tags:
+      - Users
+      summary: Get user login type
+      operationId: get-user-login-type
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -712,19 +709,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.UserLoginType'
-  /api/v2/users/{user}/organizations:
-    get:
-      operationId: get-organizations-by-user
-      summary: Get organizations by user
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/organizations:
+    get:
+      tags:
+      - Users
+      summary: Get organizations by user
+      operationId: get-organizations-by-user
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -736,25 +733,25 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/codersdk.Organization'
-  /api/v2/users/{user}/organizations/{organizationname}:
-    get:
-      operationId: get-organization-by-user-and-organization-name
-      summary: Get organization by user and organization name
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/organizations/{organizationname}:
+    get:
+      tags:
+      - Users
+      summary: Get organization by user and organization name
+      operationId: get-organization-by-user-and-organization-name
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
-      - name: organizationname
+      - description: Organization name
+        name: organizationname
         in: path
         required: true
-        description: Organization name
         schema:
           type: string
       responses:
@@ -764,43 +761,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Organization'
-  /api/v2/users/{user}/password:
-    put:
-      operationId: update-user-password
-      summary: Update user password
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/password:
+    put:
+      tags:
+      - Users
+      summary: Update user password
+      operationId: update-user-password
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
+      responses:
+        '204':
+          description: No Content
+      security:
+      - CoderSessionToken: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.UpdateUserPasswordRequest'
-      responses:
-        '204':
-          description: No Content
+        description: Update password request
+        required: true
   /api/v2/users/{user}/preferences:
     get:
-      operationId: get-user-preference-settings
-      summary: Get user preference settings
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Get user preference settings
+      operationId: get-user-preference-settings
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -810,74 +808,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.UserPreferenceSettings'
-    put:
-      operationId: update-user-preference-settings
-      summary: Update user preference settings
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+    put:
+      tags:
+      - Users
+      summary: Update user preference settings
+      operationId: update-user-preference-settings
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.UserPreferenceSettings'
+      security:
+      - CoderSessionToken: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.UpdateUserPreferenceSettingsRequest'
+        description: New preference settings
+        required: true
+  /api/v2/users/{user}/profile:
+    put:
+      tags:
+      - Users
+      summary: Update user profile
+      operationId: update-user-profile
+      parameters:
+      - description: User ID, name, or me
+        name: user
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/codersdk.UserPreferenceSettings'
-  /api/v2/users/{user}/profile:
-    put:
-      operationId: update-user-profile
-      summary: Update user profile
-      tags:
-      - Users
+                $ref: '#/components/schemas/codersdk.User'
       security:
       - CoderSessionToken: []
-      parameters:
-      - name: user
-        in: path
-        required: true
-        description: User ID, name, or me
-        schema:
-          type: string
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.UpdateUserProfileRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/codersdk.User'
+        description: Updated profile
+        required: true
   /api/v2/users/{user}/roles:
     get:
-      operationId: get-user-roles
-      summary: Get user roles
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Get user roles
+      operationId: get-user-roles
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -887,46 +887,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.User'
-    put:
-      operationId: assign-role-to-user
-      summary: Assign role to user
-      tags:
-      - Users
       security:
       - CoderSessionToken: []
+    put:
+      tags:
+      - Users
+      summary: Assign role to user
+      operationId: assign-role-to-user
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.User'
+      security:
+      - CoderSessionToken: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.UpdateRoles'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/codersdk.User'
+        description: Update roles request
+        required: true
   /api/v2/users/{user}/status/activate:
     put:
-      operationId: activate-user-account
-      summary: Activate user account
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Activate user account
+      operationId: activate-user-account
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -936,19 +937,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.User'
+      security:
+      - CoderSessionToken: []
   /api/v2/users/{user}/status/suspend:
     put:
-      operationId: suspend-user-account
-      summary: Suspend user account
       tags:
       - Users
-      security:
-      - CoderSessionToken: []
+      summary: Suspend user account
+      operationId: suspend-user-account
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -958,8 +959,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.User'
+      security:
+      - CoderSessionToken: []
 components:
   schemas:
+    codersdk.GitSSHKey:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        public_key:
+          description: 'PublicKey is the SSH public key in OpenSSH format.
+
+            Example: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3OmYJvT7q1cF1azbybYy0OZ9yrXfA+M6Lr4vzX5zlp\n"
+
+            Note: The key includes a trailing newline (\n).'
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
+    codersdk.AgentChatSendShortcut:
+      type: string
+      enum:
+      - enter
+      - modifier_enter
+      x-enum-varnames:
+      - AgentChatSendShortcutEnter
+      - AgentChatSendShortcutModifierEnter
     codersdk.CreateTokenRequest:
       type: object
       properties:
@@ -979,127 +1009,6 @@ components:
             $ref: '#/components/schemas/codersdk.APIKeyScope'
         token_name:
           type: string
-    codersdk.ExternalAuthDevice:
-      type: object
-      properties:
-        device_code:
-          type: string
-        expires_in:
-          type: integer
-        interval:
-          type: integer
-        user_code:
-          type: string
-        verification_uri:
-          type: string
-    codersdk.OIDCAuthMethod:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        iconUrl:
-          type: string
-        signInText:
-          type: string
-    codersdk.CreateFirstUserOnboardingInfo:
-      type: object
-      properties:
-        newsletter_marketing:
-          type: boolean
-        newsletter_releases:
-          type: boolean
-    codersdk.UpdateUserPasswordRequest:
-      type: object
-      properties:
-        old_password:
-          type: string
-        password:
-          type: string
-      required:
-      - password
-    codersdk.OIDCClaimsResponse:
-      type: object
-      properties:
-        claims:
-          type: object
-          description: 'Claims are the merged claims from the OIDC provider. These
-
-            are the union of the ID token claims and the userinfo claims,
-
-            where userinfo claims take precedence on conflict.'
-          additionalProperties: true
-    codersdk.GithubAuthMethod:
-      type: object
-      properties:
-        default_provider_configured:
-          type: boolean
-        enabled:
-          type: boolean
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
-    codersdk.UpdateUserPreferenceSettingsRequest:
-      type: object
-      properties:
-        agent_chat_send_shortcut:
-          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
-        code_diff_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        shell_tool_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        task_notification_alert_dismissed:
-          type: boolean
-        thinking_display_mode:
-          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
-    codersdk.Response:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: 'Detail is a debug message that provides further insight into why the
-
-            action failed. This information can be technical and a regular golang
-
-            err.Error() text.
-
-            - "database: too many open connections"
-
-            - "stat: too many open files"'
-        message:
-          type: string
-          description: 'Message is an actionable message that depicts actions the request took.
-
-            These messages should be fully formed sentences with proper punctuation.
-
-            Examples:
-
-            - "A user has been created."
-
-            - "Failed to create a user."'
-        validations:
-          type: array
-          description: 'Validations are form field-specific friendly error messages. They will be
-
-            shown on a form field in the UI. These can also be used to add additional
-
-            context if there is a set of errors in the primary ''Message''.'
-          items:
-            $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.UpdateUserProfileRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        username:
-          type: string
-      required:
-      - username
     codersdk.UpdateRoles:
       type: object
       properties:
@@ -1107,241 +1016,40 @@ components:
           type: array
           items:
             type: string
+    codersdk.UpdateUserEmailRequest:
+      type: object
+      required:
+      - new_email
+      - old_email
+      properties:
+        new_email:
+          type: string
+          format: email
+        old_email:
+          type: string
+          format: email
+    codersdk.UpdateSkillRequest:
+      type: object
+      properties:
+        content:
+          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
+
+            frontmatter must include name, may include description, and must be
+
+            followed by a non-empty body.'
+          type: string
+        enabled:
+          type: boolean
     codersdk.AgentDisplayMode:
       type: string
       enum:
       - auto
       - always_expanded
       - always_collapsed
-    codersdk.Organization:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        default_org_member_roles:
-          type: array
-          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
-
-            roles at request time. Changes propagate to all members on the
-
-            next request.'
-          items:
-            type: string
-        description:
-          type: string
-        display_name:
-          type: string
-        icon:
-          type: string
-        id:
-          type: string
-          format: uuid
-        is_default:
-          type: boolean
-        name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - created_at
-      - id
-      - is_default
-      - updated_at
-    codersdk.CreateFirstUserRequest:
-      type: object
-      properties:
-        email:
-          type: string
-        name:
-          type: string
-        onboarding_info:
-          $ref: '#/components/schemas/codersdk.CreateFirstUserOnboardingInfo'
-        password:
-          type: string
-        trial:
-          type: boolean
-        trial_info:
-          $ref: '#/components/schemas/codersdk.CreateFirstUserTrialInfo'
-        username:
-          type: string
-      required:
-      - email
-      - password
-      - username
-    codersdk.UserSkill:
-      type: object
-      properties:
-        content:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-    codersdk.UserAppearanceSettings:
-      type: object
-      properties:
-        terminal_font:
-          $ref: '#/components/schemas/codersdk.TerminalFontName'
-        theme_dark:
-          type: string
-          description: Ignored when ThemeMode is "single"
-        theme_light:
-          type: string
-          description: Ignored when ThemeMode is "single"
-        theme_mode:
-          $ref: '#/components/schemas/codersdk.ThemeMode'
-        theme_preference:
-          type: string
-          description: 'ThemePreference is the legacy single-field appearance setting. In
-
-            "single" mode it mirrors the active theme. In "sync" mode modern
-
-            clients normally mirror the active OS slot, but older clients can
-
-            update only this field, so it may diverge from ThemeLight or
-
-            ThemeDark until a modern client saves the full appearance state
-
-            again.'
-    codersdk.AuthMethods:
-      type: object
-      properties:
-        github:
-          $ref: '#/components/schemas/codersdk.GithubAuthMethod'
-        oidc:
-          $ref: '#/components/schemas/codersdk.OIDCAuthMethod'
-        password:
-          $ref: '#/components/schemas/codersdk.AuthMethod'
-        terms_of_service_url:
-          type: string
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.UpdateUserAppearanceSettingsRequest:
-      type: object
-      properties:
-        terminal_font:
-          $ref: '#/components/schemas/codersdk.TerminalFontName'
-        theme_dark:
-          type: string
-          description: 'ThemeDark is required when ThemeMode is "sync". In "single" mode
-
-            an empty value means "preserve the previously persisted slot"
-
-            rather than "clear the slot", so partial updates that send only
-
-            one slot keep the other intact.'
-          enum:
-          - light
-          - light-protan-deuter
-          - light-tritan
-          - dark
-          - dark-protan-deuter
-          - dark-tritan
-        theme_light:
-          type: string
-          description: 'ThemeLight is required when ThemeMode is "sync". In "single"
-
-            mode an empty value means "preserve the previously persisted
-
-            slot" rather than "clear the slot", so partial updates that send
-
-            only one slot keep the other intact.'
-          enum:
-          - light
-          - light-protan-deuter
-          - light-tritan
-          - dark
-          - dark-protan-deuter
-          - dark-tritan
-        theme_mode:
-          description: 'ThemeMode is optional for backward compatibility. When empty,
-
-            the server leaves theme_mode, theme_light, and theme_dark
-
-            unchanged so older CLI clients do not erase sync-mode settings.
-
-            Legacy auto preferences are the exception: they clear theme_mode
-
-            so clients can migrate the old sync-with-system setting.'
-          enum:
-          - sync
-          - single
-          allOf:
-          - $ref: '#/components/schemas/codersdk.ThemeMode'
-        theme_preference:
-          type: string
-      required:
-      - terminal_font
-      - theme_preference
-    codersdk.UserParameter:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    codersdk.UpdateUserSkillRequest:
-      type: object
-      properties:
-        content:
-          type: string
-          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
-
-            frontmatter must include name, may include description, and must be
-
-            followed by a non-empty body.'
-    codersdk.UserStatus:
-      type: string
-      enum:
-      - active
-      - dormant
-      - suspended
-    codersdk.GenerateAPIKeyResponse:
-      type: object
-      properties:
-        key:
-          type: string
-    codersdk.APIAllowListTarget:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          $ref: '#/components/schemas/codersdk.RBACResource'
-    codersdk.UserLoginType:
-      type: object
-      properties:
-        login_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-    codersdk.CreateUserSkillRequest:
-      type: object
-      properties:
-        content:
-          type: string
-          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
-
-            frontmatter must include name, may include description, and must be
-
-            followed by a non-empty body.'
+      x-enum-varnames:
+      - AgentDisplayModeAuto
+      - AgentDisplayModeAlwaysExpanded
+      - AgentDisplayModeAlwaysCollapsed
     codersdk.APIKeyScope:
       type: string
       enum:
@@ -1351,6 +1059,7 @@ components:
       - ai_gateway_key:create
       - ai_gateway_key:delete
       - ai_gateway_key:read
+      - ai_gateway_key:update
       - ai_model_price:*
       - ai_model_price:read
       - ai_model_price:update
@@ -1399,6 +1108,22 @@ components:
       - chat:read
       - chat:share
       - chat:update
+      - chat_model_config:*
+      - chat_model_config:create
+      - chat_model_config:delete
+      - chat_model_config:read
+      - chat_model_config:share
+      - chat_model_config:update
+      - chat_project:*
+      - chat_project:create
+      - chat_project:delete
+      - chat_project:read
+      - chat_project:share
+      - chat_project:update
+      - chat_project_memory:*
+      - chat_project_memory:create
+      - chat_project_memory:delete
+      - chat_project_memory:read
       - coder:all
       - coder:apikeys.manage_self
       - coder:application_connect
@@ -1444,6 +1169,12 @@ components:
       - license:create
       - license:delete
       - license:read
+      - mcp_server_config:*
+      - mcp_server_config:create
+      - mcp_server_config:delete
+      - mcp_server_config:read
+      - mcp_server_config:share
+      - mcp_server_config:update
       - notification_message:*
       - notification_message:create
       - notification_message:delete
@@ -1479,6 +1210,12 @@ components:
       - organization_member:delete
       - organization_member:read
       - organization_member:update
+      - organization_skill:*
+      - organization_skill:create
+      - organization_skill:delete
+      - organization_skill:read
+      - organization_skill:share
+      - organization_skill:update
       - prebuilt_workspace:*
       - prebuilt_workspace:delete
       - prebuilt_workspace:update
@@ -1503,11 +1240,6 @@ components:
       - tailnet_coordinator:delete
       - tailnet_coordinator:read
       - tailnet_coordinator:update
-      - task:*
-      - task:create
-      - task:delete
-      - task:read
-      - task:update
       - template:*
       - template:create
       - template:delete
@@ -1559,6 +1291,11 @@ components:
       - workspace_agent_resource_monitor:create
       - workspace_agent_resource_monitor:read
       - workspace_agent_resource_monitor:update
+      - workspace_build_orchestration:*
+      - workspace_build_orchestration:create
+      - workspace_build_orchestration:delete
+      - workspace_build_orchestration:read
+      - workspace_build_orchestration:update
       - workspace_dormant:*
       - workspace_dormant:application_connect
       - workspace_dormant:create
@@ -1577,8 +1314,776 @@ components:
       - workspace_proxy:delete
       - workspace_proxy:read
       - workspace_proxy:update
+      - workspace_secret:*
+      - workspace_secret:create
+      - workspace_secret:read
+      - workspace_secret:read_secret
+      - workspace_secret:update
+      x-enum-varnames:
+      - APIKeyScopeAll
+      - APIKeyScopeApplicationConnect
+      - APIKeyScopeAiGatewayKeyAll
+      - APIKeyScopeAiGatewayKeyCreate
+      - APIKeyScopeAiGatewayKeyDelete
+      - APIKeyScopeAiGatewayKeyRead
+      - APIKeyScopeAiGatewayKeyUpdate
+      - APIKeyScopeAiModelPriceAll
+      - APIKeyScopeAiModelPriceRead
+      - APIKeyScopeAiModelPriceUpdate
+      - APIKeyScopeAiProviderAll
+      - APIKeyScopeAiProviderCreate
+      - APIKeyScopeAiProviderDelete
+      - APIKeyScopeAiProviderRead
+      - APIKeyScopeAiProviderUpdate
+      - APIKeyScopeAiSeatAll
+      - APIKeyScopeAiSeatCreate
+      - APIKeyScopeAiSeatRead
+      - APIKeyScopeAibridgeInterceptionAll
+      - APIKeyScopeAibridgeInterceptionCreate
+      - APIKeyScopeAibridgeInterceptionRead
+      - APIKeyScopeAibridgeInterceptionUpdate
+      - APIKeyScopeApiKeyAll
+      - APIKeyScopeApiKeyCreate
+      - APIKeyScopeApiKeyDelete
+      - APIKeyScopeApiKeyRead
+      - APIKeyScopeApiKeyUpdate
+      - APIKeyScopeAssignOrgRoleAll
+      - APIKeyScopeAssignOrgRoleAssign
+      - APIKeyScopeAssignOrgRoleCreate
+      - APIKeyScopeAssignOrgRoleDelete
+      - APIKeyScopeAssignOrgRoleRead
+      - APIKeyScopeAssignOrgRoleUnassign
+      - APIKeyScopeAssignOrgRoleUpdate
+      - APIKeyScopeAssignRoleAll
+      - APIKeyScopeAssignRoleAssign
+      - APIKeyScopeAssignRoleRead
+      - APIKeyScopeAssignRoleUnassign
+      - APIKeyScopeAuditLogAll
+      - APIKeyScopeAuditLogCreate
+      - APIKeyScopeAuditLogRead
+      - APIKeyScopeBoundaryLogAll
+      - APIKeyScopeBoundaryLogCreate
+      - APIKeyScopeBoundaryLogDelete
+      - APIKeyScopeBoundaryLogRead
+      - APIKeyScopeBoundaryUsageAll
+      - APIKeyScopeBoundaryUsageDelete
+      - APIKeyScopeBoundaryUsageRead
+      - APIKeyScopeBoundaryUsageUpdate
+      - APIKeyScopeChatAll
+      - APIKeyScopeChatCreate
+      - APIKeyScopeChatDelete
+      - APIKeyScopeChatRead
+      - APIKeyScopeChatShare
+      - APIKeyScopeChatUpdate
+      - APIKeyScopeChatModelConfigAll
+      - APIKeyScopeChatModelConfigCreate
+      - APIKeyScopeChatModelConfigDelete
+      - APIKeyScopeChatModelConfigRead
+      - APIKeyScopeChatModelConfigShare
+      - APIKeyScopeChatModelConfigUpdate
+      - APIKeyScopeChatProjectAll
+      - APIKeyScopeChatProjectCreate
+      - APIKeyScopeChatProjectDelete
+      - APIKeyScopeChatProjectRead
+      - APIKeyScopeChatProjectShare
+      - APIKeyScopeChatProjectUpdate
+      - APIKeyScopeChatProjectMemoryAll
+      - APIKeyScopeChatProjectMemoryCreate
+      - APIKeyScopeChatProjectMemoryDelete
+      - APIKeyScopeChatProjectMemoryRead
+      - APIKeyScopeCoderAll
+      - APIKeyScopeCoderApikeysManageSelf
+      - APIKeyScopeCoderApplicationConnect
+      - APIKeyScopeCoderTemplatesAuthor
+      - APIKeyScopeCoderTemplatesBuild
+      - APIKeyScopeCoderWorkspacesAccess
+      - APIKeyScopeCoderWorkspacesCreate
+      - APIKeyScopeCoderWorkspacesDelete
+      - APIKeyScopeCoderWorkspacesOperate
+      - APIKeyScopeConnectionLogAll
+      - APIKeyScopeConnectionLogRead
+      - APIKeyScopeConnectionLogUpdate
+      - APIKeyScopeCryptoKeyAll
+      - APIKeyScopeCryptoKeyCreate
+      - APIKeyScopeCryptoKeyDelete
+      - APIKeyScopeCryptoKeyRead
+      - APIKeyScopeCryptoKeyUpdate
+      - APIKeyScopeDebugInfoAll
+      - APIKeyScopeDebugInfoRead
+      - APIKeyScopeDeploymentConfigAll
+      - APIKeyScopeDeploymentConfigRead
+      - APIKeyScopeDeploymentConfigUpdate
+      - APIKeyScopeDeploymentStatsAll
+      - APIKeyScopeDeploymentStatsRead
+      - APIKeyScopeFileAll
+      - APIKeyScopeFileCreate
+      - APIKeyScopeFileRead
+      - APIKeyScopeGroupAll
+      - APIKeyScopeGroupCreate
+      - APIKeyScopeGroupDelete
+      - APIKeyScopeGroupRead
+      - APIKeyScopeGroupUpdate
+      - APIKeyScopeGroupMemberAll
+      - APIKeyScopeGroupMemberRead
+      - APIKeyScopeIdpsyncSettingsAll
+      - APIKeyScopeIdpsyncSettingsRead
+      - APIKeyScopeIdpsyncSettingsUpdate
+      - APIKeyScopeInboxNotificationAll
+      - APIKeyScopeInboxNotificationCreate
+      - APIKeyScopeInboxNotificationRead
+      - APIKeyScopeInboxNotificationUpdate
+      - APIKeyScopeLicenseAll
+      - APIKeyScopeLicenseCreate
+      - APIKeyScopeLicenseDelete
+      - APIKeyScopeLicenseRead
+      - APIKeyScopeMcpServerConfigAll
+      - APIKeyScopeMcpServerConfigCreate
+      - APIKeyScopeMcpServerConfigDelete
+      - APIKeyScopeMcpServerConfigRead
+      - APIKeyScopeMcpServerConfigShare
+      - APIKeyScopeMcpServerConfigUpdate
+      - APIKeyScopeNotificationMessageAll
+      - APIKeyScopeNotificationMessageCreate
+      - APIKeyScopeNotificationMessageDelete
+      - APIKeyScopeNotificationMessageRead
+      - APIKeyScopeNotificationMessageUpdate
+      - APIKeyScopeNotificationPreferenceAll
+      - APIKeyScopeNotificationPreferenceRead
+      - APIKeyScopeNotificationPreferenceUpdate
+      - APIKeyScopeNotificationTemplateAll
+      - APIKeyScopeNotificationTemplateRead
+      - APIKeyScopeNotificationTemplateUpdate
+      - APIKeyScopeOauth2AppAll
+      - APIKeyScopeOauth2AppCreate
+      - APIKeyScopeOauth2AppDelete
+      - APIKeyScopeOauth2AppRead
+      - APIKeyScopeOauth2AppUpdate
+      - APIKeyScopeOauth2AppCodeTokenAll
+      - APIKeyScopeOauth2AppCodeTokenCreate
+      - APIKeyScopeOauth2AppCodeTokenDelete
+      - APIKeyScopeOauth2AppCodeTokenRead
+      - APIKeyScopeOauth2AppSecretAll
+      - APIKeyScopeOauth2AppSecretCreate
+      - APIKeyScopeOauth2AppSecretDelete
+      - APIKeyScopeOauth2AppSecretRead
+      - APIKeyScopeOauth2AppSecretUpdate
+      - APIKeyScopeOrganizationAll
+      - APIKeyScopeOrganizationCreate
+      - APIKeyScopeOrganizationDelete
+      - APIKeyScopeOrganizationRead
+      - APIKeyScopeOrganizationUpdate
+      - APIKeyScopeOrganizationMemberAll
+      - APIKeyScopeOrganizationMemberCreate
+      - APIKeyScopeOrganizationMemberDelete
+      - APIKeyScopeOrganizationMemberRead
+      - APIKeyScopeOrganizationMemberUpdate
+      - APIKeyScopeOrganizationSkillAll
+      - APIKeyScopeOrganizationSkillCreate
+      - APIKeyScopeOrganizationSkillDelete
+      - APIKeyScopeOrganizationSkillRead
+      - APIKeyScopeOrganizationSkillShare
+      - APIKeyScopeOrganizationSkillUpdate
+      - APIKeyScopePrebuiltWorkspaceAll
+      - APIKeyScopePrebuiltWorkspaceDelete
+      - APIKeyScopePrebuiltWorkspaceUpdate
+      - APIKeyScopeProvisionerDaemonAll
+      - APIKeyScopeProvisionerDaemonCreate
+      - APIKeyScopeProvisionerDaemonDelete
+      - APIKeyScopeProvisionerDaemonRead
+      - APIKeyScopeProvisionerDaemonUpdate
+      - APIKeyScopeProvisionerJobsAll
+      - APIKeyScopeProvisionerJobsCreate
+      - APIKeyScopeProvisionerJobsRead
+      - APIKeyScopeProvisionerJobsUpdate
+      - APIKeyScopeReplicasAll
+      - APIKeyScopeReplicasRead
+      - APIKeyScopeSystemAll
+      - APIKeyScopeSystemCreate
+      - APIKeyScopeSystemDelete
+      - APIKeyScopeSystemRead
+      - APIKeyScopeSystemUpdate
+      - APIKeyScopeTailnetCoordinatorAll
+      - APIKeyScopeTailnetCoordinatorCreate
+      - APIKeyScopeTailnetCoordinatorDelete
+      - APIKeyScopeTailnetCoordinatorRead
+      - APIKeyScopeTailnetCoordinatorUpdate
+      - APIKeyScopeTemplateAll
+      - APIKeyScopeTemplateCreate
+      - APIKeyScopeTemplateDelete
+      - APIKeyScopeTemplateRead
+      - APIKeyScopeTemplateUpdate
+      - APIKeyScopeTemplateUse
+      - APIKeyScopeTemplateViewInsights
+      - APIKeyScopeUsageEventAll
+      - APIKeyScopeUsageEventCreate
+      - APIKeyScopeUsageEventRead
+      - APIKeyScopeUsageEventUpdate
+      - APIKeyScopeUserAll
+      - APIKeyScopeUserCreate
+      - APIKeyScopeUserDelete
+      - APIKeyScopeUserRead
+      - APIKeyScopeUserReadPersonal
+      - APIKeyScopeUserUpdate
+      - APIKeyScopeUserUpdatePersonal
+      - APIKeyScopeUserSecretAll
+      - APIKeyScopeUserSecretCreate
+      - APIKeyScopeUserSecretDelete
+      - APIKeyScopeUserSecretRead
+      - APIKeyScopeUserSecretUpdate
+      - APIKeyScopeUserSkillAll
+      - APIKeyScopeUserSkillCreate
+      - APIKeyScopeUserSkillDelete
+      - APIKeyScopeUserSkillRead
+      - APIKeyScopeUserSkillUpdate
+      - APIKeyScopeWebpushSubscriptionAll
+      - APIKeyScopeWebpushSubscriptionCreate
+      - APIKeyScopeWebpushSubscriptionDelete
+      - APIKeyScopeWebpushSubscriptionRead
+      - APIKeyScopeWorkspaceAll
+      - APIKeyScopeWorkspaceApplicationConnect
+      - APIKeyScopeWorkspaceCreate
+      - APIKeyScopeWorkspaceCreateAgent
+      - APIKeyScopeWorkspaceDelete
+      - APIKeyScopeWorkspaceDeleteAgent
+      - APIKeyScopeWorkspaceRead
+      - APIKeyScopeWorkspaceShare
+      - APIKeyScopeWorkspaceSsh
+      - APIKeyScopeWorkspaceStart
+      - APIKeyScopeWorkspaceStop
+      - APIKeyScopeWorkspaceUpdate
+      - APIKeyScopeWorkspaceUpdateAgent
+      - APIKeyScopeWorkspaceAgentDevcontainersAll
+      - APIKeyScopeWorkspaceAgentDevcontainersCreate
+      - APIKeyScopeWorkspaceAgentResourceMonitorAll
+      - APIKeyScopeWorkspaceAgentResourceMonitorCreate
+      - APIKeyScopeWorkspaceAgentResourceMonitorRead
+      - APIKeyScopeWorkspaceAgentResourceMonitorUpdate
+      - APIKeyScopeWorkspaceBuildOrchestrationAll
+      - APIKeyScopeWorkspaceBuildOrchestrationCreate
+      - APIKeyScopeWorkspaceBuildOrchestrationDelete
+      - APIKeyScopeWorkspaceBuildOrchestrationRead
+      - APIKeyScopeWorkspaceBuildOrchestrationUpdate
+      - APIKeyScopeWorkspaceDormantAll
+      - APIKeyScopeWorkspaceDormantApplicationConnect
+      - APIKeyScopeWorkspaceDormantCreate
+      - APIKeyScopeWorkspaceDormantCreateAgent
+      - APIKeyScopeWorkspaceDormantDelete
+      - APIKeyScopeWorkspaceDormantDeleteAgent
+      - APIKeyScopeWorkspaceDormantRead
+      - APIKeyScopeWorkspaceDormantShare
+      - APIKeyScopeWorkspaceDormantSsh
+      - APIKeyScopeWorkspaceDormantStart
+      - APIKeyScopeWorkspaceDormantStop
+      - APIKeyScopeWorkspaceDormantUpdate
+      - APIKeyScopeWorkspaceDormantUpdateAgent
+      - APIKeyScopeWorkspaceProxyAll
+      - APIKeyScopeWorkspaceProxyCreate
+      - APIKeyScopeWorkspaceProxyDelete
+      - APIKeyScopeWorkspaceProxyRead
+      - APIKeyScopeWorkspaceProxyUpdate
+      - APIKeyScopeWorkspaceSecretAll
+      - APIKeyScopeWorkspaceSecretCreate
+      - APIKeyScopeWorkspaceSecretRead
+      - APIKeyScopeWorkspaceSecretReadSecret
+      - APIKeyScopeWorkspaceSecretUpdate
+    codersdk.UpdateUserProfileRequest:
+      type: object
+      required:
+      - username
+      properties:
+        avatar_url:
+          description: 'AvatarURL is only applied for users whose login type is password or
+
+            none. For other login types the avatar is synced from the identity
+
+            provider on login, so a submitted value is ignored.'
+          type: string
+          format: uri
+        name:
+          type: string
+        username:
+          type: string
+    codersdk.UserPreferenceSettings:
+      type: object
+      properties:
+        agent_chat_send_shortcut:
+          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
+        code_diff_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        collapse_assistant_steps:
+          type: boolean
+        shell_tool_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        thinking_display_mode:
+          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
+    codersdk.GetUsersResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.User'
+    codersdk.UserAppearanceSettings:
+      type: object
+      properties:
+        terminal_font:
+          $ref: '#/components/schemas/codersdk.TerminalFontName'
+        theme_dark:
+          description: Ignored when ThemeMode is "single"
+          type: string
+        theme_light:
+          description: Ignored when ThemeMode is "single"
+          type: string
+        theme_mode:
+          $ref: '#/components/schemas/codersdk.ThemeMode'
+        theme_preference:
+          description: 'ThemePreference is the legacy single-field appearance setting. In
+
+            "single" mode it mirrors the active theme. In "sync" mode modern
+
+            clients normally mirror the active OS slot, but older clients can
+
+            update only this field, so it may diverge from ThemeLight or
+
+            ThemeDark until a modern client saves the full appearance state
+
+            again.'
+          type: string
+    codersdk.Organization:
+      type: object
+      required:
+      - created_at
+      - id
+      - is_default
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        default_org_member_roles:
+          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
+
+            roles at request time. Changes propagate to all members on the
+
+            next request.'
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        is_default:
+          type: boolean
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.GithubAuthMethod:
+      type: object
+      properties:
+        default_provider_configured:
+          type: boolean
+        enabled:
+          type: boolean
+    codersdk.OIDCAuthMethod:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        iconUrl:
+          type: string
+        signInText:
+          type: string
+    codersdk.CreateFirstUserResponse:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+    codersdk.CreateFirstUserOnboardingInfo:
+      type: object
+      properties:
+        newsletter_marketing:
+          type: boolean
+        newsletter_releases:
+          type: boolean
+    codersdk.SkillMetadata:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+        enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.CreateFirstUserTrialInfo:
+      type: object
+      properties:
+        company_name:
+          type: string
+        country:
+          type: string
+        developers:
+          type: string
+        first_name:
+          type: string
+        job_title:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+    codersdk.ExternalAuthDevice:
+      type: object
+      properties:
+        device_code:
+          type: string
+        expires_in:
+          type: integer
+        interval:
+          type: integer
+        user_code:
+          type: string
+        verification_uri:
+          type: string
+    codersdk.UpdateUserAppearanceSettingsRequest:
+      type: object
+      required:
+      - terminal_font
+      - theme_preference
+      properties:
+        terminal_font:
+          $ref: '#/components/schemas/codersdk.TerminalFontName'
+        theme_dark:
+          description: 'ThemeDark is required when ThemeMode is "sync". In "single" mode
+
+            an empty value means "preserve the previously persisted slot"
+
+            rather than "clear the slot", so partial updates that send only
+
+            one slot keep the other intact.'
+          type: string
+          enum:
+          - light
+          - light-protan-deuter
+          - light-tritan
+          - dark
+          - dark-protan-deuter
+          - dark-tritan
+        theme_light:
+          description: 'ThemeLight is required when ThemeMode is "sync". In "single"
+
+            mode an empty value means "preserve the previously persisted
+
+            slot" rather than "clear the slot", so partial updates that send
+
+            only one slot keep the other intact.'
+          type: string
+          enum:
+          - light
+          - light-protan-deuter
+          - light-tritan
+          - dark
+          - dark-protan-deuter
+          - dark-tritan
+        theme_mode:
+          description: 'ThemeMode is optional for backward compatibility. When empty,
+
+            the server leaves theme_mode, theme_light, and theme_dark
+
+            unchanged so older CLI clients do not erase sync-mode settings.
+
+            Legacy auto preferences are the exception: they clear theme_mode
+
+            so clients can migrate the old sync-with-system setting.'
+          enum:
+          - sync
+          - single
+          allOf:
+          - $ref: '#/components/schemas/codersdk.ThemeMode'
+        theme_preference:
+          type: string
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+      x-enum-varnames:
+      - UserStatusActive
+      - UserStatusDormant
+      - UserStatusSuspended
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+      x-enum-varnames:
+      - LoginTypeUnknown
+      - LoginTypePassword
+      - LoginTypeGithub
+      - LoginTypeOIDC
+      - LoginTypeToken
+      - LoginTypeNone
+    codersdk.UpdateUserPreferenceSettingsRequest:
+      type: object
+      properties:
+        agent_chat_send_shortcut:
+          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
+        code_diff_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        collapse_assistant_steps:
+          type: boolean
+        shell_tool_display_mode:
+          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
+        thinking_display_mode:
+          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
+    codersdk.SlimRole:
+      type: object
+      properties:
+        display_name:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+    codersdk.CreateSkillRequest:
+      type: object
+      properties:
+        content:
+          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
+
+            frontmatter must include name, may include description, and must be
+
+            followed by a non-empty body.'
+          type: string
+    codersdk.AuthMethods:
+      type: object
+      properties:
+        github:
+          $ref: '#/components/schemas/codersdk.GithubAuthMethod'
+        oidc:
+          $ref: '#/components/schemas/codersdk.OIDCAuthMethod'
+        password:
+          $ref: '#/components/schemas/codersdk.AuthMethod'
+        terms_of_service_url:
+          type: string
+    codersdk.AuthMethod:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+    codersdk.CreateFirstUserRequest:
+      type: object
+      required:
+      - email
+      - password
+      - username
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        onboarding_info:
+          $ref: '#/components/schemas/codersdk.CreateFirstUserOnboardingInfo'
+        password:
+          type: string
+        trial:
+          type: boolean
+        trial_info:
+          $ref: '#/components/schemas/codersdk.CreateFirstUserTrialInfo'
+        username:
+          type: string
+    codersdk.Skill:
+      type: object
+      properties:
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+        enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.ThinkingDisplayMode:
+      type: string
+      enum:
+      - auto
+      - preview
+      - always_expanded
+      - always_collapsed
+      x-enum-varnames:
+      - ThinkingDisplayModeAuto
+      - ThinkingDisplayModePreview
+      - ThinkingDisplayModeAlwaysExpanded
+      - ThinkingDisplayModeAlwaysCollapsed
+    codersdk.ValidationError:
+      type: object
+      required:
+      - detail
+      - field
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
+    codersdk.RBACResource:
+      type: string
+      enum:
+      - '*'
+      - ai_gateway_key
+      - ai_model_price
+      - ai_provider
+      - ai_seat
+      - aibridge_interception
+      - api_key
+      - assign_org_role
+      - assign_role
+      - audit_log
+      - boundary_log
+      - boundary_usage
+      - chat
+      - chat_model_config
+      - chat_project
+      - chat_project_memory
+      - connection_log
+      - crypto_key
+      - debug_info
+      - deployment_config
+      - deployment_stats
+      - file
+      - group
+      - group_member
+      - idpsync_settings
+      - inbox_notification
+      - license
+      - mcp_server_config
+      - notification_message
+      - notification_preference
+      - notification_template
+      - oauth2_app
+      - oauth2_app_code_token
+      - oauth2_app_secret
+      - organization
+      - organization_member
+      - organization_skill
+      - prebuilt_workspace
+      - provisioner_daemon
+      - provisioner_jobs
+      - replicas
+      - system
+      - tailnet_coordinator
+      - template
+      - usage_event
+      - user
+      - user_secret
+      - user_skill
+      - webpush_subscription
+      - workspace
+      - workspace_agent_devcontainers
+      - workspace_agent_resource_monitor
+      - workspace_build_orchestration
+      - workspace_dormant
+      - workspace_proxy
+      - workspace_secret
+      x-enum-varnames:
+      - ResourceWildcard
+      - ResourceAIGatewayKey
+      - ResourceAiModelPrice
+      - ResourceAIProvider
+      - ResourceAiSeat
+      - ResourceAibridgeInterception
+      - ResourceApiKey
+      - ResourceAssignOrgRole
+      - ResourceAssignRole
+      - ResourceAuditLog
+      - ResourceBoundaryLog
+      - ResourceBoundaryUsage
+      - ResourceChat
+      - ResourceChatModelConfig
+      - ResourceChatProject
+      - ResourceChatProjectMemory
+      - ResourceConnectionLog
+      - ResourceCryptoKey
+      - ResourceDebugInfo
+      - ResourceDeploymentConfig
+      - ResourceDeploymentStats
+      - ResourceFile
+      - ResourceGroup
+      - ResourceGroupMember
+      - ResourceIdpsyncSettings
+      - ResourceInboxNotification
+      - ResourceLicense
+      - ResourceMCPServerConfig
+      - ResourceNotificationMessage
+      - ResourceNotificationPreference
+      - ResourceNotificationTemplate
+      - ResourceOauth2App
+      - ResourceOauth2AppCodeToken
+      - ResourceOauth2AppSecret
+      - ResourceOrganization
+      - ResourceOrganizationMember
+      - ResourceOrganizationSkill
+      - ResourcePrebuiltWorkspace
+      - ResourceProvisionerDaemon
+      - ResourceProvisionerJobs
+      - ResourceReplicas
+      - ResourceSystem
+      - ResourceTailnetCoordinator
+      - ResourceTemplate
+      - ResourceUsageEvent
+      - ResourceUser
+      - ResourceUserSecret
+      - ResourceUserSkill
+      - ResourceWebpushSubscription
+      - ResourceWorkspace
+      - ResourceWorkspaceAgentDevcontainers
+      - ResourceWorkspaceAgentResourceMonitor
+      - ResourceWorkspaceBuildOrchestration
+      - ResourceWorkspaceDormant
+      - ResourceWorkspaceProxy
+      - ResourceWorkspaceSecret
     codersdk.User:
       type: object
+      required:
+      - created_at
+      - email
+      - id
+      - username
       properties:
         avatar_url:
           type: string
@@ -1590,10 +2095,10 @@ components:
           type: string
           format: email
         has_ai_seat:
-          type: boolean
           description: 'HasAISeat intentionally omits omitempty so the API always includes the
 
             field, even when false.'
+          type: boolean
         id:
           type: string
           format: uuid
@@ -1622,22 +2127,42 @@ components:
           allOf:
           - $ref: '#/components/schemas/codersdk.UserStatus'
         theme_preference:
-          type: string
           description: 'Deprecated: this value should be retrieved from
 
             `codersdk.UserPreferenceSettings` instead.'
+          type: string
         updated_at:
           type: string
           format: date-time
         username:
           type: string
-      required:
-      - created_at
-      - email
-      - id
-      - username
-    codersdk.CreateUserRequestWithOrgs:
+    codersdk.TerminalFontName:
+      type: string
+      enum:
+      - ''
+      - geist-mono
+      - ibm-plex-mono
+      - fira-code
+      - source-code-pro
+      - jetbrains-mono
+      x-enum-varnames:
+      - TerminalFontUnknown
+      - TerminalFontGeistMono
+      - TerminalFontIBMPlexMono
+      - TerminalFontFiraCode
+      - TerminalFontSourceCodePro
+      - TerminalFontJetBrainsMono
+    codersdk.APIAllowListTarget:
       type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.CreateUserRequest:
+      type: object
+      required:
+      - username
       properties:
         email:
           type: string
@@ -1649,44 +2174,68 @@ components:
         name:
           type: string
         organization_ids:
-          type: array
           description: OrganizationIDs is a list of organization IDs that the user should be a member of.
+          type: array
           items:
             type: string
             format: uuid
         password:
           type: string
         roles:
-          type: array
           description: Roles is an optional list of site-level roles to assign at creation.
+          type: array
           items:
             type: string
         service_account:
-          type: boolean
           description: Service accounts are admin-managed accounts that cannot login.
+          type: boolean
         user_status:
           description: UserStatus defaults to UserStatusDormant.
           allOf:
           - $ref: '#/components/schemas/codersdk.UserStatus'
         username:
           type: string
-      required:
-      - username
-    codersdk.UserPreferenceSettings:
+    codersdk.GenerateAPIKeyResponse:
       type: object
       properties:
-        agent_chat_send_shortcut:
-          $ref: '#/components/schemas/codersdk.AgentChatSendShortcut'
-        code_diff_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        shell_tool_display_mode:
-          $ref: '#/components/schemas/codersdk.AgentDisplayMode'
-        task_notification_alert_dismissed:
-          type: boolean
-        thinking_display_mode:
-          $ref: '#/components/schemas/codersdk.ThinkingDisplayMode'
+        key:
+          type: string
+    codersdk.UpdateUserPasswordRequest:
+      type: object
+      required:
+      - password
+      properties:
+        old_password:
+          type: string
+        password:
+          type: string
+    codersdk.UserLoginType:
+      type: object
+      properties:
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+    codersdk.ThemeMode:
+      type: string
+      enum:
+      - ''
+      - sync
+      - single
+      x-enum-varnames:
+      - ThemeModeUnset
+      - ThemeModeSync
+      - ThemeModeSingle
     codersdk.APIKey:
       type: object
+      required:
+      - created_at
+      - expires_at
+      - id
+      - last_used
+      - lifetime_seconds
+      - login_type
+      - token_name
+      - updated_at
+      - user_id
       properties:
         allow_list:
           type: array
@@ -1732,182 +2281,61 @@ components:
         user_id:
           type: string
           format: uuid
-      required:
-      - created_at
-      - expires_at
-      - id
-      - last_used
-      - lifetime_seconds
-      - login_type
-      - token_name
-      - updated_at
-      - user_id
-    codersdk.GitSSHKey:
+    codersdk.Response:
       type: object
       properties:
-        created_at:
-          type: string
-          format: date-time
-        public_key:
-          type: string
-          description: 'PublicKey is the SSH public key in OpenSSH format.
+        detail:
+          description: 'Detail is a debug message that provides further insight into why the
 
-            Example: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3OmYJvT7q1cF1azbybYy0OZ9yrXfA+M6Lr4vzX5zlp\n"
+            action failed. This information can be technical and a regular golang
 
-            Note: The key includes a trailing newline (\n).'
-        updated_at:
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
           type: string
-          format: date-time
-        user_id:
+        message:
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
           type: string
-          format: uuid
-    codersdk.GetUsersResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-        users:
+        validations:
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
           type: array
           items:
-            $ref: '#/components/schemas/codersdk.User'
-    codersdk.TerminalFontName:
-      type: string
-      enum:
-      - ''
-      - geist-mono
-      - ibm-plex-mono
-      - fira-code
-      - source-code-pro
-      - jetbrains-mono
-    codersdk.ThemeMode:
-      type: string
-      enum:
-      - ''
-      - sync
-      - single
-    codersdk.SlimRole:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.OIDCClaimsResponse:
       type: object
       properties:
-        display_name:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-    codersdk.CreateFirstUserTrialInfo:
-      type: object
-      properties:
-        company_name:
-          type: string
-        country:
-          type: string
-        developers:
-          type: string
-        first_name:
-          type: string
-        job_title:
-          type: string
-        last_name:
-          type: string
-        phone_number:
-          type: string
-    codersdk.AgentChatSendShortcut:
-      type: string
-      enum:
-      - enter
-      - modifier_enter
-    codersdk.UserSkillMetadata:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-    codersdk.ThinkingDisplayMode:
-      type: string
-      enum:
-      - auto
-      - preview
-      - always_expanded
-      - always_collapsed
-    codersdk.AuthMethod:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-    codersdk.RBACResource:
-      type: string
-      enum:
-      - '*'
-      - ai_gateway_key
-      - ai_model_price
-      - ai_provider
-      - ai_seat
-      - aibridge_interception
-      - api_key
-      - assign_org_role
-      - assign_role
-      - audit_log
-      - boundary_log
-      - boundary_usage
-      - chat
-      - connection_log
-      - crypto_key
-      - debug_info
-      - deployment_config
-      - deployment_stats
-      - file
-      - group
-      - group_member
-      - idpsync_settings
-      - inbox_notification
-      - license
-      - notification_message
-      - notification_preference
-      - notification_template
-      - oauth2_app
-      - oauth2_app_code_token
-      - oauth2_app_secret
-      - organization
-      - organization_member
-      - prebuilt_workspace
-      - provisioner_daemon
-      - provisioner_jobs
-      - replicas
-      - system
-      - tailnet_coordinator
-      - task
-      - template
-      - usage_event
-      - user
-      - user_secret
-      - user_skill
-      - webpush_subscription
-      - workspace
-      - workspace_agent_devcontainers
-      - workspace_agent_resource_monitor
-      - workspace_dormant
-      - workspace_proxy
-    codersdk.CreateFirstUserResponse:
-      type: object
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
+        claims:
+          description: 'Claims are the merged claims from the OIDC provider. These
+
+            are the union of the ID token claims and the userinfo claims,
+
+            where userinfo claims take precedence on conflict.'
+          type: object
+          additionalProperties: true
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

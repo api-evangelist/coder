@@ -12,50 +12,42 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: Provisioning
 paths:
   /api/v2/organizations/{organization}/provisionerdaemons:
     get:
-      operationId: get-provisioner-daemons
-      summary: Get provisioner daemons
       tags:
       - Provisioning
-      security:
-      - CoderSessionToken: []
+      summary: Get provisioner daemons
+      operationId: get-provisioner-daemons
       parameters:
-      - name: organization
+      - description: Organization ID
+        name: organization
         in: path
         required: true
-        description: Organization ID
         schema:
           type: string
-      - name: limit
+          format: uuid
+      - description: Page limit
+        name: limit
         in: query
-        required: false
-        description: Page limit
         schema:
           type: integer
-      - name: ids
+      - description: Filter results by job IDs
+        name: ids
         in: query
-        required: false
-        description: Filter results by job IDs
+        style: form
+        explode: false
         schema:
           type: array
+          format: uuid
           items:
             type: string
-      - name: status
+      - description: Filter results by status
+        name: status
         in: query
-        required: false
-        description: Filter results by status
         schema:
           type: string
           enum:
@@ -72,12 +64,11 @@ paths:
           - canceling
           - canceled
           - failed
-      - name: tags
+      - description: Provisioner tags to filter by (JSON of the form `{'tag1':'value1','tag2':'value2'}`)
+        name: tags
         in: query
-        required: false
-        description: Provisioner tags to filter by (JSON of the form {'tag1':'value1','tag2':'value2'})
         schema:
-          type: object
+          type: string
       responses:
         '200':
           description: OK
@@ -87,8 +78,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/codersdk.ProvisionerDaemon'
+      security:
+      - CoderSessionToken: []
 components:
   schemas:
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+      x-enum-varnames:
+      - ProvisionerJobPending
+      - ProvisionerJobRunning
+      - ProvisionerJobSucceeded
+      - ProvisionerJobCanceling
+      - ProvisionerJobCanceled
+      - ProvisionerJobFailed
+      - ProvisionerJobUnknown
     codersdk.ProvisionerDaemon:
       type: object
       properties:
@@ -106,8 +117,8 @@ components:
           type: string
           format: uuid
         key_name:
-          type: string
           description: Optional fields.
+          type: string
         last_seen_at:
           type: string
           format: date-time
@@ -141,6 +152,10 @@ components:
       - offline
       - idle
       - busy
+      x-enum-varnames:
+      - ProvisionerDaemonOffline
+      - ProvisionerDaemonIdle
+      - ProvisionerDaemonBusy
     codersdk.ProvisionerDaemonJob:
       type: object
       properties:
@@ -163,18 +178,16 @@ components:
           type: string
         template_name:
           type: string
-    codersdk.ProvisionerJobStatus:
-      type: string
-      enum:
-      - pending
-      - running
-      - succeeded
-      - canceling
-      - canceled
-      - failed
-      - unknown
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

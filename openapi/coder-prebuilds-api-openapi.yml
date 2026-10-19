@@ -12,25 +12,16 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: Prebuilds
 paths:
   /api/v2/prebuilds/settings:
     get:
-      operationId: get-prebuilds-settings
-      summary: Get prebuilds settings
       tags:
       - Prebuilds
-      security:
-      - CoderSessionToken: []
+      summary: Get prebuilds settings
+      operationId: get-prebuilds-settings
       responses:
         '200':
           description: OK
@@ -38,19 +29,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.PrebuildsSettings'
-    put:
-      operationId: update-prebuilds-settings
-      summary: Update prebuilds settings
-      tags:
-      - Prebuilds
       security:
       - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.PrebuildsSettings'
+    put:
+      tags:
+      - Prebuilds
+      summary: Update prebuilds settings
+      operationId: update-prebuilds-settings
       responses:
         '200':
           description: OK
@@ -60,6 +45,15 @@ paths:
                 $ref: '#/components/schemas/codersdk.PrebuildsSettings'
         '304':
           description: Not Modified
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.PrebuildsSettings'
+        description: Prebuilds settings request
+        required: true
 components:
   schemas:
     codersdk.PrebuildsSettings:
@@ -68,7 +62,15 @@ components:
         reconciliation_paused:
           type: boolean
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

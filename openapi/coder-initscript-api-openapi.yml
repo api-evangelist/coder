@@ -12,36 +12,27 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: InitScript
 paths:
   /api/v2/init-script/{os}/{arch}:
     get:
-      operationId: get-agent-init-script
-      summary: Get agent init script
       tags:
       - InitScript
-      security:
-      - CoderSessionToken: []
+      summary: Get agent init script
+      operationId: get-agent-init-script
       parameters:
-      - name: os
+      - description: Operating system
+        name: os
         in: path
         required: true
-        description: Operating system
         schema:
           type: string
-      - name: arch
+      - description: Architecture
+        name: arch
         in: path
         required: true
-        description: Architecture
         schema:
           type: string
       responses:
@@ -49,7 +40,15 @@ paths:
           description: Success
 components:
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

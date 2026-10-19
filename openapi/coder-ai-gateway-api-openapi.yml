@@ -1,0 +1,534 @@
+openapi: 3.2.0
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder AI Gateway API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: /
+tags:
+- name: AI Gateway
+paths:
+  /api/v2/ai-gateway/clients:
+    get:
+      description: 'Alias: also available at /api/v2/aibridge/clients for backward compatibility.'
+      tags:
+      - AI Gateway
+      summary: List AI Gateway clients
+      operationId: list-ai-gateway-clients
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      security:
+      - CoderSessionToken: []
+  /api/v2/ai-gateway/models:
+    get:
+      description: 'Alias: also available at /api/v2/aibridge/models for backward compatibility.'
+      tags:
+      - AI Gateway
+      summary: List AI Gateway models
+      operationId: list-ai-gateway-models
+      parameters:
+      - description: 'Search query in the format `key:value`. Available keys are: model. A bare term searches by model prefix.'
+        name: q
+        in: query
+        schema:
+          type: string
+      - description: Literal model identifier prefix. Cannot be combined with q.
+        name: model
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      security:
+      - CoderSessionToken: []
+  /api/v2/ai-gateway/providers:
+    get:
+      tags:
+      - AI Gateway
+      summary: List AI Gateway providers
+      operationId: list-ai-gateway-providers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.AIBridgeProvider'
+      security:
+      - CoderSessionToken: []
+  /api/v2/ai-gateway/sessions:
+    get:
+      description: 'Alias: also available at /api/v2/aibridge/sessions for backward compatibility.'
+      tags:
+      - AI Gateway
+      summary: List AI Gateway sessions
+      operationId: list-ai-gateway-sessions
+      parameters:
+      - description: 'Search query in the format `key:value`. Available keys are: initiator, provider, provider_name, model, client, session_id, started_after, started_before.'
+        name: q
+        in: query
+        schema:
+          type: string
+      - description: Page limit
+        name: limit
+        in: query
+        schema:
+          type: integer
+      - description: Cursor pagination after session ID (cannot be used with offset)
+        name: after_session_id
+        in: query
+        schema:
+          type: string
+      - description: Offset pagination (cannot be used with after_session_id)
+        name: offset
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AIBridgeListSessionsResponse'
+      security:
+      - CoderSessionToken: []
+  /api/v2/ai-gateway/sessions/{session_id}:
+    get:
+      description: 'Alias: also available at /api/v2/aibridge/sessions/{session_id} for backward compatibility.'
+      tags:
+      - AI Gateway
+      summary: Get AI Gateway session threads
+      operationId: get-ai-gateway-session-threads
+      parameters:
+      - description: Session ID (client_session_id or interception UUID)
+        name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Thread pagination cursor (forward/older)
+        name: after_id
+        in: query
+        schema:
+          type: string
+      - description: Thread pagination cursor (backward/newer)
+        name: before_id
+        in: query
+        schema:
+          type: string
+      - description: Number of threads per page (default 50)
+        name: limit
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsResponse'
+      security:
+      - CoderSessionToken: []
+components:
+  schemas:
+    codersdk.AIBridgeToolCall:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        injected:
+          type: boolean
+        input:
+          type: string
+        interception_id:
+          type: string
+          format: uuid
+        metadata:
+          type: object
+          additionalProperties: {}
+        provider_response_id:
+          type: string
+        server_url:
+          type: string
+        tool:
+          type: string
+    codersdk.AgentFirewallLog:
+      type: object
+      properties:
+        allowed:
+          type: boolean
+        captured_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        detail:
+          type: string
+        id:
+          type: string
+          format: uuid
+        matched_rule:
+          type: string
+        method:
+          type: string
+        proto:
+          type: string
+        sequence_number:
+          type: integer
+        session_id:
+          type: string
+          format: uuid
+    codersdk.AIBridgeProvider:
+      type: object
+      properties:
+        display_name:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/codersdk.AIProviderType'
+    codersdk.AIBridgeSession:
+      type: object
+      properties:
+        client:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+        initiator:
+          $ref: '#/components/schemas/codersdk.MinimalUser'
+        last_active_at:
+          type: string
+          format: date-time
+        last_prompt:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: {}
+        models:
+          type: array
+          items:
+            type: string
+        network_calls:
+          description: 'NetworkCalls summarizes the Agent Firewall network requests made during the
+
+            session. A nil value means the session did not pass through Agent
+
+            Firewall, so network call monitoring was not active, which the UI
+
+            surfaces as "Disabled".'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AIBridgeSessionNetworkCallSummary'
+        providers:
+          type: array
+          items:
+            type: string
+        started_at:
+          type: string
+          format: date-time
+        threads:
+          type: integer
+        token_usage_summary:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionTokenUsageSummary'
+    codersdk.AIBridgeSessionNetworkDomain:
+      type: object
+      properties:
+        count:
+          type: integer
+        domain:
+          type: string
+    codersdk.AIBridgeAttribution:
+      type: object
+      additionalProperties:
+        type: string
+    codersdk.MinimalUser:
+      type: object
+      required:
+      - id
+      - username
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+    codersdk.AIBridgeThread:
+      type: object
+      properties:
+        agent_firewall_sequence_number:
+          description: 'AgentFirewallSequenceNumber is the firewall sequence number from
+
+            the root interception. Used to determine the position of this
+
+            LLM request in the firewall event stream. Nil when the request
+
+            did not pass through the agent firewall.'
+          type: integer
+        agent_firewall_session_id:
+          description: 'AgentFirewallSessionID links this thread to an agent firewall
+
+            confinement session. Nil when the request did not pass through
+
+            the agent firewall.'
+          type: string
+          format: uuid
+        agentic_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeAgenticAction'
+        attribution:
+          description: 'Attribution contains attribution data from the root interception.
+
+            Unknown attribution is serialized as an empty object.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AIBridgeAttribution'
+        credential_hint:
+          type: string
+        credential_kind:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        error_message:
+          description: 'ErrorMessage is the raw terminal upstream error message from the root
+
+            interception. Nil when the interception succeeded.'
+          type: string
+        error_type:
+          description: 'ErrorType is the categorized terminal upstream error from the root
+
+            interception, or nil when the interception succeeded. See the
+
+            aibridge_interception_error_type enum for possible values.'
+          type: string
+        id:
+          type: string
+          format: uuid
+        model:
+          type: string
+        prompt:
+          type: string
+        provider:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+        token_usage:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+    codersdk.AIBridgeSessionTokenUsageSummary:
+      type: object
+      properties:
+        cache_read_input_tokens:
+          type: integer
+        cache_write_input_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+        output_tokens:
+          type: integer
+    codersdk.AIBridgeSessionThreadsResponse:
+      type: object
+      properties:
+        client:
+          type: string
+        ended_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+        initiator:
+          $ref: '#/components/schemas/codersdk.MinimalUser'
+        metadata:
+          type: object
+          additionalProperties: {}
+        models:
+          type: array
+          items:
+            type: string
+        network_call_logs:
+          description: 'NetworkCallLogs is the chronological list of individual network calls made
+
+            during the session, holding the earliest calls up to a server-side cap.
+
+            NetworkCalls remains authoritative for whole-session totals, so a shorter
+
+            list than NetworkCalls.Total means the list was truncated. Empty when the
+
+            session did not pass through Agent Firewall.'
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AgentFirewallLog'
+        network_calls:
+          description: 'NetworkCalls summarizes the Agent Firewall network calls made during the
+
+            session. A nil value means the session did not pass through Agent
+
+            Firewall, so network call monitoring was not active, which the UI
+
+            surfaces as "Disabled".'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AIBridgeSessionNetworkCallSummary'
+        network_domain_count:
+          type: integer
+        network_top_domains:
+          description: 'NetworkTopDomains lists the most contacted destination hosts, ordered by
+
+            call count descending. NetworkDomainCount is the total number of distinct
+
+            domains, used to render a "+N more" overflow beyond the listed domains.'
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeSessionNetworkDomain'
+        page_ended_at:
+          type: string
+          format: date-time
+        page_started_at:
+          type: string
+          format: date-time
+        providers:
+          type: array
+          items:
+            type: string
+        started_at:
+          type: string
+          format: date-time
+        threads:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeThread'
+        token_usage_summary:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+    codersdk.AIBridgeModelThought:
+      type: object
+      properties:
+        text:
+          type: string
+    codersdk.AIBridgeAgenticAction:
+      type: object
+      properties:
+        attribution:
+          description: 'Attribution contains attribution data from this interception.
+
+            Unknown attribution is serialized as an empty object.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.AIBridgeAttribution'
+        interception_id:
+          type: string
+          format: uuid
+        model:
+          type: string
+        thinking:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeModelThought'
+        token_usage:
+          $ref: '#/components/schemas/codersdk.AIBridgeSessionThreadsTokenUsage'
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeToolCall'
+    codersdk.AIBridgeListSessionsResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.AIBridgeSession'
+    codersdk.AIBridgeSessionThreadsTokenUsage:
+      type: object
+      properties:
+        cache_read_input_tokens:
+          type: integer
+        cache_write_input_tokens:
+          type: integer
+        input_tokens:
+          type: integer
+        metadata:
+          type: object
+          additionalProperties: {}
+        output_tokens:
+          type: integer
+    codersdk.AIProviderType:
+      type: string
+      enum:
+      - openai
+      - anthropic
+      - azure
+      - google
+      - openai-compat
+      - openrouter
+      - vercel
+      - bedrock
+      - copilot
+      x-enum-varnames:
+      - AIProviderTypeOpenAI
+      - AIProviderTypeAnthropic
+      - AIProviderTypeAzure
+      - AIProviderTypeGoogle
+      - AIProviderTypeOpenAICompat
+      - AIProviderTypeOpenrouter
+      - AIProviderTypeVercel
+      - AIProviderTypeBedrock
+      - AIProviderTypeCopilot
+    codersdk.AIBridgeSessionNetworkCallSummary:
+      type: object
+      properties:
+        blocked:
+          type: integer
+        total:
+          type: integer
+  securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
+    CoderSessionToken:
+      type: apiKey
+      name: Coder-Session-Token
+      in: header

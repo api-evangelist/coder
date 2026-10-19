@@ -12,25 +12,276 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: Organizations
 paths:
-  /api/v2/organizations:
+  /api/experimental/organizations/{organization}/skills:
     get:
-      operationId: get-organizations
-      summary: Get organizations
       tags:
       - Organizations
+      summary: List organization skills
+      operationId: list-organization-skills
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.SkillMetadata'
       security:
       - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    post:
+      tags:
+      - Organizations
+      summary: Create an organization skill
+      operationId: create-an-organization-skill
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Skill'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateSkillRequest'
+        description: Create organization skill request
+        required: true
+  /api/experimental/organizations/{organization}/skills/{skillName}:
+    get:
+      tags:
+      - Organizations
+      summary: Get an organization skill by name
+      operationId: get-an-organization-skill-by-name
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Skill name
+        name: skillName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Skill'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    delete:
+      tags:
+      - Organizations
+      summary: Delete an organization skill
+      operationId: delete-an-organization-skill
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Skill name
+        name: skillName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    patch:
+      tags:
+      - Organizations
+      summary: Update an organization skill
+      operationId: update-an-organization-skill
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Skill name
+        name: skillName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Skill'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateSkillRequest'
+        description: Update organization skill request
+        required: true
+  /api/experimental/organizations/{organization}/skills/{skillName}/acl:
+    get:
+      tags:
+      - Organizations
+      summary: Get an organization skill ACL
+      operationId: get-an-organization-skill-acl
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Skill name
+        name: skillName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.OrganizationSkillACL'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    patch:
+      tags:
+      - Organizations
+      summary: Update an organization skill ACL
+      operationId: update-an-organization-skill-acl
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Skill name
+        name: skillName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateOrganizationSkillACLRequest'
+        description: Update organization skill ACL request
+        required: true
+  /api/experimental/organizations/{organization}/skills/{skillName}/acl/available:
+    get:
+      tags:
+      - Organizations
+      summary: Get available organization skill ACL users and groups
+      operationId: get-available-organization-skill-acl-users-and-groups
+      parameters:
+      - description: Organization ID or name
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: Skill name
+        name: skillName
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: User search query; free-text search also applies to groups
+        name: q
+        in: query
+        schema:
+          type: string
+      - description: User after ID
+        name: after_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - description: Page limit for users and groups, if 0 returns all candidates
+        name: limit
+        in: query
+        schema:
+          type: integer
+      - description: User page offset
+        name: offset
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ACLAvailable'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+  /api/v2/organizations:
+    get:
+      tags:
+      - Organizations
+      summary: Get organizations
+      operationId: get-organizations
       responses:
         '200':
           description: OK
@@ -40,19 +291,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/codersdk.Organization'
-    post:
-      operationId: create-organization
-      summary: Create organization
-      tags:
-      - Organizations
       security:
       - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.CreateOrganizationRequest'
+    post:
+      tags:
+      - Organizations
+      summary: Create organization
+      operationId: create-organization
       responses:
         '201':
           description: Created
@@ -60,21 +305,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Organization'
-  /api/v2/organizations/{organization}:
-    get:
-      operationId: get-organization-by-id
-      summary: Get organization by ID
-      tags:
-      - Organizations
       security:
       - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateOrganizationRequest'
+        description: Create organization request
+        required: true
+  /api/v2/organizations/{organization}:
+    get:
+      tags:
+      - Organizations
+      summary: Get organization by ID
+      operationId: get-organization-by-id
       parameters:
-      - name: organization
+      - description: Organization ID
+        name: organization
         in: path
         required: true
-        description: Organization ID
         schema:
           type: string
+          format: uuid
       responses:
         '200':
           description: OK
@@ -82,18 +335,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Organization'
-    delete:
-      operationId: delete-organization
-      summary: Delete organization
-      tags:
-      - Organizations
       security:
       - CoderSessionToken: []
+    delete:
+      tags:
+      - Organizations
+      summary: Delete organization
+      operationId: delete-organization
       parameters:
-      - name: organization
+      - description: Organization ID or name
+        name: organization
         in: path
         required: true
-        description: Organization ID or name
         schema:
           type: string
       responses:
@@ -103,26 +356,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-    patch:
-      operationId: update-organization
-      summary: Update organization
-      tags:
-      - Organizations
       security:
       - CoderSessionToken: []
+    patch:
+      tags:
+      - Organizations
+      summary: Update organization
+      operationId: update-organization
       parameters:
-      - name: organization
+      - description: Organization ID or name
+        name: organization
         in: path
         required: true
-        description: Organization ID or name
         schema:
           type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.UpdateOrganizationRequest'
       responses:
         '200':
           description: OK
@@ -130,39 +377,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Organization'
-  /api/v2/organizations/{organization}/provisionerjobs:
-    get:
-      operationId: get-provisioner-jobs
-      summary: Get provisioner jobs
-      tags:
-      - Organizations
       security:
       - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateOrganizationRequest'
+        description: Patch organization request
+        required: true
+  /api/v2/organizations/{organization}/provisionerjobs:
+    get:
+      tags:
+      - Organizations
+      summary: Get provisioner jobs
+      operationId: get-provisioner-jobs
       parameters:
-      - name: organization
+      - description: Organization ID
+        name: organization
         in: path
         required: true
-        description: Organization ID
         schema:
           type: string
-      - name: limit
+          format: uuid
+      - description: Page limit
+        name: limit
         in: query
-        required: false
-        description: Page limit
         schema:
           type: integer
-      - name: ids
+      - description: Filter results by job IDs
+        name: ids
         in: query
-        required: false
-        description: Filter results by job IDs
+        style: form
+        explode: false
         schema:
           type: array
+          format: uuid
           items:
             type: string
-      - name: status
+      - description: Filter results by status
+        name: status
         in: query
-        required: false
-        description: Filter results by status
         schema:
           type: string
           enum:
@@ -179,18 +434,17 @@ paths:
           - canceling
           - canceled
           - failed
-      - name: tags
+      - description: Provisioner tags to filter by (JSON of the form `{'tag1':'value1','tag2':'value2'}`)
+        name: tags
         in: query
-        required: false
-        description: Provisioner tags to filter by (JSON of the form {'tag1':'value1','tag2':'value2'})
-        schema:
-          type: object
-      - name: initiator
-        in: query
-        required: false
-        description: Filter results by initiator
         schema:
           type: string
+      - description: Filter results by initiator
+        name: initiator
+        in: query
+        schema:
+          type: string
+          format: uuid
       responses:
         '200':
           description: OK
@@ -200,27 +454,29 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/codersdk.ProvisionerJob'
-  /api/v2/organizations/{organization}/provisionerjobs/{job}:
-    get:
-      operationId: get-provisioner-job
-      summary: Get provisioner job
-      tags:
-      - Organizations
       security:
       - CoderSessionToken: []
+  /api/v2/organizations/{organization}/provisionerjobs/{job}:
+    get:
+      tags:
+      - Organizations
+      summary: Get provisioner job
+      operationId: get-provisioner-job
       parameters:
-      - name: organization
+      - description: Organization ID
+        name: organization
         in: path
         required: true
-        description: Organization ID
         schema:
           type: string
-      - name: job
+          format: uuid
+      - description: Job ID
+        name: job
         in: path
         required: true
-        description: Job ID
         schema:
           type: string
+          format: uuid
       responses:
         '200':
           description: OK
@@ -228,123 +484,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.ProvisionerJob'
+      security:
+      - CoderSessionToken: []
 components:
   schemas:
-    codersdk.CreateOrganizationRequest:
+    codersdk.UpdateSkillRequest:
       type: object
       properties:
-        description:
+        content:
+          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
+
+            frontmatter must include name, may include description, and must be
+
+            followed by a non-empty body.'
           type: string
-        display_name:
-          type: string
-          description: DisplayName will default to the same value as `Name` if not provided.
-        icon:
-          type: string
-        name:
-          type: string
-      required:
-      - name
-    codersdk.JobErrorCode:
+        enabled:
+          type: boolean
+    codersdk.ProvisionerJobType:
       type: string
       enum:
-      - REQUIRED_TEMPLATE_VARIABLES
-      - INSUFFICIENT_QUOTA
-    codersdk.UpdateOrganizationRequest:
+      - template_version_import
+      - workspace_build
+      - template_version_dry_run
+      x-enum-varnames:
+      - ProvisionerJobTypeTemplateVersionImport
+      - ProvisionerJobTypeWorkspaceBuild
+      - ProvisionerJobTypeTemplateVersionDryRun
+    codersdk.OrganizationSkillUser:
       type: object
+      required:
+      - id
+      - username
       properties:
-        default_org_member_roles:
-          type: array
-          description: 'DefaultOrgMemberRoles, when non-nil, replaces the org''s default
-
-            member roles.'
-          items:
-            type: string
-        description:
+        avatar_url:
           type: string
-        display_name:
-          type: string
-        icon:
-          type: string
-        name:
-          type: string
-    codersdk.Organization:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        default_org_member_roles:
-          type: array
-          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
-
-            roles at request time. Changes propagate to all members on the
-
-            next request.'
-          items:
-            type: string
-        description:
-          type: string
-        display_name:
-          type: string
-        icon:
-          type: string
+          format: uri
         id:
           type: string
           format: uuid
-        is_default:
-          type: boolean
         name:
           type: string
-        updated_at:
+        role:
+          enum:
+          - read
+          allOf:
+          - $ref: '#/components/schemas/codersdk.OrganizationSkillRole'
+        username:
           type: string
-          format: date-time
-      required:
-      - created_at
-      - id
-      - is_default
-      - updated_at
-    codersdk.ProvisionerJobStatus:
-      type: string
-      enum:
-      - pending
-      - running
-      - succeeded
-      - canceling
-      - canceled
-      - failed
-      - unknown
-    codersdk.ProvisionerJobMetadata:
-      type: object
-      properties:
-        template_display_name:
-          type: string
-        template_icon:
-          type: string
-        template_id:
-          type: string
-          format: uuid
-        template_name:
-          type: string
-        template_version_name:
-          type: string
-        workspace_build_transition:
-          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
-        workspace_id:
-          type: string
-          format: uuid
-        workspace_name:
-          type: string
-    codersdk.ProvisionerJobInput:
-      type: object
-      properties:
-        error:
-          type: string
-        template_version_id:
-          type: string
-          format: uuid
-        workspace_build_id:
-          type: string
-          format: uuid
     codersdk.ProvisionerJob:
       type: object
       properties:
@@ -416,33 +602,378 @@ components:
           format: uuid
         worker_name:
           type: string
+    codersdk.Organization:
+      type: object
+      required:
+      - created_at
+      - id
+      - is_default
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        default_org_member_roles:
+          description: 'DefaultOrgMemberRoles are unioned into every member''s effective
+
+            roles at request time. Changes propagate to all members on the
+
+            next request.'
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        id:
+          type: string
+          format: uuid
+        is_default:
+          type: boolean
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.UpdateOrganizationRequest:
+      type: object
+      properties:
+        default_org_member_roles:
+          description: 'DefaultOrgMemberRoles, when non-nil, replaces the org''s default
+
+            member roles.'
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+    codersdk.SkillMetadata:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+        enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.JobErrorCode:
+      type: string
+      enum:
+      - REQUIRED_TEMPLATE_VARIABLES
+      - INSUFFICIENT_QUOTA
+      x-enum-varnames:
+      - RequiredTemplateVariables
+      - InsufficientQuota
+    codersdk.ReducedUser:
+      type: object
+      required:
+      - created_at
+      - email
+      - id
+      - username
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        id:
+          type: string
+          format: uuid
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        theme_preference:
+          description: 'Deprecated: this value should be retrieved from
+
+            `codersdk.UserPreferenceSettings` instead.'
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+    codersdk.ProvisionerJobStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - succeeded
+      - canceling
+      - canceled
+      - failed
+      - unknown
+      x-enum-varnames:
+      - ProvisionerJobPending
+      - ProvisionerJobRunning
+      - ProvisionerJobSucceeded
+      - ProvisionerJobCanceling
+      - ProvisionerJobCanceled
+      - ProvisionerJobFailed
+      - ProvisionerJobUnknown
+    codersdk.ProvisionerJobInput:
+      type: object
+      properties:
+        error:
+          type: string
+        template_version_id:
+          type: string
+          format: uuid
+        workspace_build_id:
+          type: string
+          format: uuid
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+      x-enum-varnames:
+      - UserStatusActive
+      - UserStatusDormant
+      - UserStatusSuspended
+    codersdk.UpdateOrganizationSkillACLRequest:
+      type: object
+      properties:
+        group_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.OrganizationSkillRole'
+        user_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.OrganizationSkillRole'
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+      x-enum-varnames:
+      - LoginTypeUnknown
+      - LoginTypePassword
+      - LoginTypeGithub
+      - LoginTypeOIDC
+      - LoginTypeToken
+      - LoginTypeNone
+    codersdk.CreateSkillRequest:
+      type: object
+      properties:
+        content:
+          description: 'Content must be SKILL.md-format Markdown with YAML frontmatter. The
+
+            frontmatter must include name, may include description, and must be
+
+            followed by a non-empty body.'
+          type: string
+    codersdk.OrganizationSkillACL:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OrganizationSkillGroup'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.OrganizationSkillUser'
+    codersdk.OrganizationSkillGroup:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        quota_allowance:
+          type: integer
+        role:
+          enum:
+          - read
+          allOf:
+          - $ref: '#/components/schemas/codersdk.OrganizationSkillRole'
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
+          type: integer
+    codersdk.GroupSource:
+      type: string
+      enum:
+      - user
+      - oidc
+      x-enum-varnames:
+      - GroupSourceUser
+      - GroupSourceOIDC
+    codersdk.Skill:
+      type: object
+      properties:
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+        enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.Group:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        quota_allowance:
+          type: integer
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
+          type: integer
+    codersdk.ProvisionerJobMetadata:
+      type: object
+      properties:
+        template_display_name:
+          type: string
+        template_icon:
+          type: string
+        template_id:
+          type: string
+          format: uuid
+        template_name:
+          type: string
+        template_version_name:
+          type: string
+        workspace_build_transition:
+          $ref: '#/components/schemas/codersdk.WorkspaceTransition'
+        workspace_id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
     codersdk.ValidationError:
       type: object
+      required:
+      - detail
+      - field
       properties:
         detail:
           type: string
         field:
           type: string
+    codersdk.CreateOrganizationRequest:
+      type: object
       required:
-      - detail
-      - field
-    codersdk.WorkspaceTransition:
+      - name
+      properties:
+        description:
+          type: string
+        display_name:
+          description: DisplayName will default to the same value as `Name` if not provided.
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+    codersdk.OrganizationSkillRole:
       type: string
       enum:
-      - start
-      - stop
-      - delete
-    codersdk.ProvisionerJobType:
-      type: string
-      enum:
-      - template_version_import
-      - workspace_build
-      - template_version_dry_run
+      - read
+      - ''
+      x-enum-varnames:
+      - OrganizationSkillRoleRead
+      - OrganizationSkillRoleDeleted
     codersdk.Response:
       type: object
       properties:
         detail:
-          type: string
           description: 'Detail is a debug message that provides further insight into why the
 
             action failed. This information can be technical and a regular golang
@@ -452,8 +983,8 @@ components:
             - "database: too many open connections"
 
             - "stat: too many open files"'
-        message:
           type: string
+        message:
           description: 'Message is an actionable message that depicts actions the request took.
 
             These messages should be fully formed sentences with proper punctuation.
@@ -463,17 +994,47 @@ components:
             - "A user has been created."
 
             - "Failed to create a user."'
+          type: string
         validations:
-          type: array
           description: 'Validations are form field-specific friendly error messages. They will be
 
             shown on a form field in the UI. These can also be used to add additional
 
             context if there is a set of errors in the primary ''Message''.'
+          type: array
           items:
             $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.ACLAvailable:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Group'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+    codersdk.WorkspaceTransition:
+      type: string
+      enum:
+      - start
+      - stop
+      - delete
+      x-enum-varnames:
+      - WorkspaceTransitionStart
+      - WorkspaceTransitionStop
+      - WorkspaceTransitionDelete
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

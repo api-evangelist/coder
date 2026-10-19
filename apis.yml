@@ -168,18 +168,6 @@ apis:
     url: openapi/coder-agents-api-openapi.yml
   - type: Documentation
     url: https://coder.com/docs/reference/api
-- aid: coder:coder-ai-bridge-api
-  name: Coder AI Bridge API
-  description: The AI Bridge API from Coder — 4 operation(s) for ai bridge.
-  humanURL: https://coder.com/docs/reference/api
-  baseURL: https://coder.example.com/api/v2
-  tags:
-  - AI Bridge
-  properties:
-  - type: OpenAPI
-    url: openapi/coder-ai-bridge-api-openapi.yml
-  - type: Documentation
-    url: https://coder.com/docs/reference/api
 - aid: coder:coder-ai-providers-api
   name: Coder AI Providers API
   description: The AI Providers API from Coder — 2 operation(s) for ai providers.
@@ -429,20 +417,6 @@ apis:
     url: openapi/coder-secrets-api-openapi.yml
   - type: Documentation
     url: https://coder.com/docs/reference/api
-- aid: coder:coder-tasks-api
-  name: Coder Tasks API
-  description: The Tasks API from Coder — 9 operation(s) for tasks.
-  humanURL: https://coder.com/docs/reference/api
-  baseURL: https://coder.example.com/api/v2
-  tags:
-  - Task
-  tags_raw:
-  - Tasks
-  properties:
-  - type: OpenAPI
-    url: openapi/coder-tasks-api-openapi.yml
-  - type: Documentation
-    url: https://coder.com/docs/reference/api
 - aid: coder:coder-templates-api
   name: Coder Templates API
   description: The Templates API from Coder — 33 operation(s) for templates.
@@ -493,6 +467,42 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/coder-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-ai-gateway-api
+  name: Coder AI Gateway API
+  description: The AI Gateway API from Coder — 5 operation(s) for ai gateway.
+  humanURL: https://coder.com/docs/reference/api/workspaces
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - AI Gateway
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-ai-gateway-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-mcp-api
+  name: Coder MCP API
+  description: The MCP API from Coder — 7 operation(s) for mcp.
+  humanURL: https://coder.com/docs/reference/api/workspaces
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - MCP
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-mcp-api-openapi.yml
+  - type: Documentation
+    url: https://coder.com/docs/reference/api
+- aid: coder:coder-templatebuilder-api
+  name: Coder Template Builder API
+  description: The TemplateBuilder API from Coder — 5 operation(s) for templatebuilder.
+  humanURL: https://coder.com/docs/reference/api/workspaces
+  baseURL: https://coder.example.com/api/v2
+  tags:
+  - TemplateBuilder
+  properties:
+  - type: OpenAPI
+    url: openapi/coder-templatebuilder-api-openapi.yml
   - type: Documentation
     url: https://coder.com/docs/reference/api
 common:

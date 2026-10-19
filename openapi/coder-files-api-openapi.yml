@@ -12,39 +12,25 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: Files
 paths:
   /api/v2/files:
     post:
-      operationId: upload-file
-      summary: Upload file
+      description: 'Swagger notice: Swagger 2.0 doesn''t support file upload with a `content-type` different than `application/x-www-form-urlencoded`.'
       tags:
       - Files
-      security:
-      - CoderSessionToken: []
-      description: 'Swagger notice: Swagger 2.0 doesn''t support file upload with a `content-type` different than `application/x-www-form-urlencoded`.'
+      summary: Upload file
+      operationId: upload-file
       parameters:
-      - name: Content-Type
+      - description: Content-Type must be `application/x-tar` or `application/zip`
+        name: Content-Type
         in: header
         required: true
-        description: Content-Type must be `application/x-tar` or `application/zip`
         schema:
           type: string
-      - name: file
-        in: formData
-        required: true
-        description: File to be uploaded. If using tar format, file must conform to ustar (pax may cause problems).
-        schema:
-          type: file
+          default: application/x-tar
       responses:
         '200':
           description: Returns existing file if duplicate
@@ -58,24 +44,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.UploadResponse'
-  /api/v2/files/{fileID}:
-    get:
-      operationId: get-file-by-id
-      summary: Get file by ID
-      tags:
-      - Files
+        '413':
+          description: Request body exceeds 100 MiB, or a .zip archive exceeds it once expanded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.Response'
       security:
       - CoderSessionToken: []
+      requestBody:
+        content:
+          application/x-tar:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: File to be uploaded. If using tar format, file must conform to ustar (pax may cause problems).
+                  format: binary
+              required:
+              - file
+  /api/v2/files/{fileID}:
+    get:
+      tags:
+      - Files
+      summary: Get file by ID
+      operationId: get-file-by-id
       parameters:
-      - name: fileID
+      - description: File ID
+        name: fileID
         in: path
         required: true
-        description: File ID
         schema:
           type: string
+          format: uuid
       responses:
         '200':
           description: OK
+      security:
+      - CoderSessionToken: []
 components:
   schemas:
     codersdk.UploadResponse:
@@ -84,8 +91,60 @@ components:
         hash:
           type: string
           format: uuid
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+          type: string
+        message:
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+          type: string
+        validations:
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.ValidationError:
+      type: object
+      required:
+      - detail
+      - field
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

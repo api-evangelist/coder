@@ -1,0 +1,877 @@
+openapi: 3.2.0
+info:
+  description: Coderd is the service created by running coder server. It is a thin API that connects workspaces, provisioners and users. coderd stores its state in Postgres and is the only service that communicates with Postgres.
+  title: Coder MCP API
+  termsOfService: https://coder.com/legal/terms-of-service
+  contact:
+    name: API Support
+    url: https://coder.com
+    email: support@coder.com
+  license:
+    name: AGPL-3.0
+    url: https://github.com/coder/coder/blob/main/LICENSE
+  version: '2.0'
+servers:
+- url: /
+tags:
+- name: MCP
+paths:
+  /api/experimental/mcp/servers/{mcpServer}/oauth2/callback:
+    get:
+      tags:
+      - MCP
+      summary: Handle MCP server OAuth2 callback
+      operationId: handle-mcp-server-oauth2-callback
+      parameters:
+      - description: MCP server config ID
+        name: mcpServer
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - description: Authorization code issued by the provider. Required together with state on success.
+        name: code
+        in: query
+        schema:
+          type: string
+      - description: Opaque state issued by the connect endpoint. Required together with code on success.
+        name: state
+        in: query
+        schema:
+          type: string
+      - description: Provider error code. Present instead of code when authorization fails.
+        name: error
+        in: query
+        schema:
+          type: string
+      - description: Provider error description accompanying error.
+        name: error_description
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+  /api/v2/mcp/servers/{mcpServer}/oauth2/disconnect:
+    delete:
+      tags:
+      - MCP
+      summary: Disconnect MCP server OAuth2 token
+      operationId: disconnect-mcp-server-oauth2-token
+      parameters:
+      - description: MCP server config ID
+        name: mcpServer
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.MCPServerOAuth2DisconnectResponse'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+  /api/v2/organizations/{organization}/mcp-servers:
+    get:
+      tags:
+      - MCP
+      summary: List MCP server configs
+      operationId: list-mcp-server-configs
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.MCPServerConfig'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    post:
+      tags:
+      - MCP
+      summary: Create MCP server config
+      operationId: create-mcp-server-config
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.MCPServerConfig'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CreateMCPServerConfigRequest'
+        description: Create MCP server config request
+        required: true
+  /api/v2/organizations/{organization}/mcp-servers/{mcpserverconfig}:
+    get:
+      tags:
+      - MCP
+      summary: Get MCP server config
+      operationId: get-mcp-server-config
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: MCP server config ID
+        name: mcpserverconfig
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.MCPServerConfig'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    delete:
+      tags:
+      - MCP
+      summary: Delete MCP server config
+      operationId: delete-mcp-server-config
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: MCP server config ID
+        name: mcpserverconfig
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: No Content
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    patch:
+      tags:
+      - MCP
+      summary: Update MCP server config
+      operationId: update-mcp-server-config
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: MCP server config ID
+        name: mcpserverconfig
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.MCPServerConfig'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateMCPServerConfigRequest'
+        description: Update MCP server config request
+        required: true
+  /api/v2/organizations/{organization}/mcp-servers/{mcpserverconfig}/acl:
+    get:
+      tags:
+      - MCP
+      summary: Get MCP server config ACL
+      operationId: get-mcp-server-config-acl
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: MCP server config ID
+        name: mcpserverconfig
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.MCPServerConfigACL'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+    patch:
+      tags:
+      - MCP
+      summary: Update MCP server config ACL
+      operationId: update-mcp-server-config-acl
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: MCP server config ID
+        name: mcpserverconfig
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: No Content
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.UpdateMCPServerConfigACLRequest'
+        description: Update MCP server config ACL request
+        required: true
+  /api/v2/organizations/{organization}/mcp-servers/{mcpserverconfig}/acl/available:
+    get:
+      tags:
+      - MCP
+      summary: Get available MCP server config ACL users and groups
+      operationId: get-available-mcp-server-config-acl-users-and-groups
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: MCP server config ID
+        name: mcpserverconfig
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - description: User search query; free-text search also applies to groups
+        name: q
+        in: query
+        schema:
+          type: string
+      - description: User after ID
+        name: after_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - description: Page limit for users and groups, if 0 returns all candidates
+        name: limit
+        in: query
+        schema:
+          type: integer
+      - description: User page offset
+        name: offset
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/codersdk.ACLAvailable'
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+  /api/v2/organizations/{organization}/mcp-servers/{mcpserverconfig}/oauth2/connect:
+    get:
+      tags:
+      - MCP
+      summary: Initiate MCP server OAuth2 connect
+      operationId: initiate-mcp-server-oauth2-connect
+      parameters:
+      - description: Organization name or ID
+        name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - description: MCP server config ID
+        name: mcpserverconfig
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '307':
+          description: Temporary Redirect
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
+components:
+  schemas:
+    codersdk.CreateMCPServerConfigRequest:
+      type: object
+      required:
+      - auth_type
+      - availability
+      - display_name
+      - slug
+      - transport
+      - url
+      properties:
+        allow_in_plan_mode:
+          type: boolean
+        api_key_header:
+          type: string
+        api_key_value:
+          type: string
+        auth_type:
+          type: string
+          enum:
+          - none
+          - oauth2
+          - api_key
+          - custom_headers
+          - user_oidc
+        availability:
+          type: string
+          enum:
+          - force_on
+          - default_on
+          - default_off
+        custom_headers:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+        forward_coder_headers:
+          description: 'ForwardCoderHeaders, when true, forwards Coder identity
+
+            headers on every outgoing MCP request. See MCPServerConfig.'
+          type: boolean
+        icon_url:
+          type: string
+        model_intent:
+          type: boolean
+        oauth2_auth_url:
+          type: string
+        oauth2_client_id:
+          type: string
+        oauth2_client_secret:
+          type: string
+        oauth2_resource:
+          description: 'OAuth2Resource is the RFC 8707 resource indicator sent on OAuth2
+
+            requests when set. Auto-discovery fills it if empty.'
+          type: string
+        oauth2_revocation_url:
+          description: 'OAuth2RevocationURL is the provider''s RFC 7009 revocation
+
+            endpoint; auto-populated by OAuth2 discovery when omitted.'
+          type: string
+        oauth2_scopes:
+          type: string
+        oauth2_token_url:
+          type: string
+        signing_secret:
+          description: 'SigningSecret signs forwarded identity headers and request bodies.
+
+            Configure the same secret on the MCP server. It is never returned.'
+          type: string
+        slug:
+          type: string
+        tool_allow_list:
+          type: array
+          items:
+            type: string
+        tool_deny_list:
+          type: array
+          items:
+            type: string
+        transport:
+          type: string
+          enum:
+          - streamable_http
+          - sse
+        url:
+          type: string
+    codersdk.MCPServerOAuth2DisconnectResponse:
+      type: object
+      properties:
+        token_revocation_error:
+          type: string
+        token_revoked:
+          type: boolean
+    codersdk.MCPServerConfigACL:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.MCPServerConfigGroup'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.MCPServerConfigUser'
+    codersdk.MCPServerConfigRole:
+      type: string
+      enum:
+      - read
+      - ''
+      x-enum-varnames:
+      - MCPServerConfigRoleRead
+      - MCPServerConfigRoleDeleted
+    codersdk.UpdateMCPServerConfigACLRequest:
+      type: object
+      properties:
+        group_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.MCPServerConfigRole'
+        user_roles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.MCPServerConfigRole'
+    codersdk.GroupSource:
+      type: string
+      enum:
+      - user
+      - oidc
+      x-enum-varnames:
+      - GroupSourceUser
+      - GroupSourceOIDC
+    codersdk.MCPServerConfig:
+      type: object
+      properties:
+        allow_in_plan_mode:
+          type: boolean
+        api_key_header:
+          description: API key fields (only populated for admins).
+          type: string
+        auth_connected:
+          description: Per-user state (populated for non-admin requests).
+          type: boolean
+        auth_type:
+          description: '"none", "oauth2", "api_key", "custom_headers", "user_oidc"'
+          type: string
+        availability:
+          description: Availability policy set by admin.
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+        forward_coder_headers:
+          description: 'ForwardCoderHeaders forwards the same Coder identity headers we
+
+            send to LLM providers (X-Coder-Owner-Id, X-Coder-Chat-Id, and the
+
+            optional X-Coder-Subchat-Id and X-Coder-Workspace-Id) to this
+
+            MCP server on every request. Off by default to avoid leaking
+
+            chat identity to third-party servers.'
+          type: boolean
+        has_api_key:
+          type: boolean
+        has_custom_headers:
+          type: boolean
+        has_oauth2_secret:
+          type: boolean
+        has_signing_secret:
+          type: boolean
+        icon_url:
+          type: string
+        id:
+          type: string
+          format: uuid
+        model_intent:
+          type: boolean
+        oauth2_auth_url:
+          type: string
+        oauth2_client_id:
+          description: OAuth2 fields (only populated for admins).
+          type: string
+        oauth2_resource:
+          type: string
+        oauth2_revocation_url:
+          type: string
+        oauth2_scopes:
+          type: string
+        oauth2_token_url:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+        tool_allow_list:
+          description: Tool governance.
+          type: array
+          items:
+            type: string
+        tool_deny_list:
+          type: array
+          items:
+            type: string
+        transport:
+          description: '"streamable_http" or "sse"'
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+    codersdk.MCPServerConfigGroup:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        quota_allowance:
+          type: integer
+        role:
+          enum:
+          - read
+          allOf:
+          - $ref: '#/components/schemas/codersdk.MCPServerConfigRole'
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
+          type: integer
+    codersdk.ReducedUser:
+      type: object
+      required:
+      - created_at
+      - email
+      - id
+      - username
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        id:
+          type: string
+          format: uuid
+        is_service_account:
+          type: boolean
+        last_seen_at:
+          type: string
+          format: date-time
+        login_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        name:
+          type: string
+        status:
+          enum:
+          - active
+          - suspended
+          allOf:
+          - $ref: '#/components/schemas/codersdk.UserStatus'
+        theme_preference:
+          description: 'Deprecated: this value should be retrieved from
+
+            `codersdk.UserPreferenceSettings` instead.'
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+    codersdk.UpdateMCPServerConfigRequest:
+      type: object
+      properties:
+        allow_in_plan_mode:
+          type: boolean
+        api_key_header:
+          type: string
+        api_key_value:
+          type: string
+        auth_type:
+          type: string
+          enum:
+          - none
+          - oauth2
+          - api_key
+          - custom_headers
+          - user_oidc
+        availability:
+          type: string
+          enum:
+          - force_on
+          - default_on
+          - default_off
+        custom_headers:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          type: string
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+        forward_coder_headers:
+          description: 'ForwardCoderHeaders, when set, updates whether Coder identity
+
+            headers are forwarded on every outgoing MCP request.'
+          type: boolean
+        icon_url:
+          type: string
+        model_intent:
+          type: boolean
+        oauth2_auth_url:
+          type: string
+        oauth2_client_id:
+          type: string
+        oauth2_client_secret:
+          type: string
+        oauth2_resource:
+          description: 'OAuth2Resource is the RFC 8707 resource indicator. Omit it to keep
+
+            the stored value; send "" to clear it.'
+          type: string
+        oauth2_revocation_url:
+          description: 'OAuth2RevocationURL is validated in the handler because a
+
+            validate tag would reject the pointer to "" that clears it.'
+          type: string
+        oauth2_scopes:
+          type: string
+        oauth2_token_url:
+          type: string
+        signing_secret:
+          description: 'SigningSecret replaces the shared signing key. Omit to preserve it;
+
+            an empty string clears it. It is never returned.'
+          type: string
+        slug:
+          type: string
+        tool_allow_list:
+          type: array
+          items:
+            type: string
+        tool_deny_list:
+          type: array
+          items:
+            type: string
+        transport:
+          type: string
+          enum:
+          - streamable_http
+          - sse
+        url:
+          type: string
+    codersdk.MCPServerConfigUser:
+      type: object
+      required:
+      - id
+      - username
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        role:
+          enum:
+          - read
+          allOf:
+          - $ref: '#/components/schemas/codersdk.MCPServerConfigRole'
+        username:
+          type: string
+    codersdk.UserStatus:
+      type: string
+      enum:
+      - active
+      - dormant
+      - suspended
+      x-enum-varnames:
+      - UserStatusActive
+      - UserStatusDormant
+      - UserStatusSuspended
+    codersdk.Group:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          format: uri
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+        name:
+          type: string
+        organization_display_name:
+          type: string
+        organization_id:
+          type: string
+          format: uuid
+        organization_name:
+          type: string
+        quota_allowance:
+          type: integer
+        source:
+          $ref: '#/components/schemas/codersdk.GroupSource'
+        total_member_count:
+          description: 'How many members are in this group. Shows the total count,
+
+            even if the user is not authorized to read group member details.
+
+            May be greater than `len(Group.Members)`.'
+          type: integer
+    codersdk.ACLAvailable:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.Group'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ReducedUser'
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+      x-enum-varnames:
+      - LoginTypeUnknown
+      - LoginTypePassword
+      - LoginTypeGithub
+      - LoginTypeOIDC
+      - LoginTypeToken
+      - LoginTypeNone
+  securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
+    CoderSessionToken:
+      type: apiKey
+      name: Coder-Session-Token
+      in: header

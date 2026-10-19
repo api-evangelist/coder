@@ -12,31 +12,16 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: Notifications
 paths:
   /api/v2/notifications/custom:
     post:
-      operationId: send-a-custom-notification
-      summary: Send a custom notification
       tags:
       - Notifications
-      security:
-      - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.CustomNotificationRequest'
+      summary: Send a custom notification
+      operationId: send-a-custom-notification
       responses:
         '204':
           description: No Content
@@ -58,14 +43,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-  /api/v2/notifications/dispatch-methods:
-    get:
-      operationId: get-notification-dispatch-methods
-      summary: Get notification dispatch methods
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.CustomNotificationRequest'
+        description: Provide a non-empty title or message
+        required: true
+  /api/v2/notifications/dispatch-methods:
+    get:
+      tags:
+      - Notifications
+      summary: Get notification dispatch methods
+      operationId: get-notification-dispatch-methods
       responses:
         '200':
           description: OK
@@ -75,39 +67,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/codersdk.NotificationMethodsResponse'
-  /api/v2/notifications/inbox:
-    get:
-      operationId: list-inbox-notifications
-      summary: List inbox notifications
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/notifications/inbox:
+    get:
+      tags:
+      - Notifications
+      summary: List inbox notifications
+      operationId: list-inbox-notifications
       parameters:
-      - name: targets
+      - description: Comma-separated list of target IDs to filter notifications
+        name: targets
         in: query
-        required: false
-        description: Comma-separated list of target IDs to filter notifications
         schema:
           type: string
-      - name: templates
+      - description: Comma-separated list of template IDs to filter notifications
+        name: templates
         in: query
-        required: false
-        description: Comma-separated list of template IDs to filter notifications
         schema:
           type: string
-      - name: read_status
+      - description: 'Filter notifications by read status. Possible values: read, unread, all'
+        name: read_status
         in: query
-        required: false
-        description: 'Filter notifications by read status. Possible values: read, unread, all'
         schema:
           type: string
-      - name: starting_before
+      - description: ID of the last notification from the current page. Notifications returned will be older than the associated one
+        name: starting_before
         in: query
-        required: false
-        description: ID of the last notification from the current page. Notifications returned will be older than the associated one
         schema:
           type: string
+          format: uuid
       responses:
         '200':
           description: OK
@@ -115,48 +104,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.ListInboxNotificationsResponse'
-  /api/v2/notifications/inbox/mark-all-as-read:
-    put:
-      operationId: mark-all-unread-notifications-as-read
-      summary: Mark all unread notifications as read
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/notifications/inbox/mark-all-as-read:
+    put:
+      tags:
+      - Notifications
+      summary: Mark all unread notifications as read
+      operationId: mark-all-unread-notifications-as-read
       responses:
         '204':
           description: No Content
-  /api/v2/notifications/inbox/watch:
-    get:
-      operationId: watch-for-new-inbox-notifications
-      summary: Watch for new inbox notifications
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/notifications/inbox/watch:
+    get:
+      tags:
+      - Notifications
+      summary: Watch for new inbox notifications
+      operationId: watch-for-new-inbox-notifications
       parameters:
-      - name: targets
+      - description: Comma-separated list of target IDs to filter notifications
+        name: targets
         in: query
-        required: false
-        description: Comma-separated list of target IDs to filter notifications
         schema:
           type: string
-      - name: templates
+      - description: Comma-separated list of template IDs to filter notifications
+        name: templates
         in: query
-        required: false
-        description: Comma-separated list of template IDs to filter notifications
         schema:
           type: string
-      - name: read_status
+      - description: 'Filter notifications by read status. Possible values: read, unread, all'
+        name: read_status
         in: query
-        required: false
-        description: 'Filter notifications by read status. Possible values: read, unread, all'
         schema:
           type: string
-      - name: format
+      - description: Define the output format for notifications title and body.
+        name: format
         in: query
-        required: false
-        description: Define the output format for notifications title and body.
         schema:
           type: string
           enum:
@@ -169,19 +154,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.GetInboxNotificationResponse'
-  /api/v2/notifications/inbox/{id}/read-status:
-    put:
-      operationId: update-read-status-of-a-notification
-      summary: Update read status of a notification
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/notifications/inbox/{id}/read-status:
+    put:
+      tags:
+      - Notifications
+      summary: Update read status of a notification
+      operationId: update-read-status-of-a-notification
       parameters:
-      - name: id
+      - description: id of the notification
+        name: id
         in: path
         required: true
-        description: id of the notification
         schema:
           type: string
       responses:
@@ -191,14 +176,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-  /api/v2/notifications/settings:
-    get:
-      operationId: get-notifications-settings
-      summary: Get notifications settings
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/notifications/settings:
+    get:
+      tags:
+      - Notifications
+      summary: Get notifications settings
+      operationId: get-notifications-settings
       responses:
         '200':
           description: OK
@@ -206,19 +191,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.NotificationsSettings'
-    put:
-      operationId: update-notifications-settings
-      summary: Update notifications settings
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.NotificationsSettings'
+    put:
+      tags:
+      - Notifications
+      summary: Update notifications settings
+      operationId: update-notifications-settings
       responses:
         '200':
           description: OK
@@ -228,14 +207,21 @@ paths:
                 $ref: '#/components/schemas/codersdk.NotificationsSettings'
         '304':
           description: Not Modified
-  /api/v2/notifications/templates/custom:
-    get:
-      operationId: get-custom-notification-templates
-      summary: Get custom notification templates
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.NotificationsSettings'
+        description: Notifications settings request
+        required: true
+  /api/v2/notifications/templates/custom:
+    get:
+      tags:
+      - Notifications
+      summary: Get custom notification templates
+      operationId: get-custom-notification-templates
       responses:
         '200':
           description: OK
@@ -251,14 +237,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-  /api/v2/notifications/templates/system:
-    get:
-      operationId: get-system-notification-templates
-      summary: Get system notification templates
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/notifications/templates/system:
+    get:
+      tags:
+      - Notifications
+      summary: Get system notification templates
+      operationId: get-system-notification-templates
       responses:
         '200':
           description: OK
@@ -274,30 +260,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.Response'
-  /api/v2/notifications/test:
-    post:
-      operationId: send-a-test-notification
-      summary: Send a test notification
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/notifications/test:
+    post:
+      tags:
+      - Notifications
+      summary: Send a test notification
+      operationId: send-a-test-notification
       responses:
         '200':
           description: OK
-  /api/v2/users/{user}/notifications/preferences:
-    get:
-      operationId: get-user-notification-preferences
-      summary: Get user notification preferences
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+  /api/v2/users/{user}/notifications/preferences:
+    get:
+      tags:
+      - Notifications
+      summary: Get user notification preferences
+      operationId: get-user-notification-preferences
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
@@ -309,107 +295,164 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/codersdk.NotificationPreference'
-    put:
-      operationId: update-user-notification-preferences
-      summary: Update user notification preferences
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
+    put:
+      tags:
+      - Notifications
+      summary: Update user notification preferences
+      operationId: update-user-notification-preferences
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/codersdk.NotificationPreference'
+      security:
+      - CoderSessionToken: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.UpdateUserNotificationPreferences'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/codersdk.NotificationPreference'
+        description: Preferences
+        required: true
   /api/v2/users/{user}/webpush/subscription:
     post:
-      operationId: create-user-webpush-subscription
-      summary: Create user webpush subscription
       tags:
       - Notifications
-      security:
-      - CoderSessionToken: []
+      summary: Create user webpush subscription
+      operationId: create-user-webpush-subscription
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
+      responses:
+        '204':
+          description: No Content
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.WebpushSubscription'
+        description: Webpush subscription
+        required: true
+    delete:
+      tags:
+      - Notifications
+      summary: Delete user webpush subscription
+      operationId: delete-user-webpush-subscription
+      parameters:
+      - description: User ID, name, or me
+        name: user
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '204':
           description: No Content
-    delete:
-      operationId: delete-user-webpush-subscription
-      summary: Delete user webpush subscription
-      tags:
-      - Notifications
       security:
       - CoderSessionToken: []
-      parameters:
-      - name: user
-        in: path
-        required: true
-        description: User ID, name, or me
-        schema:
-          type: string
+      x-apidocgen:
+        skip: true
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.DeleteWebpushSubscription'
-      responses:
-        '204':
-          description: No Content
+        description: Webpush subscription
+        required: true
   /api/v2/users/{user}/webpush/test:
     post:
-      operationId: send-a-test-push-notification
-      summary: Send a test push notification
       tags:
       - Notifications
-      security:
-      - CoderSessionToken: []
+      summary: Send a test push notification
+      operationId: send-a-test-push-notification
       parameters:
-      - name: user
+      - description: User ID, name, or me
+        name: user
         in: path
         required: true
-        description: User ID, name, or me
         schema:
           type: string
       responses:
         '204':
           description: No Content
+      security:
+      - CoderSessionToken: []
+      x-apidocgen:
+        skip: true
 components:
   schemas:
-    codersdk.NotificationsSettings:
+    codersdk.CustomNotificationContent:
       type: object
       properties:
-        notifier_paused:
-          type: boolean
+        message:
+          type: string
+        title:
+          type: string
+    codersdk.GetInboxNotificationResponse:
+      type: object
+      properties:
+        notification:
+          $ref: '#/components/schemas/codersdk.InboxNotification'
+        unread_count:
+          type: integer
+    codersdk.ListInboxNotificationsResponse:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.InboxNotification'
+        unread_count:
+          type: integer
+    codersdk.DeleteWebpushSubscription:
+      type: object
+      properties:
+        endpoint:
+          type: string
+    codersdk.NotificationMethodsResponse:
+      type: object
+      properties:
+        available:
+          type: array
+          items:
+            type: string
+        default:
+          type: string
+    codersdk.UpdateUserNotificationPreferences:
+      type: object
+      properties:
+        template_disabled_map:
+          type: object
+          additionalProperties:
+            type: boolean
+    codersdk.InboxNotificationAction:
+      type: object
+      properties:
+        label:
+          type: string
+        url:
+          type: string
     codersdk.NotificationTemplate:
       type: object
       properties:
@@ -431,126 +474,6 @@ components:
         name:
           type: string
         title_template:
-          type: string
-    codersdk.CustomNotificationRequest:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
-    codersdk.NotificationPreference:
-      type: object
-      properties:
-        disabled:
-          type: boolean
-        id:
-          type: string
-          format: uuid
-        updated_at:
-          type: string
-          format: date-time
-    codersdk.DeleteWebpushSubscription:
-      type: object
-      properties:
-        endpoint:
-          type: string
-    codersdk.UpdateUserNotificationPreferences:
-      type: object
-      properties:
-        template_disabled_map:
-          type: object
-          additionalProperties:
-            type: boolean
-    codersdk.WebpushSubscription:
-      type: object
-      properties:
-        auth_key:
-          type: string
-        endpoint:
-          type: string
-        p256dh_key:
-          type: string
-    codersdk.ListInboxNotificationsResponse:
-      type: object
-      properties:
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.InboxNotification'
-        unread_count:
-          type: integer
-    codersdk.CustomNotificationContent:
-      type: object
-      properties:
-        message:
-          type: string
-        title:
-          type: string
-    codersdk.GetInboxNotificationResponse:
-      type: object
-      properties:
-        notification:
-          $ref: '#/components/schemas/codersdk.InboxNotification'
-        unread_count:
-          type: integer
-    codersdk.ValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-        field:
-          type: string
-      required:
-      - detail
-      - field
-    codersdk.InboxNotificationAction:
-      type: object
-      properties:
-        label:
-          type: string
-        url:
-          type: string
-    codersdk.Response:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: 'Detail is a debug message that provides further insight into why the
-
-            action failed. This information can be technical and a regular golang
-
-            err.Error() text.
-
-            - "database: too many open connections"
-
-            - "stat: too many open files"'
-        message:
-          type: string
-          description: 'Message is an actionable message that depicts actions the request took.
-
-            These messages should be fully formed sentences with proper punctuation.
-
-            Examples:
-
-            - "A user has been created."
-
-            - "Failed to create a user."'
-        validations:
-          type: array
-          description: 'Validations are form field-specific friendly error messages. They will be
-
-            shown on a form field in the UI. These can also be used to add additional
-
-            context if there is a set of errors in the primary ''Message''.'
-          items:
-            $ref: '#/components/schemas/codersdk.ValidationError'
-    codersdk.NotificationMethodsResponse:
-      type: object
-      properties:
-        available:
-          type: array
-          items:
-            type: string
-        default:
           type: string
     codersdk.InboxNotification:
       type: object
@@ -584,8 +507,90 @@ components:
         user_id:
           type: string
           format: uuid
+    codersdk.WebpushSubscription:
+      type: object
+      properties:
+        auth_key:
+          type: string
+        endpoint:
+          type: string
+        p256dh_key:
+          type: string
+    codersdk.CustomNotificationRequest:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/codersdk.CustomNotificationContent'
+    codersdk.NotificationsSettings:
+      type: object
+      properties:
+        notifier_paused:
+          type: boolean
+    codersdk.Response:
+      type: object
+      properties:
+        detail:
+          description: 'Detail is a debug message that provides further insight into why the
+
+            action failed. This information can be technical and a regular golang
+
+            err.Error() text.
+
+            - "database: too many open connections"
+
+            - "stat: too many open files"'
+          type: string
+        message:
+          description: 'Message is an actionable message that depicts actions the request took.
+
+            These messages should be fully formed sentences with proper punctuation.
+
+            Examples:
+
+            - "A user has been created."
+
+            - "Failed to create a user."'
+          type: string
+        validations:
+          description: 'Validations are form field-specific friendly error messages. They will be
+
+            shown on a form field in the UI. These can also be used to add additional
+
+            context if there is a set of errors in the primary ''Message''.'
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.ValidationError'
+    codersdk.NotificationPreference:
+      type: object
+      properties:
+        disabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        updated_at:
+          type: string
+          format: date-time
+    codersdk.ValidationError:
+      type: object
+      required:
+      - detail
+      - field
+      properties:
+        detail:
+          type: string
+        field:
+          type: string
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

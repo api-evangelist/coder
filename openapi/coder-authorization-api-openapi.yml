@@ -12,25 +12,16 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: Authorization
 paths:
   /api/v2/auth/scopes:
     get:
-      operationId: list-api-key-scopes
-      summary: List API key scopes
       tags:
       - Authorization
-      security:
-      - CoderSessionToken: []
+      summary: List API key scopes
+      operationId: list-api-key-scopes
       responses:
         '200':
           description: OK
@@ -40,18 +31,10 @@ paths:
                 $ref: '#/components/schemas/codersdk.ExternalAPIKeyScopes'
   /api/v2/authcheck:
     post:
-      operationId: check-authorization
-      summary: Check authorization
       tags:
       - Authorization
-      security:
-      - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.AuthorizationRequest'
+      summary: Check authorization
+      operationId: check-authorization
       responses:
         '200':
           description: OK
@@ -59,20 +42,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.AuthorizationResponse'
-  /api/v2/users/login:
-    post:
-      operationId: log-in-user
-      summary: Log in user
-      tags:
-      - Authorization
       security:
       - CoderSessionToken: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/codersdk.LoginWithPasswordRequest'
+              $ref: '#/components/schemas/codersdk.AuthorizationRequest'
+        description: Authorization request
+        required: true
+  /api/v2/users/login:
+    post:
+      tags:
+      - Authorization
+      summary: Log in user
+      operationId: log-in-user
       responses:
         '201':
           description: Created
@@ -80,54 +64,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.LoginWithPasswordResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.LoginWithPasswordRequest'
+        description: Login request
+        required: true
   /api/v2/users/otp/change-password:
     post:
-      operationId: change-password-with-a-one-time-passcode
-      summary: Change password with a one-time passcode
       tags:
       - Authorization
-      security:
-      - CoderSessionToken: []
+      summary: Change password with a one-time passcode
+      operationId: change-password-with-a-one-time-passcode
+      responses:
+        '204':
+          description: No Content
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.ChangePasswordWithOneTimePasscodeRequest'
+        description: Change password request
+        required: true
+  /api/v2/users/otp/request:
+    post:
+      tags:
+      - Authorization
+      summary: Request one-time passcode
+      operationId: request-one-time-passcode
       responses:
         '204':
           description: No Content
-  /api/v2/users/otp/request:
-    post:
-      operationId: request-one-time-passcode
-      summary: Request one-time passcode
-      tags:
-      - Authorization
-      security:
-      - CoderSessionToken: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/codersdk.RequestOneTimePasscodeRequest'
-      responses:
-        '204':
-          description: No Content
+        description: One-time passcode request
+        required: true
   /api/v2/users/validate-password:
     post:
-      operationId: validate-user-password
-      summary: Validate user password
       tags:
       - Authorization
-      security:
-      - CoderSessionToken: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/codersdk.ValidateUserPasswordRequest'
+      summary: Validate user password
+      operationId: validate-user-password
       responses:
         '200':
           description: OK
@@ -135,27 +116,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.ValidateUserPasswordResponse'
-  /api/v2/users/{user}/convert-login:
-    post:
-      operationId: convert-user-from-password-to-oauth-authentication
-      summary: Convert user from password to oauth authentication
-      tags:
-      - Authorization
       security:
       - CoderSessionToken: []
-      parameters:
-      - name: user
-        in: path
-        required: true
-        description: User ID, name, or me
-        schema:
-          type: string
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/codersdk.ConvertLoginRequest'
+              $ref: '#/components/schemas/codersdk.ValidateUserPasswordRequest'
+        description: Validate user password request
+        required: true
+  /api/v2/users/{user}/convert-login:
+    post:
+      tags:
+      - Authorization
+      summary: Convert user from password to oauth authentication
+      operationId: convert-user-from-password-to-oauth-authentication
+      parameters:
+      - description: User ID, name, or me
+        name: user
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '201':
           description: Created
@@ -163,50 +145,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.OAuthConversionResponse'
+      security:
+      - CoderSessionToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/codersdk.ConvertLoginRequest'
+        description: Convert request
+        required: true
 components:
   schemas:
-    codersdk.RequestOneTimePasscodeRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-      required:
-      - email
-    codersdk.AuthorizationObject:
-      type: object
-      description: 'AuthorizationObject can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, all workspaces across the entire product.'
-      properties:
-        any_org:
-          type: boolean
-          description: 'AnyOrgOwner (optional) will disregard the org_owner when checking for permissions.
-
-            This cannot be set to true if the OrganizationID is set.'
-        organization_id:
-          type: string
-          description: OrganizationID (optional) adds the set constraint to all resources owned by a given organization.
-        owner_id:
-          type: string
-          description: OwnerID (optional) adds the set constraint to all resources owned by a given user.
-        resource_id:
-          type: string
-          description: 'ResourceID (optional) reduces the set to a singular resource. This assigns
-
-            a resource ID to the resource type, eg: a single workspace.
-
-            The rbac library will not fetch the resource from the database, so if you
-
-            are using this option, you should also set the owner ID and organization ID
-
-            if possible. Be as specific as possible using all the fields relevant.'
-        resource_type:
-          description: 'ResourceType is the name of the resource.
-
-            `./coderd/rbac/object.go` has the list of valid resource types.'
-          allOf:
-          - $ref: '#/components/schemas/codersdk.RBACResource'
     codersdk.ConvertLoginRequest:
       type: object
+      required:
+      - password
+      - to_type
       properties:
         password:
           type: string
@@ -214,12 +168,92 @@ components:
           description: ToType is the login type to convert to.
           allOf:
           - $ref: '#/components/schemas/codersdk.LoginType'
+    codersdk.ValidateUserPasswordRequest:
+      type: object
       required:
       - password
-      - to_type
-    codersdk.AuthorizationCheck:
+      properties:
+        password:
+          type: string
+    codersdk.AuthorizationRequest:
       type: object
+      properties:
+        checks:
+          description: 'Checks is a map keyed with an arbitrary string to a permission check.
+
+            The key can be any string that is helpful to the caller, and allows
+
+            multiple permission checks to be run in a single request.
+
+            The key ensures that each permission check has the same key in the
+
+            response.'
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/codersdk.AuthorizationCheck'
+    codersdk.LoginWithPasswordRequest:
+      type: object
+      required:
+      - email
+      - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    codersdk.ValidateUserPasswordResponse:
+      type: object
+      properties:
+        details:
+          type: string
+        valid:
+          type: boolean
+    codersdk.RBACAction:
+      type: string
+      enum:
+      - application_connect
+      - assign
+      - create
+      - create_agent
+      - delete
+      - delete_agent
+      - read
+      - read_personal
+      - read_secret
+      - ssh
+      - share
+      - unassign
+      - update
+      - update_agent
+      - update_personal
+      - use
+      - view_insights
+      - start
+      - stop
+      x-enum-varnames:
+      - ActionApplicationConnect
+      - ActionAssign
+      - ActionCreate
+      - ActionCreateAgent
+      - ActionDelete
+      - ActionDeleteAgent
+      - ActionRead
+      - ActionReadPersonal
+      - ActionReadSecret
+      - ActionSSH
+      - ActionShare
+      - ActionUnassign
+      - ActionUpdate
+      - ActionUpdateAgent
+      - ActionUpdatePersonal
+      - ActionUse
+      - ActionViewInsights
+      - ActionWorkspaceStart
+      - ActionWorkspaceStop
+    codersdk.AuthorizationCheck:
       description: AuthorizationCheck is used to check if the currently authenticated user (or the specified user) can do a given action to a given set of objects.
+      type: object
       properties:
         action:
           enum:
@@ -245,58 +279,83 @@ components:
             workspaces have both `user` and `organization` owners.'
           allOf:
           - $ref: '#/components/schemas/codersdk.AuthorizationObject'
-    codersdk.ValidateUserPasswordRequest:
+    codersdk.LoginWithPasswordResponse:
       type: object
-      properties:
-        password:
-          type: string
       required:
+      - session_token
+      properties:
+        session_token:
+          type: string
+    codersdk.ChangePasswordWithOneTimePasscodeRequest:
+      type: object
+      required:
+      - email
+      - one_time_passcode
       - password
-    codersdk.AuthorizationResponse:
-      type: object
-      additionalProperties:
-        type: boolean
-    codersdk.LoginWithPasswordRequest:
-      type: object
       properties:
         email:
           type: string
           format: email
+        one_time_passcode:
+          type: string
         password:
           type: string
-      required:
-      - email
-      - password
-    codersdk.RBACAction:
-      type: string
-      enum:
-      - application_connect
-      - assign
-      - create
-      - create_agent
-      - delete
-      - delete_agent
-      - read
-      - read_personal
-      - ssh
-      - share
-      - unassign
-      - update
-      - update_agent
-      - update_personal
-      - use
-      - view_insights
-      - start
-      - stop
-    codersdk.LoginType:
-      type: string
-      enum:
-      - ''
-      - password
-      - github
-      - oidc
-      - token
-      - none
+    codersdk.AuthorizationResponse:
+      type: object
+      additionalProperties:
+        type: boolean
+    codersdk.AuthorizationObject:
+      description: 'AuthorizationObject can represent a "set" of objects, such as: all workspaces in an organization, all workspaces owned by me, all workspaces across the entire product.'
+      type: object
+      properties:
+        any_org:
+          description: 'AnyOrgOwner (optional) will disregard the org_owner when checking for permissions.
+
+            This cannot be set to true if the OrganizationID is set.'
+          type: boolean
+        organization_id:
+          description: OrganizationID (optional) adds the set constraint to all resources owned by a given organization.
+          type: string
+        owner_id:
+          description: OwnerID (optional) adds the set constraint to all resources owned by a given user.
+          type: string
+        resource_id:
+          description: 'ResourceID (optional) reduces the set to a singular resource. This assigns
+
+            a resource ID to the resource type, eg: a single workspace.
+
+            The rbac library will not fetch the resource from the database, so if you
+
+            are using this option, you should also set the owner ID and organization ID
+
+            if possible. Be as specific as possible using all the fields relevant.'
+          type: string
+        resource_type:
+          description: 'ResourceType is the name of the resource.
+
+            `./coderd/rbac/object.go` has the list of valid resource types.'
+          allOf:
+          - $ref: '#/components/schemas/codersdk.RBACResource'
+    codersdk.ExternalAPIKeyScopes:
+      type: object
+      properties:
+        external:
+          type: array
+          items:
+            $ref: '#/components/schemas/codersdk.APIKeyScope'
+    codersdk.OAuthConversionResponse:
+      type: object
+      properties:
+        expires_at:
+          type: string
+          format: date-time
+        state_string:
+          type: string
+        to_type:
+          $ref: '#/components/schemas/codersdk.LoginType'
+        user_id:
+          type: string
+          format: uuid
     codersdk.APIKeyScope:
       type: string
       enum:
@@ -306,6 +365,7 @@ components:
       - ai_gateway_key:create
       - ai_gateway_key:delete
       - ai_gateway_key:read
+      - ai_gateway_key:update
       - ai_model_price:*
       - ai_model_price:read
       - ai_model_price:update
@@ -354,6 +414,22 @@ components:
       - chat:read
       - chat:share
       - chat:update
+      - chat_model_config:*
+      - chat_model_config:create
+      - chat_model_config:delete
+      - chat_model_config:read
+      - chat_model_config:share
+      - chat_model_config:update
+      - chat_project:*
+      - chat_project:create
+      - chat_project:delete
+      - chat_project:read
+      - chat_project:share
+      - chat_project:update
+      - chat_project_memory:*
+      - chat_project_memory:create
+      - chat_project_memory:delete
+      - chat_project_memory:read
       - coder:all
       - coder:apikeys.manage_self
       - coder:application_connect
@@ -399,6 +475,12 @@ components:
       - license:create
       - license:delete
       - license:read
+      - mcp_server_config:*
+      - mcp_server_config:create
+      - mcp_server_config:delete
+      - mcp_server_config:read
+      - mcp_server_config:share
+      - mcp_server_config:update
       - notification_message:*
       - notification_message:create
       - notification_message:delete
@@ -434,6 +516,12 @@ components:
       - organization_member:delete
       - organization_member:read
       - organization_member:update
+      - organization_skill:*
+      - organization_skill:create
+      - organization_skill:delete
+      - organization_skill:read
+      - organization_skill:share
+      - organization_skill:update
       - prebuilt_workspace:*
       - prebuilt_workspace:delete
       - prebuilt_workspace:update
@@ -458,11 +546,6 @@ components:
       - tailnet_coordinator:delete
       - tailnet_coordinator:read
       - tailnet_coordinator:update
-      - task:*
-      - task:create
-      - task:delete
-      - task:read
-      - task:update
       - template:*
       - template:create
       - template:delete
@@ -514,6 +597,11 @@ components:
       - workspace_agent_resource_monitor:create
       - workspace_agent_resource_monitor:read
       - workspace_agent_resource_monitor:update
+      - workspace_build_orchestration:*
+      - workspace_build_orchestration:create
+      - workspace_build_orchestration:delete
+      - workspace_build_orchestration:read
+      - workspace_build_orchestration:update
       - workspace_dormant:*
       - workspace_dormant:application_connect
       - workspace_dormant:create
@@ -532,50 +620,286 @@ components:
       - workspace_proxy:delete
       - workspace_proxy:read
       - workspace_proxy:update
-    codersdk.ExternalAPIKeyScopes:
+      - workspace_secret:*
+      - workspace_secret:create
+      - workspace_secret:read
+      - workspace_secret:read_secret
+      - workspace_secret:update
+      x-enum-varnames:
+      - APIKeyScopeAll
+      - APIKeyScopeApplicationConnect
+      - APIKeyScopeAiGatewayKeyAll
+      - APIKeyScopeAiGatewayKeyCreate
+      - APIKeyScopeAiGatewayKeyDelete
+      - APIKeyScopeAiGatewayKeyRead
+      - APIKeyScopeAiGatewayKeyUpdate
+      - APIKeyScopeAiModelPriceAll
+      - APIKeyScopeAiModelPriceRead
+      - APIKeyScopeAiModelPriceUpdate
+      - APIKeyScopeAiProviderAll
+      - APIKeyScopeAiProviderCreate
+      - APIKeyScopeAiProviderDelete
+      - APIKeyScopeAiProviderRead
+      - APIKeyScopeAiProviderUpdate
+      - APIKeyScopeAiSeatAll
+      - APIKeyScopeAiSeatCreate
+      - APIKeyScopeAiSeatRead
+      - APIKeyScopeAibridgeInterceptionAll
+      - APIKeyScopeAibridgeInterceptionCreate
+      - APIKeyScopeAibridgeInterceptionRead
+      - APIKeyScopeAibridgeInterceptionUpdate
+      - APIKeyScopeApiKeyAll
+      - APIKeyScopeApiKeyCreate
+      - APIKeyScopeApiKeyDelete
+      - APIKeyScopeApiKeyRead
+      - APIKeyScopeApiKeyUpdate
+      - APIKeyScopeAssignOrgRoleAll
+      - APIKeyScopeAssignOrgRoleAssign
+      - APIKeyScopeAssignOrgRoleCreate
+      - APIKeyScopeAssignOrgRoleDelete
+      - APIKeyScopeAssignOrgRoleRead
+      - APIKeyScopeAssignOrgRoleUnassign
+      - APIKeyScopeAssignOrgRoleUpdate
+      - APIKeyScopeAssignRoleAll
+      - APIKeyScopeAssignRoleAssign
+      - APIKeyScopeAssignRoleRead
+      - APIKeyScopeAssignRoleUnassign
+      - APIKeyScopeAuditLogAll
+      - APIKeyScopeAuditLogCreate
+      - APIKeyScopeAuditLogRead
+      - APIKeyScopeBoundaryLogAll
+      - APIKeyScopeBoundaryLogCreate
+      - APIKeyScopeBoundaryLogDelete
+      - APIKeyScopeBoundaryLogRead
+      - APIKeyScopeBoundaryUsageAll
+      - APIKeyScopeBoundaryUsageDelete
+      - APIKeyScopeBoundaryUsageRead
+      - APIKeyScopeBoundaryUsageUpdate
+      - APIKeyScopeChatAll
+      - APIKeyScopeChatCreate
+      - APIKeyScopeChatDelete
+      - APIKeyScopeChatRead
+      - APIKeyScopeChatShare
+      - APIKeyScopeChatUpdate
+      - APIKeyScopeChatModelConfigAll
+      - APIKeyScopeChatModelConfigCreate
+      - APIKeyScopeChatModelConfigDelete
+      - APIKeyScopeChatModelConfigRead
+      - APIKeyScopeChatModelConfigShare
+      - APIKeyScopeChatModelConfigUpdate
+      - APIKeyScopeChatProjectAll
+      - APIKeyScopeChatProjectCreate
+      - APIKeyScopeChatProjectDelete
+      - APIKeyScopeChatProjectRead
+      - APIKeyScopeChatProjectShare
+      - APIKeyScopeChatProjectUpdate
+      - APIKeyScopeChatProjectMemoryAll
+      - APIKeyScopeChatProjectMemoryCreate
+      - APIKeyScopeChatProjectMemoryDelete
+      - APIKeyScopeChatProjectMemoryRead
+      - APIKeyScopeCoderAll
+      - APIKeyScopeCoderApikeysManageSelf
+      - APIKeyScopeCoderApplicationConnect
+      - APIKeyScopeCoderTemplatesAuthor
+      - APIKeyScopeCoderTemplatesBuild
+      - APIKeyScopeCoderWorkspacesAccess
+      - APIKeyScopeCoderWorkspacesCreate
+      - APIKeyScopeCoderWorkspacesDelete
+      - APIKeyScopeCoderWorkspacesOperate
+      - APIKeyScopeConnectionLogAll
+      - APIKeyScopeConnectionLogRead
+      - APIKeyScopeConnectionLogUpdate
+      - APIKeyScopeCryptoKeyAll
+      - APIKeyScopeCryptoKeyCreate
+      - APIKeyScopeCryptoKeyDelete
+      - APIKeyScopeCryptoKeyRead
+      - APIKeyScopeCryptoKeyUpdate
+      - APIKeyScopeDebugInfoAll
+      - APIKeyScopeDebugInfoRead
+      - APIKeyScopeDeploymentConfigAll
+      - APIKeyScopeDeploymentConfigRead
+      - APIKeyScopeDeploymentConfigUpdate
+      - APIKeyScopeDeploymentStatsAll
+      - APIKeyScopeDeploymentStatsRead
+      - APIKeyScopeFileAll
+      - APIKeyScopeFileCreate
+      - APIKeyScopeFileRead
+      - APIKeyScopeGroupAll
+      - APIKeyScopeGroupCreate
+      - APIKeyScopeGroupDelete
+      - APIKeyScopeGroupRead
+      - APIKeyScopeGroupUpdate
+      - APIKeyScopeGroupMemberAll
+      - APIKeyScopeGroupMemberRead
+      - APIKeyScopeIdpsyncSettingsAll
+      - APIKeyScopeIdpsyncSettingsRead
+      - APIKeyScopeIdpsyncSettingsUpdate
+      - APIKeyScopeInboxNotificationAll
+      - APIKeyScopeInboxNotificationCreate
+      - APIKeyScopeInboxNotificationRead
+      - APIKeyScopeInboxNotificationUpdate
+      - APIKeyScopeLicenseAll
+      - APIKeyScopeLicenseCreate
+      - APIKeyScopeLicenseDelete
+      - APIKeyScopeLicenseRead
+      - APIKeyScopeMcpServerConfigAll
+      - APIKeyScopeMcpServerConfigCreate
+      - APIKeyScopeMcpServerConfigDelete
+      - APIKeyScopeMcpServerConfigRead
+      - APIKeyScopeMcpServerConfigShare
+      - APIKeyScopeMcpServerConfigUpdate
+      - APIKeyScopeNotificationMessageAll
+      - APIKeyScopeNotificationMessageCreate
+      - APIKeyScopeNotificationMessageDelete
+      - APIKeyScopeNotificationMessageRead
+      - APIKeyScopeNotificationMessageUpdate
+      - APIKeyScopeNotificationPreferenceAll
+      - APIKeyScopeNotificationPreferenceRead
+      - APIKeyScopeNotificationPreferenceUpdate
+      - APIKeyScopeNotificationTemplateAll
+      - APIKeyScopeNotificationTemplateRead
+      - APIKeyScopeNotificationTemplateUpdate
+      - APIKeyScopeOauth2AppAll
+      - APIKeyScopeOauth2AppCreate
+      - APIKeyScopeOauth2AppDelete
+      - APIKeyScopeOauth2AppRead
+      - APIKeyScopeOauth2AppUpdate
+      - APIKeyScopeOauth2AppCodeTokenAll
+      - APIKeyScopeOauth2AppCodeTokenCreate
+      - APIKeyScopeOauth2AppCodeTokenDelete
+      - APIKeyScopeOauth2AppCodeTokenRead
+      - APIKeyScopeOauth2AppSecretAll
+      - APIKeyScopeOauth2AppSecretCreate
+      - APIKeyScopeOauth2AppSecretDelete
+      - APIKeyScopeOauth2AppSecretRead
+      - APIKeyScopeOauth2AppSecretUpdate
+      - APIKeyScopeOrganizationAll
+      - APIKeyScopeOrganizationCreate
+      - APIKeyScopeOrganizationDelete
+      - APIKeyScopeOrganizationRead
+      - APIKeyScopeOrganizationUpdate
+      - APIKeyScopeOrganizationMemberAll
+      - APIKeyScopeOrganizationMemberCreate
+      - APIKeyScopeOrganizationMemberDelete
+      - APIKeyScopeOrganizationMemberRead
+      - APIKeyScopeOrganizationMemberUpdate
+      - APIKeyScopeOrganizationSkillAll
+      - APIKeyScopeOrganizationSkillCreate
+      - APIKeyScopeOrganizationSkillDelete
+      - APIKeyScopeOrganizationSkillRead
+      - APIKeyScopeOrganizationSkillShare
+      - APIKeyScopeOrganizationSkillUpdate
+      - APIKeyScopePrebuiltWorkspaceAll
+      - APIKeyScopePrebuiltWorkspaceDelete
+      - APIKeyScopePrebuiltWorkspaceUpdate
+      - APIKeyScopeProvisionerDaemonAll
+      - APIKeyScopeProvisionerDaemonCreate
+      - APIKeyScopeProvisionerDaemonDelete
+      - APIKeyScopeProvisionerDaemonRead
+      - APIKeyScopeProvisionerDaemonUpdate
+      - APIKeyScopeProvisionerJobsAll
+      - APIKeyScopeProvisionerJobsCreate
+      - APIKeyScopeProvisionerJobsRead
+      - APIKeyScopeProvisionerJobsUpdate
+      - APIKeyScopeReplicasAll
+      - APIKeyScopeReplicasRead
+      - APIKeyScopeSystemAll
+      - APIKeyScopeSystemCreate
+      - APIKeyScopeSystemDelete
+      - APIKeyScopeSystemRead
+      - APIKeyScopeSystemUpdate
+      - APIKeyScopeTailnetCoordinatorAll
+      - APIKeyScopeTailnetCoordinatorCreate
+      - APIKeyScopeTailnetCoordinatorDelete
+      - APIKeyScopeTailnetCoordinatorRead
+      - APIKeyScopeTailnetCoordinatorUpdate
+      - APIKeyScopeTemplateAll
+      - APIKeyScopeTemplateCreate
+      - APIKeyScopeTemplateDelete
+      - APIKeyScopeTemplateRead
+      - APIKeyScopeTemplateUpdate
+      - APIKeyScopeTemplateUse
+      - APIKeyScopeTemplateViewInsights
+      - APIKeyScopeUsageEventAll
+      - APIKeyScopeUsageEventCreate
+      - APIKeyScopeUsageEventRead
+      - APIKeyScopeUsageEventUpdate
+      - APIKeyScopeUserAll
+      - APIKeyScopeUserCreate
+      - APIKeyScopeUserDelete
+      - APIKeyScopeUserRead
+      - APIKeyScopeUserReadPersonal
+      - APIKeyScopeUserUpdate
+      - APIKeyScopeUserUpdatePersonal
+      - APIKeyScopeUserSecretAll
+      - APIKeyScopeUserSecretCreate
+      - APIKeyScopeUserSecretDelete
+      - APIKeyScopeUserSecretRead
+      - APIKeyScopeUserSecretUpdate
+      - APIKeyScopeUserSkillAll
+      - APIKeyScopeUserSkillCreate
+      - APIKeyScopeUserSkillDelete
+      - APIKeyScopeUserSkillRead
+      - APIKeyScopeUserSkillUpdate
+      - APIKeyScopeWebpushSubscriptionAll
+      - APIKeyScopeWebpushSubscriptionCreate
+      - APIKeyScopeWebpushSubscriptionDelete
+      - APIKeyScopeWebpushSubscriptionRead
+      - APIKeyScopeWorkspaceAll
+      - APIKeyScopeWorkspaceApplicationConnect
+      - APIKeyScopeWorkspaceCreate
+      - APIKeyScopeWorkspaceCreateAgent
+      - APIKeyScopeWorkspaceDelete
+      - APIKeyScopeWorkspaceDeleteAgent
+      - APIKeyScopeWorkspaceRead
+      - APIKeyScopeWorkspaceShare
+      - APIKeyScopeWorkspaceSsh
+      - APIKeyScopeWorkspaceStart
+      - APIKeyScopeWorkspaceStop
+      - APIKeyScopeWorkspaceUpdate
+      - APIKeyScopeWorkspaceUpdateAgent
+      - APIKeyScopeWorkspaceAgentDevcontainersAll
+      - APIKeyScopeWorkspaceAgentDevcontainersCreate
+      - APIKeyScopeWorkspaceAgentResourceMonitorAll
+      - APIKeyScopeWorkspaceAgentResourceMonitorCreate
+      - APIKeyScopeWorkspaceAgentResourceMonitorRead
+      - APIKeyScopeWorkspaceAgentResourceMonitorUpdate
+      - APIKeyScopeWorkspaceBuildOrchestrationAll
+      - APIKeyScopeWorkspaceBuildOrchestrationCreate
+      - APIKeyScopeWorkspaceBuildOrchestrationDelete
+      - APIKeyScopeWorkspaceBuildOrchestrationRead
+      - APIKeyScopeWorkspaceBuildOrchestrationUpdate
+      - APIKeyScopeWorkspaceDormantAll
+      - APIKeyScopeWorkspaceDormantApplicationConnect
+      - APIKeyScopeWorkspaceDormantCreate
+      - APIKeyScopeWorkspaceDormantCreateAgent
+      - APIKeyScopeWorkspaceDormantDelete
+      - APIKeyScopeWorkspaceDormantDeleteAgent
+      - APIKeyScopeWorkspaceDormantRead
+      - APIKeyScopeWorkspaceDormantShare
+      - APIKeyScopeWorkspaceDormantSsh
+      - APIKeyScopeWorkspaceDormantStart
+      - APIKeyScopeWorkspaceDormantStop
+      - APIKeyScopeWorkspaceDormantUpdate
+      - APIKeyScopeWorkspaceDormantUpdateAgent
+      - APIKeyScopeWorkspaceProxyAll
+      - APIKeyScopeWorkspaceProxyCreate
+      - APIKeyScopeWorkspaceProxyDelete
+      - APIKeyScopeWorkspaceProxyRead
+      - APIKeyScopeWorkspaceProxyUpdate
+      - APIKeyScopeWorkspaceSecretAll
+      - APIKeyScopeWorkspaceSecretCreate
+      - APIKeyScopeWorkspaceSecretRead
+      - APIKeyScopeWorkspaceSecretReadSecret
+      - APIKeyScopeWorkspaceSecretUpdate
+    codersdk.RequestOneTimePasscodeRequest:
       type: object
-      properties:
-        external:
-          type: array
-          items:
-            $ref: '#/components/schemas/codersdk.APIKeyScope'
-    codersdk.ChangePasswordWithOneTimePasscodeRequest:
-      type: object
+      required:
+      - email
       properties:
         email:
           type: string
           format: email
-        one_time_passcode:
-          type: string
-        password:
-          type: string
-      required:
-      - email
-      - one_time_passcode
-      - password
-    codersdk.AuthorizationRequest:
-      type: object
-      properties:
-        checks:
-          type: object
-          description: 'Checks is a map keyed with an arbitrary string to a permission check.
-
-            The key can be any string that is helpful to the caller, and allows
-
-            multiple permission checks to be run in a single request.
-
-            The key ensures that each permission check has the same key in the
-
-            response.'
-          additionalProperties:
-            $ref: '#/components/schemas/codersdk.AuthorizationCheck'
-    codersdk.LoginWithPasswordResponse:
-      type: object
-      properties:
-        session_token:
-          type: string
-      required:
-      - session_token
     codersdk.RBACResource:
       type: string
       enum:
@@ -592,6 +916,9 @@ components:
       - boundary_log
       - boundary_usage
       - chat
+      - chat_model_config
+      - chat_project
+      - chat_project_memory
       - connection_log
       - crypto_key
       - debug_info
@@ -603,6 +930,7 @@ components:
       - idpsync_settings
       - inbox_notification
       - license
+      - mcp_server_config
       - notification_message
       - notification_preference
       - notification_template
@@ -611,13 +939,13 @@ components:
       - oauth2_app_secret
       - organization
       - organization_member
+      - organization_skill
       - prebuilt_workspace
       - provisioner_daemon
       - provisioner_jobs
       - replicas
       - system
       - tailnet_coordinator
-      - task
       - template
       - usage_event
       - user
@@ -627,30 +955,93 @@ components:
       - workspace
       - workspace_agent_devcontainers
       - workspace_agent_resource_monitor
+      - workspace_build_orchestration
       - workspace_dormant
       - workspace_proxy
-    codersdk.ValidateUserPasswordResponse:
-      type: object
-      properties:
-        details:
-          type: string
-        valid:
-          type: boolean
-    codersdk.OAuthConversionResponse:
-      type: object
-      properties:
-        expires_at:
-          type: string
-          format: date-time
-        state_string:
-          type: string
-        to_type:
-          $ref: '#/components/schemas/codersdk.LoginType'
-        user_id:
-          type: string
-          format: uuid
+      - workspace_secret
+      x-enum-varnames:
+      - ResourceWildcard
+      - ResourceAIGatewayKey
+      - ResourceAiModelPrice
+      - ResourceAIProvider
+      - ResourceAiSeat
+      - ResourceAibridgeInterception
+      - ResourceApiKey
+      - ResourceAssignOrgRole
+      - ResourceAssignRole
+      - ResourceAuditLog
+      - ResourceBoundaryLog
+      - ResourceBoundaryUsage
+      - ResourceChat
+      - ResourceChatModelConfig
+      - ResourceChatProject
+      - ResourceChatProjectMemory
+      - ResourceConnectionLog
+      - ResourceCryptoKey
+      - ResourceDebugInfo
+      - ResourceDeploymentConfig
+      - ResourceDeploymentStats
+      - ResourceFile
+      - ResourceGroup
+      - ResourceGroupMember
+      - ResourceIdpsyncSettings
+      - ResourceInboxNotification
+      - ResourceLicense
+      - ResourceMCPServerConfig
+      - ResourceNotificationMessage
+      - ResourceNotificationPreference
+      - ResourceNotificationTemplate
+      - ResourceOauth2App
+      - ResourceOauth2AppCodeToken
+      - ResourceOauth2AppSecret
+      - ResourceOrganization
+      - ResourceOrganizationMember
+      - ResourceOrganizationSkill
+      - ResourcePrebuiltWorkspace
+      - ResourceProvisionerDaemon
+      - ResourceProvisionerJobs
+      - ResourceReplicas
+      - ResourceSystem
+      - ResourceTailnetCoordinator
+      - ResourceTemplate
+      - ResourceUsageEvent
+      - ResourceUser
+      - ResourceUserSecret
+      - ResourceUserSkill
+      - ResourceWebpushSubscription
+      - ResourceWorkspace
+      - ResourceWorkspaceAgentDevcontainers
+      - ResourceWorkspaceAgentResourceMonitor
+      - ResourceWorkspaceBuildOrchestration
+      - ResourceWorkspaceDormant
+      - ResourceWorkspaceProxy
+      - ResourceWorkspaceSecret
+    codersdk.LoginType:
+      type: string
+      enum:
+      - ''
+      - password
+      - github
+      - oidc
+      - token
+      - none
+      x-enum-varnames:
+      - LoginTypeUnknown
+      - LoginTypePassword
+      - LoginTypeGithub
+      - LoginTypeOIDC
+      - LoginTypeToken
+      - LoginTypeNone
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

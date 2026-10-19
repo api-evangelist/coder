@@ -12,25 +12,16 @@ info:
     url: https://github.com/coder/coder/blob/main/LICENSE
   version: '2.0'
 servers:
-- url: https://{coderHost}/api/v2
-  description: Coder instance
-  variables:
-    coderHost:
-      default: coder.example.com
-      description: Your Coder deployment hostname
-security:
-- CoderSessionToken: []
+- url: /
 tags:
 - name: WorkspaceProxies
 paths:
   /api/v2/regions:
     get:
-      operationId: get-site-wide-regions-for-workspace-connections
-      summary: Get site-wide regions for workspace connections
       tags:
       - WorkspaceProxies
-      security:
-      - CoderSessionToken: []
+      summary: Get site-wide regions for workspace connections
+      operationId: get-site-wide-regions-for-workspace-connections
       responses:
         '200':
           description: OK
@@ -38,6 +29,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/codersdk.RegionsResponse-codersdk_Region'
+      security:
+      - CoderSessionToken: []
 components:
   schemas:
     codersdk.Region:
@@ -55,14 +48,13 @@ components:
         name:
           type: string
         path_app_url:
-          type: string
           description: 'PathAppURL is the URL to the base path for path apps. Optional
 
             unless wildcard_hostname is set.
 
             E.g. https://us.example.com'
-        wildcard_hostname:
           type: string
+        wildcard_hostname:
           description: 'WildcardHostname is the wildcard hostname for subdomain apps.
 
             E.g. *.us.example.com
@@ -70,6 +62,7 @@ components:
             E.g. *--suffix.au.example.com
 
             Optional. Does not need to be on the same domain as PathAppURL.'
+          type: string
     codersdk.RegionsResponse-codersdk_Region:
       type: object
       properties:
@@ -78,7 +71,15 @@ components:
           items:
             $ref: '#/components/schemas/codersdk.Region'
   securitySchemes:
+    AIGatewayKey:
+      type: apiKey
+      name: X-AI-Governance-Gateway-Key
+      in: header
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
     CoderSessionToken:
       type: apiKey
-      in: header
       name: Coder-Session-Token
+      in: header

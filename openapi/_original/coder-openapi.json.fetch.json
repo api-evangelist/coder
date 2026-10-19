@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/coder/coder/main/coderd/apidoc/swagger.json",
+ "final": "https://raw.githubusercontent.com/coder/coder/main/coderd/apidoc/swagger.json",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 804278,
+ "sha256": "30d81159de04ca4f05164262ed5638d7928f225791c39827ead9903e27146498",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}
