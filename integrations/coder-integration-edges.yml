@@ -16,6 +16,9 @@ checked:
 - https://skillsmp.com/sitemap.xml
 - https://www.skills.sh/sitemap.xml
 - eclipse/integrations/eclipse-integration-edges.yml
+- opentofu/integrations/opentofu-integration-edges.yml
+- pulumi/integrations/pulumi-integration-edges.yml
+- terraform/integrations/terraform-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -188,6 +191,67 @@ edges:
   category: IDE / developer extension marketplace listing
   badges:
   - Verified namespace
+- partner_name: OpenTofu (opentofu-registry)
+  partner: opentofu
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: opentofu-registry
+  evidence: https://search.opentofu.org/provider/coder/coder
+  mirror_of: opentofu/integrations/opentofu-integration-edges.yml
+  apps:
+  - coder/coder
+  - coder/coderd
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (GitHub domain-verified organization)
+- partner_name: Pulumi (pulumi-registry)
+  partner: pulumi
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: pulumi-registry
+  evidence: https://www.pulumi.com/registry/packages/coder/
+  mirror_of: pulumi/integrations/pulumi-integration-edges.yml
+  apps:
+  - coder
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (GitHub domain-verified organization)
+- partner_name: Terraform (terraform-registry)
+  partner: terraform
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: terraform-registry
+  evidence: https://registry.terraform.io/providers/coder/coder
+  mirror_of: terraform/integrations/terraform-integration-edges.yml
+  apps:
+  - coder/coder
+  - coder/coderd
+  - coder/envbuilder
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (Terraform partner tier)
+  - Verified publisher (GitHub domain-verified organization)
 source:
 - https://github.com/marketplace?type=actions
 - https://github.com/marketplace?type=apps
