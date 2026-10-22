@@ -171,3 +171,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: coder-digital-ocean-own
+  label: Digital Ocean (own)
+  partner: digital-ocean
+  partner_name: Digital Ocean (own)
+  category: Developer Tools
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.digitalocean.com/apps/coder
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
