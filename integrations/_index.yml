@@ -119,6 +119,44 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: coder-openssf-best-practices-badge
+  label: OpenSSF Best Practices Badge
+  partner_name: OpenSSF Best Practices Badge
+  category: OpenSSF Best Practices badge (open-source project security conformance)
+  type: register
+  channel: standard-directory
+  evidence: https://www.bestpractices.dev/en/projects/9511
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: OpenSSF Best Practices badge projects (bestpractices.dev/en/projects.json, paged)
+    standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
+    spec_file: null
+    role: badge-holder
+    registered_name: Coder
+    matched_by: github-org
+    matched_on: coder
+    certified_products:
+    - product: open-source project
+      product_type: open-source project
+      standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
+      lapsed: false
+      partner_tier: passing
+      projects:
+      - name: Coder
+        id: 9511
+        url: https://www.bestpractices.dev/en/projects/9511
+        badge_level: passing
+      baseline_levels:
+      - baseline-1
+    signal_note: 'certified_products = ONE entry (product type: open-source project) with the highest CURRENT badge
+      level in partner_tier; a provider whose projects only lost the badge is lapsed: true; project names are context,
+      never counted; in_progress entries are not conformance'
+    detected_by: sweep-openssf-best-practices-badges.py
+    detected: '2026-10-22'
+    identity_source: apis.yml GitHubOrganization pointer (provider's own declaration)
+  status: not-a-workflow
+  arazzo: null
 - slug: coder-eclipse-foundation-open-vsx
   label: Eclipse Foundation (open-vsx)
   partner: eclipse
@@ -193,6 +231,19 @@
   marketplace: own
   channel: partner-built
   evidence: https://github.com/backstage/backstage/tree/d72327203d5d0812bee2eace8688fa5ab22867be/microsite/data/plugins/coder.yaml
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: coder-artifact-hub-artifact-hub
+  label: Artifact Hub (artifact-hub)
+  partner: artifact-hub
+  partner_name: Artifact Hub (artifact-hub)
+  category: Artifact Hub listing (Helm chart)
+  type: marketplace
+  marketplace: artifact-hub
+  channel: partner-built
+  evidence: https://artifacthub.io/packages/search?repo=coder
   source: edge
   relationship: platform-app
   status: not-a-workflow
