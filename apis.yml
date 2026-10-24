@@ -299,6 +299,8 @@ apis:
   humanURL: https://coder.com/docs/reference/api
   baseURL: https://coder.example.com/api/v2
   tags:
+  - Version Control
+  tags_raw:
   - Git
   properties:
   - type: OpenAPI
